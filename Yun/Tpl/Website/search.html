@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>360vr全景云平台|720全景摄影,全景相机,360度全景拍摄,VR制作,全景旅游,全景新闻,全景图片,虚拟漫游,VR航拍</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="keywords" content="360vr全景云平台|720全景摄影,全景相机,360度全景拍摄,VR制作,全景旅游,全景新闻,全景图片,虚拟漫游,VR航拍">
+<meta name="description" content="360vr全景云平台|720全景摄影,全景相机,360度全景拍摄,VR制作,全景旅游,全景新闻,全景图片,虚拟漫游,VR航拍">
+<link href="__PUBLIC__/webstyle/css/so.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/webstyle/js/jquery.js"></script>
+<link href="__PUBLIC__/webstyle/css/css.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/webstyle/css/header.css" rel="stylesheet" type="text/css" />
+</head>
+<body onkeydown="keyLogin();">
+
+<style type="text/css">
+  body, div {
+    text-align: left;
+  }
+
+</style>
+<!--float_nav-->
+<div class="soMian" style="padding-bottom: 0px; ">
+  <div class="top">
+    <div class="topNav">
+    <p>
+    <a href="index.php?s=/Website"><strong>首页</strong></a>
+    <a href="index.php?s=/Website/qjzs"><strong>全景案例</strong></a>
+    <a href="index.php?s=/Website/qjzt"><strong>全景专题</strong></a>
+    <a href="index.php?s=/Website/qjfx"><strong>全景发现</strong></a>
+    <a href="index.php?s=/Website/wzzx"><strong>全景资讯</strong></a>
+    </p>
+    </div>
+    <div class="topBorder">
+      <div class="logo"><a href="index.php?s=/Website"><img  alt="全景-让互联网更真实" src="/Public/webstyle/images/logo.jpg" /></a></div>
+      <div class="search">
+        <div class="searchCont">
+          <form method="get" action="" enctype="multipart/form-data" id="search_v">
+            <input type="text" class="searchInput" id="WD" name="wd" value="" placeholder="搜全景" />
+            <input type="button" class="searchBtn" id="idbut" onclick="search();" />
+          </form>
+        </div>
+        <script type="text/javascript">
+
+          function search(){
+              var keywords = $("#WD").val();
+              var u = 'index.php?s=/Website/search/keywords/'+keywords;
+              location.href=u;
+          }
+      </script>
+        </div>
+ 
+      <div class="loginReg"><a href="/member/login" target="_blank" class="login">登录</a>&nbsp;&frasl;&nbsp;<a href="/member/reg" target="_blank" class="reg">注册</a></div>
+     </div>
+   </div>
+
+  <div class="placeholder"></div>
+  <div class="searchResult">
+    <p>搜索<strong>"{$keywords}"</strong> 找到<span>{$count}</span>个结果</p>
+  </div>
+</div>
+  <!--classifyList-->
+  <div class="classifyListBox">
+    <div class="classifyListImg">
+      <ul>
+        <foreach name="panolist" item="vo">
+        <li>
+          <div class="subList">
+            <a href="{$vo.outlink}" class="img" target="_blank">
+             <img alt="{$vo.title}" src="{$vo.thumb}" />
+               <i></i><b></b>
+            </a>
+            <a href="{$vo.outlink}" class="text" target="_blank">
+              <span>{$vo.title}</span>
+            </a>
+          </div>
+        </li>
+        </foreach>
+      </ul>
+      <div class="clearfloat"></div>
+    </div>
+    <!--classifyListImg--></div>
+  <!--classifyListBox-->
+  <div class="classifyPage">
+    <div class="setpage">
+        {$page}
+     </div>
+  </div>
+  <!--classifyPage-->
+ 
+<!--classifyMain-->
+
+<script src="__PUBLIC__/webstyle/js/main.js"></script>
+<include file="Footer" />

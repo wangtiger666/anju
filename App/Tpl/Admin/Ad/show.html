@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=100"/>
+        <title>系统设置</title>
+        <link href="__PUBLIC__/admin/style/common.css" rel="stylesheet" type="text/css" />
+        <script src="__PUBLIC__/common/js/jquery.js" language="javascript" type="text/javascript"></script>
+        <script language="javascript" type="text/javascript">
+            function showadd(){
+                $("#addvar").show();                
+            }
+            function ShowConfig(n){
+                n--;
+                $(".result_back_box").hide();
+                $(".result_back_box").eq(n).show();
+            }
+            $(document).ready(function(){
+                $(".result_back_box").first().show();
+            });
+        </script>
+        <!-- bootstrap START-->
+        <link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/animate.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/style.css" rel="stylesheet">
+        <style type="text/css">
+            body{
+                background: #FFF;
+            }
+        </style>
+        <!-- bootstrap END -->
+        <style type="text/css">
+        a{ text-decoration:none;}
+        a:visited{ text-decoration:none;}
+        a:hover{ text-decoration:none;}
+        a:active{}/*這四個鏈接文字的設置順序不可以顛倒*/
+        .nav_00{height:42px; border:0px solid #dee5e7;margin-bottom: 0px;}
+        .nav_00 li{width:100px; height:42px; float:left;text-align: center; line-height:42px;}
+        .nav_00 .curr{background-color:#fff;border-bottom:0px;border-right:1px solid #dee5e7;border-left:1px solid #dee5e7;border-top:1px solid #dee5e7;border-bottom:0px;}
+        .nav_00 .curr a{ color:#333}
+        .nav_00 li a{display:block; color:#333;font-size: 14px;line-height: 46px;}
+        .nav_content{height:1040px;background-color:#fff;border-right:1px solid #dee5e7;border-left:1px solid #dee5e7;border-bottom:1px solid #dee5e7;border-top:0px;}
+        </style>
+        <script type="text/javascript">
+         function m_class(obj){
+            $(".nav_00").children("li").removeClass("curr");
+            $(obj).addClass('curr');
+         }
+        </script>
+    </head>
+    <body >
+        <div class="main" style="background:#F0F3F4;">
+            <ul class="nav_00">
+               <li class="curr" onclick="m_class(this);" ><a href="/admin/ad/index" target="rightmain" >平台广告位</a></li>
+               <li  onclick="m_class(this);" ><a href="/admin/WebAd/imgindex" target="rightmain" >关于广告位</a></li>
+            </ul>  
+            <div class="nav_content">
+                 <iframe id="rightmain"  style="height:1040px;width:100%;" name="rightmain"  src="{:U('ad/index')}"   frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes" >
+                 </iframe>
+            </div>
+    </body>
+</html>

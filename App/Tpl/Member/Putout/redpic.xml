@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<krpano>
+    <eq name="redpicrow['opentype']" value="3">
+        <layer name="ploycubepic{$redpic_id}" onloaded="ploycubepic{$redpic_id}start();" scalechildren="true" visible="false" enabled="True" keep="false" type="container" bgcolor="0xFFFFFF" bgalpha="0.3" align="center" width="{$photo['bw']}" height="{$photo['bh']}" x="0" y="0" zorder="1000">
+            <layer name="ploycubepic{$redpic_id}_img" visible="True" enabled="True" keep="false" url="%SWFPATH%/toolbox/redpicimg/{$redpicrow['photo1']|basename=###}"
+                align="center" width="{$photo['w']}" height="{$photo['h']}" x="0" y="0" 
+				onclick="set(layer[ploycubepic{$redpic_id}].visible,false);"
+				onover="
+						 set(iszoom, true);
+						 set(startzoom, true);
+						 copy(copy_mousefovchange, control.mousefovchange);
+						 copy(copy_touchzoom, control.touchzoom);
+						 set(control.mousefovchange, 0);
+						 set(control.touchzoom, false);"
+						 
+						 
+						 onout="
+							set(iszoom, false);
+							copy(control.mousefovchange, copy_mousefovchange);
+							copy(control.touchzoom, copy_touchzoom);
+							"
+
+						 ondown.touch="onover();"
+						 onup.touch="onout();"
+            />
+        </layer>
+		
+<!-- 针对鼠标滚轮缩放的事件 -->
+<events name="ploycubepic{$redpic_id}_zoom_events" onmousewheel="ploycubepic{$redpic_id}_onmousewheel();" />
+<!-- 通过手势或鼠标滚轮实现图片缩放 -->
+<action name="ploycubepic{$redpic_id}_onmousewheel">
+if(iszoom,
+if(wheeldelta_touchscale GT 0,
+<!-- 触屏缩放 -->
+if(startzoom,
+set(startzoom,false);
+copy(start_wheeldelta_touchscale, wheeldelta_touchscale);
+copy(start_imagescale, layer[ploycubepic{$redpic_id}].scale);
+);
+div(tmp, wheeldelta_touchscale, start_wheeldelta_touchscale);
+mul(layer[ploycubepic{$redpic_id}].scale, start_imagescale, tmp);
+,
+<!-- 鼠标滚轮缩放 -->
+mul(sit,get(wheeldelta),0.05);
+mul(sit,layer[ploycubepic{$redpic_id}].scale);
+add(layer[ploycubepic{$redpic_id}].scale,sit);
+);
+);
+</action>						
+        <action name="ploycubepic{$redpic_id}start">
+        set(chax,1);set(chay,1);
+        if(layer[ploycubepic{$redpic_id}].width GT stagewidth,div(chax,stagewidth,{$photo['bw']}););
+        if(layer[ploycubepic{$redpic_id}].height GT stageheight,div(chay,stageheight,{$photo['bh']}););
+        if(chax LT chay,set(layer[ploycubepic{$redpic_id}].scale,get(chax));,set(layer[ploycubepic{$redpic_id}].scale,get(chay)););
+        </action>
+    </eq>
+    
+</krpano>

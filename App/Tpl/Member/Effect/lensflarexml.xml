@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano showerrors="false">
+
+    <events onloadcomplete="js(intdata(););" />
+    <view hlookat="0" vlookat="0" hlookat_bak="" vlookat_bak="" fov="80" />
+    <lensflareset name="DEFAULT" url="%SWFPATH%/lensflare/flares.jpg"/>
+    <lensflare name="flare" ath="0" atv="-30" alpha="0.5" set="DEFAULT" size="1" blind="0.6" blindcurve="4" keep="False" />
+    <hotspot name="introimage" alpha="1" ath="0" atv="-30" scale="1" url="__PUBLIC__/member/images/pano/tpoint.png"
+            align="center" edge="center"  ondown="draghotspot();"
+            />
+   
+    <image>
+        <left url="{:CC('web_root')}{$viewrow['left']}" />
+        <front url="{:CC('web_root')}{$viewrow['front']}" />
+        <right url="{:CC('web_root')}{$viewrow['right']}" />
+        <back url="{:CC('web_root')}{$viewrow['back']}" />
+        <up url="{:CC('web_root')}{$viewrow['up']}" />
+        <down url="{:CC('web_root')}{$viewrow['down']}" />
+    </image>
+	
+	
+
+    <action name="draghotspot">
+        if(%1 != dragging,
+        spheretoscreen(ath, atv, hotspotcenterx, hotspotcentery);
+        sub(drag_adjustx, mouse.stagex, hotspotcenterx);
+        sub(drag_adjusty, mouse.stagey, hotspotcentery);
+        draghotspot(dragging);
+        ,
+        if(pressed,
+        sub(dx, mouse.stagex, drag_adjustx);
+        sub(dy, mouse.stagey, drag_adjusty);
+        screentosphere(dx, dy, ath, atv);
+        copy(print_ath, ath);
+        copy(print_atv, atv);
+        roundval(print_ath, 3);
+        roundval(print_atv, 3);
+        set(lensflare[flare].ath,get(ath));
+        set(lensflare[flare].atv,get(atv));
+        js(shoot(get(ath),get(atv)););
+        delayedcall(0, draghotspot(dragging) );
+        );
+        );
+    </action>
+
+</krpano>

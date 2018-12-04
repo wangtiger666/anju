@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>登录注册</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/welcome/css/loginreg.css">
+</head>
+<body>
+	<!-- 登录界面 -->
+    <div id="loginbox">
+        <div class="loginbgcolor"></div>
+        <!-- 密码登录 -->
+        <div class="loginshow">
+            <a class="pwdlog active">密码登录</a>
+            <a class="chitlog">短信登录</a>
+            <img src="__PUBLIC__/welcome/images/close.png" class='closelog'>
+            <input type="text" maxlength="11" placeholder="请输入手机号" id="log_phone" autocomplete="off">
+            <input type="password" name="" placeholder="请输入密码" id="log_pwd">
+            <input type="submit" id="log" class="btn btn-primary" value="登录" onclick="Save()">
+            <div class="loginByOther">
+                <p>其他账号登录</p>
+                <div>
+                    <a href="#">
+                        <img src="__PUBLIC__/welcome/images/qq.png">
+                    </a>
+                    <a href="#">
+                        <img src="__PUBLIC__/welcome/images/weibo.png">
+                    </a>
+                    <a href="#">
+                        <img src="__PUBLIC__/welcome/images/wechat.png">
+                    </a>
+                </div>
+            </div>
+            <input type="checkbox" id="ck_rmbUser" />
+            <label for="ck_rmbUser" class="autologin">下次自动登录</label>
+            <div class="other-btn">
+                <a class="forgetpwd">忘记密码</a>
+                <span style="color:#ccc;">|</span>
+                <a class="freereg">免费注册</a>
+            </div>
+        </div>
+
+        <!-- 短信登录 -->
+        <div class="logichitnshow">
+            <a class="pwdlog">密码登录</a>
+            <a class="chitlog active">短信登录</a>
+            <img src="__PUBLIC__/welcome/images/close.png" class='closelog'>
+            <input type="text" placeholder="请输入手机号" id="log_chitphone" maxlength="11">
+            <input type="text" placeholder="请输验证码" id="log_chitcode">
+            <input type="button" value="获取验证码" id="getVerify">
+            <!-- <div class="verify"></div> -->
+            <input type="submit" id="pwdlogin" class="btn btn-primary" value="登录">
+            <div class="loginByOther">
+                <p>其他账号登录</p>
+                <div>
+                    <a href="#">
+                        <img src="__PUBLIC__/welcome/images/qq.png">
+                    </a>
+                    <a href="#">
+                        <img src="__PUBLIC__/welcome/images/weibo.png">
+                    </a>
+                    <a href="#">
+                        <img src="__PUBLIC__/welcome/images/wechat.png">
+                    </a>
+                </div>
+            </div>
+            <div class="other-btn">
+                <a class="forgetpwd">忘记密码</a>
+                <span style="color:#ccc;">|</span>
+                <a class="freereg">免费注册</a>
+            </div>
+        </div>
+
+        <!-- 找回密码 -->
+        <div class="chitloginshow">
+            <img src="__PUBLIC__/welcome/images/close.png" class='closelog'>
+            <span id="findpwd">找回密码</span>
+            <input type="text" id="chitphone" placeholder="手机号码" maxlength="11" value="">
+            <input type="button" value="获取验证码" name="" id="gaincode">
+            <input type="tex" name="" placeholder="短信验证码" id="chitcode">
+            <button class="btn btn-primary" id="chitbtn" style="margin-top: 76px;">提交</button>
+            <a class="returnlog">返回登录</a>
+        </div>
+
+        <!-- 注册平台 -->
+        <div class="reginshow">
+            <img src="__PUBLIC__/welcome/images/close.png" class='closelog'>
+            <span id="reguser">注册XX平台账号</span>
+            <input type="text" name="" id="regphone" placeholder="手机号码" maxlength="11">
+            <input type="button" value="获取验证码" id="reg_gaincode" name="">
+            <input type="tex" name="" placeholder="短信验证码" id="reg_chitcode">
+            <input type="password" name="" placeholder="请设置密码" id="reg_pwd">
+            <input type="checkbox" name="servername" style="position: relative;top:3px;" id="checkserver">
+            <span class="textdescribes">注册即表示同意</span>
+            <a class="protocol">《xxx服务使用协议》</a>
+            <button class="btn btn-primary" id="reginbtn">提交</button>
+            <a class="returnlog">返回登录</a>
+        </div>
+
+        <!-- xxx服务使用协议 -->
+        <div class="sevice">
+            <img src="__PUBLIC__/welcome/images/close.png" class='closeserver'>
+            <div class="title">xxx服务使用协议</div>
+            <div class="main">
+                <div class="text">
+                    1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br> 1. 特别提示
+                    <br> 1.1 微博运营方同意按照本协议的规定及其不时发布的操作规则向用户提供微博服务。为获得微博服务，微博服务使用人
+                    <br>
+                </div>
+            </div>
+            <div class="bar"></div>
+        </div>
+    </div>
+</body>
+<script src="__PUBLIC__/welcome/js/jquery-1.11.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/welcome/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="__PUBLIC__/welcome/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/welcome/js/head.js"></script>
+<script type="text/javascript">
+	/**
+     * [记住密码，下次自动登录]
+     */
+    $(document).ready(function () {
+        if ($.cookie("rmbUser") == "true") {
+            $("#ck_rmbUser").attr("checked", true);
+            $("#log_phone").val($.cookie("username"));
+            $("#log_pwd").val($.cookie("password"));
+        }
+    });
+
+     function Save() {    
+        if ($("#ck_rmbUser").attr("checked")) {      
+            var str_username = $("#log_phone").val();      
+            var str_password = $("#log_pwd").val();      
+            $.cookie("rmbUser", "true", {
+                expires: 7
+            }); //存储一个带7天期限的cookie
+                  
+            $.cookie("username", str_username, {
+                expires: 7
+            });      
+            $.cookie("password", str_password, {
+                expires: 7
+            });    
+        }    
+        else {      
+            $.cookie("rmbUser", "false", {
+                expire: -1
+            });      
+            $.cookie("username", "", {
+                expires: -1
+            });      
+            $.cookie("password", "", {
+                expires: -1
+            });    
+        } 
+    };
+
+     /**
+   * [手机正则]
+   */
+  function isPoneAvailable($poneInput) {
+    var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+    if (!myreg.test($poneInput.val())) {
+        return false;
+    } else {
+        return true;
+    }
+  }
+
+  /**
+   * [手机验证码封装函数]
+   */
+   var clock = ''; 
+   var nums = 60;
+   var btn;
+   function sendCode(thisBtn,inputval){  
+      if(inputval.val()==''){
+            alert('请输入手机号')
+      }else{
+          if(isPoneAvailable(inputval)==false){
+              alert('请输入正确手机号')
+          }else{
+             btn = thisBtn;  
+             btn.attr("disabled",true); //将按钮置为不可点击
+             btn.val(nums+'秒后可重新获取');
+             clock = setInterval(doLoop, 1000); //一秒执行一次  
+          }
+      } 
+   }
+
+   function doLoop(){
+     nums--;
+     if(nums > 0){
+        btn.val(nums+'秒后可重新获取');
+     }else{
+        clearInterval(clock); //清除js定时器
+        btn.attr("disabled",false);
+        btn.val('获取验证码');
+        nums = 60; //重置时间
+     }
+   }
+
+   var clocks = ''; 
+   var numss = 60;
+   var btns;
+   function sendCodes(thisBtn,inputval){  
+      if(inputval.val()==''){
+            alert('请输入手机号')
+      }else{
+          if(isPoneAvailable(inputval)==false){
+              alert('请输入正确手机号')
+          }else{
+             btns = thisBtn;  
+             btns.attr("disabled",true); //将按钮置为不可点击
+             btns.val(numss+'秒后可重新获取');
+             clocks = setInterval(doLoops, 1000); //一秒执行一次  
+          }
+      } 
+   }
+
+   function doLoops(){
+     numss--;
+     if(numss > 0){
+        btns.val(numss+'秒后可重新获取');
+     }else{
+        clearInterval(clocks); //清除js定时器
+        btns.attr("disabled",false);
+        btns.val('获取验证码');
+        numss = 60; //重置时间
+     }
+   }
+
+
+   var clockss = ''; 
+   var numsss = 60;
+   var btnss;
+   function sendCodess(thisBtn,inputval){  
+      if(inputval.val()==''){
+            alert('请输入手机号')
+      }else{
+          if(isPoneAvailable(inputval)==false){
+              alert('请输入正确手机号')
+          }else{
+             btnss = thisBtn;  
+             btnss.attr("disabled",true); //将按钮置为不可点击
+             btnss.val(numsss+'秒后可重新获取');
+             clockss = setInterval(doLoopss, 1000); //一秒执行一次  
+          }
+      } 
+   }
+
+   function doLoopss(){
+     numsss--;
+     if(numsss > 0){
+        btnss.val(numss+'秒后可重新获取');
+     }else{
+        clearInterval(clockss); //清除js定时器
+        btnss.attr("disabled",false);
+        btnss.val('获取验证码');
+        numsss = 60; //重置时间
+     }
+   }
+
+  /**
+   * [注册短信手机验证码发送]
+   */
+  var reg_code;
+  $("#reg_gaincode").on('click',function(){
+    if(isPoneAvailable($("#regphone"))==false){
+              alert('请输入正确手机号')
+      }else{
+        sendCode($(this),$("#regphone")) 
+        $.ajax({
+          url:"{:U('Api/sendPhoneMessage')}",
+          type:'post',
+          data:{phone:$("#regphone").val(),code_type:'1'},
+          dataType:'json',
+          success:function(data){          
+            if(data.code==200){
+              reg_code=data.msg.substr(7,13);
+            }
+          },
+          error:function(){
+            alert('请求超时')
+          }
+        })
+      }
+  })
+
+  /**
+   * [注册]
+   */
+  var names=document.getElementsByName('servername');
+  $("#reginbtn").on("click",function(){
+      if($("#regphone").val()==''){
+        alert('请输入手机号')
+      }else{
+        if(isPoneAvailable($("#regphone"))==false){
+          alert('请输入正确手机号')
+        }else{
+          if($("#reg_chitcode").val()==''){
+            alert('请填写验证码')
+          }else{
+            if($("#reg_chitcode").val()!=reg_code){
+              alert('手机验证码不正确')
+            }else{
+              if($("input[type='checkbox']").is(':checked')==false){
+                alert('请先阅读该服务协议并同意')
+              }else{
+                $.ajax({
+                  url:"{:U('/LoginReg/phoneVerifycodeReg')}",
+                  type:'post',
+                  data:{phone:$("#regphone").val(),code:$("#reg_chitcode").val(),password:$("#reg_pwd").val()},
+                  dataType:'json',
+                  success:function(data){
+                    console.log(data)
+                    if(data.code==200){
+                      alert('注册成功,请返回登录界面登录')
+                    }
+                  },
+                  error:function(){
+                    alert('请求超时')
+                  }
+                })
+              }
+            }
+          }
+        }
+      }
+  })
+
+  /**
+    * [短信登录手机验证码发送]
+    */
+   var log_code;
+   $("#getVerify").on("click",function(){
+      if(isPoneAvailable($("#log_chitphone"))==false){
+              alert('请输入正确手机号')
+      }else{
+        sendCodes($(this),$("#log_chitphone")) 
+        $.ajax({
+          url:"{:U('Api/sendPhoneMessage')}",
+          type:'post',
+          data:{phone:$("#log_chitphone").val(),code_type:'4'},
+          dataType:'json',
+          success:function(data){
+            log_code=data.msg.substr(7,13);
+          },
+          error:function(){
+            alert('请求超时')
+          }
+        })
+      }        
+   })
+
+   /**
+     * [短信登录]
+     */
+     $("#pwdlogin").on("click",function(){
+        if($("#log_chitphone").val()==''){
+            alert('请输入手机号')
+        }else{
+          if(isPoneAvailable($("#log_chitphone"))==false){
+            alert('请输入正确手机号')
+          }else{
+            if($("#log_chitcode").val()==''){
+              alert('请输入验证码')
+            }else{
+              if($("#log_chitcode").val()!=log_code){
+                alert('验证码不正确')
+              }else{
+                $.ajax({
+                  url:"{:U('/Api/phoneVerifycodeValid')}",
+                  type:'post',
+                  data:{phone:$("#log_chitphone").val(),code:$("#log_chitcode").val(),code_type:'4'},
+                  dataType:'json',
+                  success:function(data){
+                    if(data.code==200){
+                      alert('登录成功')
+                      window.location.reload()
+                    }else{
+                      alert('登录失败')
+                    }
+                  },
+                  error:function(){
+                    alert('error')
+                  }
+                })
+              }
+            }
+          }
+        }
+     })
+    
+   /**
+     * [密码登录]
+     */
+    $("#log").on("click",function(){
+        if($("#log_phone").val()==''){
+          alert('请输入手机号')
+        }else{
+          if(isPoneAvailable($("#log_phone"))==false){
+            alert('请输入正确手机号')
+          }else{
+            if($("#log_pwd").val()==''){
+              alert('请输入密码')
+            }else{
+              $.ajax({
+                url:"{:U('/LoginReg/accountPwdLogin')}",
+                type:'post',
+                data:{account:$("#log_phone").val(),password:$("#log_pwd").val()},
+                dataType:'json',
+                success:function(data){
+                 if(data.code==200){
+                      alert('登录成功')
+                      window.location.reload()
+                    }else{
+                      alert('登录失败')
+                    }
+                },
+                error:function(){
+                  alert('error')
+                }
+              })
+            }
+          }
+        }   
+    })
+
+    /**
+    * [找回密码手机验证码发送]
+    */
+   var find_code;
+   $("#gaincode").on("click",function(){
+      if(isPoneAvailable($("#chitphone"))==false){
+        alert('请输入正确手机号')
+      }else{
+        sendCodess($(this),$("#chitphone"));
+          $.ajax({
+            url:"{:U('Api/sendPhoneMessage')}",
+            type:'post',
+            data:{phone:$("#chitphone").val(),code_type:'3'},
+            dataType:'json',
+            success:function(data){
+              find_code=data.msg.substr(7,13);
+            },
+            error:function(){
+              alert('error')
+            }
+          })
+      }    
+   })
+
+   $("#chitbtn").on("click",function(){
+      if($("#chitphone").val()==''){
+        alert('请输入手机号')
+      }else{
+        if(isPoneAvailable($("#chitphone"))==false){
+          alert('请输入正确手机号')
+        }else{
+          if($("#chitcode").val()!=find_code){
+            alert('验证码不正确')
+          }else{
+            $.ajax({
+              url:"{:U('Api/sendPhoneMessage')}",
+              type:'post',
+              data:{phone:$("#chitphone").val(),code_type:'3'},
+              dataType:'json',
+              success:function(data){
+                console.log(data)
+              },
+              error:function(){
+                alert('error')
+              }
+            })
+          }
+        }
+      }
+   })
+</script>
+</html>

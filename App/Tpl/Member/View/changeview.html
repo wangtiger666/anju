@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        {:W("Easyui")}
+        {:W("Uploader")}
+        <script type="text/javascript">
+            function checksb(){
+                var result = true;
+                if(result == true){
+                    result = AutoCheckSub(".cs");
+                }
+                return result;
+            }
+            var save_a;
+            var save_b;
+            $(document).ready(function(){
+                $(".pano_cube").draggable({
+                    revert:true,
+                    proxy:'clone'                    
+                });
+                $(".pano_cube").droppable({
+                    onDragEnter:function(){
+                        $(this).addClass('over');
+                    },
+                    onDragLeave:function(){
+                        $(this).removeClass('over');
+                    },
+                    onDrop:function(e,source){
+                        $(this).removeClass('over');
+                        var a = $(source).children(".pano_down").data("viewid");
+                        var b = $(this).children(".pano_down").data("viewid");
+                        save_a = $(source);
+                        save_b = $(this);                  
+                        $.ajax({
+                            url:"{:U('ajax/view')}",
+                            type:"POST",
+                            dataType:"script",
+                            data:{
+                                dopost:"changeview",
+                                va:a,
+                                vb:b
+                            }
+                        });
+                    }
+                });
+            });
+            function changehtml(){                
+                var temp_a = save_a;
+                var temp_b = save_b;
+                var html_a = temp_a.html();
+                var html_b = temp_b.html();
+                temp_a.html(html_b);
+                temp_b.html(html_a);
+            }
+        </script>
+        <style>
+
+        </style>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">全景项目 - {$panorow['title']}</div>
+                        <div title="关闭" onclick="DoNote('确认返回功能首页？','{:U('main/index')}');" class="close"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            {:W("Panomenu",array("pano_id"=>$pano_id,"num"=>2))}
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main" style="background:  #f3f3f3;">
+                                <div class="pano_top">
+                                    <a href="{:U('index',array('pano_id'=>$pano_id))}" class="button_add floatmod">返回上级</a>
+                                </div>                                
+                                <div class="pano_table">
+									<if condition="!empty($viewlist)">
+                                    <volist id="ovo" name="viewlist">
+                                        <div class="pano_cube">
+                                            <div class="pano_up" style="position: static;">
+                                                <div class="dpic"><img src="{:CC('web_root')}{$ovo.thumb}" onload="photocenterout(this,200,100);" /></div>
+                                            </div>
+                                            <div class="pano_down" data-viewid="{$ovo.id}">
+                                                <div class="midonlytext">{$ovo.title}</div>
+                                            </div>
+                                        </div>
+                                    </volist>
+									<else />
+									<div class="page_msg mini plugin_update_tips">
+										<div class="inner group">尚未添加任何场景&nbsp;&nbsp;请先<a href="/member/view/add/pano_id/{$pano_id}" class="a_detail">创建场景</a></div>
+									</div>
+									</if>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

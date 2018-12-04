@@ -1,0 +1,47 @@
+<?php
+class AuthorAction extends Action {
+    public function index(){
+		$filter = I('get.filter') ? intval(I('get.filter')) : 1 ;
+		$this->assign("filter",$filter);
+		$order = "id desc";
+		$where = "status=1";
+		$Model = M("Member");
+		if($filter==1)
+		{
+			$authorlist = $Model->where($where)->order("rand()")->select();
+		}
+		if($filter==2)
+		{	
+			$table_member = C("DB_PREFIX")."member";
+			$table_hitscount = C("DB_PREFIX")."hitscount";
+			$authorlist = $Model->join("left join $table_hitscount h on ".$table_member.".id=h.memberid")->where("status=1")->order("h.hits desc")->select();			
+		}
+		if($filter==3)
+		{
+			$authorlist = $Model->where($where)->order("pano_count desc")->select();
+		}
+		if($filter==4)
+		{
+			$authorlist = $Model->where($where)->order("id desc")->select();
+		}
+
+		if(!empty($authorlist))
+		{
+			foreach($authorlist as $key=>$val)
+			{
+				if(!empty($val['headimg'])) $headimg = $val['headimg'];
+				else $headimg = "/Public/member/images/common/no_img.jpg";
+				$authorlist[$key]['headimg'] = $headimg;
+				$authorlist[$key]['zuopin'] = $val['pano_count'];
+				$renqi = M("hitscount")->where("memberid='".$val['memberid']."'")->getField("hits");
+				$authorlist[$key]['renqi'] = intval($renqi);
+			}
+		}
+		$this->assign("authorlist",$authorlist);
+		$this->assign("authornav",1);
+		//$Model->where($where)->order($order)->select();
+		//print_r($Model);
+		//print_r($authorlist);
+		$this->display();
+    }
+}

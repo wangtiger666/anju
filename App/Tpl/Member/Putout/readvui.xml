@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano>
+<volist name="row" id="ui">
+    <switch name="ui['uitype']" >
+        <case value="superimage">
+            <plugin devices="flash" name="ui{$ui.id}" keep="False" url="%SWFPATH%/scene/scene{$viewrow['sort']}/ui/{$ui.url||basename=###}" align="{$ui.align}" edge="{$ui.edge}" parent="{$ui.parent_name}"
+            x="{$ui.x}" y="{$ui.y}" scale="{$ui.scale}" alpha="{$ui.alpha}" rotate="{$ui.rotate}" zorder="{$ui.zorder}" visible="true"
+            crop="{$ui.crop}" onovercrop="{$ui.hovercrop}" ondowncrop="{$ui.downcrop}"
+            {$ui.action}
+            />
+        </case>
+        <case value="video">
+            <plugin devices="flash" name="ui_{$ui.id}" url="%SWFPATH%/plugins/videoplayer.swf" alturl="%SWFPATH%/plugins/videoplayer.js"
+                    updateeveryframe="true" videourl="%SWFPATH%/scene/scene{$viewrow['sort']}/ui/{$ui.url||basename=###}" loop="True" align="{$ui.align}" edge="{$ui.edge}"
+                    x="{$ui.x}" y="{$ui.y}" ox="0" oy="0" parent="ui_{$ui.parent}"
+                    volume="0.7" zorder="{$ui.zorder}" alpha="{$ui.alpha}"
+                    scale="{$ui.scale}" rotate="{$ui.rotate}" visible="True" enabled="True" capture="True" keep="False"
+                    {$ui.action}
+                    />
+        </case>
+        <default />
+        <plugin devices="flash" name="ui{$ui.id}" keep="False" url="%SWFPATH%/scene/scene{$viewrow['sort']}/ui/{$ui.url||basename=###}" align="{$ui.align}" edge="{$ui.edge}" parent="{$ui.parent_name}"
+            x="{$ui.x}" y="{$ui.y}" scale="{$ui.scale}" alpha="{$ui.alpha}" rotate="{$ui.rotate}" zorder="{$ui.zorder}" visible="true"
+            {$ui.action}
+            />
+    </switch>
+</volist>
+
+<krpano devices="mobile+html5">
+<volist name="mbrow" id="ui">
+    <switch name="ui['uitype']" >
+        <case value="superimage">
+            <plugin name="ui{$ui.id}" keep="False" url="%SWFPATH%/scene/scene{$viewrow['sort']}/ui/{$ui.url||basename=###}" align="{$ui.align}" edge="{$ui.edge}" parent="{$ui.parent_name}"
+            x="{$ui['x']*2}" y="{$ui['y']*2}" scale="{$ui['scale']*2}" alpha="{$ui.alpha}" rotate="{$ui.rotate}" zorder="{$ui.zorder}" visible="true"
+            crop="{$ui.crop}" onovercrop="{$ui.hovercrop}" ondowncrop="{$ui.downcrop}"
+            {$ui.action}
+            />
+        </case>
+        <case value="video">
+            <plugin name="ui_{$ui.id}" url="%SWFPATH%/plugins/videoplayer.swf" alturl="%SWFPATH%/plugins/videoplayer.js"
+                    updateeveryframe="true" videourl="%SWFPATH%/scene/scene{$viewrow['sort']}/ui/{$ui.url||basename=###}" loop="True" align="{$ui.align}" edge="{$ui.edge}"
+                    x="{$ui['x']*2}" y="{$ui['y']*2}" scale="{$ui['scale']*2}" ox="0" oy="0" parent="ui_{$ui.parent}"
+                    volume="0.7" zorder="{$ui.zorder}" alpha="{$ui.alpha}"
+                    rotate="{$ui.rotate}" visible="True" enabled="True" capture="True" keep="False"
+                    {$ui.action}
+                    />
+        </case>
+        <default />
+        <plugin name="ui{$ui.id}" keep="False" url="%SWFPATH%/scene/scene{$viewrow['sort']}/ui/{$ui.url||basename=###}" align="{$ui.align}" edge="{$ui.edge}" parent="{$ui.parent_name}"
+            x="{$ui['x']*2}" y="{$ui['y']*2}" scale="{$ui['scale']*2}" alpha="{$ui.alpha}" rotate="{$ui.rotate}" zorder="{$ui.zorder}" visible="true"
+            {$ui.action}
+            />
+    </switch>
+
+</volist>
+</krpano>
+
+<krpano devices="mobile+android+flash">
+<volist name="mbrow" id="ui">
+    <switch name="ui['uitype']" >
+        <case value="superimage">
+            <plugin name="ui{$ui.id}" keep="False" url="%SWFPATH%/scene/scene{$viewrow['sort']}/ui/{$ui.url||basename=###}" align="{$ui.align}" edge="{$ui.edge}" parent="{$ui.parent_name}"
+            x="{$ui.x}" y="{$ui.y}" scale="{$ui.scale}" alpha="{$ui.alpha}" rotate="{$ui.rotate}" zorder="{$ui.zorder}" visible="true"
+            crop="{$ui.crop}" onovercrop="{$ui.hovercrop}" ondowncrop="{$ui.downcrop}"
+            {$ui.action}
+            />
+        </case>
+        <case value="video">
+            <plugin name="ui_{$ui.id}" url="%SWFPATH%/plugins/videoplayer.swf" alturl="%SWFPATH%/plugins/videoplayer.js"
+                    updateeveryframe="true" videourl="%SWFPATH%/scene/scene{$viewrow['sort']}/ui/{$ui.url||basename=###}" loop="True" align="{$ui.align}" edge="{$ui.edge}"
+                    x="{$ui.x}" y="{$ui.y}" ox="0" oy="0" parent="ui_{$ui.parent}"
+                    volume="0.7" zorder="{$ui.zorder}" alpha="{$ui.alpha}"
+                    scale="{$ui.scale}" rotate="{$ui.rotate}" visible="True" enabled="True" capture="True" keep="False"
+                    {$ui.action}
+                    />
+        </case>
+        <default />
+        <plugin name="ui{$ui.id}" keep="False" url="%SWFPATH%/scene/scene{$viewrow['sort']}/ui/{$ui.url||basename=###}" align="{$ui.align}" edge="{$ui.edge}" parent="{$ui.parent_name}"
+            x="{$ui.x}" y="{$ui.y}" scale="{$ui.scale}" alpha="{$ui.alpha}" rotate="{$ui.rotate}" zorder="{$ui.zorder}" visible="true"
+            {$ui.action}
+            />
+    </switch>
+
+</volist>
+</krpano>
+</krpano>

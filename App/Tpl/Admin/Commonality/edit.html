@@ -1,0 +1,106 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="__PUBLIC__/admin/style/artedit.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/common/js/jquery.js" language="javascript" type="text/javascript"></script>
+<script src="__PUBLIC__/common/js/common.js" language="javascript" type="text/javascript"></script> 
+
+
+<link rel="stylesheet" href="__PUBLIC__/kindeditor/themes/default/default.css" />
+<script charset="utf-8" src="__PUBLIC__/kindeditor/kindeditor-min.js"></script>
+<script charset="utf-8" src="__PUBLIC__/kindeditor/lang/zh_CN.js"></script>
+<script charset="utf-8" src="__PUBLIC__/kindeditor/jquery-1.9.1.min.js"></script>
+<script charset="utf-8" src="__PUBLIC__/bootstrap/js/bootstrap.js"></script>
+<script charset="utf-8" src="__PUBLIC__/bootstrap/js/bootstrap-select.js"></script>
+
+<!-- bootstrap START-->
+<link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="__PUBLIC__/bootstrap/css/bootstrap-select.css" rel="stylesheet">
+<link href="__PUBLIC__/bootstrap/font-awesome/css/font-awesome.css" rel="stylesheet">
+<link href="__PUBLIC__/bootstrap/css/plugins/footable/footable.core.css" rel="stylesheet">
+<link href="__PUBLIC__/bootstrap/css/animate.css" rel="stylesheet">
+<link href="__PUBLIC__/bootstrap/css/style.css" rel="stylesheet">
+<link href="__PUBLIC__/common/style/recovebootstrap.css" rel="stylesheet" type="text/css" /> 
+<!-- bootstrap END -->
+ {:W("Uploader")}
+</head>
+<body >
+		<style type="text/css">
+			.hr-line-dashed{
+				margin: 7px 0;
+			}
+		</style>
+        <script type="text/javascript">
+            $(function () {
+                $('#pid').selectpicker({
+                    style: 'btn-info',
+                    size: 10
+                });
+            });
+        </script>
+	   <div  class="main"  style="height: 800px;">
+    	        <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>修改公共参数 <small></small></h5>
+                              <div class="ibox-tools">
+                               <a  onclick="window.location.href='/admin/Commonality/index'"  class="btn btn-primary btn-xs" style="height: 25px;">返回管理</a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+						<form name="myform" id="myform" action="{:U('Commonality/edit')}" method="post" class="form-horizontal">
+                            <input type='hidden' name='dopost' value='edit'/>
+                            <input type='hidden' name='id' value='{$info.id}'/>
+
+                            <div class="form-group"><label class="col-sm-2 control-label">父节点：</label>
+                                <div class="col-sm-10">
+                                    <select name="pid" id="pid" class="selectpicker" data-style="btn-info" data-live-search="true" data-live-search-placeholder="输入搜索">
+                                        <volist name="commonalityList" id="commonality">
+                                            <option  <if condition="$info['pid'] eq $key" > selected </if> data-tokens="{$commonality}" value="{$key}">{$commonality}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group"><label class="col-sm-2 control-label">名称：</label>
+                                <div class="col-sm-10">
+                                    <input type="text"   class="form-control" name="name"  id="name" value="{$info['name']}" size="55"  validate=" minlength:1, maxlength:80, required:true"  title="标题必须为1-80个字符"  />
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group"><label class="col-sm-2 control-label">状态：</label>
+                                <div class="col-sm-10">
+                                    <select name="status">
+                                        <option value="1" <if condition="$info['pid'] eq 1" > selected </if>>启用</option>
+                                        <option value="2" <if condition="$info['pid'] eq 2" > selected </if>>停用</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group"><label class="col-sm-2 control-label">排序：</label>
+                                <div class="col-sm-10">
+                                    <input type="text"   class="form-control" name="sort"  id="sort" value="{$info['sort']}" size="55"  validate=" maxlength:80" />
+                                </div>
+                            </div>
+                            <div class="form-group"><label class="col-sm-2 control-label">备注：</label>
+                                <div class="col-sm-10">
+                                    <input type="text"   class="form-control" name="remark"  id="remark" value="{$info['remark']}" size="55"  validate=" maxlength:80" />
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group"><label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-10">
+                                    <button class="btn btn-primary" type="submit">保存</button>
+                                    <button class="btn btn-primary" type="reset">重置</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    	</div>
+   </body>
+</html>

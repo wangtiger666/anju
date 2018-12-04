@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+    <volist name="viewlist" id="view">
+	
+	<krpano  onstart="buildframes({$ringvr['file']}/cube,{$ringvr['len']});">
+
+	<events onresize="updateframes()" onviewchange="updateframesscale()" />
+	
+	<style name="frame" keep="true" visible="false"
+		align="center"
+		onloaded="updateframesize(get(name));set(plugin[loadingtext].visible,false);"
+		ondown="copy(oldmousex,mouse.x);domouserotate();"
+	/>
+	
+	<plugin name="loadingtext" url="plugins/textfield.swf" keep="true" zorder="100" visible="true" enabled="false"
+		preload="true"
+		align="center"
+		autoheight="true"
+		width="100"
+		background="false"
+		html="[p]Loading...[/p]"
+		css="p {color:#FFFFFF; font-family:arial; font-size:16px }"
+	/>
+	
+	<layer name="gallerynext" url="/Public/pano/images/720ring.png" keep="true" 
+		align="right" x="0" y="0" zorder="100"
+		crop="100|0|100|100"
+		onovercrop="100|100|100|100"
+		ondowncrop="100|100|100|100"
+		ondown="set(y,1);dorotate();"
+		onup="set(y,0)"
+		direction="-1"
+	/>
+	
+	<layer name="galleryprev" url="/Public/pano/images/720ring.png" keep="true" 
+		align="left" x="0" y="0" zorder="100"
+		crop="0|0|100|100"
+		onovercrop="0|100|100|100"
+		ondowncrop="0|100|100|100"
+		ondown="set(y,1);dorotate();"
+		onup="set(y,0)"
+		direction="1"
+	/>	
+	
+	<action name="buildframes">
+		for(set(i,0), i LT %2, inc(i),
+			txtadd(fname,frame,get(i));
+			txtadd(furl,%1,get(i),.jpg);
+			<!--js(alert(get(furl)));-->
+			addplugin(get(fname));
+			plugin[get(fname)].loadstyle(frame);
+			copy(plugin[get(fname)].url,furl);
+		);
+		set(currentframe,0);
+		set(framecount,%2);
+		set(oldmousex,0);
+		showframe(0);
+	</action>
+	
+	<action name="updateframesize">
+		if(plugin[%1].imagewidth GT stagewidth,
+			set(plugin[%1].width,100%);
+			set(plugin[%1].height,prop);
+		,
+			if(plugin[%1].imageheight GT stageheight,
+				set(plugin[%1].width,prop);
+				set(plugin[%1].height,100%);
+			,
+				plugin[%1].resetsize();
+			);
+		);
+	</action>
+	
+	<action name="updateframesscale">
+		for(set(i,0), i LT framecount, inc(i),
+			txtadd(fname,frame,get(i));
+			sub(temp,180,view.fov);
+			div(newscale,temp,70);
+			copy(plugin[get(fname)].scale,newscale);
+		);	
+	</action>
+	
+	<action name="updateframes">
+		for(set(i,0), i LT framecount, inc(i),
+			txtadd(fname,frame,get(i));
+			updateframesize(get(fname));
+		);		
+	</action>
+	
+	<action name="showframe">
+		txtadd(fname,frame,get(currentframe));
+		txtadd(tempstr,'set(plugin[',get(fname),'].visible,false);');
+		ifnot(%1 == 0, delayedcall(0.03,get(tempstr)); );
+		add(currentframe,%1);
+		if(currentframe LT 0, sub(currentframe,framecount,1); );
+		if(currentframe == framecount, set(currentframe,0); );
+		txtadd(fname,frame,get(currentframe));
+		set(plugin[get(fname)].visible,true);
+		ifnot(plugin[get(fname)].loaded, set(plugin[loadingtext].visible,true);, set(plugin[loadingtext].visible,false); );
+	</action>
+
+	<action name="dorotate">
+		if(pressed,
+			showframe(get(direction));
+			delayedcall(0.05,dorotate(););
+		);
+	</action>
+
+	<action name="domouserotate">
+		if(pressed,
+			sub(temp,oldmousex,mouse.x);
+			if(temp GT 0, set(temp,1); );
+			if(temp LT 0, set(temp,-1); );
+			showframe(get(temp));
+			copy(oldmousex,mouse.x);
+			delayedcall(0.03,domouserotate(););
+		);
+	</action>
+
+	
+	
+</krpano>
+
+    </volist>

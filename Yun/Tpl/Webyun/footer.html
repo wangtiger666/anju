@@ -1,0 +1,39 @@
+<!----------- footer start --------------------->     
+<div class="Footbar_foot_3IxgDm">
+	<div class="Footbar_desktop_1U1pCA">
+    	<div class="Footbar_flogo_Fwyn47">
+        	<a href="" class="Footbar_img_1bQvsZ">720yun.com</a>
+            <div class="Select_select_3SYiKS">
+            	<div class="Select_header_coOU8v Select_down_3plElh LanguageSelect_menuhead_35UFZ3">简体中文</div>
+            </div>
+         </div>
+         <div class="Footbar_finfo_17KQLo">
+         	<div class="Footbar_about_3ASLZ0">
+			<foreach name="footeryunnav" item="vo">
+            	<a href="{$vo.outlink}" target="_blank"><strong>{$vo.name}</strong></a>
+			</foreach>
+             </div>
+             <div class="Footbar_contact_kqfvpi">
+             	<div class="Footbar_qqgroup_1W4a7C">QQ群：{$qqqun}</div>
+                <span><label>电 话：</label>{$tel}</span>
+                <span>（09:00~18:00）</span>　　
+                <span>{$banquan}</span>　
+                <span>{$beian}</span>
+             </div>
+             <div class="Footbar_friends_1LiWFI">
+             	<label>合作伙伴：</label>
+				<volist name="link" id="vo">
+                <a href="{$vo.value}" title="{$vo.name}" target="_blank">{$vo.name}</a>
+                </volist>
+              </div>
+           </div>
+           <div class="Footbar_fmedios_3Qluv-">
+           	<span class="Footbar_wx_14mHu4">
+            	<a href="javascript:void(0)" class="Footbar_wechat_rgWxTK">微信</a>
+                <span class="Footbar_wxqr_1_LFb0"><img src="__PUBLIC__/webstyle/images/web_weixin.jpg"></span>
+            </span>
+            <a href="" target="_blank" class="Footbar_weibo_oyKWU8">微博</a>
+            <a href="" target="_blank" class="Footbar_facebook_3k_e7x">facebook</a>
+           </div>
+      </div>
+</div>

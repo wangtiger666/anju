@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        {:W("Easyui")}
+        {:W("Boluoui")}
+        {:W("Uploader")}
+        <script type="text/javascript">
+            function checksb(){
+                boluo_loadding("正在提交中...");
+                var result = true;
+                if(result == true){
+                    result = AutoCheckSub(".cs");
+                }
+                return result;
+            }
+            $(document).ready(function(){
+                onoroff();
+                $('.dd').tooltip({
+                    position: 'right'
+                });
+                $("#one2six").uploader("image","one2six");
+                $("#ball2six").uploader("image","ball2six");
+            });
+            var loadbar_num = 0;
+            var loadon = 0;
+            function one2six(data){
+                loadon = 1;
+                boluo_showloadbar("条形图转化进度");
+                $.ajax({
+                    url:"{:U('ajax/pano')}",
+                    type:"POST",
+                    dataType:"script",
+                    data:{
+                        dopost:"one2six",
+                        photofile:data
+                    }
+                });
+            }
+
+            function ball2six(data){
+                loadon = 1;
+                boluo_showloadbar("球形图转化进度");
+                $.ajax({
+                    url:"{:U('ajax/pano')}",
+                    type:"POST",
+                    dataType:"script",
+                    data:{
+                        dopost:"ball2six",
+                        photofile:data
+                    }
+                });
+            }
+            function one2sixdo(imgtype,linetype,n){
+                $.ajax({
+                    url:"{:U('ajax/pano')}",
+                    type:"POST",
+                    dataType:"script",
+                    data:{
+                        dopost:"one2sixdo",
+                        imgtype:imgtype,
+                        linetype:linetype,
+                        n:n
+                    }
+                });
+            }
+
+            function loadbar(){
+                if(loadon == 1){
+                    loadbar_num++;
+                    boluo_loadbar(loadbar_num,6);
+                    if(loadbar_num == 6){
+                        loadon = 0;
+                    }
+                }
+            }
+
+
+            
+
+            $(function(){
+                $("#videoup").uploader("applevideo","videoback");
+            });
+            function videoback(data){
+                $("#videofile").val(data);
+            }
+			
+			$(function(){
+                $("#videowebmup").uploader("applevideo","videowebmback");
+            });
+            function videowebmback(data){
+                $("#videofilewebm").val(data);
+            }
+			
+			$(function(){
+                $("#videom4aup").uploader("applevideo","videom4aback");
+            });
+            function videom4aback(data){
+                $("#videofilem4a").val(data);
+            }
+			
+			
+			$(function(){
+                $("#videohdup").uploader("applevideo","videohdback");
+            });
+            function videohdback(data){
+                $("#videofilehd").val(data);
+            }
+			
+			$(function(){
+                $("#videohdwebmup").uploader("applevideo","videohdwebmback");
+            });
+            function videohdwebmback(data){
+                $("#videofilehdwebm").val(data);
+            }
+			
+			
+			$(function(){
+                $("#videohdm4aup").uploader("applevideo","videohdm4aback");
+            });
+            function videohdm4aback(data){
+                $("#videofilehdm4a").val(data);
+            }
+
+           
+        </script>
+        <style>
+            .thumbbox{
+                width: 200px; height: 100px; overflow: hidden; margin-right: 10px; border:1px solid #ccc; box-shadow: 2px 2px 2px #eee;
+                background: url(__PUBLIC__/member/images/pano/quanjingbg.png) no-repeat; float: left; cursor: pointer;
+            }
+            .pano_box{
+                width: 100px; height: 100px; overflow: hidden; margin-right: 10px; border:1px solid #ccc; box-shadow: 2px 2px 2px #eee;
+                background: url(__PUBLIC__/member/images/pano/quanjingbg.png) no-repeat; float: left; cursor: pointer;
+            }
+            .pano_font{
+                width: 102px; height: 20px; overflow: hidden; margin-right: 10px; color: #206A9B;
+                float: left; cursor: default; text-align: center; font: bold 14px/20px "微软雅黑";
+            }
+            .proxy{
+                width: 100px; height: 100px; overflow: hidden; background: #f00;
+            }
+        </style>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">全景项目 - {$panorow['title']}</div>
+                        <div title="关闭" data-url="{:U('main/index')}" data-info="确认返回功能首页" class="close delme"></div>
+                        <div title="返回上级" onclick="LinkTo('{$backurl}');" class="goback"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            {:W("Panomenu",array("pano_id"=>$pano_id,"num"=>2))}
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main">
+                                <div class="action_title"><a href="{:U('index',array('pano_id'=>$pano_id))}">全景视频场景</a> -  修改</div>
+                                <form name="form1" action="" onsubmit="return checksb();" enctype="multipart/form-data" method="post">
+                                    <input type="hidden" name="dopost" value="save" />
+                                    <input type="hidden" name="pano_id" value="{$pano_id}" />
+                                    <input type="hidden" name="view_id" value="{$view_id}" />
+                                    <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="120"><b>全景视频场景名称：</b></td>
+                                            <td align="left">
+                                                <input type="text" id="title" name="title" value="{$viewrow['title']}" sbname="全景场景名称" class="inputcube cs"/>
+                                            </td>
+                                        </tr>                                        
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="120">
+											<b>视频缩略图：</b><br><b>建议尺寸(500*500)</b>
+											</td>
+                                            <td align="left">
+                                                <div class="thumbbox">
+                                                    <img id="thumb_pic" src="{:CC('web_root')}{$viewrow['thumb']}?{$Think.now}" onload="swichimg2w(this,200);"/>
+                                                </div>
+                                                <input type="hidden" id="thumb" name="thumb" value="#" />
+                                            </td>
+                                        {:uploadSend(".thumbbox","#thumb","#thumb_pic")}
+
+                                        <tr class="tr_white" height="20">
+                                            <td colspan="2"></td>
+                                        </tr>
+                                        
+                                        <tr class="tr_white" height="40">
+                                            <td align="right"><b>开启全景视频：</b></td>
+                                            <td>
+                                                <span class="onoff easyui-tooltip dd" title="全景视频开关" target="openvideo" value="{$viewrow['openvideo']}"></span>
+                                                <input type="hidden" id="openvideo" name="openvideo" value="{$viewrow['openvideo']}" /><font color="#FF0000">(选择关闭后，请删除项目重新建立项目)</font>
+                                            </td>
+                                        </tr>
+										<tr class="tr_white" height="40">
+                                            <td align="right" width="120">
+											<b>标清视频预览图：</b><br><b>建议尺寸(1024*512)</b>
+											</td>
+                                            <td align="left">
+                                                <div class="videofileimgbox">
+                                                    <img id="videofileimg_pic" src="{:CC('web_root')}{$viewrow['videofileimg']}?{$Think.now}" onload="swichimg2w(this,200);"/>
+                                                </div>
+                                                <input type="hidden" id="videofileimg" name="videofileimg" value="#" />
+                                            </td>
+                                        {:uploadSend(".videofileimgbox","#videofileimg","#videofileimg_pic")}
+
+                                        
+                                        <tr class="tr_white" height="40">
+                                            <td align="right"><b>标清视频MP4文件：</b><br><b>视频编码h264</b></td>
+                                            <td>
+                                                <input type="text" id="videofile" name="videofile" value="{$viewrow['videofile']}" class="longinputcube"/>
+                                                <input type="button" class="btn1" id="videoup" value="点击上传" /> 
+                                            </td>
+                                        </tr>
+										<tr class="tr_white" height="40">
+                                            <td align="right"><b>标清webm文件：</b></td>
+                                            <td>
+                                                <input type="text" id="videofilewebm" name="videofilewebm" value="{$viewrow['videofilewebm']}" class="longinputcube"/>
+                                                <input type="button" class="btn1" id="videowebmup" value="点击上传" /> 
+                                            </td>
+                                        </tr>
+										<tr class="tr_white" height="40">
+                                            <td align="right"><b>标清m4a文件：</b></td>
+                                            <td>
+                                                <input type="text" id="videofilem4a" name="videofilem4a" value="{$viewrow['videofilem4a']}" class="longinputcube"/>
+                                                <input type="button" class="btn1" id="videom4aup" value="点击上传" /> 
+                                            </td>
+                                        </tr>
+										
+										
+										 
+										<tr class="tr_white" height="20">
+                                            <td colspan="2"></td>
+                                        </tr>
+										
+										
+										<tr class="tr_white" height="40">
+                                            <td align="right" width="120">
+											<b>高清视频预览图：</b><br><b>建议尺寸(1920*960)</b>
+											</td>
+                                            <td align="left">
+                                                <div class="videofilehdimgbox">
+                                                    <img id="videofilehdimg_pic" src="{:CC('web_root')}{$viewrow['videofilehdimg']}?{$Think.now}" onload="swichimg2w(this,200);"/>
+                                                </div>
+                                                <input type="hidden" id="videofilehdimg" name="videofilehdimg" value="#" />
+                                            </td>
+                                        {:uploadSend(".videofilehdimgbox","#videofilehdimg","#videofilehdimg_pic")}
+										
+										 <tr class="tr_white" height="40">
+                                            <td align="right"><b>高清视频MP4文件：</b><br><b>视频编码h264</b></td>
+                                            <td>
+                                                <input type="text" id="videofilehd" name="videofilehd" value="{$viewrow['videofilehd']}" class="longinputcube"/>
+                                                <input type="button" class="btn1" id="videohdup" value="点击上传" />
+                                            </td>
+                                        </tr>
+										<tr class="tr_white" height="40">
+                                            <td align="right"><b>高清webm文件：</b></td>
+                                            <td>
+                                                <input type="text" id="videofilehdwebm" name="videofilehdwebm" value="{$viewrow['videofilehdwebm']}" class="longinputcube"/>
+                                                <input type="button" class="btn1" id="videohdwebmup" value="点击上传" /> 
+                                            </td>
+                                        </tr>
+										<tr class="tr_white" height="40">
+                                            <td align="right"><b>高清m4a文件：</b></td>
+                                            <td>
+                                                <input type="text" id="videofilehdm4a" name="videofilehdm4a" value="{$viewrow['videofilehdm4a']}" class="longinputcube"/>
+                                                <input type="button" class="btn1" id="videohdm4aup" value="点击上传" /> 
+                                            </td>
+                                        </tr>
+										
+										
+
+                                        
+                                        
+                                        <tr class="tr_white" height="20">
+                                            <td colspan="2"></td>
+                                        </tr>
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="120"></td>
+                                            <td align="left">
+                                                <input type="submit" class="blackbutton" value="提交" />
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="10">
+                                            <td colspan="2"></td>
+                                        </tr>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

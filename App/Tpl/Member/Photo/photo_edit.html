@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/pano/pano.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jscolor/jscolor.js"></script>
+        {:W("Easyui")}
+        {:W("Boluoui")}
+        {:W("Uploader")}
+        <script type="text/javascript">
+            function checksb(){
+                var result = true;
+                if(result == true){
+                    result = AutoCheckSub(".cs");
+                }
+                if(result == true){
+                    var target_id = $("#target_id").val();
+                    if(target_id == "0"){
+                        showMsg("请选定目标场景！");
+                        result = false;
+                    }
+                }
+                return result;
+            }
+
+            function changetp(k){
+                n = k - 1;
+                $(".seltp").removeClass("me");
+                $(".seltp").eq(n).addClass("me");
+                $(".spot_tr").hide();
+                $(".spot_tr"+k).show();
+                $("#spot_type").val(k);
+            }
+            $(document).ready(function(){
+                onoroff();
+                boluo_autocheckui();
+
+                changetp("{$photorow['spot_type']}");
+                $(".seltp").click(function(){
+                    var len = $(this).prevAll().length;
+                    k = len + 1;
+                    changetp(k);
+                });
+
+                $(".move_cube").mouseover(function(){
+                    var temp = $(this).children(".movebox");
+                    var w = temp.data("w");
+                    var h = temp.data("h");
+                    var len = temp.data("len");
+                    var n = temp.data("n");
+                    var sp = temp.data("speed");
+                    $("body").stopTime("move");
+                    $("body").everyTime(sp+"ms","move",function(){
+                        n = temp.data("n");
+                        n++;
+                        if(n==len){
+                            n=0;
+                        }
+                        mv_h = -n*h;
+                        temp.children("img").css("marginTop",mv_h+"px");
+                        temp.data("n",n);
+                    });
+                });
+                $(".move_cube").mouseout(function(){
+                    $("body").stopTime("move");
+                });
+            });
+        </script>
+        <style type="text/css">
+            .action_left{
+                width: 140px; min-height: 200px; overflow: hidden; float: left;
+            }
+            .action_myphoto{
+                width: 120px; height: auto; overflow: hidden; border:1px solid #dbdbdb;
+                box-shadow:2px 2px 4px #e2e2e2; margin: 0 auto; margin-bottom: 12px;
+            }
+            .action_mytext{
+                width: auto; height: 22px; overflow: hidden; text-align: left; font: 12px/22px "微软雅黑"; color: #333; cursor: default;
+            }
+            .action_right{
+                width: 700px; min-height: 200px; overflow: hidden; float: left;
+            }
+            .cubebox{
+                width: 300px; height: 202px; overflow: hidden; float: left; margin: 5px;
+                border:1px solid #c6c6c6; background: #f3f3f3; padding: 5px; border-radius: 4px;
+            }
+            .leftbox{
+                width: 92px; height: 200px; overflow: hidden; float: left;
+            }
+            .rightbox{
+                width: 200px; height: 200px; overflow: hidden; background: #fff; float: right; border:1px solid #ddd;
+            }
+            .movebox{
+                overflow: hidden;
+            }
+            .action_left{
+                width: 140px; min-height: 200px; overflow: hidden; float: left;
+            }
+            .action_myphoto{
+                width: 120px; height: auto; overflow: hidden; border:1px solid #dbdbdb;
+                box-shadow:2px 2px 4px #e2e2e2; margin: 0 auto; margin-bottom: 12px;
+            }
+            .action_mytext{
+                width: auto; height: 22px; overflow: hidden; text-align: center; font: 12px/22px "微软雅黑"; color: #333; cursor: default;
+            }
+            .hotspot_cube{
+                width: 160px; height: 160px; overflow: hidden; border: 1px solid #dbdbdb; border-radius: 4px;
+                background: url(__PUBLIC__/member/images/common/psbg.png) #fff; cursor: pointer;
+            }
+            .cubephoto{
+                width: 110px; height: 110px; overflow: hidden; float: left; margin-right: 5px; margin-top: 5px;
+                border:1px solid #c6c6c6; background: #f3f3f3; border-radius:4px;
+            }
+            .cubephotoin{
+                width: 100px; height: 100px; overflow: hidden; border:1px solid #c6c6c6; background: #fff; margin: 4px;
+            }
+            #cubeviewtr{
+                display: none;
+            }
+            #cubeview{
+                width: 200px; height: 200px; overflow: hidden; border:1px solid #dbdbdb;
+            }
+            .cube_tool{
+                display: none;
+            }
+        </style>
+        <script type="text/javascript">
+            function pickSpot(){
+                openwin("获取静态热点","{:U('pick/spot')}",720,500);
+            }
+            function pickmoveSpot(){
+                openwin("获取动态热点","{:U('pick/movespot')}",720,500);
+            }
+            function getSpot(spot_id,spot_file){
+                $("#spot_id").val(spot_id);
+                $("#hotspot_spot").attr("src","{:CC('web_root')}"+spot_file);
+                closewin();
+            }
+            function getmoveSpot(spot_id,spot_file,w,h,len){
+                $("#movespot_id").val(spot_id);
+                $("#hotspot_movespot").attr("src","{:CC('web_root')}"+spot_file);
+                $("#hotspot_movespot").css("marginTop","0px");
+                $(".movebox").css("width",w+"px");
+                $(".movebox").css("height",h+"px");
+                var mtop = (160 - h)/2;
+                var mleft = (160 - w)/2;
+                $(".movebox").css("marginTop",mtop+"px");
+                $(".movebox").css("marginLeft",mleft+"px");
+                $(".movebox").data("w",w);
+                $(".movebox").data("h",h);
+                $(".movebox").data("len",len);
+                $(".movebox").data("n",0);
+                closewin();
+            }
+            function pickSpotxy(){
+                var spot_type =$("#spot_type").val();
+                if(spot_type == 1){
+                    var spot_id =$("#spot_id").val();
+                }else{
+                    var spot_id =$("#movespot_id").val();
+                }
+                openwin("获取静态热点","{:UOne('pick/spotxy',array('view_id'=>$view_id))}"+"&spot_id="+spot_id,900,600);
+            }
+            function backspot(a,b,c,d){
+                var p = parseInt(100*c);
+                $("#spot_x").val(a);
+                $("#spot_y").val(b);
+                $("#spot_scale").val(p);
+                setSpotcenter("#spot_edgebox",d);
+                closewin();
+            }
+            function setSpotcenter(me,va){
+                $(me).children("input").eq(0).val(va);
+                $(me).children(".btn1").removeClass("me");
+                $(me).children("."+va).addClass("me");
+            }
+            function pickSmart(){
+                var link = "{:UOne('pick/smartspot',array('view_id'=>$view_id))}";
+                var spoturl = $("#spoturl").val();
+                if(spoturl != ""){
+                    link = link + "&img="+spoturl;
+                    var spot_x = $("#spot_x").val();
+                    var spot_y = $("#spot_y").val();
+                    link = link + "&spot_x="+spot_x;
+                    link = link + "&spot_y="+spot_y;
+                    var rx = $("#smartrx").val();
+                    var ry = $("#smartry").val();
+                    var rz = $("#smartrz").val();
+                    link = link + "&rx="+rx;
+                    link = link + "&ry="+ry;
+                    link = link + "&rz="+rz;
+                    var spot_scale = $("#spot_scale").val();
+                    link = link + "&scale="+spot_scale;
+                    openwin("设置智能热点",link,900,600);
+                }else{
+                    showMsg("无热点图片！",0);
+                }
+            }
+            function smartback(ath,atv,scale,rx,ry,rz){
+                $("#spot_x").val(ath);
+                $("#spot_y").val(atv);
+                $("#spot_scale").val(scale);
+                $("#smartrx").val(rx);
+                $("#smartry").val(ry);
+                $("#smartrz").val(rz);
+                closewin();
+            }
+            $(function(){
+                $("#spoturlup").uploader("image","spotdata");
+            });
+            function spotdata(data){
+                $("#spoturl").val(data);
+            }
+        </script>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">全景项目 - {$panorow['title']}</div>
+                        <div title="关闭" onclick="DoNote('确认返回功能首页？','{:U('main/index')}');" class="close"></div>
+                        <div title="返回上级" onclick="LinkTo('{$backurl}');" class="goback"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            {:W("Panomenu",array("pano_id"=>$pano_id,"num"=>9))}
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main">
+                                <div class="action_title"><a href="{:U('index',array('pano_id'=>$pano_id))}">360物体</a> - 【{$viewrow['title']}】- 修改    <span class="vrback"><a href="{:U('photoview',array('view_id'=>$view_id))}">返回上级</a></span></div>
+                                <div class="action_web">
+                                    <div class="action_left">
+                                        <div class="action_myphoto"><img src="{:CC('web_root')}{$viewrow['thumb']}" onload="swichimg2w(this,120);"/></div>
+                                        <div class="action_mytext"><b>当前场景：</b>{$viewrow['title']}</div>
+                                    </div>
+                                    <div class="action_right">
+                                        <form name="form1" action="" onsubmit="return checksb();" enctype="multipart/form-data" method="post">
+                                            <input type="hidden" name="dopost" value="save" />
+                                            <input type="hidden" name="photo_id" id="photo_id" value="{$photo_id}" />
+                                            <input type="hidden" name="view_id" id="view_id" value="{$view_id}" />
+                                            <input type="hidden" name="spot_type" id="spot_type" value="1" />
+                                            <input type="hidden" name="spot_id" id="spot_id" value="{$spot_id}" />
+                                            <input type="hidden" name="movespot_id" id="movespot_id" value="{$movespot_id}" />
+                                            <input type="hidden" name="spot_url" id="spot_url" value="{$spotrow['file']}" />
+                                            <input type="hidden" name="delimg" id="delimg" value="" />
+                                            <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">
+                                                <tr class="tr_white" height="36">
+                                                    <td align="right" width="100"><b>图集热点名称：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" id="title" name="title" value="{$photorow['title']}" sbname="图集热点名称" class="inputcube cs"/>
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white" height="36">
+                                                    <td align="right" width="100"><b>热点显示：</b></td>
+                                                    <td align="left">
+                                                        <i class="boluo_checkbox"><input type="hidden" id="is_hover" name="is_hover" value="{$photorow['is_hover']}" /></i>全景中显示热点名称
+                                                    </td>
+                                                </tr>
+                                                <!-- <tr class="tr_white" height="36">
+                                                    <td align="right" width="100"><b>匹配平台：</b></td>
+                                                    <td align="left">
+                                                        <i class="boluo_checkbox"><input type="hidden" id="is_flash" name="is_flash" value="{$photorow['is_flash']}" /></i>FLASH
+                                                        <i class="boluo_checkbox"><input type="hidden" id="is_html5" name="is_html5" value="{$photorow['is_html5']}" /></i>HTML5
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white" height="10">
+                                                    <td colspan="2"></td>
+                                                </tr> -->
+												<input type="hidden" id="is_flash" name="is_flash" value="1" />
+												<input type="hidden" id="is_html5" name="is_html5" value="1" />
+
+
+                                                <tr class="tr_white" height="36">
+                                                    <td align="right" width="100"><b>热点类型：</b></td>
+                                                    <td align="left">
+                                                        <input type="button" class="btn2 seltp me" value="静态热点" />
+                                                        <input type="button" class="btn2 seltp" value="动态热点" />
+                                                        <input type="button" class="btn2 seltp" value="智能热点" />
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="tr_white spot_tr  spot_tr1" height="180">
+                                                    <td align="right" width="100"><b>热点图片：</b></td>
+                                                    <td align="left">
+                                                        <div class="hotspot_cube">
+                                                            <img id="hotspot_spot" src="{:CC('web_root')}{$spotrow['file']}" onload="photocenterin(this,160,160);" />
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white spot_tr  spot_tr1" height="36">
+                                                    <td align="right" width="100"><b>热点选择：</b></td>
+                                                    <td align="left">
+                                                        <input type="button" class="btn3" onclick="pickSpot();" value="点击选择" />
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white spot_tr  spot_tr2" height="180">
+                                                    <td align="right" width="100"><b>动态热点图片：</b></td>
+                                                    <td align="left">
+                                                        <div class="hotspot_cube move_cube">
+                                                            <div class="movebox" data-w="{$movespotrow['width']}" data-h="{$movespotrow['height']}" data-len="{$movespotrow['len']}" data-n="0" data-speed="{$movespotrow['speed']}" style="width: {$movespotrow['width']}px; height: {$movespotrow['height']}px; margin-left: {$movespotrow['width']*(-1)/2+80}px; margin-top: {$movespotrow['height']*(-1)/2+80}px;"><img id="hotspot_movespot" src="{:CC('web_root')}{$movespotrow['file']}" /></div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white spot_tr  spot_tr2" height="36">
+                                                    <td align="right" width="100"><b>动态热点选择：</b></td>
+                                                    <td align="left">
+                                                        <input type="button" class="btn3" onclick="pickmoveSpot();" value="点击选择" />
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white spot_tr  spot_tr3" height="36">
+                                                    <td align="right" width="100"><b>热点图片：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" id="spoturl" name="spoturl" class="longinputcube" value="{$photorow['spoturl']}"/>
+                                                        <input type="button" class="btn3" id="spoturlup" value="点击上传" />
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white spot_tr  spot_tr1  spot_tr2 spot_tr3" height="36">
+                                                    <td align="right" width="100"><b>热点位置：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" class="shortinputcube" id="spot_x" value="{$photorow['spot_x']}" name="spot_x"/><input type="text" class="shortinputcube" id="spot_y" value="{$photorow['spot_y']}" name="spot_y"/>
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white spot_tr  spot_tr1 spot_tr2" height="36">
+                                                    <td align="right" width="100"></td>
+                                                    <td align="left">
+                                                        <input type="button" class="btn3" onclick="pickSpotxy();" value="点击抓取" />
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white spot_tr  spot_tr3" height="36">
+                                                    <td align="right" width="100"></td>
+                                                    <td align="left">
+                                                        <input type="button" class="btn3" onclick="pickSmart();" value="点击定位" />
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white spot_tr  spot_tr3" height="36">
+                                                    <td align="right" width="100"><b>旋转角度X：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" class="shortinputcube" id="smartrx" value="{$photorow['rx']}" name="smartrx"/>
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white spot_tr  spot_tr3" height="36">
+                                                    <td align="right" width="100"><b>旋转角度Y：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" class="shortinputcube" id="smartry" value="{$photorow['ry']}" name="smartry"/>
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white spot_tr  spot_tr3" height="36">
+                                                    <td align="right" width="100"><b>旋转角度Z：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" class="shortinputcube" id="smartrz" value="{$photorow['rz']}" name="smartrz"/>
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white spot_tr  spot_tr1 spot_tr2 spot_tr3" height="36">
+                                                    <td align="right" width="100"><b>热点缩放：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" class="shortinputcube" id="spot_scale" value="{$photorow['spot_scale']}" name="spot_scale"/> %
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white spot_tr  spot_tr1  spot_tr2" height="36">
+                                                    <td align="right" width="100"><b>热点定位中心点：</b></td>
+                                                    <td align="left">
+                                                        <div id="spot_edgebox">
+                                                            <input type="hidden" id="spot_edge" value="center" name="spot_edge"/>
+                                                            <input type="button" class="btn1 lefttop" value="左上" />
+                                                            <input type="button" class="btn1 top" value="上" />
+                                                            <input type="button" class="btn1 righttop" value="右上" /><br/>
+                                                            <input type="button" class="btn1 left" value="左" />
+                                                            <input type="button" class="btn1 center me" value="中" />
+                                                            <input type="button" class="btn1 right" value="右" /><br/>
+                                                            <input type="button" class="btn1 leftbottom" value="左下" />
+                                                            <input type="button" class="btn1 bottom" value="下" />
+                                                            <input type="button" class="btn1 rightbottom" value="右下" />
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <script type="text/javascript">
+                                                    setSpotcenter("#spot_edgebox","{$photorow['spot_edge']}");
+                                                </script>
+                                                <tr class="tr_white" height="40">
+                                                    <td colspan="2"></td>
+                                                </tr>
+                                                <tr class="tr_white" id="cubeuploadtr" height="40">
+                                                    <td align="right" width="120"><b>图集名称：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" id="phototitle" name="phototitle" value="{$photorow['ptitle']}" sbname="图集名称" class="inputcube cs"/>
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white" id="cubeuploadtr" height="40">
+                                                    <td align="right" width="120"><b>上传图集：</b></td>
+                                                    <td align="left">
+                                                        <input type="button" class="btn1" id="photoupload" value="上传" />
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white" id="cubeuploadtr" height="10">
+                                                    <td align="right" width="120"></td>
+                                                    <td align="left">
+                                                        <div id="images_box">
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <script type="text/javascript">
+                                                    $(document).ready(function(){
+                                                        $("#photoupload").uploader("images","imageGet");
+                                                    });
+                                                    $("#images_box").editimgbox("{$havephoto}","photo");
+                                                    function imageGet(data){
+                                                        $("#images_box").addimgbox(data,"photo");
+                                                    }
+                                                </script>
+                                                <tr class="tr_white" height="20">
+                                                    <td colspan="2"></td>
+                                                </tr>
+
+                                                <tr class="tr_white" height="40">
+                                                    <td align="right" width="120"></td>
+                                                    <td align="left">
+                                                        <input type="submit" class="blackbutton" value="提交" />
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white" height="10">
+                                                    <td colspan="2"></td>
+                                                </tr>
+                                            </table>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

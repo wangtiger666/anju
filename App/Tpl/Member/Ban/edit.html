@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        {:W("Easyui")}
+        {:W("Boluoui")}
+        {:W("Uploader")}
+        <style type="text/css">
+            .ban_box{
+                width: 440px; height: 30px; overflow: hidden; border: 1px solid #ccc; background: #eee;
+                margin: 5px 0; border-radius: 4px;
+            }
+            .ban_title{
+                width: 240px; height: 24px; overflow: hidden; border: 1px solid #ccc; background: #f3f3f3; margin: 2px; float: left;
+                border-radius: 4px;
+            }
+            .ban_tool{
+                width: 60px; height: 24px; overflow: hidden; border: 1px solid #ccc; background: #f3f3f3; margin: 2px; float: right;
+                border-radius: 4px; cursor: pointer; font: 12px/24px "微软雅黑"; color: #999; text-align: center;
+            }
+            .ban_a{
+                width: 48px; height: 24px; overflow: hidden; border: 1px solid #ccc; background: #f3f3f3; margin: 2px 0; float: left;
+                border-radius: 4px; cursor: pointer; font: 12px/24px "微软雅黑"; color: #999; text-align: center; margin-left: 2px; text-decoration: none;
+            }
+            .ban_a:hover{
+                text-decoration: none;
+            }
+        </style>
+        <script type="text/javascript">
+            function checksb(){
+                var result = true;
+                if(result == true){
+                    result = AutoCheckSub(".cs");
+                }
+                return result;
+            }
+            $(document).ready(function(){
+
+            });
+        </script>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">全景项目 - {$panorow['title']} - 右键版权信息</div>
+                        <div title="关闭" onclick="DoNote('确认返回功能首页？','{:U('main/index')}');" class="close"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            {:W("Panomenu",array("pano_id"=>$pano_id,"num"=>8))}
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main">
+                                <div class="action_title">右键版权信息 - 修改</div>
+                                <div class="action_web">
+                                    <form name="form1" action="" onsubmit="return checksb();" enctype="multipart/form-data" method="post">
+                                        <input type="hidden" name="dopost" value="save" />
+                                        <input type="hidden" name="pano_id" value="{$pano_id}" />
+                                        <input type="hidden" name="ban_id" value="{$row['id']}" />
+                                        <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">
+                                            <tr class="tr_white" height="36">
+                                                <td align="right" width="80"><b>信息标题：</b></td>
+                                                <td align="left">
+                                                    <input type="text" id="title" name="title" sbname="信息标题" value="{$row['title']}" class="inputcube cs"/>
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="10">
+                                                <td colspan="2"></td>
+                                            </tr>
+
+                                            <tr class="tr_white" height="36">
+                                                <td align="right" width="100"><b>设置为：</b></td>
+                                                <td align="left" style="line-height: 30px;">
+                                                    <input type="radio" name="ban_type" value="none" {:Checked('none',$row['type']);} />
+                                                    无效果<br/>
+                                                    <input type="radio" name="ban_type" value="link"  {:Checked('link',$row['type']);}/>
+                                                    超链接：<input type="text" name="link" value="{$row['link']}" size="30" /><br/>
+                                                    <input type="radio" name="ban_type" value="skin_view_normal"  {:Checked('skin_view_normal',$row['type']);}/>
+                                                    切换正常视角<br/>
+                                                    <input type="radio" name="ban_type" value="skin_view_fisheye"  {:Checked('skin_view_fisheye',$row['type']);}/>
+                                                    切换鱼眼视角<br/>
+                                                    <input type="radio" name="ban_type" value="skin_view_architectural"  {:Checked('skin_view_architectural',$row['type']);}/>
+                                                    切换近距离视角<br/>
+                                                    <input type="radio" name="ban_type" value="skin_view_stereographic"  {:Checked('skin_view_stereographic',$row['type']);}/>
+                                                    切换远距离视角<br/>
+                                                    <input type="radio" name="ban_type" value="skin_view_littleplanet"  {:Checked('skin_view_littleplanet',$row['type']);}/>
+                                                    变换小行星<br/>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="tr_white" height="10">
+                                                <td colspan="2"></td>
+                                            </tr>
+                                            <tr class="tr_white" height="40">
+                                                <td align="right" width="100"></td>
+                                                <td align="left">
+                                                    <input type="submit" class="blackbutton" value="提交" />
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="10">
+                                                <td colspan="2"></td>
+                                            </tr>
+
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

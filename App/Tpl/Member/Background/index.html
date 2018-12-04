@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>首页</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        <script type="text/javascript">
+            $(function(){
+                setBg("{$nowbg}");
+                $(".selectimg").mouseover(function(){
+                    var imgname = $(this).attr("pic");
+                    var thebg = "__PUBLIC__/member/images/background/"+imgname;
+                    $("#bg").attr("src",thebg);
+                });
+
+                $(".selectimg").click(function(){
+                    var imgname = $(this).attr("pic");
+                    $(".selectimg").removeClass("me");
+                    $(this).addClass("me");
+                    EditDbData(imgname,'{:U('ajax/index')}','Background','{member_id:me}','bgimg');
+                });
+            });
+            function setBg(mm){
+                var len = $(".selectimg").length;
+                for(i=0;i<len;i++){
+                    if($(".selectimg").eq(i).attr("pic") == mm){
+                        $(".selectimg").eq(i).addClass("me");
+                    }
+                }
+            }
+        </script>
+        <style>
+            .bgbox{
+                min-height: 400px; overflow: hidden; padding: 10px; background: url(__PUBLIC__/member/images/common/none.png);
+            }
+            .selectimg{
+                width: 200px; height: 150px; overflow: hidden; background: url(__PUBLIC__/member/images/common/hui.png);
+                float: left; border:1px solid #5eb8c0; margin: 5px; cursor: pointer; border-radius: 4px; padding: 10px;
+            }
+            .selectimg span{
+                width: 200px; height: 150px; display: block;
+            }
+            .selectimg span img{
+                box-shadow:0px 0px 5px #eee;
+            }
+            .selectimg.me{
+                border:1px solid #CCA352; background: url(__PUBLIC__/member/images/common/huang.png);
+            }
+        </style>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">背景图选择</div>
+                        <div title="关闭" onclick="DoNote('确认返回功能首页？','{:U('main/index')}');" class="close"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="bgbox">
+                            <volist id="ovo" name="bgname">
+                                <div class="selectimg" pic="{$ovo}"><span><img src="__PUBLIC__/member/images/background/{$ovo}" onload="photocenterin(this,200,150)" /></span></div>
+                            </volist>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

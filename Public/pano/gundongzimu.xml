@@ -1,0 +1,27 @@
+<krpano>
+<!-- 滚动字幕  -->	
+  <action name="danmurun1">
+    txtadd(text1width,"-","get(layer[text1].width)");
+    inc(layer[text1].x,1,get(stagewidth),get(text1width));
+    delayedcall(0.005, danmurun1(););
+  </action>
+
+<layer name="danmu" type="container" align="top" width="100%" autowidth="true" autoheight="true" height="30" bgcolor="0xffffff" bgalpha="0.7" visible="get:skin_settings.opennews" keep="true">
+ 
+<layer name="text1" style="text" width="100%" height="30" autowidth="true" autoheight="true" backgroundalpha="0.0" css="text-align:center;font-family:微软雅黑; font-size:20px; color:#000000;letter-spacing:12px;" x="0" y="0" html="get:skin_settings.news"/> 
+	
+</layer>
+<style name="text" url="%SWFPATH%/plugins/textfield.swf" width="100%" height="30" align="right" autowidth="true" autoheight="true" />
+<!-- 滚动字幕  -->
+
+<!-- 手机端显示比例 -->
+<krpano devices="mobile">
+
+    <layer name="danmu" height="25"  > 
+    <layer name="text1" css="text-align:center;font-family:微软雅黑; font-size:16px; color:#000000;letter-spacing:10px;" />	
+    </layer>
+	
+</krpano>
+<!-- 手机端显示比例 -->
+
+</krpano>

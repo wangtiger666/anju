@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/pano/pano.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/member/js/putout.js"></script>
+        {:W("Easyui")}
+        {:W("Boluoui")}
+        {:W("Uploader")}
+        <style type="text/css">
+		a {color: #FFF;cursor: pointer;text-align: center;text-decoration: underline;}
+		a:focus { outline: thin dotted;}
+		a:hover, a:active { outline: 0;}
+            .putbox{
+                width: 500px; height: auto; overflow: hidden; border: 1px solid #486078; padding: 1px;
+            }
+            .ppbox{
+                width: 498px; height: 24px; overflow: hidden; margin: 1px; float: left;
+            }
+            .pptitle{
+                width: 148px; height: 22px; overflow: hidden; float: left; margin-right: 2px; background: url(__PUBLIC__/member/images/common/putout_bg.png);
+                font: bold 12px/22px "微软雅黑"; color: #9fc2e6; text-align: center; border: 1px solid #587491; cursor: default;
+            }
+            .ppload{
+                width: 300px; height: 22px; overflow: hidden; border: 1px solid #98756d; float: left; background: url(__PUBLIC__/member/images/common/putout_line.png);
+            }
+            .loading{
+                width: 0px; height: 22px; overflow: hidden; background: url(__PUBLIC__/member/images/common/loadbar.gif) repeat-x;
+                filter:alpha(opacity=30); /*IE滤镜，透明度50%*/
+                -moz-opacity:0.3; /*Firefox私有，透明度50%*/
+                opacity:0.3;/*其他，透明度50%*/
+            }
+            .okbox{
+                width: 40px; height: 22px; overflow: hidden; float: right; border: 1px solid #587491; cursor: default;
+                font: bold 12px/22px "微软雅黑"; color: #aaa; text-align: center; background: url(__PUBLIC__/member/images/common/putout_bg.png);
+                filter:alpha(opacity=70); /*IE滤镜，透明度50%*/
+                -moz-opacity:0.7; /*Firefox私有，透明度50%*/
+                opacity:0.7;/*其他，透明度50%*/
+            }
+            .okbox.ok{
+                border-color: #97e9cd; background: #59CB55; color: #97e9cd; background: url(__PUBLIC__/member/images/common/putout_green.png);
+            }
+            #action{
+                width: 496px; height: 24px; overflow: hidden; border: 1px solid #486078; background: url(__PUBLIC__/member/images/common/putout_bg.png);
+                font: 12px/24px "微软雅黑"; color: #85bef3; padding-left: 6px; cursor: default;
+            }
+            #action span{
+                font: 12px/24px "微软雅黑"; color: #b6dcff; margin: 0 4px;
+            }
+            .downloading{
+                width: 100px; height: 100px; overflow: hidden; border: 1px solid #587491; border-radius:4px;
+                display: none;
+            }
+            .downloading .push{
+                width: 100px; height: 100px; overflow: hidden; position: absolute; z-index: 0;
+                background: url(__PUBLIC__/member/images/common/quan1.gif) center center no-repeat #fff;
+                filter:alpha(opacity=10); /*IE滤镜，透明度50%*/
+                -moz-opacity:0.1; /*Firefox私有，透明度50%*/
+                opacity:0.1;/*其他，透明度50%*/
+            }
+            .downloading .pushtxt{
+                width: 100px; height: 100px; overflow: hidden; position: absolute; z-index: 1;
+                font: bold 14px/100px "微软雅黑"; color: #b6dcff; text-align: center;
+                filter:alpha(opacity=70); /*IE滤镜，透明度50%*/
+                -moz-opacity:0.7; /*Firefox私有，透明度50%*/
+                opacity:0.7;/*其他，透明度50%*/
+            }
+
+            .download{
+                width: 100px; height: 100px; overflow: hidden; border: 1px solid #587491; border-radius:4px;
+                display: none; background: url(__PUBLIC__/member/images/common/putout_bg.png);
+            }
+            .download .box{
+                width: 100px; height: 100px; overflow: hidden; position: absolute; z-index: 0; cursor: pointer;
+                background: url(__PUBLIC__/member/images/common/zip.png) center center no-repeat; display: block;
+                filter:alpha(opacity=80); /*IE滤镜，透明度50%*/
+                -moz-opacity:0.8; /*Firefox私有，透明度50%*/
+                opacity:0.8;/*其他，透明度50%*/
+            }
+        </style>
+        <script type="text/javascript">
+            var pano_id = "{$pano_id}";
+            function pushout(){
+                var putout_id = $("#putout_id").val();
+
+				showaction("生成完毕，准备压缩文件！");
+				$.ajax({
+					url:"{:U('pushout')}",
+					type:"POST",
+					dataType:"script",
+					data:{
+						putout_id:putout_id
+					}
+				});
+
+				/*
+                var xitong = "{$xitong}";
+                if(xitong == "WINNT" || xitong == "Windows" || xitong == "WIN32"){
+                    showaction("生成完毕，准备压缩文件！");
+                    $.ajax({
+                        url:"{:U('pushout')}",
+                        type:"POST",
+                        dataType:"script",
+                        data:{
+                            putout_id:putout_id
+                        }
+                    });
+                }else if(xitong=="Linux"){
+					var member_id = {$Think.session.member_id};
+					var panourl = "/putout/"+member_id+"/"+pano_id+"/pano";
+					showaction("生成完毕，请到本路径去下载文件：<a style='color:#FFF;' href='"+panourl+"' target='_blank'>"+panourl+"</a>");
+					$(".downloading").hide();
+					$(".download").hide();
+                }
+				*/
+            }
+
+            function zipdo(){
+                var putout_id = $("#putout_id").val();
+                $(".downloading").show();
+                $.ajax({
+                    url:"{:U('zipdo')}",
+                    type:"POST",
+                    dataType:"script",
+                    data:{
+                        putout_id:putout_id
+                    }
+                });
+            }
+            function downzip(){
+                var member_id = {$Think.session.member_id};
+				var panourl = "/putout/"+member_id+"/"+pano_id+"/pano";
+				showaction("生成完毕，项目路径：<a style='color:#FFF;' href='"+panourl+"' target='_blank'>"+panourl+"</a>");
+                $(".downloading").hide();
+                $(".download").show();
+            }
+            function downzipdo(){
+                var putout_id = $("#putout_id").val();
+                var link = "{:U('downzipdo',array('putout_id' => 'sss'))}"
+                var thelink = link.replace("sss",putout_id);
+                LinkTo(thelink);
+            }
+
+            //第一环节
+            function creatdir(){
+                showaction("开始生成项目，首先创建目录！");
+                $.ajax({
+                    url:"{:U('creatdir')}",
+                    type:"POST",
+                    dataType:"script",
+                    data:{
+                        pano_id:pano_id
+                    }
+                });
+            }
+            function copybase(){
+                var putout_id = $("#putout_id").val();
+                $.ajax({
+                    url:"{:U('copybase')}",
+                    type:"POST",
+                    dataType:"script",
+                    data:{
+                        putout_id:putout_id
+                    }
+                });
+            }
+            function copyplugins(){
+                var putout_id = $("#putout_id").val();
+                $.ajax({
+                    url:"{:U('copyplugins')}",
+                    type:"POST",
+                    dataType:"script",
+                    data:{
+                        putout_id:putout_id
+                    }
+                });
+            }
+            function scenedo(n){
+                var smax = $("#scene_len").val();
+                var putout_id = $("#putout_id").val();
+                $.ajax({
+                    url:"{:U('scenedo')}",
+                    type:"POST",
+                    dataType:"script",
+                    data:{
+                        putout_id:putout_id,
+                        max:smax,
+                        num:n
+                    }
+                });
+            }
+            function photocheck(){
+                var putout_id = $("#putout_id").val();
+                $.ajax({
+                    url:"{:U('photocheck')}",
+                    type:"POST",
+                    dataType:"script",
+                    data:{
+                        putout_id:putout_id
+                    }
+                });
+            }
+            function cubecheck(){
+                var putout_id = $("#putout_id").val();
+                $.ajax({
+                    url:"{:U('cubecheck')}",
+                    type:"POST",
+                    dataType:"script",
+                    data:{
+                        putout_id:putout_id
+                    }
+                });
+            }
+            function photodo(n){
+                var photomax = $("#photo_len").val();
+                var photo_id = $("#photo_id").val();
+                var putout_id = $("#putout_id").val();
+                $.ajax({
+                    url:"{:U('photodo')}",
+                    type:"POST",
+                    dataType:"script",
+                    data:{
+                        putout_id:putout_id,
+                        max:photomax,
+                        photo:photo_id,
+                        num:n
+                    }
+                });
+            }
+            function cubedo(n){
+                var cubemax = $("#cube_len").val();
+                var cube_id = $("#cube_id").val();
+                var putout_id = $("#putout_id").val();
+                $.ajax({
+                    url:"{:U('cubedo')}",
+                    type:"POST",
+                    dataType:"script",
+                    data:{
+                        putout_id:putout_id,
+                        max:cubemax,
+                        cube:cube_id,
+                        num:n
+                    }
+                });
+            }
+            function panoxmldo(){
+                var putout_id = $("#putout_id").val();
+                $.ajax({
+                    url:"{:U('panoxmldo')}",
+                    type:"POST",
+                    dataType:"script",
+                    data:{
+                        putout_id:putout_id
+                    }
+                });
+            }
+            function basexmldo(){
+                var putout_id = $("#putout_id").val();
+                $.ajax({
+                    url:"{:U('basexmldo')}",
+                    type:"POST",
+                    dataType:"script",
+                    data:{
+                        putout_id:putout_id
+                    }
+                });
+            }
+            function modeldo(n){
+                if(n == 1){
+                    showaction('单地图模块开始生成！');
+                }
+                var putout_id = $("#putout_id").val();
+                $.ajax({
+                    url:"{:U('modeldo')}",
+                    type:"POST",
+                    dataType:"script",
+                    data:{
+                        putout_id:putout_id,
+                        num:n
+                    }
+                });
+            }
+            function otherdo(n){
+                var putout_id = $("#putout_id").val();
+                $.ajax({
+                    url:"{:U('otherdo')}",
+                    type:"POST",
+                    dataType:"script",
+                    data:{
+                        putout_id:putout_id,
+                        num:n
+                    }
+                });
+            }
+        </script>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="putout_main">
+                            <div class="putout_action_main">
+                                <div class="putout_action_title">全景项目生成</div>
+                                <div class="putout_action_web">
+                                    <input id="putout_id" name="putout_id" type="hidden" value="" />
+                                    <input id="scene_len" name="scene_len" type="hidden" value="{$len}" />
+                                    <input id="photo_len" name="photo_len" type="hidden" value="" />
+                                    <input id="photo_id" name="photo_id" type="hidden" value="" />
+                                    <input id="cube_len" name="cube_len" type="hidden" value="" />
+                                    <input id="cube_id" name="cube_id" type="hidden" value="" />
+                                    <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">
+                                        <tr height="36">
+                                            <td align="right"><b>项目名称：</b></td>
+                                            <td align="left">
+                                                {$panorow['title']}
+                                            </td>
+                                        </tr>
+                                        <tr height="36">
+                                            <td align="right"><b>场景数目：</b></td>
+                                            <td align="left">
+                                                {$len}
+                                            </td>
+                                        </tr>
+										<tr height="36">
+                                            <td align="right"><b>项目路径：</b></td>
+                                            <td align="left" style="font-weight:bold;">
+												<if condition="!empty($panopath['fileurl'])">
+                                                <a href="{$panopath.fileurl}/pano" style="colro" target="_blank" title="查看已生成的项目">{$panopath.pcfilepath}/pano</a>&nbsp;&nbsp;
+												<a href="{$panopath.fileurl}/pano" style="colro" target="_blank">网址访问</a>
+												<else />
+												等待生成
+												</if>
+                                            </td>
+                                        </tr>
+										<tr height="36">
+                                            <td align="right"><b>压缩包存放：</b></td>
+                                            <td align="left" style="color:#FFF;">
+												<if condition="!empty($panopath['fileurl'])">
+                                                {$panopath.pcfilepath}/pano.zip&nbsp;&nbsp;										
+												[<a href="{$panopath.fileurl}/pano.zip" title="点击下载本项目压缩包">压缩包下载</a>]									
+												<else />
+												等待生成
+												</if>
+                                            </td>
+                                        </tr>
+                                        <tr height="36">
+                                            <td align="right"><b>生成进度：</b></td>
+                                            <td align="left">
+                                                <div class="putbox">
+                                                    <div class="ppbox">
+                                                        <div class="pptitle">目录初始化</div>
+                                                        <div class="ppload">
+                                                            <div class="loading"></div>
+                                                        </div>
+                                                        <div class="okbox">OK</div>
+                                                    </div>
+                                                    <div class="ppbox">
+                                                        <div class="pptitle">生成场景文件</div>
+                                                        <div class="ppload">
+                                                            <div class="loading"></div>
+                                                        </div>
+                                                        <div class="okbox">OK</div>
+                                                    </div>
+                                                    <div class="ppbox">
+                                                        <div class="pptitle">全景图集</div>
+                                                        <div class="ppload">
+                                                            <div class="loading"></div>
+                                                        </div>
+                                                        <div class="okbox">OK</div>
+                                                    </div>
+                                                    <div class="ppbox">
+                                                        <div class="pptitle">360物体</div>
+                                                        <div class="ppload">
+                                                            <div class="loading"></div>
+                                                        </div>
+                                                        <div class="okbox">OK</div>
+                                                    </div>
+                                                    <div class="ppbox">
+                                                        <div class="pptitle">XML规则计算</div>
+                                                        <div class="ppload">
+                                                            <div class="loading"></div>
+                                                        </div>
+                                                        <div class="okbox">OK</div>
+                                                    </div>
+                                                    <div class="ppbox">
+                                                        <div class="pptitle">模块生成</div>
+                                                        <div class="ppload">
+                                                            <div class="loading"></div>
+                                                        </div>
+                                                        <div class="okbox">OK</div>
+                                                    </div>
+                                                    <div class="ppbox">
+                                                        <div class="pptitle">其它</div>
+                                                        <div class="ppload">
+                                                            <div class="loading"></div>
+                                                        </div>
+                                                        <div class="okbox">OK</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr height="36">
+                                            <td align="right"><b>正在执行：</b></td>
+                                            <td align="left">
+                                                <div id="action"></div>
+                                            </td>
+                                        </tr>
+                                        <tr height="5">
+                                            <td align="right" width="80"></td>
+                                            <td align="left">
+                                                <div class="downloading">
+                                                    <div class="push"></div>
+                                                    <div class="pushtxt">压缩中...</div>
+                                                </div>
+                                                <div class="download">
+                                                    <div class="box" onclick="downzipdo();" title="点击下载压缩包"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr height="10">
+                                            <td colspan="2"></td>
+                                        </tr>
+                                        <tr height="40">
+                                            <td align="right" width="80"></td>
+                                            <td align="left">
+                                                <input type="button" onclick="startdo();" class="blackbutton" value="开始生成" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

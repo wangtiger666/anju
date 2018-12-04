@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<style type="text/css">
+html { overflow-x: hidden; overflow-y: hidden; }
+*, *::after, *::before {box-sizing: border-box;}
+body{background: #f9f9f9;}
+._3-hEacpyzzWTaV4M {font-size: 18px;}
+._1wXqK_R674Jqu3ey {text-align: center;}
+._2PpOzg814xGpaFm5 {line-height: 25px;}
+.Gx6SzU9O6XChcn12 {color: #333;}
+._1RIPVd1CR_s2ziQq {border-bottom: 2px solid #aaa;border-top: 1px dashed #aaa;height: 5px;margin-bottom: 20px;margin-top: 20px;}
+._1wXqK_R674Jqu3ey {text-align: center;}
+._2Jx29BFt4QZA_5WA {background-color: #fff;display: inline-block;}
+._1wXqK_R674Jqu3ey {padding: 20px;text-align: center;}
+._3-hEacpyzzWTaV4M {font-size: 18px;}
+@media(max-width: 640px) {
+   ._3-hEacpyzzWTaV4M{font-size: 14px;}
+   ._2Jx29BFt4QZA_5WA {background-color: #fff;display: inline-block;}
+	._1wXqK_R674Jqu3ey {padding:18px;}
+}
+</style>
+<script type="text/javascript" src="/Public/pano/images/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/Public/pano/images/jquery.qrcode.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	var sharehref="{$shareurl}";
+	$('#code').qrcode(sharehref);
+})
+</script>
+</head>
+<body>
+<div class="_1wXqK_R674Jqu3ey">
+<div class="_3-hEacpyzzWTaV4M">扫描二维码 分享你的全景</div>
+<div class="_1RIPVd1CR_s2ziQq"></div>
+<div class="_2Jx29BFt4QZA_5WA" id="code"></div>
+</div>
+</body>
+</html>

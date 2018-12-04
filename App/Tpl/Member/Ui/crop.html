@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        {:W("Easyui")}
+        <style type="text/css">
+            #cutimg{
+                width: auto; height: auto; overflow: hidden; border-radius: 4px;
+                padding: 10px; margin: 10px; border: 1px solid #ccc; background: url(__PUBLIC__/member/images/common/psbg.png);
+            }
+            .imgcube{
+                overflow: hidden; margin: 0 auto; position: relative; background: url({$img}); width: {$w}px; height:{$h}px;
+            }
+            .databox{
+                overflow: hidden; margin: 5px 10px;
+            }
+            #kuangkuang{
+                /*border: 1px #ff0000 solid;*/
+                background-color: #3afa2c;
+                filter:alpha(opacity=40); /*IE滤镜，透明度50%*/
+                -moz-opacity:0.4; /*Firefox私有，透明度50%*/
+                opacity:0.4;/*其他，透明度50%*/
+                position: relative;
+            }
+        </style>
+        <script type="text/javascript">
+
+            var box_w = {$w};
+            var box_h = {$h};
+            $(function(){
+                if(box_w>box_h){
+                    var box_m = box_h;
+                }else{
+                    var box_m = box_w;
+                }
+                $("#x").val({$cc_x});
+                $("#y").val({$cc_y});
+                $("#width").val({$cc_w});
+                $("#height").val({$cc_h});
+
+                $("#width").blur(function() {
+                    var width = $(this).val();
+                    var parent = $("#kuangkuang").parent().width();
+                    if (width > parent) {
+                        $(this).val(parent);
+                        width = parent;
+                    }
+                    $("#kuangkuang").stop().animate({width: width + "px"}, 500);
+                });
+                $("#height").blur(function() {
+                    var height = $(this).val();
+                    var parent = $("#kuangkuang").parent().height();
+                    if (height > parent) {
+                        $(this).val(parent);
+                        height = parent;
+                    }
+                    $("#kuangkuang").stop().animate({height: height + "px"}, 500);
+                });
+                $("#x").blur(function() {
+                    var x = $(this).val();
+                    if (x < 0) {
+                        x = 0;
+                    }
+                    if (x > $("#kuangkuang").parent().width() - $("#kuangkuang").width()) {
+                        x = $("#kuangkuang").parent().width() - $("#kuangkuang").width();
+                    }
+                    $(this).val(x);
+                    $("#kuangkuang").stop().animate({left: x + "px"}, 500);
+                });
+                $("#y").blur(function() {
+                    var y = $(this).val();
+                    if (y < 0) {
+                        y = 0;
+                    }
+                    if (y > $("#kuangkuang").parent().height() - $("#kuangkuang").height()) {
+                        y = $("#kuangkuang").parent().height() - $("#kuangkuang").height();
+                    }
+                    $(this).val(y);
+                    $("#kuangkuang").stop().animate({top: y + "px"}, 500);
+                });
+
+                $("#kuangkuang").css("left",{$cc_x}+"px");
+                $("#kuangkuang").css("top",{$cc_y}+"px");
+                $("#kuangkuang").width({$cc_w}).height({$cc_h});
+                $('#kuangkuang').draggable({
+                    onDrag: function(e) {
+                        getMyPosition();
+                        onDrag(e);
+                    }
+                });
+            })
+            function getMyPosition() {
+                var x = $('#kuangkuang').css("left");
+                var y = $('#kuangkuang').css("top");
+
+                $('#x').val(x.substring(0, x.length - 2));
+                $('#y').val(y.substring(0, y.length - 2));
+            }
+            function onDrag(e) {
+                var d = e.data;
+                if (d.left < 0) {
+                    d.left = 0
+                }
+                if (d.top < 0) {
+                    d.top = 0
+                }
+                if (d.left + $(d.target).outerWidth() > $(d.parent).width()) {
+                    d.left = $(d.parent).width() - $(d.target).outerWidth();
+                }
+                if (d.top + $(d.target).outerHeight() > $(d.parent).height()) {
+                    d.top = $(d.parent).height() - $(d.target).outerHeight();
+                }
+            }
+            $(document).keyup(function(e){
+                var id = e.keyCode;
+                switch (id){
+                    case 37:goleft();
+                        break;
+                    case 38:godown();
+                        break;
+                    case 39:goright();
+                        break;
+                    case 40:gotop();
+                        break;
+                }
+            });
+            function goleft(){
+                var x = $("#x").val();
+                x --;
+                if (x < 0) {
+                    x = 0;
+                }
+                if (x > $("#kuangkuang").parent().width() - $("#kuangkuang").width()) {
+                    x = $("#kuangkuang").parent().width() - $("#kuangkuang").width();
+                }
+                $("#x").val(x);
+                $("#kuangkuang").stop().animate({left: x + "px"}, 500);
+            }
+            function goright(){
+                var x = $("#x").val();
+                x++;
+                if (x < 0) {
+                    x = 0;
+                }
+                if (x > $("#kuangkuang").parent().width() - $("#kuangkuang").width()) {
+                    x = $("#kuangkuang").parent().width() - $("#kuangkuang").width();
+                }
+                $("#x").val(x);
+                $("#kuangkuang").stop().animate({left: x + "px"}, 500);
+            }
+            function gotop(){
+                var y = $("#y").val();
+                y++;
+                if (y < 0) {
+                    y = 0;
+                }
+                if (y > $("#kuangkuang").parent().height() - $("#kuangkuang").height()) {
+                    y = $("#kuangkuang").parent().height() - $("#kuangkuang").height();
+                }
+                $("#y").val(y);
+                $("#kuangkuang").stop().animate({top: y + "px"}, 500);
+            }
+            function godown(){
+                var y = $("#y").val();
+                y--;
+                if (y < 0) {
+                    y = 0;
+                }
+                if (y > $("#kuangkuang").parent().height() - $("#kuangkuang").height()) {
+                    y = $("#kuangkuang").parent().height() - $("#kuangkuang").height();
+                }
+                $("#y").val(y);
+                $("#kuangkuang").stop().animate({top: y + "px"}, 500);
+            }
+
+            function backdata(){
+                var data = $("#x").val()+"|"+$("#y").val()+"|"+$("#width").val()+"|"+$("#height").val();
+                parent.getcrop(data);
+            }
+        </script>
+    </head>
+    <body>
+        <div id="cutimg">
+            <div class="imgcube">
+                <div id="kuangkuang"></div>
+            </div>
+        </div>
+        <div class="databox">&nbsp;X&nbsp;轴：<input id="x" style="width:80px;" value="0"/></div>
+        <div class="databox">&nbsp;Y&nbsp;轴：<input id="y" style="width:80px;" value="0"/></div>
+        <div class="databox">宽度：<input id="width" style="width:80px;" value="20"/></div>
+        <div class="databox">高度：<input id="height" style="width:80px;" value="20"/></div>
+        <div class="databox">&nbsp;&nbsp;&nbsp;<input type="button" class="btn1" onclick="backdata();" value="确定" /></div>
+    </body>
+</html>

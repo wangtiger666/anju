@@ -1,0 +1,167 @@
+<krpano> 
+
+<layer name="skin_control_bar11" keep="true" type="container" bgcolor="0x000000" bgalpha="0" align="leftbottom" width="100%" height="40" x="2" y="10"  zorder="3">
+    		   
+   <!-- 左下角菜单按钮 -->
+    <layer name="skin_control_vtourskin" keep="true" url="../images/vtourskin.png" 
+	       crop="0|0|70|32" onovercrop="0|34|70|32" state="opened" 
+		   align="leftbottom" x="0" y="0"  zorder="3"  
+           onclick="switch(layer[skin_control_s].visible);
+		   switch(crop,0|0|70|32,0|68|70|32);
+		   switch(onovercrop,0|34|70|32,0|102|70|32)"/>
+    <!-- 左下角其他菜单容器 -->
+    <layer name="skin_control_s" keep="true" type="container" 
+		   bgcolor="0x000000" bgalpha="0" align="leftbottom" width="100%" height="40" x="80" y="0"  zorder="3">
+        <!-- 缩略图列表 -->
+        <layer name="skin_control_1ist" keep="true" url="../images/vtourskin.png" 
+			        crop="79|0|32|32" onovercrop="79|34|32|32" 
+					align="leftbottom"  x="0" y="0"  zorder="3"
+                    onclick="skin_showthumbs();" 
+					onover="set(layer[skin_control_1ist_text].visible,true)" onout="set(layer[skin_control_1ist_text].visible,false)" >
+                
+				<layer name="skin_control_1ist_text" keep="true" 
+				       visible="false" url="../images/vtourskin.png" crop="0|136|88|36"  align="top" edge="bottom"  x="0" y="-5"  zorder="3"/>
+				
+        </layer>
+        <!-- 全屏-->
+            <layer name="skin_control_fullscreen" keep="true" url="../images/vtourskin.png"       crop="160|0|32|32" onovercrop="160|34|32|32" 
+			       align="leftbottom"  x="40" y="0"  zorder="3" 
+				   onclick="switch(fullscreen);
+				   switch(crop,160|0|32|32,160|68|32|32);
+				   switch(onovercrop,160|34|32|32,160|102|32|32))"  
+				   onover="set(layer[skin_control_fullscreen_text].visible,true)" onout="set(layer[skin_control_fullscreen_text].visible,false)">
+                
+				<layer name="skin_control_fullscreen_text" keep="true"
+  				       visible="false" url="../images/vtourskin.png" crop="226|136|57|36"  align="top" edge="bottom"  x="0" y="-5"  zorder="3"/>
+				
+            </layer>  
+        <!-- 背景音乐-->
+            <layer name="skin_control_music" keep="true" url="../images/vtourskin.png" 
+			       crop="200|0|32|32" onovercrop="200|34|32|32" 
+				   align="leftbottom"  x="80" y="0"  zorder="3" 
+				   onclick="pausesoundtoggle(bgsnd); switch(crop,200|0|32|32,200|68|32|32);" 
+				   onover="set(layer[skin_control_music_text].visible,true)" 
+				   onout="set(layer[skin_control_music_text].visible,false)">
+                  
+				<layer name="skin_control_music_text" keep="true" 
+				       visible="false" url="../images/vtourskin.png" 
+					   crop="284|136|57|36"  align="top" edge="bottom"  x="0" y="-5"  zorder="3"/>
+            </layer>
+        <!-- 自动旋转-->
+            <layer name="skin_control_autorotate" keep="true" url="../images/vtourskin.png"       crop="281|68|32|32" onovercrop="281|102|32|32" 
+			       align="leftbottom"  x="120" y="0"  zorder="3" 
+				   onclick="if(autorotate.enabled,
+				   set(crop,281|68|32|32);
+				   set(autorotate.enabled,false);
+				   ,
+				   set(crop,281|34|32|32);
+				   set(autorotate.enabled,true);
+				   );"
+                   onover="set(layer[skin_control_autorotate_text].visible,true)" 
+				   onout="set(layer[skin_control_autorotate_text].visible,false)">
+                
+				<layer name="skin_control_autorotate_text" keep="true" 
+				       visible="false" url="../images/vtourskin.png" 
+					   crop="79|175|88|36"  align="top" 
+					   edge="bottom"  x="0" y="-5"  zorder="3"/>
+				
+            </layer> 
+        <!-- 操作模式-->
+            <layer name="skin_control_ctr" keep="true" url="../images/vtourskin.png" 
+			       crop="321|0|32|32" onovercrop="321|34|32|32" 
+				   align="leftbottom"  x="160" y="0"  zorder="3"
+				   onclick="
+					 switch(control.mousetype,moveto,drag2d);
+					 switch(control.touchtype,moveto,drag2d); 
+					 update_ctrl_mode();
+					 switch(crop,321|0|32|32,321|68|32|32);
+					 switch(onovercrop,321|34|32|32,321|102|32|32))" 
+				   onover="set(layer[skin_control_ctr_text].visible,true)" 
+				   onout="set(layer[skin_control_ctr_text].visible,false)">
+                
+				 <layer name="skin_control_ctr_text" keep="true" visible="false" 
+				        url="../images/vtourskin.png" crop="226|175|88|36"  
+						align="top" edge="bottom"  x="0" y="-5"  zorder="3"/>
+            </layer>
+			
+    </layer>
+</layer>
+
+<!-- 手机端显示比例 -->
+<krpano devices="mobile">
+
+<layer name="skin_control_bar11" height="80" x="2" y="10" >
+    		   
+   <!-- 左下角菜单按钮 -->
+    <layer name="skin_control_vtourskin" scale="2.0" align="leftbottom" x="0" y="0" />
+    <!-- 左下角其他菜单容器 -->
+    <layer name="skin_control_s"  >
+        <!-- 缩略图列表 -->
+        <layer name="skin_control_1ist" scale="2.0" x="100" >                
+				<layer name="skin_control_1ist_text" />
+				
+        </layer>
+        <!-- 全屏-->
+            <layer name="skin_control_fullscreen" visible="false">
+				<layer name="skin_control_fullscreen_text" visible="false"/>
+				
+            </layer>  
+        <!-- 背景音乐-->
+            <layer name="skin_control_music" scale="2.0" x="200">
+                  
+				<layer name="skin_control_music_text" />
+            </layer>
+        <!-- 自动旋转-->
+            <layer name="skin_control_autorotate" visible="false">                
+				<layer name="skin_control_autorotate_text" visible="false"/>
+				
+            </layer> 
+        <!-- 操作模式-->
+            <layer name="skin_control_ctr" visible="false">                
+				 <layer name="skin_control_ctr_text" visible="false"/>
+            </layer>
+			
+    </layer>
+</layer>
+	 
+</krpano>
+
+  
+<!-- 鼠标样式 全局属性 操作模式-->
+<events onxmlcomplete="action(set_qtvr_cursor);" />
+
+<action name="update_ctrl_mode">
+		if(control.mousetype == drag2d,
+			set_drag_cursor();
+		  ,
+			set_qtvr_cursor();
+		  );
+</action>
+	<!-- 鼠标事件调用属性 -->
+<action name="set_drag_cursor">
+		set(control.mousetype, drag2D);
+		set(control.touchtype, drag2D);
+		set(cursors.url,%SWFPATH%/ui/ui_016/images/drag-cursors.png);
+		set(cursors.type, drag);
+		set(cursors.move,  2|0|30|32);
+		set(cursors.drag, 37|0|30|32);
+</action>
+
+<action name="set_qtvr_cursor">
+		set(control.mousetype, moveto);
+		set(control.touchtype, moveto);
+		set(cursors.url,%SWFPATH%/ui/ui_016/images/qtvr-cursors.png);
+		set(cursors.type, 8way);
+		set(cursors.move,       0|0|16|16);
+		set(cursors.drag,      16|0|16|16);
+		set(cursors.arrow_u,   32|0|16|16);
+		set(cursors.arrow_d,   48|0|16|16);
+		set(cursors.arrow_l,   64|0|16|16);
+		set(cursors.arrow_r,   80|0|16|16);
+		set(cursors.arrow_lu,  96|0|16|16);
+		set(cursors.arrow_ru, 112|0|16|16);
+		set(cursors.arrow_rd, 128|0|16|16);
+		set(cursors.arrow_ld, 144|0|16|16);
+</action>
+
+</krpano>

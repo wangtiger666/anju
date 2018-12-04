@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        <script type="text/javascript">
+            function repassword(){
+                var m1 = $("#mi1").val();
+                var m2 = $("#mi2").val();
+                if(m1 == ""||m2 == ""){
+                    showMsg('密码不可以为空！',0);
+                }else if(m1 != m2){
+                    showMsg('两次密码不相同！',0);
+                }else{
+                    $.ajax({
+                        url:"{:U('repassword')}",
+                        type:"POST",
+                        dataType:"script",
+                        data:{
+                            mm:m1
+                        }
+                    });
+                }
+            }
+        </script>
+    </head>
+    <body>
+        {:W("Bg")}
+		{:W("Uploader")}
+        <div id="upmain">
+            <div class="ban">
+                <div class="ban_top"></div>
+                <div class="ban_mid">
+                    <div class="ban_title">微信基本配置</div>
+					<form method="post" enctype="multipart/form-data" action="" name="form1">
+                    <table width="100%"  class="tb">
+                        <tbody>
+                            <tr height="32">
+                                <td width="120" align="right"><b>公众号要求：</b></td>
+                                <td style="font-weight:600;color:red;">必须为已认证的服务号</td>
+                            </tr>
+							<tr height="32">
+                                <td align="right"><b>AppID：</b></td>
+                                <td>
+                                    <input class="ban_input" name="appid" style="float: left;" value="{$row['appid']}" />&nbsp;(应用ID)
+                                </td>
+                            </tr>
+							<tr height="32">
+                                <td align="right"><b>AppSecret：</b></td>
+                                <td>
+                                    <input class="ban_input" name="appsecret" style="float: left;" value="{$row['appsecret']}" />&nbsp;(应用密钥)
+                                </td>
+                            </tr>
+							<tr height="32">
+                                <td align="right">&nbsp;</td>
+                                <td>
+									<input type="hidden" name="dopost" value="save">
+									<input type="submit" value="保 存" class="btn1"></div>
+                                </td>
+                            </tr>
+							</tbody>
+                    </table>
+					</form>
+                </div>
+                <div class="ban_down"></div>
+            </div>
+        </div>
+    </body>
+</html>

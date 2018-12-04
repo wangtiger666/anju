@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano showerrors="false" <eq name="type" value="node">onstart=" loadscene(scene1, null, MERGE);"</eq>>
+    <eq name="type" value="map"><preview type="grid(cube,64,64,512,0xaaccee,0x999999,0xaaccee);" /></eq>
+    <eq name="type" value="node">
+        <scene name="scene1">
+        <view hlookat="{$x}" vlookat="{$y}" fov="80" fisheye="0" fovmin="60" fovmax="120" />
+        <preview url="%SWFPATH%/images/scene/preview.jpg" />
+        <image type="CUBE">
+            <left url="{:CC('web_root')}{$viewrow['left']}" />
+            <front url="{:CC('web_root')}{$viewrow['front']}" />
+            <right url="{:CC('web_root')}{$viewrow['right']}" />
+            <back url="{:CC('web_root')}{$viewrow['back']}" />
+            <up url="{:CC('web_root')}{$viewrow['up']}" />
+            <down url="{:CC('web_root')}{$viewrow['down']}" />
+        </image>
+    </scene>
+    </eq>
+    <events name="readyaction" onxmlcomplete="js(panoready(););" />
+    <layer name="map"
+            <empty name="row.map_url">url="__PUBLIC__/member/images/pano/mapauto.png"  align="leftbottom" x="0" y="0" <else />
+            url="{$row.map_url}" align="{$row.align|default=leftbottom}" x="{$row.x|default=0}" y="{$row.y|default=0}" maskchildren="true"
+            </empty>
+            visible="True" <empty name="row.map_url">onclick="js(uptu(););"</empty>
+            keep="True" <eq name="type" value="map">ondown="action(dragui)" </eq>
+        >
+            <eq name="type" value="node">
+                <layer name="radar"
+                    url="%SWFPATH%/plugins/radar.swf" alturl="%SWFPATH%/plugins/radar.js"
+                    align="center" edge="center" zorder="1"
+                    scale="{$row.radar_scale}"
+                    fillcolor="{$row.radar_fillcolor}" fillalpha="{$row.radar_fillalpha}"
+                    linecolor="{$row.radar_linecolor}" linewidth="0.5" linealpha="{$row.radar_linealpha}"
+                    headingoffset="0" ondown="js(targetback(get(VIEW.hlookat),get(VIEW.vlookat)));"
+                    heading="{$node.heading}"  <notempty name="node.node_url">visible="True" x="{$node.x}" y="{$node.y}"<else />  visible="false"</notempty>
+                    />
+                <layer name="spot" url="{$node.node_url|default='__PUBLIC__/member/images/pano/nodeauto.png'}" scale="{$node.scale|default=1}" alpha="{$node.alpha|default=1}"  align="center" edge="center" x="{$node.x|default=0}" y="{$node.y|default=0}" zorder="2"  ondown="action(dragui);"   />
+            </eq>
+        </layer>
+
+    <action name="dragui">
+            if(%1 != dragging,
+                    copy(drag_currentx, x);
+                    copy(drag_currenty, y);
+                    copy(drag_stagex, mouse.stagex);
+                    copy(drag_stagey, mouse.stagey);
+                    set(drag_sx, +1);
+                    set(drag_sy, +1);
+                    if(align == righttop,    set(drag_sx,-1); );
+                    if(align == right,       set(drag_sx,-1); );
+                    if(align == rightbottom, set(drag_sx,-1); set(drag_sy,-1); );
+                    if(align == bottom,      set(drag_sy,-1); );
+                    if(align == leftbottom,  set(drag_sy,-1); );
+                    dragui(dragging);
+              ,
+                    if(pressed,
+                            sub(dx, mouse.stagex, drag_stagex);
+                            sub(dy, mouse.stagey, drag_stagey);
+                            mul(dx, drag_sx);
+                            mul(dy, drag_sy);
+                            add(x, drag_currentx, dx);
+                            add(y, drag_currenty, dy);
+                            js(shoot(get(x),get(y)););
+                            copy(layer[radar].x, layer[spot].x);
+                            copy(layer[radar].y, layer[spot].y);
+                            delayedcall(0, dragui(dragging) );
+                      );
+              );
+    </action>
+    <action name="changepic">
+        set(layer[map].url,%1);
+        set(layer[map].onclick,"");
+    </action>
+    <action name="changenodepic">
+        set(layer[spot].url,%1);
+        set(layer[spot].onclick,"");
+    </action>
+    <action name="change">
+        set(plugin[image].%1,%2);
+    </action>
+    <action name="activatespot">
+            <!-- copy the spot position to the radar and activespot position -->
+            copy(layer[radar].x, layer[%1].x);
+            copy(layer[radar].y, layer[%1].y);
+            <!-- set the radar heading -->
+            set(layer[radar].heading, %2);
+
+            <!-- show the radar and the activespot -->
+            set(layer[radar].visible, true);
+    </action>
+</krpano>

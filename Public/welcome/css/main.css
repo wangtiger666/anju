@@ -1,0 +1,673 @@
+/*列表*/
+#leftlist{
+    width: 24.125rem;
+    height: calc(100% - 3.75rem);
+    position: absolute;
+    top: 3.75rem;
+    bottom: 0;
+    background-color: rgba(0, 37, 68, 0.77);
+    transition: all 0.5s ease-out;
+    font-family: 'Miscrosoft Yahei';
+    z-index: 10;
+    color: #fff;
+    display: none;
+}
+.list_header{
+    background-color: #0072a6;
+    line-height: 2.5rem;
+    width: 100%;
+    font-size: 0.875rem;
+    padding-left: 1rem;
+}
+.hiddens{
+    transform: translateX(-100%);
+}
+.overturn{
+    transform: rotateY(180deg);
+}
+#sort-total{
+    margin-left: 7.31rem;
+    cursor: pointer;
+    height: 1.25rem;
+    width: 1.875rem;
+    overflow: hidden;
+}
+.marginLift{
+    margin-left: 0.3125rem ! important;
+}
+#sort-price,#sort-prices{
+    margin-left: 1rem;
+    cursor: pointer;
+    height: 1.25rem;
+    width: 1.875rem;
+    overflow: hidden;
+}
+#sort-img,#sort-imgs{
+    margin-left: 0.5rem;
+    vertical-align: sub;
+    transition: all 0.5s ease-out;
+}
+#sort-prices{
+    display: none;
+}
+#sort-imgs{
+    transform: rotate(180deg);
+    display: none;
+}
+.list_village{
+    position: relative;
+    width: 100%;
+    padding-top: 1.25rem;
+    padding-left: 0.6875rem;
+    display: flex;
+    height: 10rem;
+    padding-bottom: 1.25rem;
+}
+.village_detail{
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color:#fff;
+    width: 70%;
+}
+.village_name{
+    font-size: 1.125rem;
+    float: left;
+    width: 7.82rem;
+    overflow: hidden;
+    height: 1.5625rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    cursor: pointer;
+}
+.village_area{
+    font-size: 0.875rem
+    float: right;
+    width: 5.375rem;
+    height: 1.25rem;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+.village_desc{
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    width: 100%;
+    height: 2.5rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+.button_warp{
+    margin-top: 1rem;
+}
+.village_btn{
+    padding-right: 1rem;
+    padding-left: 1rem;
+    height: 1.8125rem;
+    border: #1a84d6 solid 1px;
+    font-size: 0.875rem;
+    background-color: transparent;
+    cursor: pointer;
+    color: #fff;
+    transition: all 0.5s ease-in;
+    float: right;
+}
+.village_btn:nth-child(2){
+    float: left;
+}
+.button_warp .village_btn:hover {
+    background: #1a84d6;
+}
+.list_house{
+    height: calc(100% - 12.5rem);
+    overflow: hidden;
+}
+.house_tabs{
+    display: flex;
+    color: #fff;
+}
+.house_tab {
+    width: 25%;
+    line-height: 2.25rem;
+    font-size: 0.875rem;
+    text-align: center;
+    transition: all 0.5s ease-in;
+    cursor: pointer;
+    overflow: hidden;
+    height: 2.25rem;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+.house_tab_active {
+    background-color: #1a84d6;
+}
+.house_container{
+    height: calc(100% - 2.25rem);
+    width: 100%;
+    display: flex;
+    transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transform: translateX(-0%);
+}
+.silde{
+    display: none;
+    width: 100%;
+    overflow-x: auto;
+}
+.silde::-webkit-scrollbar {/*滚动条整体样式*/
+    width: 0.625rem;    /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+}
+.silde::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+    border-radius: 0.625rem; 
+     -webkit-box-shadow: inset 0 0 0.3125rem rgba(0,0,0,0.2);
+    background: #535353;
+}
+.silde::-webkit-scrollbar-track {/*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 0.3125rem rgba(0,0,0,0.2);
+    border-radius: 0.625rem; 
+    background: #EDEDED;
+}
+.house_warp{
+    background-color: #2c75b9;
+    height: 9.75rem;
+    border-bottom: #1c5f9d solid 1px;
+    display: flex;
+    position: relative;
+    color: #fff;
+}
+.house_warp:hover{
+    background-color: #3184D2;
+}
+.list_village .img_warp{
+    height: 7.25rem;
+    width:  7.25rem;
+}
+.list_village .img_warp img{
+    height: 100%;
+    width: 100%;
+}
+.house_warp .img_warp{
+    width: 7.125rem;
+    height: 7.125rem;
+    border: #3892E2 solid 3px;
+    margin-top: 1.25rem;
+    margin-left: 1.25rem;
+}
+.house_warp .img_warp img{
+    height: 100%;
+    width: 100%;
+}
+.house_warp .detail{
+    margin-top: 1.6875rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    width: 13.75rem;
+}
+.house_warp .name {
+    font-size: 1rem;
+    float: left;
+    height: 1.5625rem;
+    width: 7.5rem;
+    cursor: pointer;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+.house_warp .price {
+    color: #ffd200;
+    float: right;
+    font-size: 1rem;
+    height: 1.375rem;
+    width: 5.9375rem;
+    text-align: right;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+.house_warp .desc {
+    font-size: 0.875rem;
+    margin-top: 2.2rem;
+    height: 1.25rem;
+    width: 55%;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+.house_warp .area {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    height: 1.25rem;
+    width: 100%;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+.house_warp .belong {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    height: 1.25rem;
+    width: 7.5rem;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+.house_warp .btn {
+    width: 5.5rem;
+    height: 1.875rem;
+    border: #16528b solid 1px;
+    font-size: 0.875rem;
+    background-color: transparent;
+    cursor: pointer;
+    color: #fff;
+    transition: all 0.5s ease-in;
+    position: absolute;
+    top: 6.625rem;
+    left: 17.75rem;
+    line-height: 1;
+}
+.house_warp .btn:hover{
+    background-color: #16528b;
+    color:#fff;
+}
+#display-control {
+    width: 1.625rem;
+    line-height: 6.25rem;
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    background-color: #0072a6;
+    opacity: 0.9;
+    transform: translateY(-50%);
+    padding-left: 0.375rem;
+    cursor: pointer;
+    display: none;
+}
+#display-control:hover{
+    background-color: #3184D2;
+    z-index: 100;
+}
+#display-control img {
+    transition: all 0.5s ease-out;
+    vertical-align: middle;
+}
+
+/*多关键字poi搜索*/
+.checks{
+    background-color: #5e6c79;
+    position: absolute;
+    top: 55%;
+    transform: translateY(-50%);
+    right: 1rem;
+    display: none;
+}
+
+.check>input{
+    display: none;
+}
+
+.check>input:checked + label{
+    background-image: url(../images/checked.png);
+}
+
+.check>label:nth-of-type(1){
+    width: 2.125rem;
+    height: 2.125rem;
+    background-color: rgba(0, 37, 69, 0.77);
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 1px;
+    margin-bottom: 1px;
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+.check>label:nth-of-type(2){
+    background-color: rgba(0, 37, 69, 0.77);
+    width: 3.375rem;
+    line-height: 2.125rem;
+    margin-bottom: 1px;
+    display: inline-block;
+    font-size: 0.875rem;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+}
+
+#showMore{
+    width: 5.625rem;
+    line-height: 2.125rem;
+    background-color: rgba(0, 37, 69, 0.77);
+    font-size: 0.875rem;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    border-bottom: #5e6c79 solid 1px;
+}
+
+.checks-other{
+    display: none;
+    background-color: #5e6c79;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 6.25rem;
+    padding-right: 1px;
+}
+.distance-legend {
+    right: 5.5rem;
+    bottom: 6rem;
+    /*pointer-events: auto;*/
+    position: absolute;
+    /*border-radius: 15px;*/
+    /*padding-left: 5px;*/
+    padding-right: 5px;
+    height: 1.5rem;
+    width: 6rem;
+    box-sizing: content-box;
+}
+.distance-legend-label{
+    display: inline-block;
+    font-family: 'Roboto',sans-serif;
+    background: url(../images/distancekm.png);
+    font-size: 14px;
+    font-weight: lighter;
+    line-height: 2.8rem;
+    color: #fff;
+    padding-left:0.5rem;
+    width: 125px;
+    text-align: left;
+    height: 2.0625rem;
+    width: 11.25rem;
+}
+.compass {
+    /*pointer-events: auto;*/
+    right: 0.6rem;
+    overflow: hidden;
+    bottom: 5.5rem;
+    height: 4.5rem;
+    width: 4.5rem;
+}
+.distanceimg,.closedistanceimg{
+    bottom: 11.7rem;
+    /* margin-top: -5.3125rem; */
+    float: right;
+    margin-right: 2.3rem;
+    position: relative;
+    cursor: pointer;
+}
+
+/*标注*/
+.labelbox{
+    height: 6.25rem;
+    width: 16.25rem;
+    position: absolute;
+    bottom: 10rem;
+    right: 7.1875rem;
+    z-index: 100;
+    display: none;
+}
+.labelboxbgcolor{
+    position: absolute;
+    z-index: 111;
+    background-color: #000;
+    opacity: 0.5;
+    height: 100%;
+    width: 100%;
+}
+.labelcontent{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 122;
+    font-size: 0.875rem;
+    color: #fff;
+}
+.labeltext{
+    margin-top: 0.625rem;
+    display: inline-block;
+    margin-left: 0.625rem;
+}
+.labelsearchtext{
+    margin-top: 0.3125rem;
+    margin-left: 0.625rem;
+    display: inline-block;
+}   
+.distancechoose:nth-of-type(1){
+    margin-left: 0.625rem;
+    margin-top: 1.25rem;
+}
+.distancechoose:nth-of-type(2){
+    margin-left: 1.25rem;
+}
+.distancechoose:nth-of-type(3){
+    margin-left: 1.25rem;
+}
+.freshenmap{
+    height: 1.875rem;
+    width: 1.875rem;
+    background-color: #327ab5;
+    position: absolute;
+    right: 1.875rem;
+    top: 10.625rem;
+    z-index: 100;
+    float: right;
+    border: none;
+    color: #fff;
+    font-size: 0.75rem;
+}
+.breakmap{
+    color: #fff;
+    font-size: 0.875rem;
+    text-align: center;
+    width: 8rem;
+    line-height: 2.625rem;
+    background-color: #2c75B9;
+    transition: all 0.5s ease-in;
+    border: none;
+    position: absolute;
+    bottom: 3.125rem;
+    left: 50%;
+    margin-left: -4rem;
+    display: none;
+}
+.breakmap:hover{
+    background-color: #008AFF;
+}
+.house_img_warp,#village_img{
+    height: 6.75rem;
+    width:  6.75rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.newDIV{
+    position: absolute;
+    z-index: 5;
+    height: 2.5rem;
+    background-position: center;
+    cursor: pointer;
+    padding-left: 0.625rem;
+    font-size: 0.875rem;
+    padding-right: 0.625rem;
+    border-radius: 0.75rem;
+    height: 1.5625rem;
+    line-height: 1.5rem;
+    background: #2c75B9;
+    color: #fff;
+}
+.newDIV:hover{
+    z-index: 6;
+    background:#008AFF;
+}
+.newDIV:hover > i{
+    z-index: 6;
+    border-top: 0.5625rem solid #008AFF;
+}
+.newDIV i{
+    position: absolute;
+    border-top: 0.5625rem solid #2c75B9;
+    border-left:0.5625rem dashed transparent;
+    border-right: 0.5625rem dashed transparent;
+    z-index: 5;
+    left: 50%;
+    top: 1.5625rem;
+    margin-left: -0.5625rem;
+}
+/*IOI列表*/
+.IOIList{
+    width: 24.125rem;
+    position: absolute;
+    top:3.75rem;
+    background-color: rgba(0, 37, 68, 0.77);
+    z-index: 2;
+    height: calc(100% - 3.75rem ); 
+    transition: all 0.5s ease-out;
+}
+.IOIListhead{
+    line-height: 3.125rem;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    font-size: 1.125rem;
+    background-color: #0072a6;
+    letter-spacing: 0.375rem;
+    font-family: cursive;
+    font-weight: bold;
+}
+.FirstIOIList{width: 50%;height: 50%;display: flex;flex-direction:column;float: left;}
+.IOIListTip{
+    width: 100%;
+    background-color: #2c75b9;
+    border-bottom: #1c5f9d solid 1px;
+    color: #fff;
+    text-align: center;
+    flex: 1;
+    cursor: pointer;   
+}
+.IOIListTip:nth-child(2){
+    background-color: #0072a6;
+}
+.IOIListTip:hover{
+    background-color: #3184D2;
+}
+#IOIlist-control {
+    width: 1.625rem;
+    line-height: 6.25rem;
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    background-color: #0072a6;
+    opacity: 0.9;
+    transform: translateY(-50%);
+    padding-left: 0.375rem;
+    cursor: pointer;
+    margin-top: -8.75rem;
+}
+
+#IOIlist-control img {
+    transition: all 0.5s ease-out;
+    vertical-align: middle;
+}
+#IOIlist-control:hover{
+    background-color: #3184D2;
+    z-index: 100;
+}
+.IOIListTip_active{
+    background-color: #3184D2;
+}
+.IOIListTip img{
+    height: 7.5rem;
+    margin-top: 1.5rem;
+    width: 10rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-left: 0.1875rem;
+}
+.IOIListTip span  {
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    color: #fff;
+    display: inline-block;
+}
+.SmallIOIList{
+    width: 50%;
+    height: calc(100% - 3.125rem);
+    float: left;
+}
+.SmallIOIListsild{
+    float: left;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    display: none;
+    transition: all 0.5s ease-out;
+}
+.showSmallIOIListsild{display: block;}
+.SmallIOIListsild::-webkit-scrollbar {/*滚动条整体样式*/
+    width: 5px;     /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+}
+.SmallIOIListsild::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+    border-radius: 10px;
+     -webkit-box-shadow: inset 0 0 0.3125rem rgba(0,0,0,0.2);
+    background: #535353;
+}
+.SmallIOIListsild::-webkit-scrollbar-track {/*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 0.3125rem rgba(0,0,0,0.2);
+    border-radius: 0.625rem;
+    background: #EDEDED;
+}
+.SmallIOIListTip{
+    width: 100%;
+    background-color: #295f90;
+    border-bottom: #13497b solid 1px;
+    color: #fff;
+    text-align: center;
+    flex: 1;
+    cursor: pointer;   
+}
+.SmallIOIListTip:hover{
+    background-color: #3184D2;
+}
+.SmallIOIListTip img{
+    height: 7.5rem;
+    margin-top: 1rem;
+    width: 10rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-left: 0.1875rem;
+}
+.SmallIOIListTip span{
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    color: #fff;
+    display: inline-block;
+}
+#choose_map{
+    position: absolute;
+    height: 1.875rem;
+    width: 6.25rem;
+    top: 1rem;
+    left: 33.75rem;
+    border-radius: 0.9375rem;
+    z-index: 100;
+    background-color: #327AB5;
+    color: #fff;
+}
+#clearpoi{
+    height: 35px;
+    width: 100%;
+    background: rgba(0, 37, 69, 0.77);
+    border: none;
+    color: #fff;
+}

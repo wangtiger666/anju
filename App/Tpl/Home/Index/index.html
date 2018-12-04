@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>123</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        {:W("Uploader")}
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#btn").uploader("image", "spphotodata");
+            });
+            function spphotodata(data){
+                $("#tu").val(data);
+            }
+        </script>
+    </head>
+    <body>
+        <a href="{:U('admin/index/index')}">{:U('admin/index/index')}</a>
+        __PUBLIC__
+        <div><input type="text" id="tu"/><input type="button" id="btn"/></div>
+    </body>
+</html>

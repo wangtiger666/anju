@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <script src="__PUBLIC__/common/js/jquery.js" language="javascript" type="text/javascript"></script>
+		<script src="__PUBLIC__/common/js/common.js" language="javascript" type="text/javascript"></script>
+		<script src="__PUBLIC__/admin/laydate/laydate.js" language="javascript" type="text/javascript"></script>
+		<!-- bootstrap START-->
+        <link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/plugins/footable/footable.core.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/animate.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/style.css" rel="stylesheet">
+        <link href="__PUBLIC__/common/style/recovebootstrap.css" rel="stylesheet" type="text/css" />
+
+        <!-- bootstrap END -->
+    </head>
+    <body>
+         <div class="main">
+            <div class="downbox">
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5>订单列表</h5>
+                            <div class="ibox-tools" style="display: inline-block;float: right;">
+                                <form id="myform" method="post" action="{:U('Order/index')}" >
+                                    账号：<input type="text" name="account" value="{$account}">
+                                    支付类型：<select name="pay_type">
+                                                <option value="">请选择...</option>
+                                                <option value="1" <if condition="$pay_type == 1">selected</if> >支付宝</option>
+                                                <option value="2" <if condition="$pay_type == 2">selected</if>>微信支付</option>
+                                                <option value="3" <if condition="$pay_type == 3">selected</if>>银联支付</option>
+                                            </select>
+                                    订单状态：<select name="order_status">
+                                                <option value="">请选择...</option>
+                                                <option value="1" <if condition="$order_status == 1">selected</if> >未支付</option>
+                                                <option value="2" <if condition="$order_status == 2">selected</if>>支付成功</option>
+                                                <option value="3" <if condition="$order_status == 3">selected</if>>支付未完成</option>
+                                            </select>
+                                    开始时间：<input type="text" id="startDate" name="startDate" value="{$startDate}">
+                                    结束时间：<input type="text" id="endDate" name="endDate" value="{$endDate}">
+                                    <a   onclick="$('#myform').submit();" class="btn btn-primary btn-xs">搜索</a>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <table class="footable table table-stripped toggle-arrow-tiny footable-loaded default breakpoint" data-page-size="15">
+                                <thead>
+                                  <tr>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">账号<span class=""></span></th>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">订单号<span class=""></span></th>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">第三方订单号<span class=""></span></th>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">支付类型<span class=""></span></th>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">充值金额<span class=""></span></th>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">到账金额<span class=""></span></th>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">手续费<span class=""></span></th>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">订单状态<span class=""></span></th>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">支付时间<span class=""></span></th>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">到账时间<span class=""></span></th>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">修改时间<span class=""></span></th>
+                                 </tr>
+                                 </thead>
+                                 <tbody>
+                                 <volist name="list" id="vo">
+                                     <tr    class=" <if condition='(($key%2) eq 0)'>footable-odd<else />footable-even</if>"  style="display: table-row;" >
+                                     <td class="footable-visible footable-first-column">{$vo['account']}</td>
+                                     <td class="footable-visible footable-first-column">{$vo['order_no']} </td>
+                                     <td class="footable-visible footable-first-column">{$vo['third_no']}</td>
+                                     <td class="footable-visible footable-first-column">
+                                         <if condition="$vo['pay_type'] == 1">
+                                                未支付
+                                         <elseif condition="$vo['pay_type'] == 2"/>
+                                                支付成功
+                                         <else/>
+                                                支付未完成
+                                         </if>
+                                     </td>
+                                     <td class="footable-visible footable-first-column">{$vo['pay_money']}</td>
+                                     <td class="footable-visible footable-first-column">{$vo['get_money']}</td>
+                                     <td class="footable-visible footable-first-column">{$vo['fee']}</td>
+                                     <td class="footable-visible footable-first-column">
+                                         <if condition="$vo['order_status'] == 1">
+                                             支付宝
+                                             <elseif condition="$vo['order_status'] == 2"/>
+                                             微信支付
+                                             <else/>
+                                             银联支付
+                                         </if>
+                                     </td>
+                                     <td class="footable-visible footable-first-column">{$vo['pay_time']}</td>
+                                     <td class="footable-visible footable-first-column">{$vo['get_time']}</td>
+                                     <td class="footable-visible footable-first-column">{$vo['modify_time']}</td>
+                                </tr>
+                                </volist>
+                                </tbody>
+                            </table>
+                            <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" align="center">
+                                    <tr  class="tr_white" align="center">
+                                        <td id="page_list" height="60" >
+                                            {$page}
+                                        </td>
+                                    </tr>
+                            </table> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </body>
+<script>
+    //执行一个laydate实例
+    laydate.render({
+        elem: '#startDate' //指定元素
+    });
+    laydate.render({
+        elem: '#endDate' //指定元素
+    });
+</script>
+</html>

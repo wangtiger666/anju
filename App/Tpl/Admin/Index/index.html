@@ -1,0 +1,203 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{$web_name}平台管理</title>
+    <link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/bootstrap/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="__PUBLIC__/bootstrap/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/bootstrap/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+    <link href="__PUBLIC__/bootstrap/css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/bootstrap/css/style.css" rel="stylesheet">
+    <style type="text/css">  
+	.main {height:100%;}
+	.main iframe {height:100%;width:100%;z-index:0;}
+	#vie  {font-family: '微软雅黑';  text-align: center; font-size: 18px;font-weight: 400;color: white;padding: 18px 0;}
+	#viee {font-family: '微软雅黑'; font-size: 18px;font-weight: 400;}
+	.m-t-xs{ text-align: center;}
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element"> 
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear"> <span class="block m-t-xs"> 
+                            <strong  id="vie" ><a href="">{$web_name}管理 V6.0</strong>
+                             </span> 
+                  			</span>
+                             </a>
+                        </div>
+                        <div class="logo-element"  id="viee" >
+                            {$web_name}
+                        </div>
+                    </li>
+					
+					<if condition="$group_id eq 10">
+                         <li id="menu2">
+                        <a  href="/admin/pano/show" target="main" ><i class="fa fa-picture-o"></i> <span class="nav-label">全景管理</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse" id="menu12" >
+                            <li class="link"> <a href="/admin/pano/index" target="main" >全景项目</a></li>
+                            <!--
+                            <li class="link"> <a href="/admin/pano/index" target="main" >热点图标</a></li>
+                            <li class="link"> <a href="/admin/pano/index" target="main" >背景音乐</a></li>
+                            -->
+                            <li class="link"> <a href="/admin/WebHangye/index" target="main" >行业设置</a></li>
+                            <li class="link"> <a href="/admin/WebArea/index" target="main" >地区设置</a></li>
+                        </ul>
+                    </li>
+                    <li id="menu1">
+                        <a href="/admin/control/show" target="main" ><i class="fa fa-laptop"></i> <span class="nav-label">用户管理</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse"  id="menu11" >
+						
+                            <li class="link"> <a href="/admin/control/dlindex" target="main" >代理账号</a></li>
+                            <li class="link"> <a href="/admin/user/index" target="main" >用户账号</a></li>
+                            <li class="link"> <a href="/admin/control/index" target="main" >系统管理员</a></li>
+                            <li class="link"> <a href="/admin/group/index" target="main" >系统用户组</a></li>
+                        </ul>
+                    </li>
+               
+                    <li id="menu3">
+                        <a href="/admin/ad/show" target="main" ><i class="fa fa-table"></i> <span class="nav-label">广告管理</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse" id="menu13">
+                            <li class="link"> <a href="/admin/ad/imgindex/ismobile/0" target="main" >平台广告位</a></li>
+                            <li class="link"> <a href="/admin/WebAd/imgindex" target="main" >关于广告位</a></li>
+                            <li class="link"> <a href="/admin/ad/imgindex/ismobile/1" target="main" >手机广告位</a></li>
+                            <li class="link"> <a href="/admin/YunAd/imgindex" target="main" >720yun广告位</a></li>
+                        </ul>
+                    </li>
+                    <li id="menu4">
+                        <a  href="/admin/WebArticle/show" target="main" ><i class="fa fa-edit"></i> <span class="nav-label">文章管理</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse" id="menu14"  >
+                            <li class="link"> <a href="/admin/WebArtlanmu/index" target="main" >栏目设置</a></li>
+                            <li class="link"> <a href="/admin/WebArticle/index" target="main" >文章列表</a></li>
+                            <li class="link"> <a href="/admin/web_artdanye" target="main" >文章单页</a></li>
+                        </ul>
+                    </li>
+                    <li  onclick="menuhidden()">
+                        <a  href="/admin/WebNav/show" target="main" ><i class="fa fa-edit"></i> <span class="nav-label">导航管理</span><span class="fa arrow"></span></a>
+                    </li>
+                    <li id="menu4">
+                        <a  href="/admin/YunArticle/show" target="main" ><i class="fa fa-edit"></i> <span class="nav-label">720云文章管理</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse" id="menu14"  >
+                            <li class="link"> <a href="/admin/YunArtlanmu/index" target="main" >栏目设置</a></li>
+                            <li class="link"> <a href="/admin/YunArticle/index" target="main" >文章列表</a></li>
+                            <li class="link"> <a href="/admin/yun_artdanye" target="main" >文章单页</a></li>
+                        </ul>
+                    </li>
+                    <li  onclick="menuhidden()">
+                        <a  href="/admin/YunNav/show" target="main" ><i class="fa fa-edit"></i> <span class="nav-label">720云导航管理</span><span class="fa arrow"></span></a>
+                    </li>
+                    <li onclick="menuhidden()">
+                        <a  href="/admin/Weblink/index" target="main"><i class="fa fa-magic"></i> <span class="nav-label">友情链接</span> <span class="fa arrow"></span></a>
+                       </li>
+                        <li onclick="menuhidden()" >
+                        <a href="/admin/system/show" target="main" ><i class="fa fa-th-large"></i> <span class="nav-label">系统配置</span> <span class="fa arrow"></span></a>
+                    </li>
+                    <li id="menu4">
+                        <a target="main" ><i class="fa fa-edit"></i> <span class="nav-label">系统数据管理</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse" id="menu14"  >
+                            <li class="link"> <a href="/admin/Region/index" target="main" >行政区域设置</a></li>
+                            <li class="link"> <a href="/admin/Commonality/index" target="main" >公共参数配置设置</a></li>
+                        </ul>
+                    </li>
+                    <li id="menu4">
+                        <a target="main" ><i class="fa fa-edit"></i> <span class="nav-label">账号相关管理</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse" id="menu14"  >
+                            <li class="link"> <a href="/admin/Account/index" target="main" >账号管理</a></li>
+                            <li class="link"> <a href="/admin/HouseFollow/index" target="main" >浏览关注记录管理</a></li>
+                            <li class="link"> <a href="/admin/HouseBook/index" target="main" >房屋预订记录管理</a></li>
+                            <li class="link"> <a href="/admin/Order/index" target="main" >充值订单管理</a></li>
+                            <li class="link"> <a href="/admin/SystemMessage/index" target="main" >发送系统消息</a></li>
+                        </ul>
+                    </li>
+                    <!--
+                      <li onclick="menuhidden()">
+                        <a href="/admin/AppConfig/show" target="main" ><i class="fa fa-magic"></i> <span class="nav-label">APP配置</span> <span class="fa arrow"></span></a>
+                       </li>
+                     -->
+                    <li onclick="menuhidden()">
+                        <a href="/admin/updata/index" target="main" ><i class="fa fa-files-o"></i> <span class="nav-label">一键升级</span> <span class="fa arrow"></span></a></li>
+				 <else/>
+				 <li id="menu1">
+                        <a href="/admin/control/show" target="main" ><i class="fa fa-laptop"></i> <span class="nav-label">用户管理</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse"  id="menu11" >
+						
+                            <li class="link"> <a href="/admin/user/index" target="main" >用户账号</a></li>
+
+
+                        </ul>
+                    </li>
+				 </if>
+				 
+                </ul>
+            </div>
+        </nav>
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+        <div class="row border-bottom">
+        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+        </div>
+            <ul class="nav navbar-top-links navbar-right">
+            <li>
+                <span class="m-r-sm text-muted welcome-message"><a href="/" target="_blank"  >查看前台</a> 您好，<a href="/admin/control/edit/id/1" target="main" alt="修改密码" >{:session(C("SESSION_NAME"));} </a></span>
+            </li>
+      
+            <li>
+                <a href="{:U('login/logout')}">
+                    <i class="fa fa-sign-out"></i>退出
+                </a>
+            </li>
+        </ul>
+
+        </nav>
+        </div>
+        <div class="row  border-bottom white-bg dashboard-header" style="height: 100%" >
+            <div class="main" style="height: 100%">
+            <iframe id="main" style="min-height:900px;width:100%;height: 100%;" name="main" src="{:U('system/home')}"   frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"  ></iframe>
+            </div>
+        </div>
+       
+        </div>
+    </div>
+    <script type="text/javascript">
+    	function menuhidden(){
+    		$("#menu1").removeClass("active");
+    		$("#menu2").removeClass("active");
+    		$("#menu3").removeClass("active");
+    		$("#menu4").removeClass("active");
+    		$("#menu5").removeClass("active");
+    		$("#menu15").removeClass("in");
+    		$("#menu11").removeClass("in");
+    		$("#menu12").removeClass("in");
+    		$("#menu13").removeClass("in");
+    		$("#menu14").removeClass("in");
+    	}
+    </script>
+	<script src="__PUBLIC__/bootstrap/js/jquery-2.1.1.js"></script>
+	<script src="__PUBLIC__/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/bootstrap/js/plugins/metisMenu/jquery.metisMenu.js"></script> 
+    <script src="__PUBLIC__/bootstrap/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/plugins/flot/jquery.flot.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/plugins/flot/jquery.flot.spline.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/plugins/flot/jquery.flot.resize.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/plugins/flot/jquery.flot.pie.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/demo/peity-demo.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/inspinia.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/plugins/pace/pace.min.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/plugins/gritter/jquery.gritter.min.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/demo/sparkline-demo.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/plugins/chartJs/Chart.min.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/plugins/toastr/toastr.min.js"></script>
+</body>
+</html>

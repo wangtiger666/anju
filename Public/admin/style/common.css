@@ -1,0 +1,166 @@
+@charset "utf-8";
+*{
+    font: 12px "微软雅黑", "宋体", Helvetica, Arial, Verdana;
+}
+body{
+    margin:0;padding:0;background:#fff; overflow:auto;
+     font-family: "微软雅黑", "宋体", Helvetica, Arial, Verdana;
+     font-size: 12px;
+}
+ul,li,dl,dt,dd{ margin:0px; padding:0px; list-style:none;}
+a{text-decoration:none; color: #333; cursor: pointer;}
+a:link{}
+a:visited{}
+a:hover{text-decoration:none; color: #199372;}
+a:active{}
+img{border:0;padding:0; margin:0;}
+p{padding:0; margin:0;}
+b{
+    font-weight: bold;
+}
+span.bold{
+    font-weight: bold;
+}
+span.red{
+    color: #be0000;
+}
+span.green{
+    color: #199372;
+}
+
+.main{
+    overflow: hidden; margin: 10px;
+}
+
+#indexmian{
+    width: auto; overflow: hidden; border:1px solid #ccc; margin: 6px;
+    border-radius:2px; box-shadow: 0px 2px 2px #ddd;
+}
+#indextitle{
+    width: auto; height: 30px; overflow: hidden; background: #f3f3f3; border-bottom: 1px solid #ccc;
+    font: bold 14px/30px "微软雅黑"; color: #333; padding: 0 10px;
+}
+#indexmain{
+    width: auto; overflow: hidden; margin: 4px;
+}
+
+.right{
+    float: right;
+}
+
+.tr_white{
+    background: #fff;
+}
+.tr_hui{
+    background: url(../images/common/menutbbg.png) repeat-x #f8f8f8;
+}
+
+
+.td_head{
+    border:1px solid #d6d6d6; border-bottom:none; padding: 0px 10px;
+}
+.td_title{
+    background: url(../images/common/tbg.gif) repeat-x;
+}
+.td_p8{
+    padding-left: 8px;
+}
+.td_pr8{
+    padding-right: 8px;
+}
+.td_p16{
+    padding-left: 16px;
+}
+
+.btn1{
+    width: 68px; height: 22px; background: url(../images/common/btn1.jpg) no-repeat; overflow: hidden; padding: 0px; margin: 2px; border:none;
+    color: #666; cursor: pointer; line-height: 22px;
+}
+.btn1:hover{
+    background-position: 0 -22px;
+}
+.btn2{
+    width: 78px; height: 22px; background: url(../images/common/btn2.jpg) no-repeat; overflow: hidden; padding: 0px;  margin: 2px; border:none;
+    color: #fffae7; cursor: pointer; line-height: 22px;
+}
+.btn2:hover{
+    color: #fff;
+}
+.btn3{
+    width: 100px; height: 22px; background: url(../images/common/btn3.jpg) no-repeat; overflow: hidden; padding: 0px;  margin: 2px; border:none;
+    color: #666; cursor: pointer; line-height: 22px;
+}
+.btn3:hover{
+    background-position: 0 -22px;
+}
+.btn4{
+    width: 100px; height: 22px; background: url(../images/common/btn4.jpg) no-repeat; overflow: hidden; padding: 0px;  margin: 2px; border:none;
+    color: #fffae7; cursor: pointer; line-height: 22px;
+}
+.btn4:hover{
+    color: #fff;
+}
+
+
+#page_list .page_text{
+    padding: 2px 8px; border:1px solid #ddd; background: #f6f6f6; border-radius:3px; color: #333; margin: 0 2px;
+    font: bold 12px/26px "微软雅黑", "宋体", Helvetica, Arial, Verdana; overflow: hidden; cursor: default;
+}
+
+#page_list a{
+    padding: 2px 6px; border:1px solid #bbb; background: #f6f6f6; border-radius:3px; color: #333;
+    font: bold 12px/26px "微软雅黑", "宋体", Helvetica, Arial, Verdana; overflow: hidden; margin: 0 2px;
+}
+#page_list a:hover{
+    background: #eee; border-color: #999; color: #333; text-decoration: none;
+}
+#page_list span.current{
+    padding: 2px 6px; border:1px solid #f88e00; background: #ffbc00; border-radius:3px; color: #fff;
+    font: bold 12px/26px "微软雅黑", "宋体", Helvetica, Arial, Verdana; cursor: default;
+    overflow: hidden; margin: 0 2px;
+}
+#page_list span.notuse{
+    padding: 2px 6px; border:1px solid #ddd; background: #f6f6f6; border-radius:3px; color: #fff;
+    font: bold 12px/26px "微软雅黑", "宋体", Helvetica, Arial, Verdana; cursor: default;
+    overflow: hidden; margin: 0 2px;  color: #999;
+}
+
+.onoff{
+    width: 58px; height: 29px; overflow: hidden; background: url(../images/common/onoff.png) no-repeat; cursor: pointer; display: inline-block; vertical-align: middle;
+}
+.onoff.off{
+    width: 58px; height: 29px; overflow: hidden; background: url(../images/common/onoff.png) 0 -30px no-repeat; cursor: pointer;
+}
+
+.msgbox{
+    width: 300px; height: 80px; overflow: hidden; border-radius: 4px;
+    background: url(../images/common/hei.png) repeat;
+    position: fixed; z-index: 1000000000; cursor: default;
+}
+.msgbox .main{
+    width: 290px; height: 70px; overflow: hidden; margin: 5px; background: #fff; border-radius: 3px;
+}
+.msgbox .main .msgform{
+    width: 280px; height: 60px; overflow: hidden; padding: 5px;
+}
+.msgbox .main .msgform .good{
+    width: 48px; height: 48px; overflow: hidden;
+    background: url(../images/common/msg1.png) no-repeat;
+}
+.msgbox .main .msgform .bad{
+    width: 48px; height: 48px; overflow: hidden;
+    background: url(../images/common/msg0.png) no-repeat;
+}
+.msgbox .main .msgform .tan{
+    width: 48px; height: 48px; overflow: hidden;
+    background: url(../images/common/msg2.png) no-repeat;
+}
+.msgbox .main .msgform span{
+    font-size: 14px;
+}
+.msgbox .main .msgform span.red{
+    color: #be0000;
+}
+.msgbox .main .msgform span.green{
+    color: #1F9999;
+}

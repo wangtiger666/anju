@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/pano/pano.js"></script>
+        {:W("Easyui")}
+        {:W("Uploader")}
+        <script type="text/javascript">
+            function checksb(){
+                var result = true;
+                if(result == true){
+                    result = AutoCheckSub(".cs");
+                }
+                if(result == true){
+                    var target_id = $("#target_id").val();
+                    if(target_id == "0"){
+                        showMsg("请选定目标场景！");
+                        result = false;
+                    }
+                }
+                return result;
+            }
+        </script>
+        <style type="text/css">
+            .chengbox{
+                width: auto; height: 24px; overflow: hidden; border:1px solid #f7db99; border-radius : 5px; text-indent: 10px;
+                background: #fffbf3;margin: 5px; font: 12px/24px "微软雅黑"; color: #FFA900; cursor: default;
+            }
+        </style>
+
+        <style>
+            .cropbox{
+                width: 100px; height: 100px; overflow: hidden; border:1px solid #ccc; background: url(__PUBLIC__/member/images/common/psbg.png); cursor: pointer;
+            }
+            .hovercropbox{
+                width: 100px; height: 100px; overflow: hidden; border:1px solid #ccc; background: url(__PUBLIC__/member/images/common/psbg.png); cursor: pointer;
+            }
+            .downcropbox{
+                width: 100px; height: 100px; overflow: hidden; border:1px solid #ccc; background: url(__PUBLIC__/member/images/common/psbg.png); cursor: pointer;
+            }
+            .thepic{
+                overflow: hidden;
+            }
+            .hide{
+                display: none;
+            }
+        </style>
+        <script type="text/javascript">
+            var nowcrop = "";
+            $(function(){
+                var img = $("#url").val();
+                if(img != ""){
+                    $(".hide").show();
+                    $(".thepic").css("background-image","url("+img+")");
+                    getcropto("crop",$("#crop").val())
+                    getcropto("hovercrop",$("#hovercrop").val())
+                    getcropto("downcrop",$("#downcrop").val())
+                }
+            });
+            function fillimg(img,name){
+                var classname = name + "box";
+                var theImage = new Image();
+                theImage.src = img;
+                var w = theImage.width;
+                var h = theImage.height;
+                if(w>h){
+                    $("#"+name).val("0|0|"+h+"|"+h);
+                }else{
+                    $("#"+name).val("0|0|"+w+"|"+w);
+                }
+                $("."+classname).children(".thepic").width(w);
+                $("."+classname).children(".thepic").height(h);
+                $("."+classname).children(".thepic").css("background-image","url("+img+")");
+                $("."+classname).children(".thepic").css("background-position","0px 0px");
+                if(w>100){
+                    $("."+classname).width(w);
+                    $("."+classname).children(".thepic").css("marginLeft","0px");
+                }else{
+                    $("."+classname).width(100);
+                    var ox = (100 - w)/2;
+                    $("."+classname).children(".thepic").css("marginLeft",ox+"px");
+                }
+                if(h>100){
+                    $("."+classname).height(h);
+                    $("."+classname).children(".thepic").css("marginTop","0px");
+                }else{
+                    $("."+classname).height(100);
+                    var oy = (100 - h)/2;
+                    $("."+classname).children(".thepic").css("marginTop",oy+"px");
+                }
+            }
+            function getcrop(data){
+                if(nowcrop == "crop"){
+                    var aa = $("#crop").val();
+                    getcropto(nowcrop,data);
+                    if($("#hovercrop").val() == aa){
+                        getcropto("hovercrop",data);
+                    }
+                    if($("#downcrop").val() == aa){
+                        getcropto("downcrop",data);
+                    }
+                }else{
+                    getcropto(nowcrop,data);
+                }
+            }
+            function getcropto(thecrop,data){
+                var thearr = data.split("|");
+                $("#"+thecrop).val(data);
+                var classname = thecrop + "box";
+                var w = thearr[2];
+                var h = thearr[3];
+
+                $("."+classname).children(".thepic").width(w);
+                $("."+classname).children(".thepic").height(h);
+                $("."+classname).children(".thepic").css("background-position","-"+thearr[0]+"px "+"-"+thearr[1]+"px");
+                if(w>100){
+                    $("."+classname).width(w);
+                    $("."+classname).children(".thepic").css("marginLeft","0px");
+                }else{
+                    $("."+classname).width(100);
+                    var ox = (100 - w)/2;
+                    $("."+classname).children(".thepic").css("marginLeft",ox+"px");
+                }
+                if(h>100){
+                    $("."+classname).height(h);
+                    $("."+classname).children(".thepic").css("marginTop","0px");
+                }else{
+                    $("."+classname).height(100);
+                    var oy = (100 - h)/2;
+                    $("."+classname).children(".thepic").css("marginTop",oy+"px");
+                }
+
+                closewin();
+            }
+        </script>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">UI模块管理</div>
+                        <div title="关闭" onclick="DoNote('确认返回功能首页？','{:U('main/index')}');" class="close"></div>
+                        <div title="返回上级" onclick="LinkTo('{$backurl}');" class="goback"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            <span class="pano_menu_bottom me">自定义UI</span>
+                            <a href="{:U('sysindex')}" class="pano_menu_bottom">系统默认UI</a>
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main">
+                                <div class="action_title">UI - <a href="{$backurl}">{$row['title']}</a> - 添加UI子元素</div>
+                                <form name="form1" action="" onsubmit="return checksb();" enctype="multipart/form-data" method="post">
+                                    <input type="hidden" name="dopost" value="save" />
+                                    <input type="hidden" name="cid" value="{$cid}" />
+                                    <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="80"><b>元素名称：</b></td>
+                                            <td align="left">
+                                                <input type="text" id="title" name="title" value="{$row['title']}" sbname="元素名称" class="inputcube cs"/>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="tr_white" height="36">
+                                            <td align="right" width="100"><b>图片文件：</b></td>
+                                            <td align="left">
+                                                <input type="text" id="url" name="url" value="{$row['url']}" sbname="图片文件" class="longinputcube cs"/>
+                                                <input type="button" class="btn3" id="upimg" value="点击上传图片" />
+                                            </td>
+                                        </tr>
+                                        <script type="text/javascript">
+                                            $("#upimg").uploader("image","backimg");
+                                            function backimg(data){
+                                                $("#url").val(data);
+                                                $(".hide").show();
+                                                fillimg(data,"crop");
+                                                fillimg(data,"hovercrop");
+                                                fillimg(data,"downcrop");
+                                            }
+                                        </script>
+
+                                        <tr class="tr_white" height="10">
+                                            <td colspan="2"></td>
+                                        </tr>
+
+                                        <tr class="tr_white" height="10">
+                                            <td align="right" width="100"></td>
+                                            <td align="left">
+                                                点击下方图片，设置截取部分。
+                                            </td>
+                                        </tr>
+
+                                        <tr class="tr_white hide" height="36">
+                                            <td align="right" width="100"><b>默认状态：</b></td>
+                                            <td align="left">
+                                                <input type="hidden" id="crop" name="crop" value="{$row['crop']}"/>
+                                                <div class="cropbox">
+                                                    <div class="thepic"></div>
+                                                </div>
+                                                <script type="text/javascript">
+                                                    $(".cropbox").click(function(){
+                                                        nowcrop = "crop";
+                                                        var cropdata = $("#crop").val();
+                                                        var link = "{:UOne('crop')}";
+                                                        var picbox = $("#url").val();
+                                                        if(picbox == ""){
+                                                            return;
+                                                        }
+                                                        var theImage = new Image();
+                                                        theImage.src = picbox;
+                                                        var w = theImage.width;
+                                                        var h = theImage.height;
+                                                        link += "&img="+picbox;
+                                                        link += "&crop="+cropdata;
+                                                        link += "&w="+w;
+                                                        link += "&h="+h;
+                                                        var mw = w + 60;
+                                                        var mh = h + 220;
+                                                        if(mw<200){
+                                                            mw = 200;
+                                                        }
+                                                        if(mh<200){
+                                                            mh=200;
+                                                        }
+                                                        if(w>0 && h>0){
+                                                            openwin("截取图片",link,mw,mh);
+                                                        }else{
+                                                            $(".cropbox").click();
+                                                        }
+                                                    });
+                                                </script>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="tr_white hide" height="36">
+                                            <td align="right" width="100"><b>鼠标经过状态：</b></td>
+                                            <td align="left">
+                                                <input type="hidden" id="hovercrop" name="hovercrop" value="{$row['hovercrop']}"/>
+                                                <div class="hovercropbox">
+                                                    <div class="thepic"></div>
+                                                </div>
+                                                <script type="text/javascript">
+                                                    $(".hovercropbox").click(function(){
+                                                        nowcrop = "hovercrop";
+                                                        var cropdata = $("#hovercrop").val();
+                                                        var link = "{:UOne('crop')}";
+                                                        var picbox = $("#url").val();
+                                                        if(picbox == ""){
+                                                            return;
+                                                        }
+                                                        var theImage = new Image();
+                                                        theImage.src = picbox;
+                                                        var w = theImage.width;
+                                                        var h = theImage.height;
+                                                        link += "&img="+picbox;
+                                                        link += "&crop="+cropdata;
+                                                        link += "&w="+w;
+                                                        link += "&h="+h;
+                                                        var mw = w + 20;
+                                                        var mh = h + 220;
+                                                        if(mw<200){
+                                                            mw = 200;
+                                                        }
+                                                        if(mh<200){
+                                                            mh=200;
+                                                        }
+                                                        if(w>0 && h>0){
+                                                            openwin("截取图片",link,mw,mh);
+                                                        }else{
+                                                            $(".hovercropbox").click();
+                                                        }
+                                                    });
+                                                </script>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="tr_white hide" height="36">
+                                            <td align="right" width="100"><b>鼠标点击状态：</b></td>
+                                            <td align="left">
+                                                <input type="hidden" id="downcrop" name="downcrop" value="{$row['downcrop']}"/>
+                                                <div class="downcropbox">
+                                                    <div class="thepic"></div>
+                                                </div>
+                                                <script type="text/javascript">
+                                                    $(".downcropbox").click(function(){
+                                                        nowcrop = "downcrop";
+                                                        var cropdata = $("#downcrop").val();
+                                                        var link = "{:UOne('crop')}";
+                                                        var picbox = $("#url").val();
+                                                        if(picbox == ""){
+                                                            return;
+                                                        }
+                                                        var theImage = new Image();
+                                                        theImage.src = picbox;
+                                                        var w = theImage.width;
+                                                        var h = theImage.height;
+                                                        link += "&img="+picbox;
+                                                        link += "&crop="+cropdata;
+                                                        link += "&w="+w;
+                                                        link += "&h="+h;
+                                                        var mw = w + 20;
+                                                        var mh = h + 220;
+                                                        if(mw<200){
+                                                            mw = 200;
+                                                        }
+                                                        if(mh<200){
+                                                            mh=200;
+                                                        }
+                                                        if(w>0 && h>0){
+                                                            openwin("截取图片",link,mw,mh);
+                                                        }else{
+                                                            $(".downcropbox").click();
+                                                        }
+                                                    });
+                                                </script>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="tr_white" height="10">
+                                            <td colspan="2"></td>
+                                        </tr>
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="80"></td>
+                                            <td align="left">
+                                                <input type="submit" class="blackbutton" value="提交" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

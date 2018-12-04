@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link href="__PUBLIC__/admin/style/common.css" rel="stylesheet" type="text/css" />
+        <script src="__PUBLIC__/common/js/jquery.js" language="javascript" type="text/javascript"></script>
+        <script src="__PUBLIC__/common/js/common.js" language="javascript" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                onoroff();
+                $(".selectbox .cube").click(function(){
+                    var len = $(this).prevAll().length;
+                    $(".selectbox .cube").removeClass("me");
+                    $(".selectbox .cube").eq(len).addClass("me");
+                    $(".selectbody .cube").removeClass("me");
+                    $(".selectbody .cube").eq(len).addClass("me");
+                });
+            });
+        </script>
+        <style type="text/css">
+            .selectbag{
+                overflow: hidden; margin: 10px 30px;
+            }
+            .selectbox{
+                width: auto; height: 34px; overflow: hidden; padding: 0 10px;
+            }
+            .selectbox .cube{
+                width: 120px; height: 30px; overflow: hidden; margin-top: 4px; float: left; cursor: pointer;
+                text-align: center; font: bold 12px/30px "微软雅黑"; margin-right: 4px; border: 1px solid #c6c6c6; border-radius: 4px 4px 0 0;
+                border-bottom: 1px solid #fff; background: #eee; color: #666;
+            }
+            .selectbox .cube.me{
+                background: #FFA900; height: 34px; margin-top: 0px; border-color: #FFA900; line-height: 34px; color: #fff;
+            }
+            .selectbody{
+                width: auto; height: auto; min-height: 200px; overflow: hidden; border: 1px solid #c6c6c6; border-radius: 4px;
+            }
+            .selectbody .cube{
+                display: none; overflow: hidden; margin: 12px;
+            }
+            .selectbody .cube.me{
+                display: block; overflow: hidden;
+            }
+            .toolline{
+                height: 30px; width: 220px; overflow: hidden; float: left; padding: 5px 0;
+            }
+            .toolname{
+                width: 120px; height: 30px; overflow: hidden; float: left; font: bold 12px/30px "微软雅黑"; text-align: right; color: #009a70;
+            }
+            .tooloff{
+                width: 60px; height: 30px; overflow: hidden; float: left; margin: 0 15px;
+            }
+            .toolinfo{
+                height: 30px; overflow: hidden; font: bold 12px/30px "微软雅黑"; text-align: left; color: #999;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main">
+            <form name='form1' method='post'>
+                <input type='hidden' name='dopost' value='save'/>
+                <input type='hidden' name='id' value='{$id}'/>
+                <input type='hidden' name='pow_k' value='{$pow_k}'/>
+                <table width="100%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D6D6D6" align="center">
+                    <tr>
+                        <td class="td_title" height="26" style="padding-left:10px;">
+                            <table width="100%" border="0" cellspacing="1" cellpadding="1">
+                                <tr> 
+                                    <td width="24%" class="td_p8"><b>修改用户组</b> </td>
+                                    <td width="76%" class="td_pr8" align="right">
+                                        <input type="button" onclick="window.location.href='{$backurl}'" value="返回管理" class="btn2"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>                            
+                    </tr>
+                    <tr class="tr_white">
+                        <td align="center" style="padding-top: 20px;">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr> 
+                                    <td width="120" height="40" align="right"><b>用户组名称：</b></td>
+                                    <td align="left" class="td_p8">
+                                        <input name="groupname" type="text" value="{$row['groupname']}" id="groupname"/> 
+                                    </td>
+                                </tr>
+                                <tr> 
+                                    <td width="120" height="40" align="right"><b>权限描述 ：</b></td>
+                                    <td align="left" class="td_p8">
+                                        <input name="groupinfo" type="text" size="60" value="{$row['groupinfo']}" id="groupinfo"/> 
+                                    </td>
+                                </tr>
+								<if condition="$id eq 10">
+								<tr>
+                                    <td height="40" align="right"><b>所有功能：</b></td>
+                                    <td align="left" class="td_p8">
+                                        <span class="onoff" target="allpow" value="{$allpower}"></span>
+                                        <input type="hidden" id="allpow" name="allpow" value="{$allpower}" />
+                                    </td>
+                                </tr>
+								</if>
+                                <!-- <tr> 
+                                    <td height="40" align="right"><b>级别值：</b></td>
+                                    <td align="left" class="td_p8">
+                                        {$id}
+                                    </td>
+                                </tr>
+									
+                                
+
+                                <tr>
+                                    <td colspan="2" align="left">
+                                        <div class="selectbag">
+                                            <div class="selectbox">
+                                                {$head}
+                                            </div>
+                                            <div class="selectbody">
+                                                {$body}
+                                            </div>                                            
+                                        </div>                                        
+                                    </td>
+                                </tr> -->
+                                <tr> 
+                                    <td height="50" align="center">&nbsp;</td>
+                                    <td height="50"  style="text-align:left;">
+                                        <input  class="btn1" type="submit" value="保存"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>                    
+                </table>                
+            </form>
+        </div>
+    </body>
+</html>

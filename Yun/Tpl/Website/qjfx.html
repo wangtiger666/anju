@@ -1,0 +1,68 @@
+<include file="Header" />
+<!--float_nav-->
+<link rel="stylesheet" href="__PUBLIC__/webstyle/css/miao.css">
+<script type="text/javascript" src="__PUBLIC__/webstyle/js/advert1.js"></script>
+<div id="shan">
+  <div class="shanBanner">
+    <div class="shanBannerPic"><img src="__PUBLIC__/webstyle/images/shan_banner.jpg" alt="360度全景展示,全景拍摄,全景" /></div>
+    <div class="shanBannerCon">
+      <div class="shanBannerPos">
+        <p class="shanBanerTitle"><span>高 </span>质量全景推荐<br>
+          <span>抢</span>"0"元广告位<br>
+          世界变化太快，机会转瞬即逝</p>
+        <p class="shanBanerFont">全景发现推出"0"元广告位，3天免费展示<br>
+          只要您速度够快，就能从9个广告位中抢得一席之地。<br>
+          除了这里，我们还会在首页、资讯页、官方微信等重要位置免费展示您的全景。<br>
+          速度决定一切，抢到就是你的！</p>
+      </div>
+    </div>
+    <div class="downArrow"></div>
+  </div>
+  <div class="shanCon">
+    <div class="shanConLeft">
+
+
+      <foreach name="pano1" item="vo">
+      <div class="shanList">
+        <div class="shanListImg" style="width:325px;height:230px;position: relative;overflow: hidden;"  >
+        <a  target="_blank"><img data-id="12315" src="{$vo.panothumb}" alt="{$vo.title}"   style="margin-top:-48px;width:325px; height:278px;"  /></a></div>
+        <div class="shanListExplain">
+          <div class="shanListTitle">
+            <h3 data-id="12315"><a  target="_blank">{$vo.title}</a></h3>
+          </div>
+          <p class="industry" style="max-height:52px;overflow: hidden;" ><a  target="_blank">{$vo.pano_intro}</a></p>
+         <!--  <p class="showTime">展示时间：2016-10-24至2016-10-27</p> -->
+          <p class="freeGrab"><a class="queue" href="{$vo.panopath}" >预览</a></p>
+          <p class="moreActivities" ><a  class="pageView" id="view_history_745" >{$vo.hits} <div class="shareBd" ></div></a><!-- <a  class="share">分享</a> --></p>
+          <div class="shareBox">
+            <div class="bdsharebuttonbox"><a  class="bds_tsina" data-cmd="tsina" data-id="12315" title="分享到新浪微博" style="margin:0 18px 0 0;"></a><a  class="bds_weixin" data-cmd="weixin" data-id="12315" title="分享到微信" style="margin:0;"></a></div>
+          </div>
+        </div>
+      </div>
+       </foreach>
+    </div>
+    <!-- 左侧 .shanConLeft -->
+    <div class="shanConRight">
+     <!--  <div class="shanAd"><script id="s_advert_1464"></script></div> -->
+      <div class="expoonDynamics">
+        <div class="expoonDynamicsTitle">全景动态</div>
+        <ul class="expoonDynamicsNews" style="padding:0px 13px 0;">
+       <foreach name="hangye" item="vo">
+          <li><span>•</span><a  href="{$vo.ariurl}" target="_blank">{$vo.title}</a></li>
+     	</foreach>
+        </ul>
+      </div>
+      <div class="hotBooth">
+        <div class="hotBoothTitle">热门全景</div>
+        <ul class="hotBoothCon">
+		    <foreach name="pano2" item="vo">
+	          <li style="width:305px;height:254px;position: relative;overflow: hidden;" ><a href="{$vo.panopath}"  target="_blank" class="hotBoothImg"><img src="{$vo.panothumb}" alt="{$vo.title}"  style="margin-top:-50px;width:305px; height:255px;"  /></a><a  target="_blank">{$vo.title}</a></li>
+	        </foreach>
+        </ul>
+      </div>
+    </div>
+    <!-- 左侧 .shanConRight --></div>
+</div>
+<script src="__PUBLIC__/webstyle/js/miao.js"></script>
+<script src="__PUBLIC__/webstyle/js/zx_main.js"></script>
+<include file="Footer" />

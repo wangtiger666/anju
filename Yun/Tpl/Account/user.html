@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CCB3D全景看房系统</title>
+    <link rel="stylesheet" href="__PUBLIC__/welcome/css/head.css">
+    <link rel="stylesheet" href="__PUBLIC__/welcome/css/user.css">
+</head>
+</head>
+
+<body>
+    <div id="mask"></div>
+    <!-- 引入导航 -->
+    <include file="Welcome/head"/>
+    <main>
+        <div class="tip">
+            <span id="location">您的位置 : 首页 >> 个人中心</span>
+        </div>
+        <div class="user-center">
+            <div class="user-left">
+                <div class="img">
+                    <img src="{$accountSession['head_img']}" id="user_headimg">
+                </div>
+                <div class="btns">
+                    <button onclick="showAlert('#alert-password','#password-old','#password-new','#password-confirm')">修改密码</button>
+                    <button id="btn_file" onclick="F_Open_dialog()">修改头像</button>
+                    <input type="file" id="sendhead_img" name="sendhead_img" onchange="send_userimg()" style="display: none;">                
+                </div>
+                <div class="name">
+                    <input type="text" value="{$accountSession['nick_name']}" disabled='disabled' id='name'>
+                    <img src="__PUBLIC__/welcome/images/pen.png" id="changeName">
+                    <img src="__PUBLIC__/welcome/images/save.png" id="saveName">
+                </div>
+                <div class="nav">
+                    <img src="__PUBLIC__/welcome/images/tab.png" id="tab-act">
+                    <div class="user-tab">个人信息</div>
+                    <div class="user-tab" id="myfollows">我的关注</div>
+                    <div class="user-tab" onclick="mybrowing()"/>浏览记录</div>
+                    <div class="user-tab">我的消息</div>
+                    <div class="user-tab" onclick="mybespeak()"/>我的预约</div>
+                    <div class="user-tab"/>我的租房</div>
+                    <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=875999053&site=qq&menu=yes" id="qqserver" class="user-tab">在线客服</a>
+                    <div class="user-tab" id="log_off">退出登录</div>
+                </div>
+            </div>
+            <if condition="empty($accountSession)">
+                <button onclick="showAlert('#alert-phone','#phone-number','#verify-msg','#verify-img')" id="btn-setphone">设置手机</button>
+            <else/>
+            <div class="user-right user-type-0" id="user-page-0">
+                <img src="__PUBLIC__/welcome/images/tri.png">
+                <div class="title">
+                    个人信息
+                </div>
+
+                <div class="safe">
+                    <div class="safe-title title2">
+                        安全信息
+                    </div>
+                    <div class="info">
+                        <span>安全级别</span>
+                        <span class="lv1"></span>
+                        <span class="lv2"></span>
+                        <span class="lv3"></span>
+                        <span class="lv-info">低</span>
+                    </div>
+                    <div class="info">
+                        <span>绑定手机</span>
+                        <img src="__PUBLIC__/welcome/images/warn.png">
+                        <input type="text" placeholder="未绑定" value="{$accountSession['binding_phone']}" disabled>
+                        <button id="btn-changeBindPhone">更变手机</button>
+                    </div>
+                    <div class="info">
+                        <span>实名认证</span>
+                        <img src="__PUBLIC__/welcome/images/warn.png">
+                        <input type="text" placeholder="未认证" value="{$accountSession['real_name']}" disabled>
+                        <if condition="empty($accountSession['real_name'])">
+                        <button onclick="showAlert('#alert-realname','#real-name','#id-card','#verify')">前往认证</button>
+                        <else/>
+                        <button onclick="showAlert('#alert-realname','#real-name','#id-card','#verify')" disabled="disabled">已认证</button>
+                        </if>
+                    </div>
+                </div>
+
+                <div class="contact">
+                    <div class="contact-title title2">
+                        联系信息
+                    </div>
+                    <div class="info">
+                        <span>联系手机:</span>
+                        <input type="text" id="tel" value="{$accountSession['contact_phone']}" disabled maxlength="11">
+                        <button id="changeTel">编辑</button>
+                        <button id="saveTel">保存</button>
+                    </div>
+                    <div class="info">
+                        <span>QQ:</span>
+                        <input type="text" id="qq" value="{$accountSession['contact_qq']}" disabled>
+                        <button id="changeQQ">编辑</button>
+                        <button id="saveQQ">保存</button>
+                    </div>
+                    <div class="info">
+                        <span>微信:</span>
+                        <input type="text" id="wx" value="{$accountSession['contact_weixin']}" disabled>
+                        <button id="changeWx">编辑</button>
+                        <button id="saveWx">保存</button>
+                    </div>
+                    <button id="send_userinfo">保存</button>
+                    <div class="timer1-wrapper">
+                        <span>方便联系时段：</span>
+                        <input type="radio" name="timer1" id="timer1-1" value="不限时间" checked>
+                        <label for="timer1-1">不限时间</label>
+                        <input type="radio" name="timer1" id="timer1-2" value="周末">
+                        <label for="timer1-2">周末</label>
+                        <input type="radio" name="timer1" id="timer1-3" value="假期">
+                        <label for="timer1-3">假期</label>
+                        <input type="radio" name="timer1" id="timer1-4" value="节假日除外">
+                        <label for="timer1-4">节假日除外</label>
+                        <input type="radio" name="timer1" id="timer1-5" value="其他">
+                        <label for="timer1-5">其他</label>
+                        <input type="text" id="timer1-input" placeholder="特殊情况请备注">
+                    </div>
+                    <div class="timer2-wrapper">
+                        <span>方便联系时间：</span>
+                        <input type="radio" name="timer2" id="timer2-1" value="不限时间" checked>
+                        <label for="timer2-1">不限时间</label>
+                        <input type="radio" name="timer2" id="timer2-2" value="8:00~12:00">
+                        <label for="timer2-2">8:00~12:00</label>
+                        <input type="radio" name="timer2" id="timer2-3" value="12:00~14:00">
+                        <label for="timer2-3">12:00~14:00</label>
+                        <input type="radio" name="timer2" id="timer2-4" value="14:00~18:00">
+                        <label for="timer2-4">14:00~18:00</label>
+                        <input type="radio" name="timer2" id="timer2-5" value="20:00~22:00">
+                        <label for="timer2-5">20:00~22:00</label>
+                        <input type="radio" name="timer2" id="timer2-6" value="其他">
+                        <label for="timer2-6">其他</label>
+                    </div>
+                </div>
+            </div>
+            </if>
+
+            <div class="user-right user-type-1" id="user-page-1">
+                <img src="__PUBLIC__/welcome/images/tri.png">
+                <div class="title">
+                    我的关注
+                </div>
+                <div class="item-wrap"></div>
+                <div class="check-wrap">
+                    <input type="checkbox" name="notRented" id="notRented">
+                    <label for="notRented">只看在租房源</label>
+                </div>
+
+                <div class="sorter">
+                    <button id="page-prev">上一页</button>
+                    <button class="page-current">1</button>
+                    <button>2</button>
+                    <button>3</button>
+                    <button>4</button>
+                    <button>5</button>
+                    <button id='page-next'>下一页</button>
+                </div>
+            </div>
+
+            <div class="user-right user-type-1" id="user-page-2">
+                <img src="__PUBLIC__/welcome/images/tri.png">
+                <div class="title">
+                    浏览记录
+                </div>
+                <div class="item-wrap"></div>
+                <div class="check-wrap">
+                    <input type="checkbox" name="notRented" id="notRented">
+                    <label for="notRented">只看在租房源</label>
+                </div>
+                <div class="sorter">
+                    <button id="page-prev">上一页</button>
+                    <button class="page-current">1</button>
+                    <button>2</button>
+                    <button>3</button>
+                    <button>4</button>
+                    <button>5</button>
+                    <button id='page-next'>下一页</button>
+                </div>
+            </div>
+
+            <div class="user-right user-type-3" id="user-page-3">
+                <img src="__PUBLIC__/welcome/images/tri.png">
+                <div class="title">
+                    我的消息
+                </div>
+
+                <div class="system-title title2">
+                    系统消息
+                </div>
+                <div class="system-wrap">
+                    <div class="systemInfo-item">
+                        <div class="tip">您放弃了以下房源的预租，意向金将于3个工作日内到达您的支付账户。</div>
+                        <div class="time">2018-07-08 14:00:00</div>
+                        <div style="clear:both;height: 12px;"></div>
+                        <div class="item">
+                            <div class="img-wrap">
+                                <div class="id">
+                                    i3554141
+                                </div>
+                                <img src="__PUBLIC__/welcome/images/concern.png">
+                            </div>
+                            <div class="main">
+                                <div class="name">正规三房低价出租</div>
+                                <div class="tag">三房两厅 | 整租 | 南</div>
+                                <div class="area">海沧区</div>
+                                <div class="belong">XX小区</div>
+                            </div>
+                            <div class="price">3500/月</div>
+                            <button class="btn">房屋全景</button>
+                        </div>
+                    </div>
+                    <div class="systemInfo-item">
+                        <div class="tip">您放弃了以下房源的预租，意向金将于3个工作日内到达您的支付账户。</div>
+                        <div class="time">2018-07-08 14:00:00</div>
+                        <div style="clear:both;height: 12px;"></div>
+                        <div class="item">
+                            <div class="img-wrap">
+                                <div class="id">
+                                    i3554141
+                                </div>
+                                <img src="__PUBLIC__/welcome/images/concern.png">
+                            </div>
+                            <div class="main">
+                                <div class="name">正规三房低价出租</div>
+                                <div class="tag">三房两厅 | 整租 | 南</div>
+                                <div class="area">海沧区</div>
+                                <div class="belong">XX小区</div>
+                            </div>
+                            <div class="price">3500/月</div>
+                            <button class="btn">房屋全景</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="private-title title2">
+                    私人消息
+                </div>
+                <div id="private-wrap">
+                    <div class="info-private">
+                        <div>您好，您预计什么时候有空看房，如果有空，麻烦电话联系18245622015，谢谢</div>
+                        <div>2018-06-15 14:00:00</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-right user-type-4" id="user-page-4">
+                <img src="__PUBLIC__/welcome/images/tri.png">
+                <div class="title">
+                    我的预约
+                </div>
+                <div class="time-sub">
+                    <span>预约看房时间：&ensp;&ensp;&ensp;</span>
+                    2018-06-30 14:02:20 - 2018-06-30 14:02:20
+                </div>
+
+                <div class="warn-wrap">
+                    <input type="checkbox" name="warn" id="warn">
+                    <label class="label-warn" for="warn">开启到期提醒</label>
+
+                    <input class='warn-radio' type="radio" name="warn-type" id="warn-type-0">
+                    <label class="label-warn" for="warn-type-0">1天</label>
+                    <input class='warn-radio' type="radio" name="warn-type" id="warn-type-1">
+                    <label class="label-warn" for="warn-type-1">3天</label>
+                    <input class='warn-radio' type="radio" name="warn-type" id="warn-type-2">
+                    <label class="label-warn" for="warn-type-2">1周</label>
+
+                    <p class="warn-tip">开启到期提醒后，将通过短信发送至您个人中心联系手机上，若无设置联系手机将无法收到短信提醒</p>
+                </div>
+
+                <p class="remind">
+                    <span>温馨提醒： </span>预约后前3天将免费为您保留房源，第四天起，每天预约金/预约总时长扣除预约金。
+                    <br/>若预约时间内看房后不满意，我们将退还剩余订金。
+                    <br/>若您在预约时间内未如期置房或达成租赁，将无法退还预约金。
+                </p>
+
+                <div class="sorter">
+                    <button id="page-prev">上一页</button>
+                    <button class="page-current">1</button>
+                    <button>2</button>
+                    <button>3</button>
+                    <button>4</button>
+                    <button>5</button>
+                    <button id='page-next'>下一页</button>
+                </div>
+            </div>
+
+            <div class="user-right user-type-5" id="user-page-5">
+                <img src="__PUBLIC__/welcome/images/tri.png">
+                <div class="title">
+                    我的租房
+                </div>
+                <div class="sorter">
+                    <button id="page-prev">上一页</button>
+                    <button class="page-current">1</button>
+                    <button>2</button>
+                    <button>3</button>
+                    <button>4</button>
+                    <button>5</button>
+                    <button id='page-next'>下一页</button>
+                </div>
+
+            </div>
+
+            <div class="user-right user-type-6" id="user-page-6">
+                <img src="__PUBLIC__/welcome/images/tri.png">
+                <div class="title">
+                    在线客服
+                </div>
+            </div>
+        </div>
+
+        <!-- 密码修改弹窗 -->
+        <div class="alert alert-type-1" id="alert-password">
+            <img src="__PUBLIC__/welcome/images/close.png" class="alert-close">
+            <div class="title">账号安全</div>
+            <input type="password" name="password-old" id="password-old" placeholder="旧密码：">
+            <input type="password" name="password-new" id="password-new" placeholder="新密码：">
+            <input type="password" name="password-confirm" id="password-confirm" placeholder="确认新密码：">
+            <button class="submit" id="revisepwd-btn">确 定</button>
+        </div>
+
+        <!-- 实名认证弹窗 -->
+        <div class="alert alert-type-1" id="alert-realname">
+            <img src="__PUBLIC__/welcome/images/close.png" class="alert-close">
+            <div class="title">实名认证</div>
+            <input type="text" name="real-name" id="real-name" placeholder="姓名：">
+            <input type="text" name="id-card" id="id-card" placeholder="身份证号码：" onkeyup="value=value.replace(/[^\d]/g,'')">
+            <input type="text" name="verify" id="verify" placeholder="验证码：">
+            <img src="__PUBLIC__/welcome/images/verify.png" class="verify">
+            <button class="submit" id="certification-btn">确 定</button>
+            <div class="alert-tip">实名认证后无法更改，请仔细填写身份证信息。</div>
+        </div>
+
+        <!-- 绑定手机弹窗 -->
+        <div class="alert alert-type-1" id="alert-phone">
+            <img src="__PUBLIC__/welcome/images/close.png" class="alert-close">
+            <div class="title">绑定手机</div>
+            <input type="tel" name="phone-number" id="phone-number" placeholder="绑定手机：">
+            <input type="text" name="verify-msg" id="verify-msg" placeholder="短信验证码：" >
+            <input type="text" name="verify-img" id="verify-img" placeholder="图形验证码：">
+            <img src="__PUBLIC__/welcome/images/verify.png" class="verify">
+            <!-- <button id="btn-getMsg">获取短信</button> -->
+            <input type="button" value="获取短信" id="btn-getMsg" name="">
+            <button class="submit" id="bindphone-btn">确 定</button>
+        </div>
+
+        <!-- 更换绑定手机弹窗1 -->
+        <div class="alert alert-type-2" id="alert-changePhone-1">
+            <img src="__PUBLIC__/welcome/images/close.png" class="alert-close">
+            <div class="title">更换绑定手机</div>
+            <div class="div-input div-input-1">
+                <label for="tel-old">原绑定手机：</label>
+                <input type="text" name="tel-old" id="tel-old" value="{$accountSession['binding_phone']}" disabled>
+            </div>
+            <div class="div-input div-input-2">
+                <label for="verify-old" onkeyup="value=value.replace(/[^\d]/g,'')">短信验证码：</label>
+                <input type="text" name="verify-old" id="verify-old" onkeyup="value=value.replace(/[^\d]/g,'')">
+                <input type="button" id="getVerify-old" value="获取验证码" class="btn-getVerify" name="">
+            </div>
+            <button class="submit" id="next" disabled='disabled'>下一步</button>
+        </div>
+
+        <!-- 更换绑定手机弹窗2 -->
+        <div class="alert alert-type-2" id="alert-changePhone-2">
+            <img src="__PUBLIC__/welcome/images/close.png" class="alert-close">
+            <div class="title">更换绑定手机</div>
+            <div class="div-input div-input-1">
+                <label for="tel-new">输入新手机：</label>
+                <input type="text" name="tel-new" id="tel-new" onkeyup="value=value.replace(/[^\d]/g,'')">
+            </div>
+            <div class="div-input div-input-2">
+                <label for="verify-new">短信验证码：</label>
+                <input type="text" name="verify-new" id="verify-new" onkeyup="value=value.replace(/[^\d]/g,'')">
+                <input type="button" value="获取验证码" id="getVerify-new" class="btn-getVerify" name="">
+            </div>
+            <button class="submit active" id="change-bindphone-btn">提交</button>
+        </div>
+    </main>
+    <footer><img src="__PUBLIC__/welcome/images/chaoyou.png"><img src="__PUBLIC__/welcome/images/chaowu.png">厦门市超娱网络科技有限公司丨网络经营许可证 [2016]2515-041号 ICP编号 闽B2-20160157 丨Copyright2016-2018 瞄房网orzunion.com版权所有 <img src="__PUBLIC__/welcome/images/beian.png"> 闽公网安备35020302032761号</footer>
+</body>
+    <script src="__PUBLIC__/welcome/js/jquery-1.11.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/welcome/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/welcome/js/jquery.form.js"></script>
+    <script src="__PUBLIC__/welcome/js/user.js"></script>
+    <script type="text/javascript">
+        /**
+         * [getImageUrl 上传头像]
+         */
+        function send_userimg(){
+            var formData= new FormData();
+            var img_file=document.getElementById('sendhead_img');
+            var fileObj=img_file.files[0];
+            formData.append('head_img',fileObj);
+            $.ajax({
+                url:"{:U('/Account/uploadHeadPic')}",
+                type:'post',
+                data:formData,
+                processData : false,
+                contentType : false,
+                async:false,
+                dataType:'json',
+                success:function(data){
+                    if(data.code==200){
+                        alert('修改成功')
+                        window.location.reload();
+                    }else{
+                        alert('修改失败')
+                    }
+                },
+                error:function(){
+                    alert('请求超时')
+                }
+            })
+        }
+
+    /**
+ * [修改密码]
+ */
+$("#revisepwd-btn").on("click",function(){
+    if($("#password-new").val()!=$("#password-confirm").val()){
+        alert('两次密码不一致')
+    }else{
+        $.ajax({
+            url:"{:U('/Account/changePwd')}",
+            type:'post',
+            data:{password:$("#password-old").val(),newpwd:$("#password-new").val(),newpwd_check:$("#password-confirm").val()},
+            dataType:'json',
+            success:function(data){
+                if(data.code==200){
+                    alert(data.msg)
+                    window.location.reload()
+                }else{
+                    alert(data.msg)
+                }
+            },
+            error:function(){
+                alert('网络超时')
+            }
+        })
+    }
+});
+
+/**
+ * [修改个人信息]
+ */
+$("#send_userinfo").on("click",function(){
+    var dataPost={
+        nick_name:$("#name").val(),
+        contact_phone:$("#tel").val(),
+        contact_qq:$("#qq").val(),
+        contact_weixin:$("#wx").val(),
+        contact_period:$("input[name=timer1]:checked").val(),
+        contact_time:$("input[name=timer2]:checked").val()
+    };
+    $.ajax({
+        url:"{:U('/Account/updateInfo')}",
+        type:'post',
+        data:dataPost,
+        dataType:'json',
+        success:function(data){
+            if(data.code==200){
+                alert(data.msg)
+                $("#changeName").show();
+                $("#name").attr('disabled',true);
+                $("#saveName").hide();
+            }else{
+                alert(data.msg)
+            }
+        },
+        error:function(){
+            alert('请求超时')
+        }
+    })
+})
+
+/**
+   * [绑定手机验证码发送]
+   */
+  var bindphone_code;
+  $("#btn-getMsg").on('click',function(){
+    if($("#phone-number").val()==''){
+        alert('请输入手机号')
+    }else{
+        if(isPoneAvailable($("#phone-number"))==false){
+              alert('请输入正确手机号')
+      }else{    
+        $.ajax({
+          url:"{:U('Api/sendPhoneMessage')}",
+          type:'post',
+          data:{phone:$("#phone-number").val(),code_type:'2'},
+          dataType:'json',
+          success:function(data){ 
+            sendCode($(this),$("#phone-number"))          
+            if(data.code==200){
+              bindphone_code=data.msg.substr(7,13);
+            }else{
+                alert(data.msg)
+            }
+          },
+          error:function(){
+            alert('请求超时')
+          }
+        })
+      }
+    }
+  })
+
+/**
+ * [绑定手机]
+ */
+$("#bindphone-btn").on("click",function(){
+    if($("#phone-number").val()==''){
+        alert('请输入手机号')
+    }else{
+        if(isPoneAvailable($("#phone-number"))==false){
+            alert('请输入正确手机号')
+        }else{
+            if($("#verify-msg").val()==''){
+                alert('请输入验证码')
+            }else{
+                if($("#verify-msg").val()!=bindphone_code){
+                    alert('验证码不正确')
+                }else{
+                    $.ajax({
+                      url:"{:U('/Account/bindingPhone')}",
+                      type:'post',
+                      data:{phone:$("#phone-number").val(),code:$("#verify-msg").val()},
+                      dataType:'json',
+                      success:function(data){          
+                        if(data.code==200){
+                            alert(data.msg)
+                            $("#btn-setphone").hide();
+                            $("#btn-changeBindPhone").show()
+                            window.location.reload()
+                        }else{
+                            alert(data.msg)
+                        }
+                      },
+                      error:function(){
+                        alert('请求超时')
+                      }
+                    })
+                }   
+            }
+        }
+    }
+});
+
+/**
+ * [更换绑定手机验证码]
+ */
+var changebindphone_code;
+$("#getVerify-old").on("click",function(){ 
+    $.ajax({
+      url:"{:U('Api/sendPhoneMessage')}",
+      type:'post',
+      data:{phone:$("#tel-old").val(),code_type:'2'},
+      dataType:'json',
+      success:function(data){          
+        if(data.code==200){
+        sendCodes($(this),$("#tel-old")) 
+          changebindphone_code=data.msg.substr(7,13);
+          $("#next").attr('disabled',false)
+        }else{
+            alert(data.msg)
+        }
+      },
+      error:function(){
+        alert('请求超时')
+      }
+    })
+})
+
+/**
+ * [更换绑定手机验证码]
+ */
+var newphone_code;
+$("#getVerify-new").on("click",function(){
+    if($("#tel-new").val()==''){
+        alert('请输入手机号')
+    }else{
+        if(isPoneAvailable($("#tel-new"))==false){
+            alert('请输入正确手机号')
+        }else{
+            $.ajax({
+              url:"{:U('Api/sendPhoneMessage')}",
+              type:'post',
+              data:{phone:$("#tel-new").val(),code_type:'2'},
+              dataType:'json',
+              success:function(data){ 
+                sendCodess($(this),$("#tel-new"))          
+                if(data.code==200){
+                  newphone_code=data.msg.substr(7,13);
+                }else{
+                    alert(data.msg)
+                }
+              },
+              error:function(){
+                alert('请求超时')
+              }
+            })
+        }
+    }
+})
+
+/**
+ * [更换手机绑定事件]
+ */
+$("#change-bindphone-btn").on("click",function(){
+    if($("#tel-new").val()==''){
+        alert('请输入手机号')
+    }else{
+        if(isPoneAvailable($("#tel-new"))==false){
+            alert('请输入正确手机号')
+        }else{
+            if($("#verify-new").val()==''){
+                alert('请输入验证码')
+            }else{
+                if($("#verify-new").val()!=newphone_code){
+                    alert('验证码不正确')
+                }else{
+                    $.ajax({
+                      url:"{:U('/Account/bindingPhone')}",
+                      type:'post',
+                      data:{phone:$("#tel-new").val(),code:$("#verify-new").val()},
+                      dataType:'json',
+                      success:function(data){ 
+                        sendCodess($(this),$("#tel-new"))          
+                        if(data.code==200){
+                            alert(data.msg)
+                            window.location.reload()
+                        }else{
+                            alert(data.msg)
+                        }
+                      },
+                      error:function(){
+                        alert('请求超时')
+                      }
+                    })
+                }
+            }
+        }
+    }
+})
+
+/**
+ * [实名认证]
+ */
+$("#certification-btn").on("click",function(){
+    if($("#real-name").val()==''){
+        alert('请填写您的姓名')
+    }else{
+        if($("#id-card").val()==''){
+            alert('请填写您的身份证')
+        }else{
+            $.ajax({
+              url:"{:U('/Account/realNameAuth')}",
+              type:'post',
+              data:{real_name:$("#real-name").val(),id_card:$("#id-card").val()},
+              dataType:'json',
+              success:function(data){         
+                if(data.code==200){
+                    alert(data.msg)
+                    window.location.reload()
+                }else{
+                    alert(data.msg)
+                }
+              },
+              error:function(){
+                alert('请求超时')
+              }
+            })
+        }
+    }
+})
+//我的关注、浏览记录
+function msgDiv(item,eqi){
+    var infodiv='<div class="item">'+
+        '<div class="img-wrap">'+          
+        '<div class="id">'+item.house_no+'</div>'+              
+        '<img src="'+item.house_img+'">'+                 
+        '</div>'+               
+        '<div class="main">'+              
+        '<div class="name">'+item.house_title+'</div>'+          
+        '<div class="tag">'+item.house_type+' | '+item.lease_type+' | '+item.house_direction+'</div>'+           
+        '<div class="area">'+item.area_name+'</div>'+               
+        '<div class="belong">'+item.name+'</div>'+               
+        '</div>'+               
+        '<div class="price">'+item.lease_money+'/月'+'</div>'+              
+        '<button class="btn">房屋全景</button>'+           
+        '</div>';     
+    $(".item-wrap:eq("+eqi+")").append(infodiv)     
+}
+
+//我的预约
+function mybespeakDiv(item){
+    var infodiv='<div class="item-sub">'+
+                '<div class="img-wrap">'+  
+                '<img src="__PUBLIC__/welcome/images/concern.png">'+        
+                '</div>'+    
+                '<div class="main">'+    
+                '<div class="name">'+item.house_title+'</div>'+       
+                '<div class="tag">'+item.house_type+' | '+item.lease_type+' | '+item.house_direction+'</div>'+       
+                '<div class="area">'+item.area_name+'</div>'+        
+                '<div class="belong">'+item.name+'</div>'+        
+                '</div>'+    
+                '<div class="price">'+item.lease_money+'/月'+    
+                '<span>(押一付三)</span>'+        
+                '</div>'+   
+                '</div>';
+    $("#user-page-4").append(infodiv)            
+}
+
+//我的租房
+function myrentDiv(item){
+    var infoDiv='<div class="item-sub">'+
+                '<div class="img-wrap">'+   
+                '<img src="__PUBLIC__/welcome/images/concern.png">'+        
+                '</div>'+   
+                    '<div class="main">'+
+                        '<div class="name">'+item.title+'</div>'+
+                        '<div class="tag">'+item.house_type+' | '+item.lease_type+' | '+item.house_direction+'</div>'+
+                        '<div class="area">'+item.area+'</div>'+
+                        '<div class="belong">'+item.belong+'</div>'+
+                    '</div>'+
+                    '<div class="price">'+item.rent+'/月'+
+                        '<span>(押一付三)</span>'+
+                    '</div>'+
+                    '<div class="QR-wrap">'+
+                        '<img src="__PUBLIC__/welcome/images/QR.png">'+
+                        '<p>扫一扫手机看房</p>'+
+                    '</div>'+
+                '</div>';
+    $("#user-page-5").append(infoDiv)            
+}
+                   
+// 我的关注(){
+$("#myfollows").on("click",function(){
+    $.ajax({
+        url:"{:U('/Account/myFollow')}",
+        type:'post',
+        data:{type:'2'},
+        dataType:'json',
+        success:function(data){
+            if(data.code==200){
+                $.each(data.follow,function(i,s){
+                    msgDiv(s,'0')
+                })
+            }else{
+                alert(data.msg)
+            }
+        },
+        error:function(){
+            alert('请求超时')
+        }
+    })
+})
+// 浏览记录
+function mybrowing(){
+    $.ajax({
+        url:"{:U('/Account/myFollow')}",
+        type:'post',
+        data:{type:'1'},
+        dataType:'json',
+        success:function(data){
+            if(data.code==200){
+                console.log(data)
+            }else{
+                alert(data.msg)
+            }
+        },
+        error:function(){
+            alert('请求超时')
+        }
+    })
+}
+// 我的预约
+function mybespeak(){
+    $.ajax({
+        url:"{:U('/Account/myBook')}",
+        type:'post',
+        data:{type:'1'},
+        dataType:'json',
+        success:function(data){
+           if(data.msg==200){
+                console.log(data)
+            }else{
+                alert(data.msg)
+            }
+        },
+        error:function(){
+            alert('请求超时')
+        }
+    })
+}
+// 我的租房
+$(".user-tab:eq(5)").on("click",function(){
+    $.ajax({
+        url:"{:U('/Account/myBook')}",
+        type:'post',
+        data:{type:'2'},
+        dataType:'json',
+        success:function(data){
+            if(data.msg==200){
+                console.log(data)
+            }else{
+                alert(data.msg)
+            }
+        },
+        error:function(){
+            alert('请求超时')
+        }
+    })
+})
+
+/**
+ * [退出登录]
+ */
+$("#log_off").on("click",function(){
+    $.ajax({
+        url:"{:U('/LoginReg/loginout')}",
+        success:function(data){ 
+            $.cookie("rmbUser", "false", {
+                expires: 7,path:'/Welcome/index'
+            });
+            window.sessionStorage.removeItem('lost1');
+            window.sessionStorage.removeItem('lost2');
+            window.location.reload()
+        },
+        error:function(){
+            alert('请求超时')
+        }
+    })
+})
+    </script>
+</body>
+
+</html>

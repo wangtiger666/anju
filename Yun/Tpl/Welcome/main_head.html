@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>主页面导航</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/welcome/css/main_head.css">
+	<link href="__PUBLIC__/welcome/css/jquery.city.css" rel="stylesheet" />
+    <link href="__PUBLIC__/welcome/css/animate.min.css" rel="stylesheet" />
+    <link href="__PUBLIC__/welcome/css/style.css" type="text/css" rel="stylesheet">
+</head>
+<body style="min-width: 1600px;">
+	<nav>
+        <img src="/Public/welcome/images/logo.png" class="logo">
+        <ol class="searchbox">
+        	<li>
+		        <input type="text" placeholder="选择城市   ▼" id="choose_city" readonly="readonly">
+        	</li>
+        	<li>
+        		<input type="text" name="" id="choose_input"> 
+        		<img src="__PUBLIC__/welcome/images/pen.png" style="position: absolute;top:20px;left: 320px;">
+        	</li>
+        	<li>
+        		<select id="choose_area">
+		        	<option value="">选择区域</option>
+		        </select>
+        	</li>
+        </ol> 
+        <ol class="nav-bar">
+            <li>
+            	<select>
+            		<option value="">租金</option>
+            	</select>
+            </li>
+             <li>
+            	<select>
+            		<option value="">类型</option>
+            	</select>
+            </li>
+             <li>
+            	<select>
+            		<option value="">房型</option>
+            	</select>
+            </li>
+             <li>
+            	<select>
+            		<option value="">更多</option>
+            	</select>
+            </li>
+            <li>
+            	<button id="clearchoose">清除条件</button>
+            </li>   
+        </ol>
+        <ol class="user">
+            <li id="logbtn">登录</li>
+            <div class="separator"></div>
+            <li id="regbtn">注册</li>
+        </ol>
+    </nav>
+</body>
+<script src="__PUBLIC__/welcome/js/jquery-1.11.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/welcome/js/City_data.js"></script>
+<script type="text/javascript" src="__PUBLIC__/welcome/js/areadata.js"></script>
+<script type="text/javascript" src="__PUBLIC__/welcome/js/auto_area.js"></script>
+<script type="text/javascript">
+	$("#choose_city").on("click",function(){
+		appendCity(this, 'choose_city');
+	})
+
+	//确定选择
+	function svae_City() {
+	    var val = '';
+	    var Cityname = '';
+	    if ($('.svae_box').length > 0) {
+	        $('.svae_box').each(function () {
+	            val += $(this).data("code") + '-';
+	            Cityname += $(this).data("name") + '-';
+	        });
+	    }
+	    if (val != '') {
+	        val = val.substring(0, val.lastIndexOf('-'));
+	    }
+	    if (Cityname != '') {
+	        Cityname = Cityname.substring(0, Cityname.lastIndexOf('-'));
+	    }
+	    $(dataCityinput).data("value", val);
+	    $(dataCityinput).val(Cityname);
+	    	
+	    Close();
+	}
+</script>
+</html>

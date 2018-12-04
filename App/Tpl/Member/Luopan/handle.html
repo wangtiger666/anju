@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/pano/pano.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jscolor/jscolor.js"></script>
+        {:W("Easyui")}
+        {:W("Boluoui")}
+        {:W("Uploader")}
+        <script type="text/javascript">
+            function checksb(){
+                var result = true;
+                if(result == true){
+                    result = AutoCheckSub(".cs");
+                }
+                return result;
+            }
+
+            $(document).ready(function(){
+                onoroff();
+            });
+            $(function(){
+                $("#autobtn").click(function(){
+                    $("#luopanshow").html("开始生成罗盘图！转化中。。。");
+                    $.ajax({
+                        url:"{:U('ajax/luopan')}",
+                        type:"POST",
+                        dataType:"script",
+                        data:{
+                            dopost:"start",
+                            view_id:"{$view_id}"
+                        }
+                    });
+                });
+            });
+
+            function changeback(){
+                $("#luopanshow").html("图片生成中！");
+                $.ajax({
+                    url:"{:U('ajax/luopan')}",
+                    type:"POST",
+                    dataType:"script",
+                    data:{
+                        dopost:"luopan",
+                        view_id:"{$view_id}"
+                    }
+                });
+            }
+            function backluopan(data){
+                $("#luopanshow").html("图片生成完毕！");
+                $("#image").val(data);
+                $("#imageimg").html('<img src="' + "{:CC('web_root')}" +data+'" onload="photocenterin(this,120,120)" />');
+            }
+
+        </script>
+        <style type="text/css">
+            .action_left{
+                width: 140px; min-height: 200px; overflow: hidden; float: left;
+            }
+            .action_myphoto{
+                width: 120px; height: auto; overflow: hidden; border:1px solid #dbdbdb;
+                box-shadow:2px 2px 4px #e2e2e2; margin: 0 auto; margin-bottom: 12px;
+            }
+            .action_mytext{
+                width: auto; height: 22px; overflow: hidden; text-align: left; font: 12px/22px "微软雅黑"; color: #333; cursor: default;
+            }
+            .action_right{
+                width: auto; min-height: 200px; overflow: hidden; float: left;
+            }
+            .mypano{
+                width: 600px; height: 400px; overflow: hidden; border:1px solid #ccc;
+            }
+            .mypano.over{
+                border-color: #C00;
+            }
+
+        </style>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">全景项目 - {$panorow['title']}</div>
+                        <div title="关闭" data-url="{:U('main/index')}" data-info="确认返回功能首页" class="close delme"></div>
+                        <div title="返回上级" onclick="LinkTo('{$backurl}');" class="goback"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            {:W("Panomenu",array("pano_id"=>$pano_id,"num"=>4))}
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main">
+                                <div class="action_title"><a href="{:U('toolbox/index',array('pano_id'=>$pano_id))}">模块管理</a> - <a href="{:U('index',array('pano_id'=>$pano_id))}">罗盘图</a>
+								<span class="vrback"><a href="{:U('luopan/index',array('pano_id'=>$pano_id))}">返回上级</a></span></div>
+                                <div class="action_web">
+                                    <div class="action_left">
+                                        <div class="action_myphoto"><img src="{:CC('web_root')}{$viewrow['thumb']}" onload="swichimg2w(this,120);"/></div>
+                                        <div class="action_mytext"><b>当前场景：</b>{$viewrow['title']}</div>
+                                    </div>
+                                    <div class="action_right">
+                                        <form name="form1" action="" onsubmit="return checksb();" enctype="multipart/form-data" method="post">
+                                            <input type="hidden" name="dopost" value="save" />
+                                            <input type="hidden" name="view_id" id="view_id" value="{$view_id}" />
+                                            <input type="hidden" name="pano_id" id="pano_id" value="{$pano_id}" />
+                                            <input type="hidden" name="member_id" id="member_id" value="{$member_id}" />
+
+                                            <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">
+                                                <tr class="tr_white" height="20">
+                                                    <td colspan="2"></td>
+                                                </tr>
+                                                <tr class="tr_white" height="40">
+                                                    <td align="right" width="70"><b>开启开关：</b></td>
+                                                    <td>
+                                                        <span class="onoff" target="open" value="{$row['open']}"></span>
+                                                        <input type="hidden" id="open" name="open" value="{$row['open']}" />
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white" height="10">
+                                                    <td colspan="2"></td>
+                                                </tr>
+                                                <tr class="tr_white" height="40">
+                                                    <td colspan="2">
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="floatimg" id="imageimg">
+                                                                        <neq name="row['image']" value=""><img src="{:CC('web_root')}{$row['image']}" onload="photocenterin(this,120,120);" /></neq>
+                                                                    </div>
+                                                                    <input type="hidden" id="image" name="image" value="{$row['image']}" />
+                                                                    <input type="hidden" name="old_image" value="{$row['image']}" />
+                                                                </td>
+                                                                <td>
+                                                                    <input type="button" value="点击上传" id="imagebtn" class="btn" />
+                                                                    （图片不超过400×400的正方形图片）
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                        <script type="text/javascript">
+                                                            $(function(){
+                                                                $("#imagebtn").uploader("image", "image");
+                                                            })
+                                                            function image(data){
+                                                                $("#image").val(data);
+                                                                $("#imageimg").html('<img src="'+data+'" onload="photocenterin(this,120,120)" />');
+                                                            }
+                                                        </script>
+                                                    </td>
+                                                </tr>
+                                                <eq name="os" value="windows">
+                                                <tr class="tr_white" height="10">
+                                                    <td colspan="2">
+                                                        <div style="margin:3px;"><input type="button" value="自动生成罗盘图" id="autobtn" class="btn" /></div>
+                                                        <b id="luopanshow"></b>
+                                                    </td>
+                                                </tr>
+                                                </eq>
+                                                <tr class="tr_white" height="80">
+                                                    <td colspan="2">
+                                                        <input type="submit" class="blackbutton" value="提交" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

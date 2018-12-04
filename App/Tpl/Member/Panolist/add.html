@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        {:W("Easyui")}
+        {:W("Uploader")}
+        <script type="text/javascript">
+            function checksb(){
+                var result = true;
+                if(result == true){
+                    result = AutoCheckSub(".cs");
+                }
+                return result;
+            }
+            $(document).ready(function(){
+                onoroff();
+                $('.dd').tooltip({
+                    position: 'right'
+                });
+                $(".box").click(function(){
+                    var cid = $(this).data("cid");
+                    $("#cursor_id").val(cid);
+                    checkcurosr(cid);
+                });
+            });
+
+            function checkcurosr(n){
+                $(".box").removeClass("me");
+                $("#cursor"+n).addClass("me");
+            }
+        </script>
+        <style type="text/css">
+            .box{
+                width: auto; height: 50px; overflow: hidden; border:1px solid #c6c6c6; margin: 5px; float: left; border-radius: 5px; background: #eee; cursor: pointer;
+            }
+            .box.me{
+                background: #e0f5ff; border-color: #ace;
+            }
+            .box:hover{
+                background: #e5ffcb;
+            }
+            .box.me:hover{
+                background: #e0f5ff;
+            }
+            .boxtext{
+                width: 60px; height: 36px; overflow: hidden; float: left; background: #fff; padding: 2px 0;
+                text-align: center; font: 12px/36px "微软雅黑"; cursor: default; margin-top: 5px; margin-left: 5px;
+            }
+            .boxbag{
+                width: auto; height: 50px; overflow: hidden; float: left; padding-right: 5px;
+            }
+            .boxbag .pigbox{
+                width: 38px; height: 38px; overflow: hidden; float: left; background: #fff; margin-left: 5px; border:1px solid #ccc;
+                margin-top: 5px;
+            }
+            .box.me .boxbag .pigbox{
+                border-color: #ace;
+            }
+            .cursorout{
+                overflow: hidden; background: #f8f8f8; padding: 5px; border:1px solid #c6c6c6; float: left; border-radius:5px;
+            }
+            .cursormarket{
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">创建全景项目</div>
+                        <div title="关闭" onclick="DoNote('确认返回功能首页？','{:U('main/index')}');" class="close"></div>
+                        <div title="返回上级" onclick="LinkTo('{$backurl}');" class="goback"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="webpage">
+                            <!--                            内容正式开始的部分                            -->
+                            <form name="form1" action="{:U('add')}" onsubmit="return checksb();" enctype="multipart/form-data" method="post">
+                                <input type="hidden" name="dopost" value="save" />
+                                <div class="action_main">
+                                    <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="120"><b>全景项目名称：</b></td>
+                                            <td align="left">
+                                                <input type="text" id="title" name="title" sbname="全景项目名称" class="longinputcube cs"/>
+                                            </td>
+                                        </tr>
+                                        <!-- <tr class="tr_white" height="10">
+                                            <td colspan="2"></td>
+                                        </tr>
+                                        <tr class="tr_white" height="40">
+                                            <td align="right"><b>苹果重力感应：</b></td>
+                                            <td>
+                                                <span class="onoff easyui-tooltip dd tooltip-f" title="苹果手机或IPAD中可以根据重力感应自动改变视角" target="is_ipad_view" value="1"></span>
+                                                <input type="hidden" id="is_ipad_view" name="is_ipad_view" value="1" />
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="10">
+                                            <td colspan="2"></td>
+                                        </tr>
+                                        <tr class="tr_white" height="40">
+                                            <td align="right"><b>开启鼠标样式：</b></td>
+                                            <td>
+                                                <span class="onoff easyui-tooltip dd" title="关闭则鼠标为默认样式" target="cursor_open" value="0"></span>
+                                                <input type="hidden" id="cursor_open" name="cursor_open" value="0" />
+                                            </td>
+                                        </tr> -->
+
+                                        <!-- <tr class="tr_white" height="40">
+                                            <td align="right"><b>鼠标样式选择：</b></td>
+                                            <td>
+                                                <input type="hidden" name="cursor_id" id="cursor_id" value="1" />
+                                                <div class="cursorout">
+                                                    <volist id="sys" name="syscursorrow">
+                                                        <div class="cursormarket">
+                                                            <if condition="$sys['mode'] eq 'drag'">
+                                                                <div class="box" id="cursor{$sys.id}" data-cid="{$sys.id}">
+                                                                    <div class="boxbag">
+                                                                        <div class="pigbox"><div style="width: {$sys['w']}px; height:{$sys['h']}px; margin-left:{$sys['w']*(-1)/2+19}px; margin-top:{$sys['h']*(-1)/2+19}px; overflow:hidden;"><img style="margin-left:{$sys['w']*0}px;" src="/Public/material/system/cursor/{$sys['file']}/cursor.png" /></div></div>
+                                                                        <div class="pigbox"><div style="width: {$sys['w']}px; height:{$sys['h']}px; margin-left:{$sys['w']*(-1)/2+19}px; margin-top:{$sys['h']*(-1)/2+19}px; overflow:hidden;"><img style="margin-left:{$sys['w']*(-1)}px;" src="/Public/material/system/cursor/{$sys['file']}/cursor.png" /></div></div>
+                                                                    </div>
+                                                                </div>
+                                                                <elseif condition="$sys['mode'] eq '4way'"/>
+                                                                <div class="box" id="cursor{$sys.id}" data-cid="{$sys.id}">
+                                                                    <div class="boxbag">
+                                                                        <div class="pigbox"><div style="width: {$sys['w']}px; height:{$sys['h']}px; margin-left:{$sys['w']*(-1)/2+19}px; margin-top:{$sys['h']*(-1)/2+19}px; overflow:hidden;"><img style="margin-left:{$sys['w']*0}px;" src="/Public/material/system/cursor/{$sys['file']}/cursor.png" /></div></div>
+                                                                        <div class="pigbox"><div style="width: {$sys['w']}px; height:{$sys['h']}px; margin-left:{$sys['w']*(-1)/2+19}px; margin-top:{$sys['h']*(-1)/2+19}px; overflow:hidden;"><img style="margin-left:{$sys['w']*(-1)}px;" src="/Public/material/system/cursor/{$sys['file']}/cursor.png" /></div></div>
+                                                                        <div class="pigbox"><div style="width: {$sys['w']}px; height:{$sys['h']}px; margin-left:{$sys['w']*(-1)/2+19}px; margin-top:{$sys['h']*(-1)/2+19}px; overflow:hidden;"><img style="margin-left:{$sys['w']*(-2)}px;" src="/Public/material/system/cursor/{$sys['file']}/cursor.png" /></div></div>
+                                                                        <div class="pigbox"><div style="width: {$sys['w']}px; height:{$sys['h']}px; margin-left:{$sys['w']*(-1)/2+19}px; margin-top:{$sys['h']*(-1)/2+19}px; overflow:hidden;"><img style="margin-left:{$sys['w']*(-3)}px;" src="/Public/material/system/cursor/{$sys['file']}/cursor.png" /></div></div>
+                                                                        <div class="pigbox"><div style="width: {$sys['w']}px; height:{$sys['h']}px; margin-left:{$sys['w']*(-1)/2+19}px; margin-top:{$sys['h']*(-1)/2+19}px; overflow:hidden;"><img style="margin-left:{$sys['w']*(-4)}px;" src="/Public/material/system/cursor/{$sys['file']}/cursor.png" /></div></div>
+                                                                        <div class="pigbox"><div style="width: {$sys['w']}px; height:{$sys['h']}px; margin-left:{$sys['w']*(-1)/2+19}px; margin-top:{$sys['h']*(-1)/2+19}px; overflow:hidden;"><img style="margin-left:{$sys['w']*(-5)}px;" src="/Public/material/system/cursor/{$sys['file']}/cursor.png" /></div></div>
+                                                                    </div>
+                                                                </div>
+                                                                <else/>
+                                                                <div class="box" id="cursor{$sys.id}" data-cid="{$sys.id}">
+                                                                    <div class="boxbag">
+                                                                        <div class="pigbox"><div style="width: {$sys['w']}px; height:{$sys['h']}px; margin-left:{$sys['w']*(-1)/2+19}px; margin-top:{$sys['h']*(-1)/2+19}px; overflow:hidden;"><img style="margin-left:{$sys['w']*0}px;" src="/Public/material/system/cursor/{$sys['file']}/cursor.png" /></div></div>
+                                                                        <div class="pigbox"><div style="width: {$sys['w']}px; height:{$sys['h']}px; margin-left:{$sys['w']*(-1)/2+19}px; margin-top:{$sys['h']*(-1)/2+19}px; overflow:hidden;"><img style="margin-left:{$sys['w']*(-1)}px;" src="/Public/material/system/cursor/{$sys['file']}/cursor.png" /></div></div>
+                                                                        <div class="pigbox"><div style="width: {$sys['w']}px; height:{$sys['h']}px; margin-left:{$sys['w']*(-1)/2+19}px; margin-top:{$sys['h']*(-1)/2+19}px; overflow:hidden;"><img style="margin-left:{$sys['w']*(-2)}px;" src="/Public/material/system/cursor/{$sys['file']}/cursor.png" /></div></div>
+                                                                        <div class="pigbox"><div style="width: {$sys['w']}px; height:{$sys['h']}px; margin-left:{$sys['w']*(-1)/2+19}px; margin-top:{$sys['h']*(-1)/2+19}px; overflow:hidden;"><img style="margin-left:{$sys['w']*(-3)}px;" src="/Public/material/system/cursor/{$sys['file']}/cursor.png" /></div></div>
+                                                                        <div class="pigbox"><div style="width: {$sys['w']}px; height:{$sys['h']}px; margin-left:{$sys['w']*(-1)/2+19}px; margin-top:{$sys['h']*(-1)/2+19}px; overflow:hidden;"><img style="margin-left:{$sys['w']*(-4)}px;" src="/Public/material/system/cursor/{$sys['file']}/cursor.png" /></div></div>
+                                                                        <div class="pigbox"><div style="width: {$sys['w']}px; height:{$sys['h']}px; margin-left:{$sys['w']*(-1)/2+19}px; margin-top:{$sys['h']*(-1)/2+19}px; overflow:hidden;"><img style="margin-left:{$sys['w']*(-5)}px;" src="/Public/material/system/cursor/{$sys['file']}/cursor.png" /></div></div>
+                                                                        <div class="pigbox"><div style="width: {$sys['w']}px; height:{$sys['h']}px; margin-left:{$sys['w']*(-1)/2+19}px; margin-top:{$sys['h']*(-1)/2+19}px; overflow:hidden;"><img style="margin-left:{$sys['w']*(-6)}px;" src="/Public/material/system/cursor/{$sys['file']}/cursor.png" /></div></div>
+                                                                        <div class="pigbox"><div style="width: {$sys['w']}px; height:{$sys['h']}px; margin-left:{$sys['w']*(-1)/2+19}px; margin-top:{$sys['h']*(-1)/2+19}px; overflow:hidden;"><img style="margin-left:{$sys['w']*(-7)}px;" src="/Public/material/system/cursor/{$sys['file']}/cursor.png" /></div></div>
+                                                                        <div class="pigbox"><div style="width: {$sys['w']}px; height:{$sys['h']}px; margin-left:{$sys['w']*(-1)/2+19}px; margin-top:{$sys['h']*(-1)/2+19}px; overflow:hidden;"><img style="margin-left:{$sys['w']*(-8)}px;" src="/Public/material/system/cursor/{$sys['file']}/cursor.png" /></div></div>
+                                                                        <div class="pigbox"><div style="width: {$sys['w']}px; height:{$sys['h']}px; margin-left:{$sys['w']*(-1)/2+19}px; margin-top:{$sys['h']*(-1)/2+19}px; overflow:hidden;"><img style="margin-left:{$sys['w']*(-9)}px;" src="/Public/material/system/cursor/{$sys['file']}/cursor.png" /></div></div>
+                                                                    </div>
+                                                                </div>
+                                                            </if>
+                                                        </div>
+                                                    </volist>
+                                                </div>
+                                                <script type="text/javascript">
+                                                    checkcurosr("1");
+                                                </script>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="tr_white" height="5">
+                                            <td colspan="2"></td>
+                                        </tr> -->
+                                        <tr style="background: #fff;" height="40">
+                                            <td align="right"></td>
+                                            <td align="left">
+                                                <input class="btn1" type="submit" value="提交" />
+                                                <input class="btn1" type="button" onclick="LinkTo('{:U('panolist/index')}');" value="返回" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </form>
+                            <!--                            内容正式结束的部分                            -->
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

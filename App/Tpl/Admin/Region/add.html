@@ -1,0 +1,190 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="__PUBLIC__/admin/style/artedit.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/common/js/jquery-1.10.2.js" language="javascript" type="text/javascript"></script>
+<script src="__PUBLIC__/common/js/common.js" language="javascript" type="text/javascript"></script>
+<script charset="utf-8" src="__PUBLIC__/bootstrap/js/bootstrap.js"></script>
+<script charset="utf-8" src="__PUBLIC__/bootstrap/js/bootstrap-select.js"></script>
+    <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+    {:W("Uploader")}
+<!-- bootstrap START-->
+<link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="__PUBLIC__/bootstrap/css/bootstrap-select.css" rel="stylesheet">
+<link href="__PUBLIC__/bootstrap/font-awesome/css/font-awesome.css" rel="stylesheet">
+<link href="__PUBLIC__/bootstrap/css/plugins/footable/footable.core.css" rel="stylesheet">
+<link href="__PUBLIC__/bootstrap/css/animate.css" rel="stylesheet">
+<link href="__PUBLIC__/bootstrap/css/style.css" rel="stylesheet">
+<link href="__PUBLIC__/common/style/recovebootstrap.css" rel="stylesheet" type="text/css" />
+<!-- bootstrap END -->
+</head>
+<body >
+		<style type="text/css">
+			.hr-line-dashed{
+				margin: 7px 0;
+			}
+		</style>
+	   <div  class="main" >
+    	        <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>新增行政区域 <small></small></h5>
+                              <div class="ibox-tools">
+                               <a  onclick="window.location.href='/admin/Region/index'"  class="btn btn-primary btn-xs" style="height: 25px;">返回管理</a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+
+                        <form name="myform" id="myform" action="{:U('Region/add')}" method="post" class="form-horizontal">
+						        <input type='hidden' name='dopost' value='add'/>
+                                <input type='hidden' name='pid' id="pid" value=""/>
+                                 <div class="hr-line-dashed"></div>
+                                <if condition="!empty($errors)">
+                                    <div class="form-group" style="color:red;"><label class="col-sm-2 control-label"></label>
+                                        <div class="col-sm-10">
+                                            错误信息：{$errors}
+                                        </div>
+                                    </div>
+                                </if>
+                                <div class="form-group"><label class="col-sm-2 control-label">父节点：</label>
+                                    <div class="col-sm-10">
+                                        <select name="pidid" id="pidid" class="selectpicker" data-style="btn-info" data-live-search="true" data-live-search-placeholder="输入搜索">
+                                            <volist name="regionList" id="region">
+                                                <option data-tokens="{$region['name']}" value="{$region['id']}">{$region['name']}</option>
+                                            </volist>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group"><label class="col-sm-2 control-label">名称：</label>
+                                    <div class="col-sm-10"> 
+                                    <input type="text"   class="form-control" name="name"  id="name" value="" size="55"  validate=" minlength:1, maxlength:80, required:true"  title="标题必须为1-80个字符"  />
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+
+                                <div class="form-group"><label class="col-sm-2 control-label">城市编码：</label>
+                                    <div class="col-sm-10">
+                                    <input type="text"   class="form-control" name="citycode"  id="citycode" value="" size="55"  validate=" maxlength:80" />
+                                    </div>
+                                </div>
+                                <div class="form-group"><label class="col-sm-2 control-label">区域编码：</label>
+                                    <div class="col-sm-10">
+                                    <input type="text"   class="form-control" name="adcode"  id="adcode" value="" size="55"  validate=" maxlength:80" />
+                                    </div>
+                                </div>
+                                <div class="form-group"><label class="col-sm-2 control-label">识别符：</label>
+                                    <div class="col-sm-10">
+                                    <input type="text"   class="form-control" name="idcode"  id="idcode" value="" size="55"  validate=" maxlength:80" />
+                                    </div>
+                                </div>
+                                <div class="form-group"><label class="col-sm-2 control-label">中心点(地图坐标)：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text"   class="form-control" name="center"  id="center" value="" size="55"  validate=" maxlength:80" />
+                                        <input type="button" onclick="openwinNew()" class="btn1" value="点击获取"/>
+                                    </div>
+                                </div>
+                                <div class="form-group"><label class="col-sm-2 control-label">所属区域：</label>
+                                    <div class="col-sm-10">
+                                        <select name="level" id="level">
+                                            <option value="country">国家</option>
+                                            <option value="province">省份</option>
+                                            <option value="city">市</option>
+                                            <option value="district">区县</option>
+                                            <option value="street">街道</option>
+                                            <option value="uptown">小区</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group"><label class="col-sm-2 control-label">描述：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text"   class="form-control" name="content"  id="content" value="" size="55"  validate=" maxlength:80" />
+                                    </div>
+                                </div>
+                                <div class="form-group"><label class="col-sm-2 control-label"><b>平面图：</b></label>
+                                    <div class="col-sm-10">
+                                        <div class="thumbbox1" id="imgbox" style="cursor: pointer;width:200px;height:200px;">
+
+                                        </div>
+                                        <input type="button" id="imgbtn" class="btn3" value="点击上传" />
+                                        <input type="hidden" sbname="房屋平面图" id="img" class="cs" name="img" value=" " />
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                    $(function(){
+                                        $("#imgbtn").uploader("image", "file");
+                                    });
+                                    function file(data){
+                                        $("#img").val(data);
+                                        $("#imgbox").html('<img width="200" height="200" src="' + data + '"/>');
+                                    }
+                                </script>
+                            <div class="form-group"><label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-10">
+                                    <button class="btn btn-primary" type="submit">保存</button>
+                                    <button class="btn btn-primary" type="reset">重置</button>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    	</div>
+<script type="text/javascript">
+    $(function () {
+        $('#pidid').selectpicker({
+            style: 'btn-info',
+            size: 15
+        }).on('changed.bs.select',function(e){
+            var pidd = $("#pidid").selectpicker('val');
+            $("#pid").val(pidd);
+        });
+
+    });
+
+    function openwinNew(){
+        var pid = $("#pid").val();
+        console.info(pid);
+        if(pid === null || pid === ''){
+            alert('父节点不能为空');
+            return ;
+        }
+        var name = $("#name").val();
+        if(name === null || name === ''){
+            alert('名称不能为空');
+            return ;
+        }
+        //获取小区的全部具体信息
+        $.ajax({
+            url: "{:U('Region/getPath')}",
+            type : 'post',
+            dataType : 'json',
+            data: {
+                id : pid
+            },
+            success: function(result){
+                if(result.code == 200){
+                    var detailAddress = result.msg + name;
+                    var url = "/admin/config/gdgetpoint?detailAddress=" + detailAddress;
+                    openwin('地图坐标拾取',url,1000,1000);
+                }else{
+                    alert(result.msg);
+                }
+            }
+        });
+
+    }
+
+    function submitMap(addr,poi)
+    {
+        //$('#detailAddress').val(addr);
+        $('#center').val(poi);
+        closewin();
+    }
+</script>
+</body>
+</html>

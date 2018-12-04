@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <script src="__PUBLIC__/common/js/jquery.js" language="javascript" type="text/javascript"></script>
+        <script src="__PUBLIC__/common/js/common.js" language="javascript" type="text/javascript"></script>
+        <!-- bootstrap START-->
+        <link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/plugins/footable/footable.core.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/animate.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/style.css" rel="stylesheet">
+        <link href="__PUBLIC__/common/style/recovebootstrap.css" rel="stylesheet" type="text/css" /> 
+        <!-- bootstrap END -->
+    </head>
+    <body>
+        <div class="main">
+            <div class="downbox">
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5>文章栏目列表</h5>
+                            <div class="ibox-tools" >
+                                <a   onclick="window.location.href = '{:U('WebArtlanmu/add')}';" class="btn btn-primary btn-xs">添加文章栏目</a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <table class="footable table table-stripped toggle-arrow-tiny footable-loaded default breakpoint" data-page-size="15">
+                                <thead>
+                                  <tr>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">ID<span class=""></span></th>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">栏目名称<span class=""></span></th>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">栏目排序<span class=""></span></th>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">操作<span class=""></span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                   {$tree}
+                                </tbody>
+                            </table>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+
+
+
+
+    </body>
+</html>

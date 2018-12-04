@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="keywords" content="{$web_keywords}">
+  <meta name="description" content="{$web_description}" id="metaDescription">
+  <title>{$web_name}_手机版</title>
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/author.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/listpano.css">  
+  <script src="__PUBLIC__/webyun/js/jquery-1.11.1.min.js"></script>
+  <script src="__PUBLIC__/webyun/js/find.js"></script>
+</head>
+<body>
+  <div id="app">
+	<div>
+		<include file="header_m" />
+		<div class="PageWithNavbar_mobile_10Xw1C App_page_J8KxFT">
+			<div class="IndexPage_main_2jrHQt">
+				<div class="Filterbar_filter_sOiOXO">
+					<div class="Filterbar_mobile_MCNIrz">
+						<ul class="Filterbar_nav1_1Lkxkn">
+							<li><a class="Filterbar_active_1qQjRp">全部作者</a></li>
+						</ul>
+						<div class="Filterbar_nav2_2C3ocZ">
+							<div class="Filterbar_cell_2gh0e_">
+								<div class="Select_select_3SYiKS" id="authorkm">
+									<div class="Select_header_coOU8v Select_down_3plElh Filterbar_menuhead_2qSFTE">{$paixu}</div>
+									<div class="Select_menu_tkm095" style="right: -10px; top: 50px; display: flex; flex-flow: row wrap;">
+										<img src="__PUBLIC__/webyun/images/top.png" class="Select_up_1bAWg5" style="right: 38px;">
+										{$paixulist}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div style="margin-left: 14px;">			
+				<volist name="authorlist" id="vo">
+					<div class="Author_mauthor_1CvYp8">
+						<div class="Author_headimg_1Zo3nr">
+							<a href="/index.php?s=/Webyun/authorlist/id/{$vo.id}"><span><img src="{$vo.headimg}" width="50" height="50" style="border-radius: 50%; vertical-align: middle; background-color: rgb(244, 244, 244);"></span></a>
+						</div>
+						<div class="Author_text_2ZsNUt">
+							<h3>
+								<a href="/index.php?s=/Webyun/authorlist/id/{$vo.id}">{$vo.nickname}</a>
+								<if condition="$vo['rengzheng'] eq 1">
+								<a class="Author_icon_3mcwOG Author_cert_2VRyQg" href="" target="_blank">认证</a> 
+								</if> 
+								<if condition="$vo['vip'] eq 1">
+								<a href="" target="_blank" class="Author_icon_3mcwOG Author_vip_1cY4UT">vip</a>
+								</if> 
+							</h3>
+							<div class="Author_feature_BRqi42">
+								<span class="Author_icon_3mcwOG Author_geo_17PzeD">{$vo.dizhi}</span>
+								<span class="Author_icon_3mcwOG Author_pv_N_64kn">{$vo.renqi}</span>
+							</div>
+						</div>
+						<div class="Author_desc_mZhLCT">
+							<div style="position: relative; overflow: hidden; width: 100%; height: 100%;">
+								<div style="position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; overflow: scroll; margin-right: -17px; margin-bottom: -17px;">
+									<div>{$vo.intro}</div>
+								</div>
+								<div style="position: absolute; height: 6px; right: 2px; bottom: 2px; left: 2px; border-radius: 3px;">
+									<div style="position: relative; display: block; height: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2); width: 0px;"></div>
+								</div>
+								<div style="position: absolute; width: 6px; right: 2px; bottom: 2px; top: 2px; border-radius: 3px;">
+									<div style="position: relative; display: block; width: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2); height: 0px;"></div>
+								</div>
+							</div>
+						</div>
+						<div class="Author_products__57eM7">{$vo.zhuop}</div>
+					</div>
+				 </volist>
+</div>
+<div class="ResPagination_pagination_2GmSW-">
+	<ul class="rc-pagination ant-pagination" unselectable="unselectable">{$page}</ul>
+</div>
+</div>
+</div>
+<div class="Notification_container_3kJM0z"><span></span></div>
+<include file="footer_m" />	
+</div>
+</div>
+</body>
+</html>

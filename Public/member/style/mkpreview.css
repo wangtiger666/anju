@@ -1,0 +1,120 @@
+@charset "utf-8";
+*{
+    font: 12px "微软雅黑", "宋体", Helvetica, Arial, Verdana;
+}
+body{margin:0;padding:0;}
+ul,li,dl,dt,dd{ margin:0px; padding:0px; list-style:none;}
+a{text-decoration:none;}
+a:link{}
+a:visited{}
+a:hover{text-decoration:underline;}
+a:active{}
+img{border:0;padding:0; margin:0;}
+p{padding:0; margin:0;}
+b{
+    font-weight: bold;
+}
+
+#bg{
+    top: 0px; left: 0px; position:  fixed; z-index: 1; width: 100%; height: 100%;
+}
+#upmain{
+    width: 100%; height: 100%;
+    position: absolute; z-index: 10;
+    background: url(../images/common/none.png) repeat;
+    _background: none;
+}
+
+.main{
+    overflow: hidden; margin: 10px; width: 360px; margin: 0 auto; margin-top: 200px;
+}
+.main .main_head{
+    width: auto; height: 32px; overflow: hidden; position: relative;
+}
+.main .main_head .main_head_left{
+    width: 4px; height: 32px; overflow: hidden; position: absolute; left: 0px; top: 0px;
+    background: url(../images/common/web_top.png) no-repeat;
+}
+.main .main_head .main_head_main{
+    width: auto; height: 32px; overflow: hidden; margin: 0 4px;
+    background: url(../images/common/web_top.png) 0 -64px repeat-x;
+}
+.main .main_head .main_head_right{
+    width: 4px; height: 32px; overflow: hidden; position: absolute; right: 0px; top: 0px;
+    background: url(../images/common/web_top.png) 0 -32px no-repeat;
+}
+.main .main_head .main_head_main .title{
+    width: auto; height: 32px; overflow: hidden; cursor: default; text-align: center;
+    font: bold 14px/30px "微软雅黑"; color: #dbdbdb;
+}
+.main .main_head .main_head_main .title a{
+    font: bold 14px/30px "微软雅黑"; color: #dbdbdb;
+}
+.main .main_head .main_head_main .title a:hover{
+    color: #fff; text-decoration: none;
+}
+.main .main_head .main_head_main .close{
+    width: 48px; height: 20px; overflow: hidden; background: url(../images/common/close.png) no-repeat;
+    float: right; margin-top: 6px; margin-right: 2px; cursor: pointer;
+}
+.main .main_head .main_head_main .close:hover{
+    background: url(../images/common/close.png) 0 -20px no-repeat;
+}
+.main .main_head .main_head_main .goback{
+    width: 48px; height: 20px; overflow: hidden; background: url(../images/common/goback.png) no-repeat;
+    float: right; margin-top: 6px; margin-right: 2px; cursor: pointer;
+}
+.main .main_head .main_head_main .goback:hover{
+    background: url(../images/common/goback.png) 0 -20px no-repeat;
+}
+.main .main_foot{
+    width: auto; height: 6px; overflow: hidden; position: relative;
+}
+.main .main_foot .main_foot_left{
+    width: 4px; height: 6px; overflow: hidden; position: absolute; left: 0px; top: 0px;
+    background: url(../images/common/web_down.png) 0 -6px no-repeat;
+}
+.main .main_foot .main_foot_main{
+    width: auto; height: 6px; overflow: hidden; margin: 0 4px;
+    background: url(../images/common/web_down.png) 0 -30px repeat-x;
+}
+.main .main_foot .main_foot_right{
+    width: 4px; height: 6px; overflow: hidden; position: absolute; right: 0px; top: 0px;
+    background: url(../images/common/web_down.png) 0 -18px no-repeat;
+}
+
+.main .main_mid{
+    width: auto; height: auto; overflow: hidden; position: relative;
+}
+.main .main_mid .main_mid_left{
+    width: 4px; height: 100%; overflow: hidden; position: absolute; left: 0px; top: 0px;
+    background: url(../images/common/web_mid.png) repeat-y;
+}
+.main .main_mid .main_mid_main{
+    width: auto; height: 100%; overflow: hidden; margin: 0 4px;
+    background: url(../images/common/web.png) repeat;
+}
+.main .main_mid .main_mid_right{
+    width: 4px; height: 100%; overflow: hidden; position: absolute; right: 0px; top: 0px;
+    background: url(../images/common/web_mid.png) -4px 0 repeat-y;
+}
+.webpage{
+    width: auto; overflow: hidden; height: 24px; background: url(../images/common/hei.png); border: 1px solid #666; margin: 0 2px; margin-top: 4px; padding: 2px;
+}
+.webpage .word{
+    font: bold 14px/26px "微软雅黑"; color: #ccc;
+}
+.webpage .hui{
+    font: 12px/22px "微软雅黑"; color: #999;
+}
+.webpage .hui a{
+    color: #ff9900;
+}
+
+.dobox{
+    width: 0px; height: 22px; overflow: hidden; border:1px solid #E6C78A;
+    background: url(../images/common/loadbar.gif) repeat-x;
+    filter:alpha(opacity=60); /*IE滤镜，透明度50%*/
+    -moz-opacity:0.6; /*Firefox私有，透明度50%*/
+    opacity:0.6;/*其他，透明度50%*/
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="keywords" content="{$web_keywords}">
+  <meta name="description" content="{$web_description}" id="metaDescription">
+  <title>{$userinfo.nickname}主页_{$web_name}</title>
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/member.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/listpano.css"> 
+  <script src="__PUBLIC__/webyun/js/jquery-1.11.1.min.js"></script>
+  <script src="__PUBLIC__/webyun/js/find.js"></script>
+  
+</head>
+<body>
+  <div id="app">
+	<div>
+		<div class="PageWithNavbar_mobile_10Xw1C App_page_3VYgF_">
+			<div>
+				<div class="ProductsPage_coverno_T4yuWB">
+					<include file="header_m" />
+				</div>
+				<div class="Author_author_1m1RbA">
+					<div class="Author_mobile_3P7SUb">
+						<ul class="Author_nav1_bSI6lA">
+							<li><span><img src="{$userinfo.headimg}" width="60" height="60" style="border-radius: 50%; vertical-align: middle; background-color: rgb(244, 244, 244);"></span></li>
+							<li class="Author_cell2_3Iyy9P">
+								<h1 class="Author_h1_3GTvs0">
+									<span class="Author_nickname_MrhTZp" title="{$userinfo.nickname}">{$userinfo.nickname}</span>
+									<if condition="$userinfo['rengzheng'] eq 1">
+										<a href="" class="Author_icon_3g4xnI Author_cert_WdF20-">cert</a>
+									</if> 
+									<if condition="$userinfo['vip'] eq 1">
+										<a href="" class="Author_icon_3g4xnI Author_vip_1-oUzl">vip</a>
+									</if> 	
+									
+									
+								</h1>
+								<div class="Author_feature_39G7wg">
+									<span class="Author_icon_3g4xnI Author_geo_LUajkC">{$dizhi}</span>
+									<span class="Author_icon_3g4xnI Author_pv_9d116C">{$hiscount}</span>
+								</div>
+							</li>
+						</ul>
+						<div class="Author_personbtn_HLQZY6">
+							<div><a href="javascript:showBg();"   class="PersonalInfo_mobilebtn_34Eqzg">个人资料</a></div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="Filterbar_filter_1y_ai-">
+					<div class="Filterbar_mobile_3hVthK">
+						<ul class="Filterbar_nav1_1sEkze">
+							<li><a class="Filterbar_active_Mcj0Yq" name="1">全景图片</a></li>
+						</ul>
+						<div class="Filterbar_nav2_1B7fEY">
+				<div class="Filterbar_cell_jnxpXX">
+					<div class="Select_select_3SYiKS"  id="authorkm">
+						<div class="Select_header_coOU8v Select_down_3plElh Filterbar_menuhead_374IQI">{$paixuname}</div>
+						<div class="Select_menu_tkm095" style="left: -10px; top: 50px;">
+							<img src="__PUBLIC__/webyun/images/top.png" class="Select_up_1bAWg5" style="right: 38px;">
+							{$paixulist}	
+						</div>
+					</div>
+				</div>
+			</div>
+					</div>
+				</div>
+				<div class="ProductsPage_list_1fKdek">
+					<div class="ProductsPage_loading_nvC6US">
+						<div>
+							<div class="Products_mflow_1-gxyP">
+							<volist name="list" id="vo">
+								<div class="Product_mpro_1SArhM">
+									<p><a href="{$vo.panopath}" target="_blank" class="ResPanoImg_mproimg_3eXcwj" style="background-image: url({$vo.panothumb});"></a></p>
+									<div class="Product_bottom_2dF4r9">
+										<a href="{$vo.panopath}" class="Product_h3_sIN4l1 ellipsis">{$vo.title}</a>
+									</div>
+									<p class="Product_top_1hj6pT">
+										<span class="Product_pv_1gAMyE">{$vo.hits}</span>
+										<span class="Product_like_2ulNuh">{$vo.zan}</span>
+									</p>
+								</div>
+							</volist>	
+							</div>
+								
+								
+							<div class="ResPagination_pagination_2GmSW-"><ul class="rc-pagination ant-pagination" unselectable="unselectable">{$page}</ul></div>
+								
+								
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="Notification_container_3kJM0z"><span></span></div>
+<include file="footer_m" />	
+</div>
+</div>
+								
+								
+<div class="ReactModalPortal">
+	<div class="ReactModal__Overlay ReactModal__Overlay--after-open Modal_overlay_3xL3Qo" aria-modal="true">
+		<div class="ReactModal__Content ReactModal__Content--after-open Modal_content_qVxweC PersonalInfo_mobiledialog_3zxycn Modal_scolltop_2Tlqa4" tabindex="-1" aria-label="modal">
+			<a onclick="closeBg();" class="Modal_close_36ySNs">close</a>
+				<div class="PersonalInfo_p1_1TK_zS">
+					<span><img src="{$userinfo.headimg}" width="100" height="100" style="border-radius: 50%; vertical-align: middle; background-color: rgb(244, 244, 244);"></span>
+					<p class="PersonalInfo_nickname_1SWPLq"><span>{$userinfo.nickname}</span>  </p>
+					<p class="PersonalInfo_popular_2Tn8Xe">人气：<em>{$hiscount}</em></p>
+				</div>
+				<div class="PersonalInfo_p2_gs3zdS">
+					<div class="PersonalInfo_row_1iSmS_"><label>昵称：<span>{$userinfo.nickname}</span></label></div>
+					<div class="PersonalInfo_row_1iSmS_"><label>现居：<span>{$dizhi}</span></label></div>
+					<div class="PersonalInfo_row2_1NDAvy">
+						<label>简介：</label>
+						<div class="PersonalInfo_remark_1eejl8" style="position: relative; overflow: hidden; width: 100%; height: 100px;">
+							<div style="position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; overflow: scroll; margin-right: 8px; margin-bottom: 0px;">{$userinfo.intro}</div>
+							<div style="position: absolute; height: 6px; right: 2px; bottom: 2px; left: 2px; border-radius: 3px;">
+								<div style="position: relative; display: block; height: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2); width: 0px;"></div>
+							</div>
+							<div style="position: absolute; width: 6px; right: 2px; bottom: 2px; top: 2px; border-radius: 3px;">
+								<div style="position: relative; display: block; width: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2); height: 90px; transform: translateY(0px);"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

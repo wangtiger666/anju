@@ -1,0 +1,100 @@
+<include file="Header" />
+<!--float_nav-->
+<link href="__PUBLIC__/webstyle/css/css.css" rel="stylesheet" type="text/css" />
+<div class="classifyMain">
+  <div class="classifyList">
+    <ul>
+    	<li><a href="javascript:void(0);" onclick="sethangyeid();getcaturl();"  <if condition="$hangyeid eq $vo[id] "> class="curr" </if> >全部</a></li>
+    	<input type="text" name="hangyeid"  id="hangyeid" value="{$hangyeid}"  style="display: none;" />
+	    <foreach name="hangye" item="vo"> 
+	        <if condition="$key elt 9 ">
+	      		<li><a   <if condition="$hangyeid eq $vo[id] "> class="curr" </if>    href="javascript:void(0);" onclick="sethangyeid({$vo.id});getcaturl();"  >{$vo.name}</a></li>
+	      	</if>
+	    </foreach>
+	    <foreach name="hangye" item="vo">
+	        <if condition="$key egt 10 ">
+     			<li class="shouqi none"><a   <if condition="$hangyeid eq $vo[id] "> class="curr" </if>    href="javascript:void(0);" onclick="sethangyeid({$vo.id});getcaturl();" >{$vo.name}</a></li>
+      	</if>
+	    </foreach>
+      <li><b class="kaiqi" id="kaiqi"   ></b></li>
+    </ul>
+    <div class="clearfloat"></div>
+  </div>
+  <div class="classifyProvince"><p>           
+  		热门省市：
+            <a   <if condition="$areaid eq $vo[id] ">class="on" </if>   href="javascript:void(0);" onclick="setareaid();getcaturl();"  >不限</a>
+            <input type="text" name="areaid"  id="areaid" value="{$areaid}" style="display: none;" />
+            <foreach name="area" item="vo">
+                <if condition="$key elt 17 ">
+           			 <a href="javascript:void(0);"  <if condition="$areaid eq $vo[id] ">class="on" </if>  onclick="setareaid({$vo.id});getcaturl();" >{$vo.name}</a>
+           		</if>
+	    	</foreach>
+            </p>
+            <div class="provinceTab" style="border-bottom: 1px solid rgb(223, 223, 223);"><span class="" style="border-left: 1px solid rgb(223, 223, 223);">&nbsp;</span>查看其它省市</div>
+
+            <div class="provinceTabList" style="display: none;">
+	            <p>
+	            	 <foreach name="area" item="vo">
+                		<if condition="$key egt 18 ">
+		            		<a href="javascript:void(0);" onclick="setareaid({$vo.id});getcaturl();" >{$vo.name}</a>
+		            	</if>
+	    			</foreach>
+	            </p>
+            </div><!--provinceTabList-->
+   </div>
+   <div class="classifyTitle"><div class="line"></div><div class="title"><h3>{$hangyename}</h3></div></div>
+   <div class="classifyListTwo"><p></p></div>
+  <!--classifyList-->
+  <div class="classifyListBox">
+    <div class="classifyListImg">
+      <ul>
+        <foreach name="list" item="vo">
+        <li>
+          <div class="subList">
+	          <a href="{$vo.panopath}" class="img" target="_blank" style="" >
+	         	 <img alt="{$vo.title}" src="{$vo.thumb}"  style="margin-top: -58.625px;height: 268px;" />
+	          	 <i></i><b></b>
+	          </a>
+	          <a href="{$vo.panopath}" class="text" target="_blank">
+	          	<span>{$vo.title}</span>
+	          </a>
+          </div>
+        </li>
+        </foreach>
+      </ul>
+      <div class="clearfloat"></div>
+    </div>
+    <!--classifyListImg--></div>
+  <!--classifyListBox-->
+  <div class="classifyPage">
+    <div class="setpage">
+      	{$page}
+     </div>
+  </div>
+  <!--classifyPage-->
+  </div>
+<!--classifyMain-->
+<script type="text/javascript">
+		function getcaturl(){
+			var areaid   = $("#areaid").val();
+			var hangyeid = $("#hangyeid").val();
+			var urlpar="";
+			if(areaid){
+				var  urlpar=urlpar+"/areaid/"+areaid;
+			}
+			if(hangyeid){
+				var  urlpar=urlpar+"/hangyeid/"+hangyeid;
+			}
+			var u = "index.php?s=/Website/qjzscat"+urlpar;
+			location.href=u;
+		}
+		function setareaid(id){
+			$("#areaid").val(id);
+		}
+
+		function sethangyeid(id){
+			$("#hangyeid").val(id);
+		}
+</script>
+<script src="__PUBLIC__/webstyle/js/main.js"></script>
+<include file="Footer" />

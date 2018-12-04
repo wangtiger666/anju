@@ -1,0 +1,51 @@
+#bg{
+    top: 0px; left: 0px; position:  fixed; z-index: 1; width: 100%; height: 100%;
+}
+#upmain{
+    width: 100%; height: 100%;
+    position: absolute; z-index: 10;
+    background: url(../images/common/none.png) repeat;
+    _background: none;
+}
+
+.logo{
+    width: 175px; height: 110px; overflow: hidden; margin: 0 auto; margin-top: 60px;
+    background: url(../images/reg/happy.png) repeat;
+}
+.ban{
+    width: 552px; height: auto; overflow: hidden; margin: 0 auto; margin-top: 20px;
+}
+.ban_top{
+    width: 552px; height: 12px; overflow: hidden;
+    background: url(../images/reg/ban_top.png) no-repeat;
+}
+.ban_mid{
+    width: 552px; height: auto; overflow: hidden; padding: 20px 0;
+    background: url(../images/reg/ban_mid.png) repeat-y;
+}
+.ban_down{
+    width: 552px; height: 11px; overflow: hidden;
+    background: url(../images/reg/ban_down.png) no-repeat;
+}
+
+.ban_border{
+    width: 248px; height: 32px; overflow: hidden; border:1px solid #bbb; border-radius: 5px; float: left; background: #fff;
+}
+.ban_border.green{
+    border-color: #9ccd3b; background: #f4ffdf;
+}
+.ban_border input{
+    width: 228px; height: 20px; overflow: hidden; padding: 0px; border: none; border-width: 0px;
+    background: url(../images/common/none.png) repeat; margin-left: 10px; margin-top: 6px;
+    font: 14px/20px "微软雅黑"; color: #666; outline: none;
+}
+.ban_submit{
+    width: 248px; height: 32px; overflow: hidden; border:1px solid #008800; background: #9ccd3b; border-radius: 4px;
+    font: bold 14px/32px "微软雅黑"; color: #008800; text-align: center; cursor: pointer;
+}
+.ban_submit:hover{
+    background: #008800; color: #fff;
+}
+.reg_title{
+    font: bold 20px "微软雅黑"; color: #000;
+}

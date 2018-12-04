@@ -1,0 +1,100 @@
+<html lang="zh-cn"><head><link rel="stylesheet" type="text/css" href="http://webapi.amap.com/theme/v1.3/style1.3.21.1.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="{$web_keywords}">
+  <meta name="description" content="{$web_description}" id="metaDescription">
+  <meta name="robots" content="all">
+  <title>{$web_name}</title>
+<link href="__PUBLIC__/yun/css/authorlist.css" rel="stylesheet" type="text/css"/>
+<link href="__PUBLIC__/yun/css/author.css" rel="stylesheet" type="text/css"/>
+<link href="__PUBLIC__/yun/css/normalize.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/yun/css/index.css">
+<script src="__PUBLIC__/yun/js/jquery.min-1.10.2.js"></script>
+
+</head>
+<body>
+  <div id="root">
+  <div data-reactroot="">
+  	   <div class="p4b9YXf9RfoBkQjb" style="height: 50px;">
+            <div class="notifications-wrapper">
+            </div>
+            <div class="_2xfu_lq1CjrY3ElJ">
+                <include file="Public:header" />            
+            </div>
+            <span></span>
+        </div>
+ <div class="yh40wPez5OWlbxid" style="top:12%;">
+ <div class="_1g8opRF9ayj5WoTF">
+ <div class="YzNrxONKeHzIwSxp">
+ <div class="_1l9B8E_0L8VPIXFC">
+
+ <div class="_3JDnZIJ3Q9MivvoS">
+ <img class="_1KQH3p2DukV9bP3B" src="{$userinfo.headimg}">
+ </div>
+
+ <div class="_2BYJx3vXQn9u88mK"><p class="_3yTS66RGAuGqFBvH" style="margin-top: 10px;">{$userinfo.company} {$userinfo.nickname}</p><a href="javascript: void 0" class="_2kbnwOD2emY5aALL"><!-- 资 料 --></a></div>
+ <div class="YPAmC7DNYN11UGdq" style="height: 29px;">
+<div class="_1JhgAMGF4djopmYg"><span class="_3BOfASUzjoXhNnJt"><!-- react-text: 396 -->全景作品<!-- /react-text --><!-- react-text: 397 -->: <!-- /react-text --><!-- react-text: 398 -->{$photocount}<!-- /react-text --></span><span class="_3BOfASUzjoXhNnJt"><!-- react-text: 400 -->人气: <!-- /react-text --><!-- react-text: 401 -->{$hiscount}<!-- /react-text --></span></div>
+</div>
+</div>
+
+
+</div>
+</div>
+<div class="_10VRfBKWFYLHftSq">
+<div class="DjNGzEXFOSLEKdc9">
+
+<volist name="list" id="vo">
+	<div class="NGgz_sYXHxlaFO3N" onmouseover="xiala({$vo.id})" onmouseout="xiala_hidden({$vo.id})" >
+		     <span>
+           <script type="text/javascript">
+                function xiala(xialaid){
+                    var xiala = "xial_"+xialaid;
+                        $("#"+xiala).css("display","block");
+                        $("#"+xiala).animate({height:35,opacity:1},300);
+                }
+
+                function xiala_hidden(xialaid){
+                        var xiala = "xial_"+xialaid;
+                        $("#"+xiala).animate({height:0,opacity:0},300);
+                }
+            </script>
+
+        <div class="_3IIOkjQq8bSM2S5b"  id="xial_{$vo.id}" style="display:none;height: 0px;" >
+                <div class="_lmg9AgZFrlOvlEet" style="display: inline-block;float: right;margin-right:5px;">
+                        <i class="icon icon-eye _2Tt-zTxm4RhlTwfw"> </i>
+                        <span class="_3ZAMESFTY7t-h-1N">{$vo.zan} </span>
+                </div>
+                
+                <div class="_lmg9AgZFrlOvlEet" style="display: inline-block;float: right;margin-right:5px;">
+                        <i class="icon icon-like _2Tt-zTxm4RhlTwfw"> </i>
+                        <span class="_3ZAMESFTY7t-h-1N">{$vo.hits} </span>
+                </div>
+        </div>
+        </span>
+
+		<a href="{$vo.fileurl}" target="_blank">
+			<div class="_3d-Vc0h35OVpORE2">
+				<img class="_1KQH3p2DukV9bP3B" src="{$vo.panothumb}">
+			</div>
+		</a>
+		<div class="_1czBVoSKS46ancPC">
+			<span class="_1f5dpIkQD-IE7GLv">{$vo.title}</span>
+			<a href="{$vo.fileurl}" class="w8GfmTYx5jvQINmj">
+			<div class="_3aBVpTQfOEkQLfNO" title="{$vo.title}">
+				<img class="_1KQH3p2DukV9bP3B" src="{$userinfo.headimg}" alt="{$vo.title}">
+			</div>
+			</a>
+		</div>
+	</div>
+</volist>
+
+
+</div>
+	</div>
+		<div class="container" >
+		<include file="Public:footer" />
+		</div>
+	</div>
+	</div>	

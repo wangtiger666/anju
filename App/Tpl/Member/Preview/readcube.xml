@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano>
+<skin_settings cube{$cube_id}_open="1" cube{$cube_id}_drect="1" cube{$cube_id}_id="{$cube_id}" cube{$cube_id}_speed="{$cuberow['speed']}" cube{$cube_id}_total="{$row['len']}" />
+<layer name="cube{$cube_id}" visible="false" enabled="True" keep="true" type="container" bgcolor="0x000000" bgalpha="0.7" align="center" width="{$row['show_width']}" height="{$row['show_height']}" x="0" y="0" zorder="1000">
+<layer name="cube{$cube_id}_phototext" keep="true" type="container" bgcolor="0x000000" bgalpha="0" align="top" width="100%" height="40" x="0" y="0" zorder="1001">
+<layer name="cube{$cube_id}_phototext_title" url="%SWFPATH%/plugins/textfield.swf" align="center" edge="center" width="95%" height="32" autoheight="true" x="0" y="0" zorder="1002" enabled="true" background="false" border="false" html="{$row.title}" css="text-align:center; color:#FFFFFF; font-family:微软雅黑; font-size:16px; line-height:32px;" textshadow="0" visible="true" />
+</layer>
+<layer name="cube{$cube_id}_show" keep="true" type="container" bgcolor="0x000000" bgalpha="0" align="top" width="100%" height="{$row['height']}" x="0" y="40" zorder="1001">
+
+<for start="0" end="$row['len']">
+	<if condition="$i eq 0">
+	<layer name="cube{$cube_id}_img{$i+1}" visible="true" url="{:CC('web_root')}{$row['file']}/cube{$i}.{$end[$row['imagetype']]}" preload="True" align="center" edge="center" width="95%" height="95%" x="0" y="0" />
+	<else/>
+	<layer name="cube{$cube_id}_img{$i+1}" visible="false" url="{:CC('web_root')}{$row['file']}/cube{$i}.{$end[$row['imagetype']]}" preload="True" align="center" edge="center" width="95%" height="95%" x="0" y="0" />
+	</if>
+</for>
+</layer>
+        <layer name="cube{$cube_id}_control" keep="true" type="container" bgcolor="0x000000" bgalpha="0" align="bottom" width="100%" height="45" x="0" y="10" zorder="1001">
+            <layer  name="cube{$cube_id}_play" visible="true" url="%SWFPATH%/images/play.png" alpha="0.6" align="center"  edge="center"  width="50" height="50" x="0" y="0" onclick="cube{$cube_id}playbtn();" onhover="showtext('暂停/播放');" crop="40|50|50|50" zorder="1005"></layer>
+            <layer  name="cube{$cube_id}_left" visible="true" url="%SWFPATH%/images/play.png" alpha="0.6" align="center"  edge="center"  width="40" height="40" x="-45" y="0" onclick="cube{$cube_id}playup();" onhover="showtext('逆时针');" crop="0|5|40|40" zorder="1005"></layer>
+            <layer  name="cube{$cube_id}_right" visible="true" url="%SWFPATH%/images/play.png" alpha="0.6" align="center"  edge="center"  width="40" height="40" x="45" y="0" onclick="cube{$cube_id}playdown();" onhover="showtext('顺时针');" crop="90|55|40|40" zorder="1005"></layer>
+            <layer  name="cube{$cube_id}_speed" visible="true" url="%SWFPATH%/images/sound.png" alpha="0.8" align="right"  edge="center"  width="65" height="22" x="50" y="0" onclick="cube{$cube_id}speed();" onhover="showtext('调整速度');" crop="0|0|65|22" zorder="1005"></layer>
+        </layer>            
+        <layer  name="cube{$cube_id}_photobox_close" url="%SWFPATH%/images/x.png" align="righttop"  edge="righttop"  width="30" height="30" x="-10" y="-10" onhover="showtext('点击关闭');" onclick="set(layer[cube{$cube_id}].visible,false);set(skin_settings.cube{$cube_id}_open,0);" zorder="1015"/>
+    </layer>
+	<krpano devices="mobile">
+	<layer name="cube{$cube_id}" scale="0.95" width="100%" height="70%" />
+	<action name="cube{$cube_id}show" autorun="onstart">
+        set(layer[cube{$cube_id}_show].height,70%);
+    </action>
+	</krpano>
+    <action name="cube{$cube_id}next">
+            if(skin_settings.cube{$cube_id}_drect == 1,
+            if(skin_settings.cube{$cube_id}_id LT skin_settings.cube{$cube_id}_total,
+            set(cubenow,get(skin_settings.cube{$cube_id}_id));
+            add(cubenext,get(skin_settings.cube{$cube_id}_id),1);
+            ,
+            set(cubenow,get(skin_settings.cube{$cube_id}_id));
+            set(cubenext,1);
+            );
+            ,
+            if(skin_settings.cube{$cube_id}_id GT 1,
+            set(cubenow,get(skin_settings.cube{$cube_id}_id));
+            sub(cubenext,get(skin_settings.cube{$cube_id}_id),1);
+            ,
+            set(cubenow,get(skin_settings.cube{$cube_id}_id));
+            set(cubenext,get(skin_settings.cube{$cube_id}_total));
+            );
+            );
+       
+            txtadd(cubenowlayer,cube{$cube_id}_img,get(cubenow));
+            txtadd(cubenextlayer,cube{$cube_id}_img,get(cubenext));            
+            
+            set(layer[get(cubenowlayer)].visible,false);
+            set(layer[get(cubenextlayer)].visible,true);
+            set(skin_settings.cube{$cube_id}_id,get(cubenext));
+            div(speeddata,0.08,get(skin_settings.cube{$cube_id}_speed));
+            if(skin_settings.cube{$cube_id}_open == 1,delayedcall(cube{$cube_id}action,get(speeddata), cube{$cube_id}next()););
+    </action>
+    <action name="cube{$cube_id}playup">
+        set(skin_settings.cube{$cube_id}_drect,-1);
+        set(layer[cube{$cube_id}_left].crop,0|55|40|40);
+        set(layer[cube{$cube_id}_right].crop,90|5|40|40);
+    </action>
+    <action name="cube{$cube_id}playdown">
+        set(skin_settings.cube{$cube_id}_drect,1);
+        set(layer[cube{$cube_id}_left].crop,0|5|40|40);
+        set(layer[cube{$cube_id}_right].crop,90|55|40|40);
+    </action>
+    <action name="cube{$cube_id}playbtn">
+        if(skin_settings.cube{$cube_id}_open == 1,set(skin_settings.cube{$cube_id}_open,0);set(layer[cube{$cube_id}_play].crop,40|0|50|50);,set(skin_settings.cube{$cube_id}_open,1);cube{$cube_id}next();set(layer[cube{$cube_id}_play].crop,40|50|50|50););
+    </action>
+    <action name="cube{$cube_id}speed">
+        if(skin_settings.cube{$cube_id}_speed == 3,
+        set(skin_settings.cube{$cube_id}_speed,1);set(layer[cube{$cube_id}_speed].crop,0|44|65|22);,
+        if(skin_settings.cube{$cube_id}_speed == 1,
+        set(skin_settings.cube{$cube_id}_speed,2);set(layer[cube{$cube_id}_speed].crop,0|22|65|22);,
+        set(skin_settings.cube{$cube_id}_speed,3);set(layer[cube{$cube_id}_speed].crop,0|0|65|22);
+        );
+        );
+    </action>
+</krpano>

@@ -1,0 +1,56 @@
+﻿<krpano>
+<style name="cms_skin" url="images/gongneng.png" keep="true" zorder="0" align="righttop" x="9" scale="0.5" onover="copy(layer[tooltip].html, tooltip);set(layer[tooltip].visible, true);tween(layer[tooltip].alpha, 1.0, 0.5);asyncloop(hovering, copy(layer[tooltip].x,mouse.stagex); copy(layer[tooltip].y,mouse.stagey); );" onout="tween(layer[tooltip].alpha, 0.0, 0.25, default, set(layer[tooltip].visible,false), copy(layer[tooltip].x,mouse.stagex); copy(layer[tooltip].y,mouse.stagey); );" />
+<style name="cms_skin2" url="images/gongneng.png" keep="true" zorder="0" align="righttop" x="9" scale="0.5" />	
+<style name="cms_text" url="%SWFPATH%/plugins/textfield.swf" zorder="0" align="bottom" x="14" oy="23" keep="true" backgroundcolor="0xFFFFFF" backgroundalpha="0.0" roundedge="0" css="font-family:Arial,宋体; font-size:14px; color:#FFFFFF;"  width="100" autoheight="" />
+
+<layer name="cms_guanfang" style="cms_skin" crop="0|0|63|63" y="100" visible="get:skin_settings.openhttp" onclick="get:skin_settings.http" tooltip="官方网站"/>		 
+		<layer name="cms_xinxi" style="cms_skin" crop="0|63|63|63" y="140" onhover="showtext(get(skin_settings.tel),skintext)" visible="get:skin_settings.opentel"   onclick="get:skin_settings.tel" tooltip="联系电话" /> 		   
+		<layer name="cms_map_dtzb" style="cms_skin" crop="0|126|63|63" y="180" visible="get:skin_settings.opendaohang" onclick="get:skin_settings.daohang" tooltip="地图导航"/>
+
+		<!-- <layer name="cms_yuyin" style="cms_skin" crop="0|189|63|63" y="260" visible="get:skin_settings.bgyunyin" 
+			onclick="pausesoundtoggle(bgyunyin); 
+			          switch(crop, 0|189|63|63, 0|252|63|63);			          
+					  if(layer[cms_yuyin_html].html==开启语音,
+		                 set(layer[cms_yuyin_html].html,关闭语音);
+			             ,
+			             set(layer[cms_yuyin_html].html,开启语音);
+						)"/>
+		<layer name="cms_yuyin_html" style="cms_text" parent="cms_yuyin" html="关闭语音"/> -->
+		
+		<layer name="cms_card" style="cms_skin" crop="0|504|63|63" y="220" visible="get:skin_settings.opencard" onclick="opencard(get(skin_settings.domainlink),get(skin_settings.pano_id))" tooltip="展商名片"/>
+		<action name="opencard">
+		txtadd(cardurl,%1,'/my.php?s=/Member/Panoapi/tuwen/type/card/id/',%2);
+        	txtadd(mcardurl,%1,'/my.php?s=/Member/Panoapi/tuwen/type/card/id/',%2,'/m_type/1');
+		openIframe(820,540,get(cardurl),get(mcardurl));
+		</action>
+
+		<layer name="cms_erweima" style="cms_skin" crop="0|315|63|63" y="260" visible="get:skin_settings.erweima" onclick="openwindow('./share.html',25%,35%)" tooltip="场景分享"/>
+
+
+		<style name="zan_text" url="%SWFPATH%/plugins/textfield.swf" align="bottom" oy="23" keep="true" backgroundcolor="0xFFFFFF" backgroundalpha="0.0" roundedge="0" css="text-align:center;font-family:Arial,宋体; font-size:12px; color:#FFFFFF;" width="100"/>
+		<layer name="cms_zan" style="cms_skin2" crop="0|378|63|63" y="300" visible="get:skin_settings.openzan" onclick="run_cms_zan(get(skin_settings.domainlink),get(skin_settings.pano_id))"/>
+		<layer name="cms_zan_html" keep="true" style="zan_text" parent="cms_zan" html=""/>
+		<action name="run_cms_zan">
+		js(jsrun_cms_zan(%1,%2));
+		</action>
+		<action name="cms_zan_html">
+		set(layer[cms_zan_html].html,%1);
+		</action>
+		<action name="cms_zan_check">
+		set(layer[cms_zan].crop,'0|441|63|63');
+		</action>
+
+
+
+<krpano devices="mobile">
+	<style name="cms_skin" x="6" />
+	<layer name="cms_guanfang" y="52" scale="0.8"/>
+	<layer name="cms_xinxi" y="112" scale="0.8"/>
+	<layer name="cms_map_dtzb" y="172" scale="0.8"/>
+	<layer name="cms_erweima" y="232" onclick="openwindow('./share.html',70%,60%)" scale="0.8"/>
+	<layer name="cms_card" y="292" scale="0.8"/>
+	<layer name="cms_zan" x="6" y="352" scale="0.8"/>
+
+</krpano>
+
+</krpano>

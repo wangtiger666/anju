@@ -1,0 +1,96 @@
+/*banner*/
+#shan{width:100%;overflow:hidden;}
+.shanBanner{position:relative;overflow:hidden;}
+.shanBannerCon{width:1190px;overflow:hidden;position:relative;height:661px;}
+.shanBannerPic{width:1920px;position:absolute;left:50%;top:50%;margin-left:-960px;margin-top:-500px;height:1000px;}
+.shanBannerPos{position:absolute;color:#fff;text-align:left;top:50%;left:238px;}
+.shanBanerTitle{font-size:60px;line-height:115px;margin-bottom:28px;}
+.shanBanerTitle span{font-size:100px;}
+.shanBanerFont{font-size:18px;line-height:32px;color:#f2f2f2;}
+@-webkit-keyframes nextPage {
+	0% {
+		-webkit-transform: translateY(10px);
+		opacity: 0.8;
+	}
+	50% {
+		-webkit-transform: translateY(20px);
+		opacity: 0.4;
+	}
+	100% {
+		-webkit-transform: translateY(40px);
+		opacity: 0;
+	}
+}
+@keyframes nextPage {
+	0% {
+		transform: translateY(10px);
+		opacity: 0.8;
+	}
+	50% {
+		transform: translateY(20px);
+		opacity: 0.4;
+	}
+	100% {
+		transform: translateY(40px);
+		opacity: 0;
+	}
+}
+.downArrow{width:93px;height:47px;position:absolute;bottom:45px;left:50%;margin-left:-46px;background:url(../images/down_arrow.gif) no-repeat;-webkit-animation:nextPage 1.2s linear infinite;-moz-animation:nextPage 1.2s linear infinite;-ms-animation:nextPage 1.2s linear infinite;-o-animation:nextPage 1.2s linear infinite;animation:nextPage 1.2s linear infinite;cursor:pointer;}
+/*content*/
+.shanCon{width:1190px;overflow:hidden;margin:50px auto 31px;}
+/*左侧*/
+.shanConLeft{width:862px;float:left;overflow:hidden;}
+.shanList{width:832px;height:232px;border:1px solid #e5e5e5;padding:18px 14px;margin-bottom:19px;}
+.shanListImg{width:325px;height:230px;float:left;}
+.shanListImg a{font-size:0;}
+.shanListImg img{width:325px;height:230px;}
+.shanListExplain{width:461px;height:230px;float:left;padding-left:41px;text-align:left;position:relative;}
+.shanListExplain p{text-align:left;}
+.shanListExplain a{color:#666;}
+.shanListExplain a.pageView{cursor:default;}
+.shanListTitle{font-size:30px;color:#333;height:50px;line-height:50px;text-align:left;overflow:hidden;}
+.shanListTitle h3{font-weight:normal;font-size:30px;color:#333;}
+.shanListTitle h3 a{color:#333;}
+.shanListTitle a:hover{color:#0099ff;}
+.industry{font-size:15px;line-height:25px;height:52px;overflow:hidden;color:#666;margin:3px 0 9px 0;}
+.showTime{font-size:12px;line-height:28px;height:28px;overflow:hidden;color:#aaa;}
+.freeGrab{margin-top:17px;height:37px;line-height:37px;}
+.freeGrab a{display:block;width:110px;height:37px;text-align:center;color:#fff;font-size:18px;background:#66cc00;}
+.freeGrab a.queue{background:#0099ff;}
+.freeGrab a.notHave{background:#ababab;}
+.moreActivities{margin-top:16px;position:relative;display:inline-block;width:auto;}
+.pageView{padding-left:32px;font-size:15px;margin-top:16px;color:#a0a0a0;background:url(../images/shan_icon.jpg) no-repeat 0 2px;}
+.pageView:hover{background:url(../images/shan_icon.jpg) no-repeat 0 -118px;color:#0099ff;}
+.share{margin-left:18px;padding-left:22px;font-size:15px;color:#a0a0a0;background:url(../images/shan_icon.jpg) no-repeat 0 -38px;}
+.share:hover{background:url(../images/shan_icon.jpg) no-repeat 0 -78px;color:#0099ff;}
+.shareBox{position:absolute;width:96px;height:43px;padding:11px 0 0 12px;border:1px solid #e5e5e5;background:#fff;left:186px;top:195px;display:none;}
+/*右侧*/
+.shanConRight{width:307px;float:right;overflow:hidden;}
+.shanAd,.shanAd img{width:307px;height:195px;}
+.expoonDynamics{width:305px;height:261px;border:1px solid #e5e5e5;}
+.expoonDynamicsTitle{height:60px;line-height:60px;color:#333;font-size:25px;padding-left:20px;text-align:left;border-bottom:1px solid #e5e5e5;}
+.expoonDynamicsNews{text-align:left;padding:20px 13px 0;}
+.expoonDynamicsNews li{line-height:32px;font-size:14px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:#666;}
+.expoonDynamicsNews li span{padding-right:10px;}
+.expoonDynamicsNews li a{color:#666;}
+.expoonDynamicsNews li a:hover{color:#0099ff;text-decoration:underline;}
+.hotBooth{width:305px;overflow:hidden;border:1px solid #e5e5e5;}
+.hotBoothTitle{height:60px;line-height:60px;color:#333;font-size:25px;padding-left:20px;text-align:left;}
+.hotBoothCon{width:305px;overflow:hidden;}
+.hotBoothCon li{width:305px;height:254px;}
+.hotBoothCon li a{line-height:40px;color:#666;font-size:16px;}
+.hotBoothCon li .hotBoothImg{font-size:0;line-height:0;}
+.hotBoothCon li img{width:305px;height:205px;}
+
+
+
+
+
+
+
+
+
+
+
+
+

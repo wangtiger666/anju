@@ -1,0 +1,432 @@
+<krpano>
+
+	<style name="skin_base" url="vtourskin.png" />
+
+	<style name="skin_glow"
+	       ondown="copy(skin_lockglow,name); skin_buttonglow(get(name)); if(ondown2, ondown2() );"
+	       onover="if(skin_lockglow === null, copy(skin_lockglow,name); skin_buttonglow(get(name),0.3) ); "
+	       onout="if(skin_lockglow === name, ifnot(pressed, skin_buttonglow(null);delete(skin_lockglow); ));"
+	       onup="if(hovering, skin_buttonglow(get(name),0.3), skin_buttonglow(null);delete(skin_lockglow); ); if(onup2, onup2() );"
+	       />
+
+<!-- 缩略图字体样式  -->
+<style name="skin_thumbtext_style" 
+       url="../plugins/textfield.swf" 
+	   align="bottom" width="100%" autoheight="true" y="3" enabled="false" background="true" backgroundcolor="0x000000" backgroundalpha="0.5" border="false" 
+	   css="calc:skin_settings.design_text_css + ' text-align:center; font-size:12px;'" 
+	   textshadow="get:skin_settings.design_text_shadow" />
+
+
+<!-- 场景分组标题 文本样式 -->
+<style name="group_id_txt" keep="true" zorder="2"  vcenter="true"  
+       backgroundcolor="0xffffff" backgroundalpha="0"
+	   url="../plugins/textfield.swf" 
+	   align="lefttop" visible="true" y="0" x="0" 
+	   autowidth="true" height="30" padding="0 10"
+	   css="text-align:center; color:#FFFFFF; font-family:Arial; font-size:14px;letter-spacing:2px; leading:30px;line-height:30px;" 
+	   onover="tween(backgroundalpha,0.3, 0.2,linear);" 
+	   onout="tween(backgroundalpha,0, 0.2,linear);" 
+	   onclick="skin_addthumbs(group_id,get(name),user);" />
+
+	<!-- skin_tooltip - style for the thumb, hotspot and mapspot tooltips -->
+	<style name="skin_tooltips"
+	       onover="copy(layer[skin_tooltip].html, tooltip);
+	               set(layer[skin_tooltip].visible, true);
+	               tween(layer[skin_tooltip].alpha, 1.0, 0.1);
+	               asyncloop(hovering, copy(layer[skin_tooltip].x,mouse.stagex); copy(layer[skin_tooltip].y,mouse.stagey); );"
+	       onout="tween(layer[skin_tooltip].alpha, 0.0, 0.1, default, set(layer[skin_tooltip].visible,false), copy(layer[skin_tooltip].x,mouse.stagex); copy(layer[skin_tooltip].y,mouse.stagey); );"
+	       />
+
+	<!-- the tooltip textfield -->
+	<layer name="skin_tooltip" keep="true"
+	       url="../plugins/textfield.swf"
+	       parent="STAGE"
+	       visible="false" alpha="0" enabled="false"
+	       align="lefttop" edge="bottom" oy="-2" width="200" autoheight="true"
+	       background="false" backgroundcolor="0xFFFFFF" backgroundalpha="1.0"
+	       border="false" bordercolor="0x000000" borderalpha="1.0" borderwidth="1.0" roundedge="0"
+	       shadow="0.0" shadowrange="4.0" shadowangle="45" shadowcolor="0x000000" shadowalpha="1.0"
+	       textshadow="1" textshadowrange="6.0" textshadowangle="90" textshadowcolor="0x000000" textshadowalpha="1.0"
+	       css="text-align:center; color:#FFFFFF; font-family:Arial; font-weight:bold; font-size:16px;"
+	       html=""
+	       />
+
+
+	
+	<layer name="skin_scroll_window" type="container" keep="true" align="leftbottom" width="get:skin_settings.layout_width" height="100%" x="0" y="60" y_opened="60" y_closed="-2" maskchildren="true">
+		
+		<layer name="skin_scroll_layer" type="container" align="leftbottom" width="100%" height="100%" x="0" y="-100%">
+			
+						
+			<layer name="skin_scroll_container" type="container" bgcolor="get:skin_settings.layout_bgcolor" bgalpha="get:skin_settings.layout_bgalpha" align="lefttop" width="100%" height="100%" x="0" y="0" bgroundedge="get:skin_settings.layout_bgroundedge" maskchildren="true">
+				
+				<layer name="skin_thumbs_container" type="container" align="lefttop" width="100%" height="100%" visible="false">
+				    
+					<layer name="skin_album" state="closed" 
+					       url="../plugins/scrollarea.swf" 
+					       alturl="../plugins/scrollarea.js" 
+						   direction="h" align="top" width="100%" height="30" x="0" 
+						   onloaded="setcenter(0,0);" />
+					
+					<layer name="skin_thumbs_scrollleft"  style="skin_base|skin_glow" crop="0|64|64|64"  align="lefttop"  edge="left"  x="5" y="50" scale="0.5" zorder="2" alpha="1.0" ondown2="asyncloop(pressed, layer[skin_thumbs].scrollby(+2,0));" visible="false" />
+					
+					<layer name="skin_thumbs_scrollright" style="skin_base|skin_glow" crop="64|64|64|64" align="righttop" edge="right" x="5" y="50" scale="0.5" zorder="2" alpha="1.0" ondown2="asyncloop(pressed, layer[skin_thumbs].scrollby(-2,0));" visible="false" />
+					
+					<layer name="skin_thumbs_scrollindicator" type="container" bgcolor="0xFFFFFF" bgalpha="0.25" align="lefttop" width="0" y="100" height="4" visible="false" enabled="false" />
+					
+					<layer name="skin_thumbs" state="closed" url="../plugins/scrollarea.swf" alturl="../plugins/scrollarea.js" direction="h" align="top" width="100%" height="100" zorder="1" onloaded="skin_updatescroll();"  />
+					
+					<!-- 缩略图对齐图片 -->
+	                <layer name="skin_thumbborder"  keep="true" type="container" visible="false" enabled="false" 
+	                       align="lefttop" scale="1.0"      
+		                   x="get:skin_settings.design_thumbborder_padding" 
+		                   y="get:skin_settings.design_thumbborder_padding" 
+	                       width="calc:skin_settings.thumbs_width - 2*skin_settings.design_thumbborder_padding" 
+		                   height="calc:skin_settings.thumbs_height - 2*skin_settings.design_thumbborder_padding" 
+		                   bgborder="get:skin_settings.design_thumbborder_bgborder" 
+		                   bgroundedge="get:skin_settings.design_thumbborder_bgroundedge" />
+	
+				</layer>
+				
+			</layer>
+			
+		</layer>
+		
+	</layer>
+
+	<layer name="skin_control_bar" keep="true" type="container" bgcolor="0x000000" bgalpha="0.5" align="leftbottom" width="100%" height="70" x="0" y="0" y_opened="20" y_closed="-42" zorder="3">
+				
+		<layer name="skin_btn_thumbs" style="skin_base|skin_glow" crop="128|0|64|88"  align="left"  x="10"   y="0"   scale="0.6"  title="选择场景" onhover="showtext(get(title),skintext)" ondown2="skin_showmap(false); skin_showthumbs();" />
+		
+		<layer name="skin_btn_muisc" style="skin_base|skin_glow" crop="192|0|85|88"  align="left" x="60"   y="0"   scale="0.6" title="音乐" onhover="showtext(get(title),skintext)" 
+		       onclick="pausesoundtoggle(bgsnd); switch(crop, 192|88|85|88, 192|0|85|88);"/>	
+			   
+			   
+		<layer name="skin_btn_say"    style="skin_base|skin_glow" crop="277|88|88|88"  align="left"      x="120"   y="0"  scale="0.6"  title="说一说" onhover="showtext(get(title),skintext)"  onclick="toggleGui(); switch(crop, 277|175|88|88, 277|88|88|88);"/>
+		   	
+		<layer name="skin_btn_VR" style="skin_base|skin_glow" crop="128|88|64|88"  align="left"  x="180"   y="0"   scale="0.6" onhover="showtext(get(title),skintext)" ondown2="webvr.enterVR();webvr_enterVR();" visible="get:skin_settings.webvr"  title="VR" devices="html5" />	
+		
+		<layer name="skin_btn_fs"     style="skin_base|skin_glow" crop="0|315|64|88"  align="left"       x="227"   y="0"  scale="0.6" title="全屏" onhover="showtext(get(title),skintext)"  onclick="switch(fullscreen);switch(crop, 64|315|64|88, 0|315|64|88);"  />				
+		
+		<layer name="skin_btn_gyro"   style="skin_base|skin_glow" crop="128|176|64|88"  align="left"      x="227"  y="0"   scale="0.5" ondown2="skin_showmap(false);" onclick="switch(plugin[skin_gyro].enabled);" visible="false" devices="html5" />
+		
+		
+		
+	</layer>
+	
+
+<!-- 顶部场景标题  STAR-->
+   <layer name="text_biaoti" keep="true" url="../plugins/textfield.swf" align="top" x="0" y="35"
+       html=""
+       css="font-family:STXihei; font-size:17px; color:#ffffff;letter-spacing:2px;text-shadow: rgb(0, 0, 0) 0px 0px 3.2px;;"
+       autowidth="true" autoheight="auto" vcenter="true"
+       padding="4" roundedge="5" 
+	   background="false"
+       backgroundcolor="0xFFFFFF" backgroundalpha="1.5" handcursor="false" enabled="false"
+       /> 
+	   
+    <!-- 加载文本样式 -->
+   <layer name="skin_loadingtext" keep="true" url="roading.png" scale="0.8" align="center" x="5" y="-5" visible="false" autoheight="true" background="false" border="false" enabled="false" />
+	<!-- 鼠标经过按钮属性 -->
+	<layer name="skin_buttonglow"   keep="true" style="skin_base" crop="64|0|64|64" align="center" x="0" y="1" alpha="0.0" visible="false" enabled="false" />
+	
+
+<!-- 手机端皮肤 -->
+	<krpano devices="mobile">
+
+	<!-- 顶部场景标题  STAR-->
+    <layer name="text_biaoti" x="10" y="50" css="font-family:黑体; font-size:22px; color:#FFFFFF;text-shadow: rgb(0, 0, 0) 0px 0px 3.2px;"/> 
+	<style name="group_id_txt" css="text-align:center; color:#FFFFFF; font-family:微软黑体; font-size:24px;letter-spacing:3px;" height="60" padding="0 15" />
+	<layer name="logo"   visible="false"  />	
+		<layer name="skin_scroll_window" y="77" y_opened="100" y_closed="-4">
+			<layer name="skin_scroll_layer">	
+				<layer name="skin_title" css="calc:skin_settings.design_text_css + ' text-align:left;font-size:26px;'" />			
+				<layer name="skin_scroll_container" >
+					
+					<layer name="skin_thumbs_container">
+					    
+						<layer name="skin_album" height="60" zorder="999"/>
+						
+						<layer name="skin_thumbs_scrollleft"  scale="1" />
+						<layer name="skin_thumbs_scrollright" scale="1" />
+						<layer name="skin_thumbs_scrollindicator" height="6" />
+						
+						<layer name="skin_thumbs" height="160" oy="15" />
+						
+						<layer name="skin_thumbborder" scale="1.6" />
+					</layer>
+					
+				</layer>
+				
+			</layer>
+		</layer>
+
+		<layer name="skin_control_bar" height="75" y="0" y_opened="0" y_closed="-88">
+			<layer name="skin_btmborder"  visible="false" />
+			
+			<layer name="skin_btn_thumbs" scale="0.6" y="0" align="left" x="10" />			
+			<layer name="skin_btn_muisc"  scale="0.6" align="left" x="65"/>
+			<layer name="skin_btn_say"  scale="0.6" align="left" x="140"/>
+			
+			<layer name="skin_btn_gyro"   scale="0.6" y="0" align="left" x="215" />
+			<layer name="skin_btn_fs" scale="0.6" y="0" align="left" x="215" />
+			<layer name="skin_btn_VR" align="left"  x="270"   y="0"   scale="0.6" />
+			
+		</layer>
+
+		<layer name="skin_loadingtext" css="calc:skin_settings.design_text_css + ' text-align:center; font-style:微软雅黑; font-size:27px;'" />
+		
+		<layer name="skin_buttonglow"  scale="2.0" />
+		
+		<style name="skin_thumbtext_style" css="calc:skin_settings.design_text_css + ' text-align:center; font-size:19px;'" />
+		
+	</krpano>
+<!-- 手机端皮肤 -->
+
+
+
+<action name="skin_addthumbs">
+
+      if(%1 == atart,
+
+	      copy(thumbwidth, skin_settings.thumbs_width);
+		  copy(thumbheight, skin_settings.thumbs_height);
+		  copy(thumbpadding, skin_settings.thumbs_padding);
+		  copy(thumbcrop, skin_settings.thumbs_crop);
+
+		  if(device.mobile,
+				mul(thumbwidth,1.6);
+				mul(thumbheight,1.6);
+				mul(thumbpadding,1.6);
+			  );
+			  
+		  add(thumbxoffset, thumbwidth, thumbpadding);
+		  mul(thumbxcenter, thumbxoffset, 0.5);
+		  mul(thumbbarwidth, thumbxoffset,get(thumbs_shu));
+		  add(thumbbarwidth, thumbpadding);
+		  add(thumbbarheight, thumbpadding, thumbheight);
+		  add(thumbbarheight, thumbpadding);
+		  copy(layer[skin_thumbs].height, thumbbarheight);
+		  copy(layer[skin_thumbs].width, thumbbarwidth);
+		  mul(halfheight, thumbbarheight, 0.5);
+		  copy(layer[skin_thumbs_scrollleft].y, halfheight);
+		  copy(layer[skin_thumbs_scrollright].y, halfheight);
+	    );
+	  
+	  
+	  if(%1 == create, 
+	        txtadd(thumbname,'skin_thumb_',get(i));
+			addlayer(get(thumbname));
+			copy(layer[get(thumbname)].url, scene[%2].thumburl);
+			set(layer[get(thumbname)].keep, true);
+			set(layer[get(thumbname)].parent, 'skin_thumbs');
+			set(layer[get(thumbname)].align, left);
+			copy(layer[get(thumbname)].crop, thumbcrop);
+			copy(layer[get(thumbname)].width, thumbwidth);
+			copy(layer[get(thumbname)].height, thumbheight);
+			mul(thumbx,thumbs_shu,thumbxoffset);
+			add(thumbx, thumbpadding);
+			copy(layer[get(thumbname)].x, thumbx);
+			add(scene[%2].thumbx, thumbx, thumbxcenter);
+			copy(scene[%2].thumby, thumbpadding);
+			set(layer[get(thumbname)].linkedscene, %2);
+			set(layer[get(thumbname)].onclick, copy(layer[skin_thumbborder].parent, name);loadscene(get(linkedscene), null, MERGE, BLEND(0.5)););
+			
+			txtadd(thumbtitlbackename,'thumb_title_bg',get(i));
+			addlayer(get(thumbtitlbackename));
+			copy(layer[get(thumbtitlbackename)].parent, thumbname);
+			
+			layer[get(thumbtitlbackename)].loadstyle(skin_thumbbg_style);
+			
+			set(layer[get(thumbtitlbackename)].zorder,2);
+			
+			<!-- 新增加缩略图标题 -->
+			if(skin_settings.thumbs_text,
+					txtadd(thumbtext, 'skin_thumbtext_', get(i));
+					addlayer(get(thumbtext));
+					layer[get(thumbtext)].loadstyle(skin_thumbtext_style);
+					set(layer[get(thumbtext)].keep, true);
+					set(layer[get(thumbtext)].parent, get(thumbname));
+					set(layer[get(thumbtext)].html, get(scene[get(i)].title));
+			);
+	    );
+	  
+	  if(%1 == del, 
+	       set(layer[skin_thumbborder].visible,false);
+		   for(set(i,0), i LT group_id[group_id].item.count, inc(i),
+		       set(group_id_name,get(group_id[group_id].item[get(i)].name));
+			   set(layer[get(group_id_name)].backgroundalpha,0);
+			   set(layer[get(group_id_name)].onout,tween(backgroundalpha,0, 0.2,linear););
+			   set(layer[get(group_id_name)].onclick,skin_addthumbs(group_id,get(name),user););
+		    );
+			
+		   for(set(i,0), i LT scene.count, inc(i),
+		        txtadd(thumbname,'skin_thumb_',get(i));
+				txtadd(thumbtitlbackename,'thumb_title_bg',get(i));
+				txtadd(thumbtext, 'skin_thumbtext_',get(i));
+				removelayer(get(thumbtext));
+				removelayer(get(thumbtitlbackename));
+				removelayer(get(thumbname));
+		    );
+	    );
+	  
+	  if(%1 == all, 
+	      set(thumbs_shu,get(scene.count));
+		  skin_addthumbs(atart);
+		  set(thumbs_shu,0);
+		  for(set(i,0), i LT scene.count, inc(i), 
+		      skin_addthumbs(create,get(scene[get(i)].name));
+			  add(thumbs_shu,1);		  
+		    );	  
+	    );
+	  
+	  if(%1 == group_id,
+	      skin_addthumbs(del);
+		  
+		  set(photo_dq,%2);
+		  set(layer[%2].backgroundalpha,0.3);
+		  set(layer[%2].onout,false);
+		  set(layer[%2].onclick,false);
+		  skin_addthumbs(atart);
+		  set(thumbs_shu,0);
+		  
+		  for(set(i,0), i LT scene.count, inc(i), 
+		      if(scene[get(i)].group_id == %2, 
+			      skin_addthumbs(create,get(scene[get(i)].name));
+				  if(thumbs_shu LT 1,set(sc,get(scene[get(i)].name)););
+				  add(thumbs_shu,1);
+			    );
+		    );
+		  
+		  if(%3 == user, 
+		      loadscene(get(sc), null, MERGE, BLEND(0.5));
+		    );
+		  
+		  set(layer[skin_thumbs].width,calc(thumbs_shu * thumbxoffset));
+		  
+		  skin_updatescroll();
+	  
+	    );
+
+</action>
+
+
+
+<action name="skin_updatescroll">
+     if(layer[skin_thumbs].loaded, set(cursceneindex, 0);
+	      if(xml.scene, 
+		     copy(cursceneindex, scene[get(xml.scene)].index)
+		    );
+		  layer[skin_thumbs].setcenter(get(scene[get(cursceneindex)].thumbx), get(scene[get(cursceneindex)].thumby));	 
+	    );
+</action>
+
+
+<action protect="true" name="skin_update_scene_infos">
+      set(layer[text_biaoti].html,get(scene[get(xml.scene)].title));
+      if(xml.scene !== null, 
+	      if(scene[get(xml.scene)].index GE 0, 
+		      if(pano_state == normal, 
+			     if(scene[get(xml.scene)].title, 
+				     set(layer[skin_title].html,get(scene[get(xml.scene)].title));
+				    , 
+				     set(layer[skin_title].html,);
+				    );
+			    );
+			  
+			  if(group_id[group_id].item.count GT 1, 
+			      set(group_id_name,get(scene[get(xml.scene)].group_id));
+				  if(photo_dq !== group_id_name, 
+				      skin_addthumbs(group_id,get(group_id_name));
+				    );
+				);
+			  
+			  if(layer[calc("skin_thumb_" + scene[get(xml.scene)].index)].visible,
+			      txtadd(layer[skin_thumbborder].parent,'skin_thumb_',get(scene[get(xml.scene)].index));
+				  set(layer[skin_thumbborder].visible,true);
+				, 
+				  set(layer[skin_thumbborder].visible,false);
+			    );		  
+		    );	  
+	    );
+</action>
+
+<action protect="true" name="skin_showthumbs">
+     if(%1 == restore, 
+	      if(layer[skin_thumbs].state == 'opened', 
+		       if(xwlcf == 6, 
+			     delete(xwlcf);
+			    , 
+			     set(layer[skin_thumbs].state, 'closed');
+			     skin_showthumbs();
+			     delayedcall(0.5,add(xwlcf,1);skin_showthumbs(restore););
+			    );
+		    );
+		, 
+		   if(layer[skin_thumbs].state == 'closed', 
+		     set(show,true);
+			 , 
+			 set(show,false);
+		    );
+			
+		   mul(mh, layer[skin_scroll_layer].pixelheight, -1);
+		   
+		   if(layer[skin_scroll_layer].y == -100%, 
+		      copy(layer[skin_scroll_layer].y,mh);
+		    );
+		 
+		   if(show, 
+		     set(layer[skin_thumbs].state, 'opened');
+		     add(mh,layer[skin_thumbs].height);
+			 if(group_id[group_id].item.count GT 1, if(device.mobile, add(mh,45);, add(mh,25);););
+			 tween(layer[skin_scroll_layer].y, get(mh), 0.5, easeOutQuint);
+			 
+			 if(device.mobile, 
+			     tween(layer[agree_num].y, 300, 0.5, easeOutQuint);
+				 , 
+				 tween(layer[agree_num].y, 195, 0.5, easeOutQuint);
+				 );
+			 
+			 
+			 set(layer[skin_thumbs_container].visible, true);
+			 tween(layer[skin_thumbs_container].alpha, 1.0, 0.25);
+			 tween(layer[skin_map].alpha, 0.0, 0.25, default, set(layer[skin_map].visible,false));
+			 , 
+			 set(layer[skin_thumbs].state, 'closed');
+			 tween(layer[skin_scroll_layer].y, get(mh), 0.5, easeOutQuint, set(layer[skin_thumbs_container].visible, false););
+			 
+			 if(device.mobile, 
+			     tween(layer[agree_num].y, 100, 0.5, easeOutQuint);
+				 , 
+				 tween(layer[agree_num].y, 70, 0.5, easeOutQuint);
+				 );
+			 
+		    );	 
+	    );
+</action>		   
+
+	<!-- 加载进度 -->
+	<!-- VR模式下不显示加载字样 -->
+	<action name="skin_showloading">
+		if(display.stereo == true,
+			set(layer[skin_loadingtext].visible, false);
+		  ,
+			set(loadingpercent_isloading, true);
+		   set(layer[skin_loadingtext].visible, true);
+		
+		    asyncloop(loadingpercent_isloading,
+			mul(pv, progress.progress, 100);
+			roundval(pv,0);
+			txtadd(layer[skin_loadingtext].html, get(skin_settings.loading), get(pv), '%');
+		     );
+		);
+	</action>
+		
+	<action name="loadingpercent_stoploading">
+		set(loadingpercent_isloading, false); 
+		set(layer[skin_loadingtext].visible, false);
+	</action>
+	<!-- 加载进度 -->
+
+	
+</krpano>

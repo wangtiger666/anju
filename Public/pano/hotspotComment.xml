@@ -1,0 +1,224 @@
+﻿<krpano>
+		
+	<events name="event_newpano" keep="true" onnewpano="event_newpano()" />	
+	<action name="initHC" autorun="onstart">
+		set(toggle_addgui, false);
+		set(toggle_gui, true);
+		setJsVar(showGui, true);
+		set(cc_H, 28);
+		set(cc_W, 28);
+		set(cc_X, 32);
+		set(cc_AH, 50);
+		set(cc_AW, 210);
+		
+		set(cc_xx, -10);
+		set(cc_yy, -10);
+
+		set(cc_Css, 'text-align:center; color:#FFFFFF; font-family:黑体; font-weight:Narrow; line-height:30px; padding: 0 8px; margin: 0px; font-size:12px;letter-spacing:1px;');
+	</action>
+	
+	<action name="initHC_Mobile" autorun="onstart" devices="mobile">
+		set(cc_H, 28);
+		set(cc_W, 28);
+		set(cc_X, 30);
+		set(cc_AH, 40);
+		set(cc_AW, 190);
+
+		set(cc_xx, -5);
+		set(cc_yy, -5);
+
+		set(cc_Css, 'text-align:center; color:#FFFFFF; font-family:黑体; font-weight:Narrow; line-height:30px; padding: 0 8px; margin: 0px; font-size:14px;letter-spacing:1px;font-weight:bold;');		
+	</action>
+	
+	<action name="event_newpano">
+		js(switchScene('get(xml.scene)'));
+		if(toggle_addgui == true, hideAddGui());
+	</action>
+	
+	<action name="toggleGui">
+		if(toggle_gui == true, hideGui(),showGui());
+	</action>
+	
+	
+	
+	<action name="hideComments">
+		if(%1 != 1, hideAddGui());
+		for(set(i,0),i LT hotspot.count,,
+			subtxt(tempStr, hotspot[%i].name, 0, 10);
+			if(tempStr == "hccomment_", 
+				set(hotspot[%i].visible, false);
+			);
+			inc(i);
+		);
+	</action>
+	
+	<action name="showComments">
+		js(loadComment('get(xml.scene)'));
+	</action>
+	
+	<action name="commentLeft">
+		js(CommentLeft());
+	</action>
+	
+	<action name="commentRight">
+		js(CommentRight());
+	</action>
+	
+	<action name="toggleAddGui">
+		if(toggle_addgui == true, hideAddGui(),showAddGui());
+	</action>
+	
+	
+	
+	<action name="showAddGui">
+		showAddGui_c();
+
+		addhotspot(addGui);
+		set(hotspot[addGui].keep, "true");
+		set(hotspot[addGui].visible, "true");
+		set(hotspot[addGui].width, "30");
+		set(hotspot[addGui].height, "48");
+		set(hotspot[addGui].edge, "bottom");
+		set(hotspot[addGui].url, "%SWFPATH%/hotspotComment/transparent.png");
+		div(tempX, stageWidth, 2);
+		sub(tempX, 100);
+		div(tempY, stageHeight, 2);
+		screentosphere(tempX, tempY, tempH, tempV);
+		copy(hotspot[addGui].ath, tempH);
+		copy(hotspot[addGui].atv, tempV);
+		setJsVar(nowAth, get(hotspot[addGui].ath));
+		setJsVar(nowAtv, get(hotspot[addGui].atv));
+		
+		addlayer(addGui_Avatar);
+		set(layer[addGui_Avatar].keep, "true");
+		set(layer[addGui_Avatar].parent, hotspot[addGui]);
+		set(layer[addGui_Avatar].zorder, 10);
+		set(layer[addGui_Avatar].width, get(cc_W));
+		set(layer[addGui_Avatar].height, get(cc_H));
+		set(layer[addGui_Avatar].alpha, "1");
+		set(layer[addGui_Avatar].url, "%SWFPATH%/hotspotComment/avatar.png?headimg");
+		
+		addlayer(addGui_Text);
+		set(layer[addGui_Text].keep, "true");
+		set(layer[addGui_Text].parent, hotspot[addGui]);
+		set(layer[addGui_Text].url,'%SWFPATH%/plugins/textfield.swf');
+		set(layer[addGui_Text].zorder, 10);
+	    set(layer[addGui_Text].x, get(cc_X));
+	    set(layer[addGui_Text].y, 0);
+	    set(layer[addGui_Text].height, get(cc_H));
+	    set(layer[addGui_Text].autowidth,true);
+	    set(layer[addGui_Text].background,true);
+	    set(layer[addGui_Text].backgroundcolor,0x000000);
+	    set(layer[addGui_Text].roundedge,5);
+	    set(layer[addGui_Text].backgroundalpha,0.4);
+	    set(layer[addGui_Text].css,get(cc_Css));
+	    set(layer[addGui_Text].textshadow,1);
+	    set(layer[addGui_Text].textshadowrange,6.0);
+	    set(layer[addGui_Text].textshadowangle,90);
+	    set(layer[addGui_Text].html, "拖动至你要评论的位置");
+	    
+	    addlayer(addGui_b);
+		set(layer[addGui_b].keep, "true");
+		set(layer[addGui_b].type, "container");
+		set(layer[addGui_b].enabled, "true");
+		set(layer[addGui_b].zorder, 9);
+		set(layer[addGui_b].parent, hotspot[addGui]);
+		set(layer[addGui_b].width, "30");
+		set(layer[addGui_b].height, "48");
+
+		set(layer[addGui_b].url, "%SWFPATH%/hotspotComment/transparent.png?zindex");
+		copy(layer[addGui_b].bgcolor, addGui_BackColor);
+		set(layer[addGui_b].bgalpha, "0.4");
+		set(layer[addGui_b].bgroundedge, "6");
+		set(layer[addGui_b].maskchildren, "true");
+		
+		addlayer(addGui_bc);
+		set(layer[addGui_bc].keep, "true");
+		set(layer[addGui_bc].zorder, 10);
+		set(layer[addGui_bc].parent, hotspot[addGui]);
+		set(layer[addGui_bc].url, "%SWFPATH%/hotspotComment/transparent_bg.png");
+		set(layer[addGui_bc].width, get(cc_AW));
+		set(layer[addGui_bc].height, get(cc_AH));
+		set(layer[addGui_bc].x, "-10");
+		set(layer[addGui_bc].y, "-10");
+		set(layer[addGui_bc].ondown, moveCommentStart());
+	    set(layer[addGui_bc].onup, moveCommentOver());
+	</action>
+	
+	
+	
+	<action name="moveCommentStart">
+		set(commentMoving, true);
+		screentolayer(addGui_Avatar, mouse.x, mouse.y, extX, extY);
+		moveCommentPos();
+	</action>
+	
+	<action name="moveCommentOver">
+		set(commentMoving, false);
+		setJsVar(nowAth, get(hotspot[addGui].ath));
+		setJsVar(nowAtv, get(hotspot[addGui].atv));
+	</action>
+	
+	<action name="moveCommentPos">
+		if(commentMoving == true,
+			sub(tempX, mouse.x, extX);
+			sub(tempY, mouse.y, extY);
+			screentosphere(tempX, tempY, tempH, tempV);
+			copy(hotspot[addGui].ath, tempH);
+			copy(hotspot[addGui].atv, tempV);
+			delayedcall(0.01, moveCommentPos());
+		);
+	</action>
+	
+	<action name="setJsVar">
+		txtadd(tempStr, "eval(",%1,"=",%2,")");
+		js(get(tempStr));
+	</action>
+	
+	<action name="addComment">
+		txtadd(clName, "hcComment_", %1);
+		addhotspot(get(clName));
+		set(hotspot[%clName].keep, "false");
+		set(hotspot[%clName].visible, "true");
+		set(hotspot[%clName].width, "30");
+		set(hotspot[%clName].height, "48");
+		set(hotspot[%clName].edge, "bottom");
+		set(hotspot[%clName].ath, %2);
+		set(hotspot[%clName].atv, %3);
+		set(hotspot[%clName].url, "%SWFPATH%/hotspotComment/transparent.png");
+		
+		txtadd(claName, "hcComment_a", %1);
+		addlayer(get(claName));
+		set(layer[%claName].keep, "false");
+		txtadd(tempParent, hotspot[,get(clName),]);
+		copy(layer[%claName].parent, tempParent);
+		set(layer[%claName].width, get(cc_W));
+		set(layer[%claName].height, get(cc_H));
+		set(layer[%claName].alpha, "1");
+		set(layer[%claName].url, %5);
+		set(layer[%claName].handcursor, false);
+		set(layer[%claName].enabled, false);
+
+	    txtadd(cltName, "hcComment_t", %1);
+		addlayer(get(cltName));
+		set(layer[%cltName].keep, "false");
+		txtadd(tempParent, hotspot[,get(clName),]);
+		copy(layer[%cltName].parent, tempParent);
+		set(layer[%cltName].url,'%SWFPATH%/plugins/textfield.swf');
+	    set(layer[%cltName].x, get(cc_X));
+	    set(layer[%cltName].y, 0);
+	    set(layer[%cltName].height, get(cc_H));
+	    set(layer[%cltName].autowidth,true);
+	    set(layer[%cltName].background,true);
+	    set(layer[%cltName].backgroundcolor,0x000000);
+	    set(layer[%cltName].roundedge,5);
+	    set(layer[%cltName].backgroundalpha,0.3);
+	    set(layer[%cltName].css, get(cc_Css));
+	    set(layer[%cltName].textshadow,1);
+	    set(layer[%cltName].textshadowrange,6.0);
+	    set(layer[%cltName].textshadowangle,90);
+	    set(layer[%cltName].html, %4);
+		set(layer[%cltName].handcursor, false);
+		set(layer[%cltName].enabled, false);
+	</action>
+</krpano>

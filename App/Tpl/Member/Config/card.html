@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jscolor/jscolor.js"></script>
+        {:W("Easyui")}
+        {:W("Uploader")}
+        <script type="text/javascript">
+            function checksb(){
+                var result = true;
+                if(result == true){
+                    result = AutoCheckSub(".cs");
+                }
+                return result;
+            }
+            $(document).ready(function(){
+                onoroff();
+            });
+        </script>
+
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_mid">
+                    <div class="main_mid_main">
+                        <div class="none_main">
+                            <div class="action_main" style="min-height: 456px;">
+                                <div class="action_web">
+                                    <form name="form1" action="" onsubmit="return checksb();" enctype="multipart/form-data" method="post">
+                                        <input name="dopost" value="save" type="hidden" />
+                                        <input name="pano_id" value="{$pano_id}" type="hidden" />
+                                        <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">                
+											<tr class="tr_white" height="10">
+                                            <td align="right" width="80"><b><font color="red">*</font>公司名称：</b></td>
+                                            <td align="left">
+                                               <input type="text" id="c_name" name="c_name" sbname="公司名称" value="{$cardinfo['c_name']}" class="inputcube cs"/>
+                                            </td>
+											</tr>
+											<tr class="tr_white" height="10">
+                                            <td align="right" width="80"><b><font color="red">*</font>联系电话：</b></td>
+                                            <td align="left">
+                                                <input type="text" id="c_phone" name="c_phone" sbname="联系电话" value="{$cardinfo['c_phone']}" class="inputcube cs"/>
+                                            </td>
+											</tr>
+											<tr class="tr_white" height="10">
+                                            <td align="right" width="80"><b><font color="red">*</font>邮箱：</b></td>
+                                            <td align="left">
+                                                <input type="text" id="c_email" name="c_email" sbname="邮箱" value="{$cardinfo['c_email']}" class="inputcube cs"/>
+                                            </td>
+											</tr>
+											<tr class="tr_white" height="10">
+                                            <td align="right" width="80"><b><font color="red">*</font>公司地址：</b></td>
+                                            <td align="left">
+                                                <input type="text" id="c_address" name="c_address" sbname="公司地址" value="{$cardinfo['c_address']}" class="inputcube cs"/>
+                                            </td>
+											</tr>
+											<tr class="tr_white" height="10">
+                                            <td align="right" width="80"><b>企业微信公众账号：</b></td>
+                                            <td align="left">
+                                                <input type="text" id="c_wechat" name="c_wechat" value="{$cardinfo['c_wechat']}" class="inputcube"/>
+                                            </td>
+											</tr>
+											<tr class="tr_white" height="40">
+                                            <td align="right" width="80"><b>企业微信二维码：</b></td>
+                                            <td align="left">												
+												<input type="hidden" id="file" name="file" value="{$cardinfo['c_weixinimg']}" />
+												<input type="hidden" id="old_file" name="old_file" value="{$cardinfo['c_weixinimg']}" />
+
+
+                                                <input type="button" id="imgbtn" class="btn3" value="点击上传" />
+                                                <font color="red">（请到微信公众平台下载属于您的二维码 尺寸：258*258）</font>
+                                            </td>
+											</tr>
+											<tr class="tr_white" height="10">
+                                            <td align="right" width="120"></td>
+                                            <td align="left">
+                                                <div id="imgbox"><img src="{:CC('web_root')}{$cardinfo['c_weixinimg']}" /></div>
+                                            </td>
+											</tr>
+											<script type="text/javascript">
+												$(function(){
+													$("#imgbtn").uploader("image", "file");
+												})
+												function file(data){
+													$("#file").val(data);
+													$("#imgbox").html('<img src="'+data+'"" />');
+												}
+											</script>
+
+											<tr class="tr_white" height="10">
+                                            <td align="right" width="80"><b>QQ：</b></td>
+                                            <td align="left">
+                                                <input type="text" id="c_qq" name="c_qq" value="{$cardinfo['c_qq']}" class="inputcube"/>
+                                            </td>
+											</tr>
+											<tr class="tr_white" height="10">
+                                            <td align="right" width="80"><b>备注：</b></td>
+                                            <td align="left">
+                                               <textarea style="width: 250px; height: 50px;" class="textacube" name="c_remarks">{$cardinfo['c_remarks']}</textarea>
+                                            </td>
+											</tr>
+
+                                            <tr class="tr_white" height="10">
+                                                <td align="right" width="120"></td>
+                                                <td align="left">
+                                                    <input type="submit" class="blackbutton" value="提交" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

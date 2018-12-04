@@ -1,0 +1,95 @@
+<php>
+$member_id = cookie('member_id');
+$member_name = cookie('member_name');
+if(!empty($member_id)){
+	$headimg = M("Member")->where("id='$member_id'")->getField("headimg");
+	if(empty($headimg)) $headimg = "/Public/member/images/common/no_img.jpg";
+}
+</php>
+<!--    head start    -->                
+<div class="header-sm">
+	<div class="header-main">
+		<div class="container-sm clearfix">
+			<h1><a href="/" title="720云全景VR社区"><img src="__PUBLIC__/webyun/images/logo.png" alt="720云全景VR社区" border="0" /></a></h1>
+			<!-- use login status -->
+			
+			
+			
+			<if condition="!empty($member_id)">	
+			<div class="user">
+				<div id="um">
+				<!-- 头像 -->
+					<div class="ui-login-toggle">
+						<span class="user-avatar"><img src="{$headimg}"></span>
+						<span class="user-name hide-row">{$member_name}</span>
+					</div>
+					<div class="ui-login-status" >
+					<ul>
+						<li class="user-primary-info">
+							<p class="user-avatar-name">
+								<span class="user-avatar"><a href="javascript:;"><img src="{$headimg}"></a></span>
+								<span class="hide-row"><a href="javascript:;" class="hide-row">{$member_name}</a></span>
+							</p>
+						</li>
+						<li class="user-setting"><a href="/index.php?s=/Webyun/authorlist/id/{$member_id}">个人主页</a></li>
+						<li class="user-setting"><a href="/member/panolist">作品管理</a></li>
+						<li class="user-setting"><a href="/member">账户管理</a></li>
+						<li class="user-logout"><a href="/member/login/logout">退出登录</a></li>
+					</ul>
+					</div>
+				</div>
+			</div>
+			<else/>
+			<?php   
+			$host = $_SERVER['HTTP_HOST']; 
+			$domain = $host;
+			$regrul = "http://".$domain."/member/reg";
+			$loginrul = "http://".$domain."/member/login";
+			?>
+			<div class="user">
+				<div class="fastlg cl">
+					<span class="xi2"><a href="<?php  echo $loginrul;?>" class="xi2" style="color:#fff !important;">登录</a></span>
+				</div>
+			</div>
+			</if>
+			
+			
+
+			<ul class="header-menu">
+				<li id="mn_Nd997" ><a href="/" hidefocus="true" title="发现更美的全景" target="_blank"  >首页<span>发现更美的全景</span></a></li>
+				<li id="mn_F1" ><a href="/index.php?s=/webyun/listpano" hidefocus="true" target="_blank"  >频道</a></li>
+				<li id="mn_F37" ><a href="/index.php?s=/webyun/author" hidefocus="true" target="_blank"  >作者</a></li>
+				<li class="a" id="mn_forum" ><a href="/index.php?s=/webyun/indexarticle" hidefocus="true" title="BBS"  >文章<span>BBS</span></a></li>
+				<!--<li id="mn_N445a" ><a href="" hidefocus="true"  >客户端</a></li>-->
+				<li id="mn_N1c7a" ><a href="https://shop586648065.taobao.com/shop/view_shop.htm?spm=a230r.1.14.178.730d4af1vxpx8t&user_number_id=732759493" hidefocus="true" title="720vr全景软件官方淘宝商城" target="_blank"  >商城<span>720vr全景软件官方淘宝商城</span></a></li>
+			</ul>
+
+		</div>
+	</div>
+
+	<div class="location">
+		<div class="container-sm clearfix">
+		<div id="scbar" class="cl">
+		<form id="scbar_form" method="get" action="/index.php/Webyun/articlesearch/" enctype="multipart/form-data" target="_blank">
+			<table cellspacing="0" cellpadding="0">
+			<tbody>
+			<tr>
+				<td class="scbar_type_td">
+					<a href="javascript:;" id="scbar_type" class="xg1" onclick="showMenu(this.id)" hidefocus="true" initialized="true">帖子</a>
+				</td>
+				<td class="scbar_txt_td"><input type="text"  id="scbar_txt"  name="keywords" value="" autocomplete="off" x-webkit-speech="" speech="" class=" xg1" placeholder="请输入搜索内容"></td>
+				<td class="scbar_icon_td"><button type="submit" name="searchsubmit" id="scbar_btn" sc="1" class="pn pnc" value="true"><strong class="xi2">搜索</strong></button></td>
+			</tr>
+			</tbody>
+			</table>
+		</form>
+		</div>
+		<h2>
+			<a href="index.php?s=/webyun/indexarticle">文章</a> 
+			{$position}
+			<div class="z"></div>
+		</h2>
+		</div>
+	</div>
+</div>
+<!--    head end    -->

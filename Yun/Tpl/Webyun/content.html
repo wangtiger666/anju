@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="{$web_keywords}">
+<meta name="description" content="{$web_description}" id="metaDescription">
+<title>{$info.title}_{$web_name}</title>
+<meta name="MSSmartTagsPreventParsing" content="True" />
+<meta http-equiv="MSThemeCompatible" content="Yes" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/style_4_common.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/style_4_forum_viewthread.css" />
+<meta name="renderer" content="webkit">
+<link rel="stylesheet" id="css_widthauto" type="text/css" href="__PUBLIC__/webyun/css/style_4_widthauto.css?Xg9" />
+<link rel="stylesheet" type="text/css"  href="__PUBLIC__/webyun/css/main.css" />
+<script src="__PUBLIC__/webyun/js/jquery-1.11.1.min.js"></script>
+<script src="__PUBLIC__/webyun/js/find.js"></script>
+</head>
+
+<body id="nv_forum" class="pg_viewthread" onkeydown="if(event.keyCode==27) return false;">
+<include file="header2" />
+
+<div id="main" class="main forums-page cl" >
+	<div class="container-sm">
+    	<div class="section">
+			<div class="content hl_content">    
+        		<div class="xmtp cl" style="margin-bottom:0;border-radius: 0;">
+					<div class="z" style="width:100%">
+						<div class="hl_zt">
+							<h1 class="ts"><span id="thread_subject">{$info.title}</span></h1>
+						</div>
+						<div class="hl_zb">
+							<div style="float:left">
+								<span><a href="" title="{$info.username}">{$info.username}</a></span>
+								<em id="authorposton176850">发表在
+									<span class="pipe"></span>
+									<a href="/index.php?s=/Webyun/articlelist/lanmuid/{$lanmuid}">{$lanmu_name}</a>
+									<span class="pipe"></span>         
+									<span title="<?php echo date("Y-m-d H:i",$info['updatetime']); ?>"><?php echo date("Y-m-d H:i",$info['updatetime']); ?></span>                          
+								</em>
+
+								<span>
+									<span class="pipe"></span>
+									<a href="" onclick="return copyThreadUrl(this, '720云全景VR社区')" > 复制链接</a>
+								</span>
+								<span class="pipe"> </span>                    
+							</div>                      
+							<div style="display:inline-block; margin:4px 0 0 6px; float:left"></div>
+							
+							
+                            <span class="replies y"><a href="#SOHUCS" id="changyan_count_unit"></a><script type="text/javascript" src="http://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script></span>
+							<span class="views y" id="hits"></span>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>		
+
+				
+				<div id="postlist" class="pl bm" style="width:100%">
+					<table cellspacing="0" cellpadding="0" class="ad">
+						<tr><td class="plc"></td></tr>
+					</table>                            
+					<div id="post_176812" class="ifrist" style="background:#FFF;border: 1px solid #e5e5e5;border-top:0;    border-bottom: 0; ">
+						<table id="pid176812" class="plhin" summary="pid176812" cellspacing="0" cellpadding="0">
+							<tr>
+								<td class="plc" style="width:100%; ">
+									<div class="pct">
+									<style type="text/css">.pcb{margin-right:0}</style>
+									<div class="pcb">
+										<div class="t_fsz">
+											<table cellspacing="0" cellpadding="0">
+												<tr>
+													<td class="t_f" id="postmessage_176812"><?php  echo html_entity_decode($info['content']); ?></td>
+												</tr>
+											</table>
+										</div>
+										<div id="comment_176812" class="cm"></div>
+										<div id="post_rate_div_176812"></div>
+									</div>
+									</div>
+								</td>
+							</tr>
+							<tr id="_postposition176812"></tr>
+
+							<tr class="ad"><td class="pls"></td><td class="plc"></td></tr>
+						</table>
+					</div>
+					
+					
+					
+					
+				</div>
+				
+				
+				
+				
+				
+				
+				
+				<div id="diyfastposttop" class="area"></div>
+				<div class="content forum-list-fastpost">
+						<h4>评论专区</h4>
+						<div id="f_pst" class="pl bm" style="background:#FFF;padding:10px;">
+					<!--PC版-->
+<div id="SOHUCS" sid="{$info.id}"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cytAtwFtX',
+conf: 'prod_265dd101428c7d8fa5e448a9bc63192c'
+});
+</script>
+						</div>
+					</div> 
+
+
+
+
+
+
+
+					
+			</div>
+		</div>
+		<!-- *************** 右侧模块 start **************** -->
+		<div class="sidebar">
+			<div class="profile">
+				<div class="profile-card">
+					<span class="avatar"><a href="" target="_blank">
+					
+					<img   <if condition="empty($minfo['headimg']) eq true">  src='/Public/member/images/common/no_img.jpg' <else/> src='{$minfo.headimg}'  </if>  />
+					
+					</a></span>
+					<p><span class="name">{$info.username}</span></p>
+					<p class="url"><a></a></p>
+				</div>
+				<ul class="profile-col-3 clearfix">
+					<li><span>帖子</span> <em>{$tiezicount}</em></li>
+					<li><span>人气</span> <em>{$hiscount}</em></li>
+					<li><span>排名</span> <em>{$paixu}</em></li>
+				</ul>
+			</div>
+			<!-- *************** 作者其他帖子 start **************** -->
+            <div class="right-module right-rank-editor">
+				<h4>作者其他帖子</h4>
+				<ul class="clearfix"> 
+				    <foreach name="xiangguan_article" item="vo">	
+					<li><a href="{$vo.ariurl}">{$vo.title}</a></li>
+					</foreach>
+				</ul>
+			</div>
+			<!-- *************** 作者其他帖子 end **************** -->
+			<!-- *************** 版块推荐 start **************** -->
+			<div class="right-module plate-recommend">
+				<h4>版块推荐</h4>
+					<div id="hl_diy04" class="area">
+						<div id="frameq5iCt8" class="cl_frame_bm frame move-span cl frame-1">
+							<div id="frameq5iCt8_left" class="column frame-1-c">
+								<div id="frameq5iCt8_left_temp" class="move-span temp"></div>
+								<div id="portal_block_18" class="cl_block_bm block move-span">
+									<div id="portal_block_18_content" class="dxb_bc">
+										<ul class="plate-list clearfix">
+										<foreach name="lanmu" item="vo">											
+                                            <li style="background: url(__PUBLIC__/webyun/images/forum_new.gif) no-repeat 20px center;background-size: 26px 26px;-webkit-background-size: 26px 26px;"><a href="{$vo.ariurl}" title="{$vo.name}" target="_blank">{$vo.name}</a></li>
+										</foreach>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			</div>
+			<!-- *************** 版块推荐 end **************** -->
+            <!-- *************** 广告位 start **************** -->
+ 			<!--[diy=hl_diy05]--><div id="hl_diy05" class="area"></div><!--[/diy]-->
+			<!-- *************** 广告位 end **************** -->
+		</div>
+		<!-- *************** 右侧模块 end **************** -->
+	</div>
+</div>
+<include file="footer2" /> 
+<input type="hidden" value="{$info.id}" id="aritcleid">
+<script type="text/javascript">
+$(document).ready(function() {
+	$.ajax({
+		type:"get",
+		url:"{$domainlink}/index.php?s=/Panoapi/view",
+		data:{id:$("#aritcleid").val()},
+		dataType:'jsonp',
+		jsonp: "callbackparam",
+		async:false,
+		jsonpCallback:"success_jsonpCallback",
+		success:function(result){
+			var html = "";
+			if(result.status == 1){	
+				html +=result.data;			
+			}
+			$("#hits").html(html); 
+		}
+	});
+});
+</script>            
+</body>
+</html>

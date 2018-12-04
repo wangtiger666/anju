@@ -1,0 +1,52 @@
+<div id="regdiv" style="display:none;">
+	<div class="_1VfD7GdE1ncSCIu7 BagJmRurwwOhja2H">
+		<div class="_3JZ3l5sDYDRcF2Op">
+			<span>用户注册</span><a href="javascript: void 0;">
+			<div class="phkv3GSLbrnpgNMb" id="closeRegdiv">
+				×
+			</div>
+			</a>
+		</div>
+		<div class="oohtM10wzsxsq4he">
+			<div class="_3B1jqWkk4c0dGJwe">
+				<div class="qEEqtl0O_cL9dUSm">
+					用户注册
+				</div>
+				<div class="zF_7YdCLi3BmArIn">
+					<input type="text" id="reg_userid" class="_1-99wlCwYLP3Qpb4" placeholder="用户名">
+					<input type="password" id="reg_pwd" class="_1-99wlCwYLP3Qpb4" placeholder="密 码">
+					<input type="text" id="reg_nickname" class="_1-99wlCwYLP3Qpb4" placeholder="昵 称">
+					<!-- <input type="text" id="email" class="_1-99wlCwYLP3Qpb4" placeholder="邮 箱">
+					<input type="text" id="phone" class="_1-99wlCwYLP3Qpb4" placeholder="手 机"> -->
+					<div class="_1OIzSWB1IAqd0DYC">
+						<input type="text" class="kym3_NkBXyApQdSJ" id="reg_verify" placeholder="验证码"><img id="verifyImg" width="80" onclick="fleshVerify()" src="/index.php?s=/Public/verifyBig/" class="_2rV0dRWHbuO92yTO">
+					</div>
+					<div class="_2U3fHwA72YD2cDWt" id="reg_showmsg"></div>
+					<a href="javascript: void 0;" class="_3a1eOL1JCs59usz2" style="color: rgb(255, 255, 255); border-color: rgb(0, 165, 217); background-color: rgb(0, 165, 217); width: 100%; padding-left: 0px; padding-right: 0px;" id="subReg">注 册</a>
+				</div>
+				<div class="_3kl6zYC3d1x4n57D">
+					<p>
+						已有帐号?
+					</p>
+					<a href="javascript: void 0;" id="divyunLogin" class="_3wKyQgnjEpuGdFDm">点击这里登录全景云</a>
+					<!-- <div class="_23cPdBLN_fb_h7mF" style="display:none;">
+						<a href="">
+						<div class="_3FzIKYanzVvtyi4s">
+							<img class="_3FY52TIlSp5gnYU0" src="http://static-qiniu.720static.com/3JexHWJgRl2iN3iu.png?imageMogr2/thumbnail/60x">
+						</div>
+						微信登录</a>
+					</div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="_3CNregfMyDtsnb2p">
+	</div>
+</div>
+<script>
+function fleshVerify(){
+	//重载验证码
+	var timenow = new Date().getTime();
+	document.getElementById('verifyImg').src= '/index.php?s=/Public/verifyBig/'+timenow;
+}
+</script>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano showerrors="false">
+    <events name="readyaction" onxmlcomplete="start();" />
+    <action name="start">
+        loadscene(scene1, null, MERGE);
+    </action>
+    <scene name="scene1">
+        <view hlookat="0" vlookat="0" fov="80" fisheye="0" fovmin="60" fovmax="120" />
+        <image type="CUBE">
+            <left url="{:CC('web_root')}{$viewrow['left']}" />
+            <front url="{:CC('web_root')}{$viewrow['front']}" />
+            <right url="{:CC('web_root')}{$viewrow['right']}" />
+            <back url="{:CC('web_root')}{$viewrow['back']}" />
+            <up url="{:CC('web_root')}{$viewrow['up']}" />
+            <down url="{:CC('web_root')}{$viewrow['down']}" />
+        </image>
+    </scene>
+    <plugin name="background" type="container" bgcolor="0x000000" bgalpha="0.3" width="100%" height="100%" align="center" keep="true" devices="all" visible="true" enabled="true" zorder="0" />
+    <plugin name="maper" url="{:CC('web_root')}{$mapsrow['mapurl']}" align="center" x="{$mapx}" y="{$mapy}" ondown="action(dragui));" keep="true" devices="all" visible="true" enabled="true" zorder="1"/>
+    <plugin name="point" url="{:CC('web_root')}{$maprow['thepointimg']}" align="lefttop" edge="center" ondown="action(dragui));" parent="maper" keep="true" devices="all" visible="true" enabled="true" zorder="2" x="{$porow['map_x']}" y="{$porow['map_y']}" />
+	<plugin name="back" url="__PUBLIC__/member/images/pano/ok.png" keep="true" zorder="8" align="rightbottom" edge="center" x="35" y="35" handcursor="true" onclick="backdata()" alpha="1" />
+
+   <action name="backdata">
+        js(parent.backpos(get(plugin[point].x),get(plugin[point].y))));
+    </action>
+
+    <action name="dragui">
+            if(%1 != dragging,
+                    copy(drag_currentx, x);
+                    copy(drag_currenty, y);
+                    copy(drag_stagex, mouse.stagex);
+                    copy(drag_stagey, mouse.stagey);
+                    set(drag_sx, +1);
+                    set(drag_sy, +1);
+                    if(align == righttop,    set(drag_sx,-1); );
+                    if(align == right,       set(drag_sx,-1); );
+                    if(align == rightbottom, set(drag_sx,-1); set(drag_sy,-1); );
+                    if(align == bottom,      set(drag_sy,-1); );
+                    if(align == leftbottom,  set(drag_sy,-1); );
+                    dragui(dragging);
+              ,
+                    if(pressed,
+                            sub(dx, mouse.stagex, drag_stagex);
+                            sub(dy, mouse.stagey, drag_stagey);
+                            mul(dx, drag_sx);
+                            mul(dy, drag_sy);
+                            add(x, drag_currentx, dx);
+                            add(y, drag_currenty, dy);
+                            delayedcall(0, dragui(dragging) );
+                      );
+              );
+    </action>
+</krpano>

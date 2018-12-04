@@ -1,0 +1,74 @@
+<krpano>
+	<config>	
+        <groups name="KRpanocms" >
+
+            <group name="group_1" title="分组一">
+
+                 <pano name="scene1" >
+                    <info title="场景一" thumburl="http://oimhikf8r.bkt.clouddn.com/3/scene1/thumb.jpg"/>
+				</pano>
+
+                <pano name="scene2">
+                    <info title="场景二" thumburl="http://oimhikf8r.bkt.clouddn.com/3/scene2/thumb.jpg"/>
+                </pano>
+				
+				<pano name="scene3">
+                    <info title="场景三" thumburl="http://oimhikf8r.bkt.clouddn.com/3/scene3/thumb.jpg"/>
+                </pano>
+
+            </group>
+
+			
+            <group name="group_2" title="分组二" >
+
+                <pano name="scene4" >
+                 <info title="场景四" thumburl="http://oimhikf8r.bkt.clouddn.com/3/scene4/thumb.jpg"/>
+                </pano>
+				<pano name="scene5" >
+                 <info title="场景五" thumburl="http://oimhikf8r.bkt.clouddn.com/3/scene5/thumb.jpg"/>
+                </pano>
+				
+
+            </group>
+			
+			 <group name="group_3" title="分组三" >
+                
+				<pano name="scene6" >
+                 <info title="场景六" thumburl="http://oimhikf8r.bkt.clouddn.com/3/scene6/thumb.jpg"/>
+                </pano>
+				
+                <pano name="scene6" >
+                 <info title="场景七" thumburl="http://oimhikf8r.bkt.clouddn.com/3/scene7/thumb.jpg"/>
+                </pano>
+				
+				<pano name="scene8" >
+                 <info title="场景八" thumburl="http://oimhikf8r.bkt.clouddn.com/3/scene8/thumb.jpg"/>
+                </pano>
+
+            </group>
+			
+			 <group name="group_4" title="分组四" >
+
+                <pano name="scene9" >
+                 <info title="场景九" thumburl="http://oimhikf8r.bkt.clouddn.com/3/scene9/thumb.jpg"/>
+                </pano>
+				
+				<pano name="scene10" >
+                 <info title="场景十" thumburl="http://oimhikf8r.bkt.clouddn.com/3/scene10/thumb.jpg"/>
+                </pano>
+				
+				<pano name="scene11" >
+                 <info title="场景十一" thumburl="http://oimhikf8r.bkt.clouddn.com/3/scene11/thumb.jpg"/>
+                </pano>
+
+            </group>
+
+			
+        </groups>
+    </config>
+
+	
+	
+	
+	
+</krpano>

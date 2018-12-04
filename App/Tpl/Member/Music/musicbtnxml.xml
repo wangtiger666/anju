@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano>
+    <preview type="grid(cube,64,64,512,0xaaccee,0x999999,0xaaccee);" />
+
+    <events name="readyaction" onxmlcomplete="js(panoready(););" />
+
+    <plugin name="musicbtn" url="__PUBLIC__/pano/store/soundon.png"
+                         onurl="__PUBLIC__/pano/store/soundon.png"
+                         offurl="__PUBLIC__/pano/store/soundoff.png"
+                         onalpha="1" outalpha="0.5" ondown="action(dragui);"
+                         align="leftbottom" x="10" y="10" alpha="0.5" scale="1" onover="tween(alpha,get(onalpha));" onout="tween(alpha,get(outalpha));"
+	        onclick="pausesoundtoggle(bgsnd); switch(url, get(onurl), get(offurl));"
+	        />
+         <action name="dragui">
+            if(%1 != dragging,
+                    copy(drag_currentx, x);
+                    copy(drag_currenty, y);
+                    copy(drag_stagex, mouse.stagex);
+                    copy(drag_stagey, mouse.stagey);
+                    set(drag_sx, +1);
+                    set(drag_sy, +1);
+                    if(align == righttop,    set(drag_sx,-1); );
+                    if(align == right,       set(drag_sx,-1); );
+                    if(align == rightbottom, set(drag_sx,-1); set(drag_sy,-1); );
+                    if(align == bottom,      set(drag_sy,-1); );
+                    if(align == leftbottom,  set(drag_sy,-1); );
+                    dragui(dragging);
+              ,
+                    if(pressed,
+                            sub(dx, mouse.stagex, drag_stagex);
+                            sub(dy, mouse.stagey, drag_stagey);
+                            mul(dx, drag_sx);
+                            mul(dy, drag_sy);
+                            add(x, drag_currentx, dx);
+                            add(y, drag_currenty, dy);
+                            js(shoot(get(x),get(y)););
+                            delayedcall(0, dragui(dragging) );
+                      );
+              );
+    </action>
+</krpano>

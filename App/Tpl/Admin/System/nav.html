@@ -1,0 +1,43 @@
+
+
+<div class="app-content-body fade-in-up ng-scope" ui-view="" style=""><div ng-controller="ConfigsController as vm" class="ng-scope">
+  <div class="wrapper-md">
+    <div class="tab-container ng-isolate-scope" active="vm.active">
+  <ul class="nav nav-tabs" ng-class="{'nav-stacked': vertical, 'nav-justified': justified}" ng-transclude="">
+      <!-- ngRepeat: group in vm.configs --><li ng-class="[{active: active, disabled: disabled}, classes]" class="uib-tab nav-item ng-isolate-scope active" index="$index" select="vm.select(group)" ng-repeat="group in vm.configs" style="">
+  <a href="" ng-click="select($event)" class="nav-link ng-binding" uib-tab-heading-transclude=""><uib-tab-heading class="ng-scope">
+          <a href="" data-toggle="tab" class="ng-binding" aria-expanded="true">
+            支付配置
+          </a>
+        </uib-tab-heading></a>
+</li><!-- end ngRepeat: group in vm.configs --><li ng-class="[{active: active, disabled: disabled}, classes]" class="uib-tab nav-item ng-isolate-scope" index="$index" select="vm.select(group)" ng-repeat="group in vm.configs" style="">
+  <a href="" ng-click="select($event)" class="nav-link ng-binding" uib-tab-heading-transclude=""><uib-tab-heading class="ng-scope">
+          <a href="" data-toggle="tab" class="ng-binding" aria-expanded="false">
+            社交配置
+          </a>
+        </uib-tab-heading></a>
+</li><!-- end ngRepeat: group in vm.configs --><li ng-class="[{active: active, disabled: disabled}, classes]" class="uib-tab nav-item ng-isolate-scope" index="$index" select="vm.select(group)" ng-repeat="group in vm.configs" style="">
+  <a href="" ng-click="select($event)" class="nav-link ng-binding" uib-tab-heading-transclude=""><uib-tab-heading class="ng-scope">
+          <a href="" data-toggle="tab" class="ng-binding" aria-expanded="true">
+            云推送
+          </a>
+        </uib-tab-heading></a>
+</li><!-- end ngRepeat: group in vm.configs --><li ng-class="[{active: active, disabled: disabled}, classes]" class="uib-tab nav-item ng-isolate-scope" index="$index" select="vm.select(group)" ng-repeat="group in vm.configs" style="">
+  <a href="" ng-click="select($event)" class="nav-link ng-binding" uib-tab-heading-transclude=""><uib-tab-heading class="ng-scope">
+          <a href="" data-toggle="tab" class="ng-binding" aria-expanded="false">
+            云存储
+          </a>
+        </uib-tab-heading></a>
+</li><!-- end ngRepeat: group in vm.configs --><li ng-class="[{active: active, disabled: disabled}, classes]" class="uib-tab nav-item ng-isolate-scope" index="$index" select="vm.select(group)" ng-repeat="group in vm.configs" style="">
+  <a href="" ng-click="select($event)" class="nav-link ng-binding" uib-tab-heading-transclude=""><uib-tab-heading class="ng-scope">
+          <a href="" data-toggle="tab" class="ng-binding" aria-expanded="false">
+            异常上报
+          </a>
+        </uib-tab-heading></a>
+</li><!-- end ngRepeat: group in vm.configs -->
+    </ul>
+  
+</div>
+  </div>
+</div>
+</div>

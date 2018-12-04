@@ -1,0 +1,47 @@
+#bg{
+    top: 0px; left: 0px; position:  fixed; z-index: 1; width: 100%; height: 100%;
+}
+#upmain{
+    width: 100%; height: 100%;
+    position: absolute; z-index: 10;
+    background: url(../images/common/none.png) repeat;
+    _background: none;
+}
+
+.logo{
+    width: 400px; height: 186px; overflow: hidden; margin: 0 auto; margin-top: 140px;
+    background: url(../images/login/happy.png) repeat;
+}
+.ban{
+    width: 590px; height: 80px; overflow: hidden; margin: 0 auto; margin-top: 20px;
+    background: url(../images/login/ban.png) no-repeat;
+}
+.ban_box{
+    width: 540px; height: 80px; overflow: hidden; float: left; _display: inline;
+}
+.ban_btn_outer{
+    width: 50px; height: 80px; overflow: hidden; float: left; _display: inline; margin-top: 12px;
+}
+.ban_btn{
+    width: 50px; height: 54px; overflow: hidden; cursor: pointer;
+    background: url(../images/login/btn.png) no-repeat; border: none; outline: none;
+}
+.ban_border{
+    width: 248px; height: 52px; overflow: hidden; border:1px solid #bbb; border-radius: 5px; float: left;
+    margin-top: 12px; background: #fff;
+}
+.ban_border.green{
+    border-color: #9ccd3b; background: #f4ffdf;
+}
+.bb1{
+    margin-left: 14px;
+}
+.bb2{
+    margin-left: 13px;
+}
+.ban_border input{
+    width: 228px; height: 40px; overflow: hidden; padding: 0px; border: none; border-width: 0px;
+    background: url(../images/common/none.png) repeat; margin-left: 10px; margin-top: 5px;
+    font: 20px/40px "微软雅黑"; color: #666; outline: none;
+}
+

@@ -1,0 +1,517 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+}
+nav {
+    background-image: url(../images/nav_bg.png);
+    background-position: top center;
+    background-size: cover;
+    height: 60px;
+    position: absolute;
+    z-index: 2;
+    color: #fff;
+    top: 0;
+    left: 0;
+    right: 0;
+    min-width: 1200px;
+}
+#login_user_img{
+    height: 60px;
+    border-radius: 2.5rem;
+    width: 60px;
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+    top: 20px;
+    border: 10px solid #51a1e7;
+}
+.logo{
+    position: absolute;
+    top: 1.25rem;
+    left: 1.4rem;
+	cursor:pointer;
+}
+
+.nav-bar{
+    font-size: 14px;
+    display: block;
+    line-height: 60px;
+    width: 659px;
+    margin-left: 0 auto;
+    text-align: end;
+}
+
+.nav-bar li{
+    display: inline;
+    margin-left: 93px;
+    cursor: pointer;
+}
+.nav-bar li a{
+    text-decoration: none;
+    color: #fff;
+}
+.user{
+    position: absolute;
+    line-height: 60px;
+    top: 0;
+    right: 40px;
+}
+
+#user-img{
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.user li{
+    display: inline;
+    cursor: pointer;
+}
+.separator{
+    background-color: #fff;
+    width: 1px;
+    height: 14px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#txt_city {
+    position: absolute;
+    top: 17px;
+    left: 200px;
+    width: 120px;
+    text-align: center;
+    height: 30px;
+    border-radius: 15px;
+    background-color: #1A68AA;
+    color: #fff;
+    border: #0F93DD;
+    cursor: pointer;
+}
+#txt_city::-webkit-input-placeholder{
+    color:#fff;
+}
+.loginbox {
+    height: 50px;
+    width: 200px;
+    position: absolute;
+    right: 20px;
+    top: 5px;
+}
+
+#userimg {
+    height: 20px;
+    width: 20px;
+    margin-top: 15px;
+    margin-left: 15px;
+    float: left;
+}
+
+#logbtn {
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+.loginbox span {
+    color: #fff;
+    margin-right: 5px;
+}
+
+.loginbox a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.loginbox div {
+    margin-top: 15px;
+    float: left;
+    cursor: pointer;
+}
+
+.loginbox a:hover {
+    color: red;
+}
+
+/*登录注册*/
+
+#loginbox {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: none;
+}
+
+.loginbgcolor {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: -15px;
+    left: 0;
+    z-index: 11;
+    background-color: #000;
+    opacity: 0.5
+}
+
+/*密码登录*/
+
+.loginshow,
+.logichitnshow {
+    box-sizing: border-box;
+    height: 423px;
+    width: 334px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 13;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding-top: 24px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.pwdlog {
+    color: #047fb7;
+    text-decoration: none;
+    font-size: 18px;
+    display: inline-block;
+    cursor: pointer;
+    border-right: #e5e5e5 solid 1px;
+    padding-right: 9px;
+    margin-right: 9px;
+}
+
+.chitlog {
+    color: #55A6CC;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.closelog {
+    position: absolute;
+    top: 13px;
+    right: 13px;
+    cursor: pointer;
+}
+
+#log_phone,
+#log_chitphone {
+    height: 25px;
+    width: 100%;
+    margin-top: 29px;
+    padding-bottom: 5px;
+    border: none;
+    border-bottom: 1px solid #9f9f9f;
+    padding-left: 36px;
+    font-size: 14px;
+}
+
+#log_phone{
+    background: url(../images/u48.png) no-repeat;
+    background-position-x: 10px;
+}
+
+#log_chitphone{
+    background: url(../images/phone.png) no-repeat;
+    background-position-x: 10px;
+}
+
+#log_pwd,
+#log_chitcode {
+    height: 25px;
+    width: 100%;
+    margin-top: 20px;
+    border: none;
+    border-bottom: 1px solid #9f9f9f;
+    outline: none;
+    background: url(../images/u50.png) no-repeat;
+    background-position-x: 10px;
+    padding-left: 36px;
+    font-size: 14px;
+}
+
+.verify {
+    background: #9f9f9f;
+    width: 100%;
+    height: 35px;
+    margin-top: 17px;
+}
+
+#log,
+#pwdlogin {
+    width: 100%;
+    height: 53px;
+    color: #fff;
+    margin-top: 21px;
+    font-size: 18px;
+    border: none;
+    background-color: #047fb7;
+    border-radius: 0px;
+    cursor: pointer;
+}
+
+.loginByOther {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-size: 16px;
+    color: #9f9f9f;
+    width: 100%;
+    text-align: center;
+}
+
+.loginByOther>div {
+    margin-top: 17px;
+    display: flex;
+    justify-content: space-around;
+}
+
+#ck_rmbUser{
+    vertical-align: middle;
+}
+
+.autologin {
+    color: #9f9f9f;
+    margin-left: 5px;
+    font-size: 14px;
+}
+
+.other-btn {
+    float: right;
+    font-size: 14px;
+    color: #9f9f9f
+}
+
+.forgetpwd,
+.freereg,
+.freereg {
+    color: #9f9f9f;
+    font-size: 12px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.freereg:hover,
+.forgetpwd:hover {
+    color: red;
+}
+
+.hiddenanchor {
+    display: none;
+}
+
+#getVerify{
+    width: 97px;
+    height: 35px;
+    border: #e5e4e3 solid 1px;
+    color:#047fb7;
+    background-color: #fff;
+    position: absolute;
+    top: 112px;
+    right: 32px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+#log_chitcode{
+    width: 170px;
+    background-position-x: 5px;
+}
+
+/*找回密码*/
+
+.chitloginshow,
+.reginshow {
+    width: 334px;
+    height: 348px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: #fff;
+    padding-left: 31px;
+    padding-right: 31px;
+    text-align: center;
+    display: none;
+    z-index: 11;
+    padding-top: 32px;
+}
+
+#findpwd {
+    color: #047fb7;
+    font-size: 18px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+#chitphone,
+#chitcode {
+    width: 100%;
+    height: 40px;
+    background-color: #E5E4E3;
+    margin-top: 15px;
+    border: none;
+    padding-left: 14px;
+}
+
+#chitcode {
+    margin-top: 1px;
+    padding-left: 14px;
+    color:#000 ! important;
+}
+
+#chitcode,
+#chitphone::-webkit-input-placeholder {
+    color: #9f9f9f;
+}
+
+#gaincode,
+#reg_gaincode {
+    height: 35px;
+    width: 97px;
+    background-color: #fff;
+    border: none;
+    color: #047fb7;
+    font-size: 14px;
+    position: absolute;
+    top: 73px;
+    right: 35px;
+}
+
+.textdescribe {
+    margin-top: 68px;
+    color: #9f9f9f;
+    font-size: 12px;
+    display: inline-block;
+}
+
+.protocol {
+    color: #3994DE;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+#chitbtn,#reginbtn {
+    width: 100%;
+    height: 53px;
+    background: #047fb7;
+    border: none;
+    margin-top: 8px;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.returnlog {
+    color: #9f9f9f;
+    font-size: 14px;
+    margin-top: 20px;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+}
+
+/*注册*/
+
+#reguser {
+    color: #047fb7;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#regphone,#regphones {
+    width: 100%;
+    height: 40px;
+    background-color: #E5E4E3;
+    margin-top: 15px;
+    border: none;
+    padding-left: 14px;
+    font-size: 14px;
+}
+
+#reg_chitcode {
+    width: 100%;
+    height: 40px;
+    background-color: #E5E4E3;
+    border: none;
+    padding-left: 14px;
+    font-size: 14px;
+    margin-top: 1px;
+}
+
+#reg_pwd,#reg_pwds {
+    width: 100%;
+    height: 40px;
+    background-color: #E5E4E3;
+    border: none;
+    padding-left: 14px;
+    font-size: 14px;
+    margin-top: 1px;
+}
+
+.textdescribes {
+    margin-top: 24px;
+    color: #9f9f9f;
+    font-size: 12px;
+    display: inline-block;
+}
+
+
+.active {
+    color: #0078ff;
+}
+/*服务协议*/
+.sevice {
+    width: 652px;
+    height: 743px;
+    background-color: #fff;
+    padding: 25px 18px 16px 18px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 12;
+    display: none;
+}
+
+.sevice .closelog {
+    transform: scale(1.5);
+}
+
+.sevice .title {
+    color: #047fb7;
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 17px;
+}
+
+.sevice .main {
+    background-color: #9f9f9f;
+    width: 100%;
+    height: 635px;
+    position: relative;
+    overflow-y: auto;
+}
+
+.sevice .main .text {
+    position: absolute;
+    top: 19px;
+    right: 31px;
+    left: 27px;
+    border-bottom: #c1c1c1 solid 1px;
+    font-size: 14px;
+    color: #6a6a6a;
+    line-height: 20.5px;
+}
+
+.sevice .bar {
+    height: 27px;
+    width: 100%;
+    background-color: #9f9f9f;
+}

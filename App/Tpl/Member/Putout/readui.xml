@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<krpano>
+<volist name="row" id="ui">
+    <switch name="ui['uitype']" >
+        <case value="superimage">
+            <plugin devices="desktop" name="ui{$ui.id}" keep="true" url="{$ui.url||basename=###}" align="{$ui.align}" edge="{$ui.edge}" parent="{$ui.parent_name}"
+            x="{$ui.x}" y="{$ui.y}" scale="{$ui.scale}" alpha="{$ui.alpha}" rotate="{$ui.rotate}" zorder="{$ui.zorder}" visible="true"
+            crop="{$ui.crop}" onovercrop="{$ui.hovercrop}" ondowncrop="{$ui.downcrop}"
+            {$ui.action}
+            />
+        </case>
+        <case value="video">
+            <plugin devices="desktop" name="ui_{$ui.id}" url="%SWFPATH%/plugins/videoplayer.swf" alturl="%SWFPATH%/plugins/videoplayer.js"
+                    updateeveryframe="true" videourl="%XMLPATH%/{$ui.url||basename=###}" loop="True" align="{$ui.align}" edge="{$ui.edge}"
+                    x="{$ui.x}" y="{$ui.y}" ox="0" oy="0" parent="ui_{$ui.parent}"
+                    volume="0.7" zorder="{$ui.zorder}" alpha="{$ui.alpha}"
+                    scale="{$ui.scale}" rotate="{$ui.rotate}" visible="True" enabled="True" capture="True" keep="True"
+                    {$ui.action}
+                    />
+        </case>
+        <default />
+        <plugin devices="desktop" name="ui{$ui.id}" keep="true" url="{$ui.url||basename=###}" align="{$ui.align}" edge="{$ui.edge}" parent="{$ui.parent_name}"
+            x="{$ui.x}" y="{$ui.y}" scale="{$ui.scale}" alpha="{$ui.alpha}" rotate="{$ui.rotate}" zorder="{$ui.zorder}" visible="true"
+            {$ui.action}
+            />
+    </switch>
+
+</volist>
+</krpano>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title id="title">{$panorow['title']}</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="Keywords" content="全景,全景软件,全景拍摄,全景照片,三维全景,全景网,虚拟现实内容平台,360度全景,720全景,360VR,pano2vr,全景通,720vr全景软件淘宝店 非本店购买均为盗版">
+	<meta name="Description" content="720vr全景软件淘宝店独家开发的国内首款基于WEB图形化的漫游制作平台，具有WEB系统良好的扩展性与易用性，是目前国内应用最广泛的专业全景软件">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<link rel="stylesheet" type="text/css" href="loadingbg/loadingbg.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/welcome/css/panoview.css">
+	<style>
+		@-ms-viewport { width:device-width; }
+		@media only screen and (min-device-width:800px) { html { overflow:hidden; } }
+		html { height:100%; }
+		body, html { height:100%; overflow:hidden; margin:0; padding:0; font-family: Arial,PingFangSC-Regular,Hiragino Sans GB,STHeiti,WenQuanYi Micro Hei,SimSun,sans-serif; font-size:16px; color:#FFFFFF; }
+	</style>
+
+</head>
+<body>
+<nav id="view_head">
+	<div id="logoboxs">
+      <img src="/Public/welcome/images/CCBlogo.png" class="logo">
+    </div> 
+    <if condition="empty($accountSession)">
+      <ol class="user">
+	    	<img src="/Public/welcome/images/user-img.png" id="user-imgs">
+	    </ol>
+    <else/>
+       <img src="{$accountSession['head_img']}" id="login_user_img">
+    	}
+    </if>
+</nav>
+<include file="./Yun/Tpl/LoginReg/index.html"/>
+<include file="agree"/>
+        <script src="pano.js"></script>
+        <div id="pano" style="width:100%;height:100%;">
+            <noscript><table style="width:100%;height:100%;"><tr style="vertical-align:middle;"><td><div style="text-align:center;">ERROR:<br/><br/>Javascript not activated<br/><br/></div></td></tr></table></noscript>
+            <script>
+				embedpano({swf:"pano.swf", xml:"pano.xml", target:"pano", html5:"prefer",wmode:"transparent",initvars:{design:""}, passQueryParameters:true});
+            </script>
+        </div>
+<script src="images/common.js"></script>
+<img src="__PUBLIC__/welcome/images/start2.png" class="love">
+<img src="__PUBLIC__/welcome/images/start.png" class="unlove">
+<!-- 小区详情 -->
+<div id="belong_intro_btn" onclick="showbelong_intro_box()">小区简介</div>
+<div id="belong_intro_box">
+	<div class="belong_intro_bgcolor"></div>
+	<div class="belong_intro_content"></div>
+	<div id="belongqrcode">
+		<img src="" id="belongqrcodeimg">
+	</div>
+</div>
+<!-- 房屋详情 -->
+<div id="house_intro_btn" onclick="showhouse_intro_box()">房屋简介</div>
+<div id="house_intro_box">
+	<div class="house_intro_bgcolor"></div>
+	<div class="house_intro_content">
+		<div id="qrcode" class="QR_img">
+			<img src="" id="houseqrcodeimg">
+		</div>
+	</div>
+</div>
+<div id="btnbox">
+	<div>
+		<button id="recive" class="btnstyle" onclick="breakstep()">返回上一步</button>
+		<button id="joinmap" class="btnstyle" onclick="joinmap()">地图</button>
+		<button id="joinsquaer" class="btnstyle" onclick="joinsquaer()">街区</button>
+		<button id="joinbottompano" class="btnstyle">鸟瞰</button>
+		<button id="joinbelong" class="btnstyle">小区</button>
+	</div>
+</div>
+<div id="logobox">
+	<img src="__PUBLIC__/welcome/images/1538291587A076.png">
+</div>
+</body>
+<script type="text/javascript" src="__PUBLIC__/welcome/js/qrcode.js"></script>
+<script type="text/javascript">
+	function house_details(item){
+	var infodiv='<span class="text">房屋详情信息</span><br/>'+
+			'<span class="text">所在小区：</span><span class="belong">'+item.name+'</span><br/>'+
+			'<span class="text">户型：</span><span class="house_type">'+item.house_type+'</span><br/>'+
+			'<span class="text">朝向：</span><span class="house_direction">'+item.house_direction+'</span><br/>'+
+			'<span class="text">面积：</span><span class="house_proportion">'+item.house_size+'平米</span><br/>'+
+			'<span class="text">租贷方式：</span><span class="lease_type">'+item.lease_type+'</span><br/>'+
+			'<span class="text">所属区域：</span><span class="area">'+item.area_name+'</span><br/>'+
+			'<span class="text">详细地址：</span><span class="addr">'+item.detail_address+'</span><br/>'+
+			'<span class="text">设施：</span><span class="device">'+item.house_equip+'</span><br/>'+
+			'<em>扫一扫，VR看房</em>'+
+			'<img src="" class="sand"><br/>'+
+			'<span class="text">联系信息：</span><span class="pwd_phone">'+item.tel+'</span><br/>'+
+			'<span class="text">温馨提示：</span><br/>'+
+			'<p>1.支付意向金后，可获得房源联系信息。</p>'+
+			'<p>2.若对房屋不满意，可在7天内退回意向金。</p>'+
+			'<p>3.退回的意向金将原路返回你的支付账户。</p>'+
+			'<button id="pay" onclick="pay()">支付意向金</button>'+
+			'<button id="paynow" onclick="paynow()">立即租房</button>'
+	$(".house_intro_content").append(infodiv);
+}
+var lost1=window.sessionStorage.getItem("lost1");
+var lost2=window.sessionStorage.getItem("lost2");
+
+/**
+ * [接收地址栏]
+ */
+function GetUrlParam(name){
+  var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+  var r = encodeURI(window.location.search).substr(1).match(reg);
+  if(r!=null)return unescape(r[2]); return null;
+}
+var house_type = decodeURI(GetUrlParam("type"));//类型
+var houid = decodeURI(GetUrlParam("houid"));//房屋id
+var img= decodeURI(GetUrlParam("img"));//房屋户型图
+// var pano_nk_guid= decodeURI(GetUrlParam("pano_nk_guid"));//鸟瞰
+// var bp= decodeURI(GetUrlParam("bp"));//小区唯一id
+var qc= decodeURI(GetUrlParam("qc"));//房屋二维码路径
+//二维码
+var qrcode = new QRCode(document.getElementById("qrcode"));
+if(qc==''){
+	$("#qrcode").hide();
+	$(".house_intro_content>em").hide()
+} 
+function makeCode () {	
+	var mylocation=window.location.href;
+	var elText = mylocation.split('?')[0];
+	if (!elText) {
+		alert("error");
+		return;
+	}
+	qrcode.makeCode(elText);
+}
+// makeCode();
+
+if($("#title").text()=='UONE水木'){
+	$("#belongqrcodeimg").attr("src","/Public/welcome/images/UONE水木手机版二维码/UONE水木小区.png")
+}else{
+	if($("#title").text()=='UONE水木-201'){
+		$("#houseqrcodeimg").attr("src","/Public/welcome/images/UONE水木手机版二维码/UONE-201.png")
+	}else{
+		if($("#title").text()=='UONE水木-202'){
+			$("#houseqrcodeimg").attr("src","/Public/welcome/images/UONE水木手机版二维码/UONE-202.png")
+		}else{
+			if($("#title").text()=='UONE水木-203'){
+				$("#houseqrcodeimg").attr("src","/Public/welcome/images/UONE水木手机版二维码/UONE-203.png")
+			}else{
+				if($("#title").text()=='UONE水木-205'){
+					$("#houseqrcodeimg").attr("src","/Public/welcome/images/UONE水木手机版二维码/UONE-205.png")
+				}else{
+					if($("#title").text()=='UONE水木-206'){
+						$("#houseqrcodeimg").attr("src","/Public/welcome/images/UONE水木手机版二维码/UONE-206.png")
+					}else{
+						if($("#title").text()=='禹州中央海岸'){
+							$("#belongqrcodeimg").attr("src","/Public/welcome/images/禹州中央海岸/禹州中央海岸全景.png")
+						}else{
+							if($("#title").text()=='禹州中央海岸-9#9F616'){
+								$("#houseqrcodeimg").attr("src","/Public/welcome/images/禹州中央海岸/套房一.png")
+							}else{
+								if($("#title").text()=='禹州中央海岸-9#9F601'){
+									$("#houseqrcodeimg").attr("src","/Public/welcome/images/禹州中央海岸/套房二.png")
+								}else{
+									if($("#title").text()=='UONE闽南院子'){
+										$("#belongqrcodeimg").attr("src","/Public/welcome/images/闽南院子/闽南院子小区.png")
+									}else{
+										if($("#title").text()=='翔安新城'){
+											$("#belongqrcodeimg").attr("src","/Public/welcome/images/翔安新城/翔安新城.png")
+										}else{
+											if($("#title").text()=='翔安新城9#601'){
+												$("#houseqrcodeimg").attr("src","/Public/welcome/images/翔安新城/翔安新城套房.png")
+											}else{
+												$("#houseqrcodeimg").hide()
+												makeCode();
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+//获取房屋详情
+if(house_type=='房屋'){
+	$("#belongqrcode").hide()
+	$("#house_intro_btn").show();
+	$("#belong_intro_btn").hide();
+	$("#joinbottompano").hide();
+	$("#joinbelong").show();
+	$(".love").show()
+	$.ajax({
+		url:"{:U('/HouseResources/house_detail_infos')}",
+		type:'post',
+		data:{id:houid},
+		dataType:'json',
+		success:function(data){
+			house_details(data.house_detail)
+			$(".sand").attr("src",img)
+		},
+		error:function(){
+			// alert('请求超时')
+		}
+	})
+}
+if(house_type=='小区'){
+	$("#belongqrcode").show()
+	$(".love").hide();
+	$(".unlove").hide();
+	$("#belong_intro_btn").show();
+	$("#house_intro_btn").hide();
+	$("#joinbelong").hide();
+	$("#joinbottompano").show();
+	var int=window.sessionStorage.getItem("int");
+	if(int==''){
+		$(".belong_intro_content").html("暂无简介");
+	}else{
+		$(".belong_intro_content").html(int);
+	}
+	$(".belong_intro_content").html(int);
+}
+if(house_type=='鸟瞰'){
+	$("#belongqrcode").hide()
+	$(".love").hide();
+	$(".unlove").hide();
+	$("#belong_intro_btn").hide();
+	$("#house_intro_btn").hide();
+	$("#joinbelong").show();
+	$("#joinbottompano").hide();
+}
+
+/**
+ * [house_resouces_id 房屋唯一编号]
+ * [house_resouces_id 判断该房屋是否收藏过]
+ * @type {[type]}
+ */
+if(houid!='' && house_type=='房屋'){
+	if(lost1=='1' || lost2=='2'){
+		$.ajax({
+			url:"{:U('/Account/is_follow')}",
+			type:'post',
+			data:{house_resouces_id:houid},
+			dataType:'json',
+			success:function(data){
+				if(data.code==200){
+					if(data.count=='0'){
+						//未关注
+						$(".love").show();
+						$(".unlove").hide();
+					}else{
+						//已关注
+						$(".love").hide();
+						$(".unlove").show();
+					}
+				}else{
+					alert(data.msg)
+				}
+			},
+			error:function(){
+				
+			}
+		})
+	}
+}
+/**
+ * [if 判断设备]
+ */
+if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+    $("#view_head").hide()
+    $("#btnbox").hide()
+    $(".love").hide();
+	$(".unlove").hide();
+	$("#belong_intro_btn").hide();
+	$("#house_intro_btn").hide();
+} else {
+   	$("#view_head").show()
+   	$("#btnbox").show()
+}
+
+/**
+ * [logstadues1 判断是否登录]
+ * @type {[type]}
+ */
+if(lost1=='1' ||lost2=='2'){
+	$("#user-img").hide()
+	$("#login_user_img").show()
+}
+
+$("#user-img").on("click",function(){
+	var lost1=window.sessionStorage.getItem("lost1");
+	var lost2=window.sessionStorage.getItem("lost2");
+	if(lost1=='1' || lost2=='2'){
+		window.open("/Account/user")
+	}else{
+		$("#loginbox").show();
+	}	
+})
+
+/**
+ * [recivemap 底部按钮]
+ */
+function joinmap(){
+	window.location.href="/Welcome/main"//返回地图
+}
+
+function joinsquaer(){
+	check_type=1;
+	window.location.href="/Welcome/main?check_type="+check_type;//返回街区
+}
+
+$("#joinbottompano").on("mouseover",function(){
+	if($("#title").text()=='UONE水木'){
+		$(this).css({cursor:'pointer'});
+		$(this).attr("disabled",false)
+	}else{
+		var pano_nk_guid=window.sessionStorage.getItem('pano_nk_guid')
+		if(pano_nk_guid=='null'){
+			$(this).css({cursor:'not-allowed'});
+			$(this).attr("disabled",true)
+		}else{
+			$(this).css({cursor:'pointer'});
+			$(this).attr("disabled",false)
+		}
+	}
+})
+
+$("#joinbottompano").on("click",function(){
+	if($("#title").text()=='UONE水木'){
+		window.location.href="http://orzunion.com/putout/1/136/pano/?type=%E9%B8%9F%E7%9E%B0";
+	}else{
+		var pano_nk_guid=window.sessionStorage.getItem('pano_nk_guid')
+		var member_id=window.sessionStorage.getItem('nkmember')
+		var pano_id=window.sessionStorage.getItem('nkpaniid')
+		window.location.href="{:U('/putout/"+member_id+"/"+pano_id+"/pano/')}?type=鸟瞰";
+	}	
+})
+
+$("#joinbelong").on("mouseover",function(){
+	if($("#title").text()=='UONE水木-206'){
+		$(this).css({cursor:'pointer'});
+		$(this).attr("disabled",false)
+	}else{
+		var pano_guid=window.sessionStorage.getItem('pano_guid')
+		if(pano_guid=='null'){
+			$(this).css({cursor:'not-allowed'});
+			$(this).attr("disabled",true)
+		}else{
+			$(this).css({cursor:'pointer'});
+			$(this).attr("disabled",false)
+		}
+	}	
+})
+$("#joinbelong").on("click",function(){
+	if($("#title").text()=='UONE水木-206'){
+		window.location.href="http://orzunion.com/putout/1/66/pano/?type=%E5%B0%8F%E5%8C%BA"
+	}else{
+		var pano_guid=window.sessionStorage.getItem('pano_guid')
+		var panoid=window.sessionStorage.getItem('belongpaniid')
+		var memberId=window.sessionStorage.getItem('belongmember')
+		window.location.href="{:U('/putout/"+memberId+"/"+panoid+"/pano/')}?type=小区";
+	}
+})
+
+function breakstep(){
+	window.history.back(-1); //返回上一步
+}
+
+/**
+ * [showbelong_intro_box 展开小区详情]
+ */
+var i=0;
+ function showbelong_intro_box(){
+ 	$("#belong_intro_box").toggle("fast");
+ 	if(i++%2==0){
+ 		$("#belong_intro_btn").html("收起 >>")
+ 	}else{
+ 		$("#belong_intro_btn").html("小区简介")
+ 	}
+ }
+
+ var k=0;
+ function showhouse_intro_box(){
+ 	if(i++%2==0){
+ 		$("#house_intro_btn").html("收起 >>")
+ 	}else{
+ 		$("#house_intro_btn").html("房屋简介")
+ 	}
+ 	$("#house_intro_box").toggle("fast");
+ }
+ // 收藏
+ $(".love").on('click',function(){
+ 	if(lost1=='1' || lost2=='2'){
+ 		$.ajax({
+ 		url:"{:U('/Account/follow')}",
+ 		type:'post',
+ 		data:{house_resouces_id:houid},
+ 		dataType:'json',
+ 		success:function(data){
+ 			if(data==200){
+ 				alert(data.msg)
+ 				$(".love").hide();
+ 				$(".unlove").show(); 				
+ 			}else{
+ 				alert(data.msg)
+ 			}
+ 			window.location.reload()
+ 		},
+ 		error:function(){
+ 			// alert('请求超时')
+ 		}
+ 	})
+ 	}else{
+ 		$("#loginbox").show();
+ 	}	
+ })
+ // 取消收藏
+ $(".unlove").on("click",function(){
+ 	if(lost1=='1' || lost2=='2'){
+ 		$.ajax({
+	 		url:"{:U('/Account/delete_follow')}",
+	 		type:'post',
+	 		data:{house_resouces_id:houid},
+	 		dataType:'json',
+	 		success:function(data){	
+	 			if(data==200){
+	 				alert(data.msg)
+	 				$(".love").show();
+	 				$(".unlove").hide();
+	 			}else{
+	 				alert(data.msg)
+	 			}
+	 			window.location.reload()
+	 		},
+	 		error:function(){
+	 			// alert('请求超时')
+	 		}
+	 	})
+ 	}else{
+ 		$("#loginbox").show();
+ 	}	
+ })
+
+/**
+* [支付意向金]
+*/	
+function pay(){
+	var lost1=window.sessionStorage.getItem("lost1");
+	var lost2=window.sessionStorage.getItem("lost2");
+	if(lost1=='1' || lost2=='2'){
+		$(".serverboxs").show()
+		$(".sevices").show();
+		$(".sevicenexts").hide();
+		$(".sevicenextss").hide();
+	}else{
+		$("#loginbox").show();
+	}
+}	 	
+
+function paynow(){
+	var lost1=window.sessionStorage.getItem("lost1");
+	var lost2=window.sessionStorage.getItem("lost2");
+	if(lost1=='1' || lost2=='2'){
+		$(".serverboxs").show()
+		$(".sevicenexts").show();
+		$(".sevices").hide();
+		$(".sevicenextss").hide();
+	}else{
+		$("#loginbox").show();
+	}
+}
+</script>
+</html>

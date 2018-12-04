@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jscolor/jscolor.js"></script>
+        {:W("Easyui")}
+        {:W("Uploader")}
+		{:W("Kindediter")}
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">全景项目 - {$panorow['title']}</div>
+                        <div title="关闭" data-info="确认返回功能首页？" data-url="{:U('main/index')}" class="delaction close"></div>
+                        <div title="返回上级" onclick="LinkTo('{$backurl}');" class="goback"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            {:W("Panomenu",array("pano_id"=>$pano_id,"num"=>4))}
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main">
+                                <div class="action_title"><a href="{:U('toolbox/index',array('pano_id'=>$pano_id))}">模块管理</a> - <a href="{:U('index',array('pano_id'=>$pano_id))}">电子相册管理</a>
+								<span class="vrback"><a href="{:U('toolbox/index',array('pano_id'=>$pano_id))}">返回上级</a></span></div>
+                                
+								<div class="pano_table">
+								<div class="action_web">
+                                    <form name="form1" action="" enctype="multipart/form-data" method="post">
+                                        <input name="dopost" value="save" type="hidden" />
+                                        <input name="pano_id" value="{$pano_id}" type="hidden" />
+                                        <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">
+											<tr class="tr_white" height="40">
+                                                <td align="right"><b>相册名称：</b></td>
+                                                <td>
+                                                    <input type="text" class="inputcube cs" value="" name="name" />
+                                                </td>
+                                            </tr>
+
+                                            <tr class="tr_white" height="40">
+                                                <td align="right" width="122"></td>
+                                                <td align="left">
+                                                    <input type="submit" class="blackbutton" value="提交" />&nbsp;&nbsp;&nbsp;&nbsp;
+													<a href="{:U('index',array('pano_id'=>$pano_id))}">返回相册列表</a>
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="10">
+                                                <td colspan="2"></td>
+                                            </tr>
+										</table>
+                                    </form>
+                                </div>
+								</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

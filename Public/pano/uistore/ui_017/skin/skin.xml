@@ -1,0 +1,86 @@
+<krpano>
+	<include url="gridmenu.xml" />
+	<include url="ui_skin.xml" />
+	<include url="ui_action.xml" />
+	<include url="showtext.xml" />
+	<include url="plugin.xml" />
+	<include url="html5_vr.xml" />
+   <skin_settings  thumbs_opened="false"	               				   
+				   deeplinking="false"
+				   loading="loading..."
+				   gyro="true"
+                   gyro_enabled="false"	
+                   grid_title="720vr全景软件"				   
+	               />
+				   
+	
+    <!-- 注意下面 group="true" 开启缩略图分组功能哦	 -->
+	<responsive_grid button="true" 
+                 padding_top="75"
+	             padding_bottom="75"
+	             width_margin="0"
+
+	             group="true"
+	             current="false"
+	
+	             cat_container_border_height="1"
+	             display_cat_desc="true"
+				 
+	             thumbs_width="240" 
+	             thumbs_height="150"
+	             thumbs_padding="25"
+	             thumbs_scale="100"
+	             active_thumb_border="3 0xffffff 1.00"
+	
+	             display_thumb_title="true"	
+	             display_thumb_desc="true"
+				 
+	             loadscene_flags="MERGE"
+  	             loadscene_blend="BLEND(1)"
+    />			   
+				   
+	<events name="skin_events" keep="true"
+	        onxmlcomplete="set(events[skin_events].onxmlcomplete,null); skin_startup();skin_showloading();"
+	        onnewpano="skin_showloading(); skin_update_scene_infos();skin_deeplinking_update_url();"
+	        onremovepano="skin_showloading();"
+	        onloadcomplete="set(layer[skin_loadingtext].visible, false);"
+			onidle="skin_deeplinking_update_url();"
+	        onresize="stopdelayedcall(rg_resize_event);delayedcall(rg_resize_event,0.1,rg_set_row_number());"			
+			onenterfullscreen.fullscreensupport="set(layer[skin_btn_fs].crop, '126|0|63|63');"
+	        onexitfullscreen.fullscreensupport="set(layer[skin_btn_fs].crop, '63|0|63|63');"
+			onmousewheel="image_onmousewheel();"
+			onclick="skin_showthumbs(false);"
+	        />
+
+    <events name="responsive_grid_mobile" keep="true" devices="mobile" 
+        onxmlcomplete="set(responsive_grid.thumbs_padding,15);"
+		/>
+		
+    <action name="skin_startup">
+		        
+		if(skin_settings.littleplanetintro AND (device.webgl OR device.flash),
+			skin_setup_littleplanetintro();
+		  );
+		
+		if(skin_settings.gyro AND !device.desktop AND device.html5,
+			copy(plugin[skin_gyro].url, plugin[skin_gyro].html5_url);			
+	    );
+		
+		if(skin_settings.opennews , danmurun1(); );
+		
+		set(scene[get(xml.scene)].password,true); 
+		 
+		skin_addthumbs();
+		skin_onresize();
+		skin_updatescroll();
+		
+		<!-- 密码插件  --> 
+		set(scene[get(xml.scene)].password,true);
+		setup_responsive_grid_plugin();
+	</action>  
+
+
+    
+
+
+</krpano>

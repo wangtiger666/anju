@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>微信说一说管理</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        {:W("Boluoui")}
+        <style>
+            .panoimg{width: 120px; height: 90px; overflow: hidden; border:1px solid #dbdbdb;}
+			.form-inline .form-group {margin: 4px 8px 4px 0;}
+			.form-group {display: inline-block;vertical-align: middle;float:right;}
+			.form-control {width: auto;}
+			.form-control {border-radius: 0;font-size: 12px;height: 18px;padding: 3px;transition: none 0s ease 0s ;background-color: #ffffff;background-image: none;border: 1px solid #cccccc;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;color: #555555;line-height: 1.42857;vertical-align: middle;}
+			.console-searchbar-textinput {min-width: 180px;}
+			.btn-primary {background-color: #ffa900;border: 1px solid #ffa900;color: #fff;}
+			.alibtn {border-radius: 0;font-size: 12px;height: 26px;line-height: 14px;padding: 5px 16px;-moz-user-select: none;background-image: none;cursor: pointer;display: inline-block;font-weight: normal;margin-bottom: 1px;text-align: center;vertical-align: middle;white-space: nowrap;}
+        </style>
+		<script type="text/javascript">
+		$(document).ready(function(){
+			$("#searchform").submit(function(){
+				var panoname = $.trim($("#panoname").val());
+				if(panoname==""){
+					alert("请输入项目名称");
+					return false;
+				}
+			});
+		});
+		</script>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">微信说一说管理</div>
+                        <div title="关闭" onclick="DoNote('确认返回功能首页？','{:U('main/index')}');" class="close"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="webpage">
+                            <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#c6c6c6" align="center">
+                                <tr>
+                                    <td height="36" class="td_title" style="border:1px solid #c6c6c6; border-bottom:none; padding: 0px 10px;font-weight:600px;text-align:center;">
+									{$panoname}&nbsp;说一说列表
+                                    </td>
+                                </tr>
+                            </table>
+                            <table width="100%" border="0" cellpadding="2" cellspacing="1" bgcolor="#c6c6c6">
+                                <tr class="tr_hui" height="36" align="center">
+                                    <!-- <td width="5%">
+                                        <b>选择</b>
+                                    </td> -->
+									<td width="5%">
+                                        <b>编号</b>
+                                    </td>
+                                    <td width="10%">
+                                        <b>昵称</b>
+                                    </td>
+									<td width="50%">
+                                        <b>内容</b>
+                                    </td>
+                                    <td width="10%">
+                                        <b>状态</b>
+                                    </td>
+                                    <td width="15%">
+                                        <b>操作</b>
+                                    </td>
+                                </tr>
+                                <volist id="vo" name="list">
+                                    <tr class="tr_white" height="36">
+                                        <!-- <td align="center"><input type="checkbox" value="{$vo['id']}" /></td> -->
+                                        <td align="center">{$vo.id}</td>
+                                        <td align="center">
+										<if condition="!empty($vo['headimgurl'])">
+										<img src="{$vo.headimgurl}" width="20" height="20" />
+										<else/>
+										<img src="/Public/pano/hotspotComment/avatar.png" width="20" height="20" />
+										</if>
+										&nbsp;{$vo.nickname}</td>
+										<td align="center">{$vo.text}</td>
+                                        <td align="center">
+										<if condition="$vo['status'] eq 1">
+										<span style="color:green;">显示</span>
+										<else/>
+										<span style="color:red;">关闭</span>
+										</if>
+										</td>                                        
+                                        <td align="center">
+										<if condition="$vo['status'] eq 1">
+										<input type="button" onclick="LinkTo('{:U('setStatus',array('id' =>$vo['id'],'act'=>'close'))}');" class="btn1" value="禁止"/>
+										<else/>
+										<input type="button" onclick="LinkTo('{:U('setStatus',array('id' =>$vo['id'],'act'=>'open'))}');" class="btn1" value="显示"/>
+										</if>											
+										<input type="button" onclick="DoNote('确认删除吗？','{:U('del',array('id' =>$vo['id']))}');" class="btn1" value="删除"/>
+										</td>
+                                    </tr>
+                                </volist>
+                            </table>
+							<script>							
+							function DoNote(text,gourl) {
+								if(!window.confirm(text)){
+									return false;
+								}
+								location.href=gourl;
+							}
+							</script>
+                            <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" align="center">
+                                <tr  class="tr_white" align="center">
+                                    <td id="page_list" height="60" style="border:1px solid #c6c6c6; border-top: none; padding: 0px 10px;">
+                                        {$page}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

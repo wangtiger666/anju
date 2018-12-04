@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="./css/head.css">
+	<link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+	<link href="./css/jquery.city.css" rel="stylesheet" />
+	<link href="./css/animate.min.css" rel="stylesheet" />
+</head>
+<body style="min-width: 1600px;">
+	<div class="main_head">
+		<img src="./images/logo.png" class="main_logo">
+		<input id="txt_city" placeholder="请选择城市"></input>
+		<!-- 导航 -->
+		<ul class="nav nav-pills">
+		  <li role="presentation"><a href="#">首页导航</a></li>
+		  <li role="presentation"><a href="#">全景租房</a></li>
+		  <li role="presentation"><a href="#">首页导航</a></li>
+		  <li role="presentation"><a href="#">首页导航</a></li>
+		</ul>
+		<!-- 登录注册 -->
+		<div class="loginbox">
+			<img src="./images/user-img.png" id="userimg">
+			<div>
+				<a id="logbtn">登录</a>
+				<span>|</span>
+				<a id="regbtn">注册</a>
+			</div>
+		</div>
+	</div>
+	<!-- 登录界面 -->
+	<div id="loginbox">
+        <div class="loginbgcolor"></div>
+        <!-- 密码登录 -->
+        <div class="loginshow">
+            <a class="pwdlog active">密码登录</a>
+            <span style="color:#ccc;">|</span>
+            <a class="chitlog">短信登录</a>
+            <span class="closelog">x</span>
+            <input type="text" name="" placeholder="请输入手机号" id="log_phone" autocomplete="off"><br/>
+            <input type="password" name="" placeholder="请输入密码" id="log_pwd"> 
+            <input type="submit" id="log" class="btn btn-primary" value="登录" onclick="Save()"><br/>
+            <input type="checkbox" id="ck_rmbUser"/><span class="autologin">下次自动登录</span>
+            <div style="float: right;margin-right: 20px;margin-top: 17px;">
+                <a class="forgetpwd">忘记密码</a>
+                <span style="color:#ccc;">|</span>
+                <a class="freereg">免费注册</a>
+            </div>
+        </div>
+
+        <!-- 短信登录 -->
+        <div class="logichitnshow">
+            <a class="pwdlog">密码登录</a>
+            <span style="color:#ccc;">|</span>
+            <a class="chitlog active">短信登录</a>
+            <span class="closelog">x</span>
+            <input type="text" name="" placeholder="请输入手机号" id="log_chitphone"><br/>
+            <input type="password" name="" placeholder="请输验证码" id="log_chitcode"> 
+            <input type="submit" id="logs" class="btn btn-primary" value="登录"><br/>
+            <!-- <input type="checkbox" id="ck_rmbUser"/><span class="autologin">下次自动登录</span> -->
+            <div style="float: right;margin-right: 20px;margin-top: 17px;">
+                <a class="forgetpwd">忘记密码</a>
+                <span style="color:#ccc;">|</span>
+                <a class="freereg">免费注册</a>
+            </div>
+        </div>
+
+        <!-- 找回密码 -->
+        <div class="chitloginshow">
+            <span class="closelog">x</span>
+            <span id="findpwd">找回密码</span><br/>
+            <input type="text" id="chitphone" placeholder="手机号码" maxlength="11" value="">
+            <button id="gaincode">获取验证码</button><br/>
+            <input type="tex" name="" placeholder="短信验证码" id="chitcode"><br/>
+            <span class="textdescribe">注册即表示同意</span><a class="protocol">《xxx服务使用协议》</a>
+            <button class="btn btn-primary" id="chitbtn">提交</button><br/>
+            <a class="returnlog">返回登录</a>
+        </div>
+
+        <!-- 注册平台 -->
+        <div class="reginshow">
+            <span class="closelog">x</span>
+            <span id="reguser">注册XX平台账号</span><br/>
+            <input type="text" name="" id="regphone" placeholder="手机号码" maxlength="11">
+            <button id="reg_gaincode">获取验证码</button><br/>
+            <input type="tex" name="" placeholder="短信验证码" id="reg_chitcode"><br/>
+            <input type="password" name="" placeholder="请设置密码" id="reg_pwd"><br/>
+            <span class="textdescribes">注册即表示同意</span><a class="protocol">《xxx服务使用协议》</a>
+            <button class="btn btn-primary" id="chitbtn">提交</button><br/>
+            <a class="returnlog">返回登录</a>
+        </div>
+    </div>
+</body>
+<script src="./js/jquery-1.11.min.js"></script>
+<script src="./js/jquery.city.js"></script>
+<script type="text/javascript" src="./js/head.js"></script>
+<script type="text/javascript" src="./js/jquery.cookie.js"></script>
+<script type="text/javascript" src="./js/jquery-ui.min.js"></script>
+<script type="text/javascript">
+    /**
+     * [记住密码，下次自动登录]
+     */
+     $(document).ready(function () {
+        if ($.cookie("rmbUser") == "true") {
+            $("#ck_rmbUser").attr("checked", true);
+            $("#log_phone").val($.cookie("username"));
+            $("#log_pwd").val($.cookie("password"));
+        }
+     });
+     function Save() {
+        if ($("#ck_rmbUser").attr("checked")) {
+          var str_username = $("#log_phone").val();
+          var str_password = $("#log_pwd").val();
+          $.cookie("rmbUser", "true", { expires: 7 }); //存储一个带7天期限的cookie
+          $.cookie("username", str_username, { expires: 7 });
+          $.cookie("password", str_password, { expires: 7 });
+        }
+        else {
+          $.cookie("rmbUser", "false", { expire: -1 });
+          $.cookie("username", "", { expires: -1 });
+          $.cookie("password", "", { expires: -1 });
+        }
+     };
+</script>
+</html>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano showerrors="false" onstart="action(start);">
+    <action name="start">
+        loadscene(scene1, null, MERGE);
+    </action>
+
+    <scene name="scene1">
+        <view hlookat="{$x}" vlookat="{$y}" fov="80" fisheye="0" fovmin="60" fovmax="120" />
+        <image type="CUBE">
+            <left url="{:CC('web_root')}{$viewrow['left']}" />
+            <front url="{:CC('web_root')}{$viewrow['front']}" />
+            <right url="{:CC('web_root')}{$viewrow['right']}" />
+            <back url="{:CC('web_root')}{$viewrow['back']}" />
+            <up url="{:CC('web_root')}{$viewrow['up']}" />
+            <down url="{:CC('web_root')}{$viewrow['down']}" />
+        </image>
+        <layer name="infotext" url="__PUBLIC__/pano/plugins/textfield.swf" enabled="false" border="false" background="false"
+		align="top" x="0" y="10" width="90%" autoheight="true"
+		css="text-align:center; color:#FF0000; font-family:微软雅黑; font-weight:bold; font-size:14px;"
+		html="右键可以更改【热点定位中心点】"
+		/>
+        <if condition="$spotrow['type'] eq 'spot'">
+            <hotspot name="introimage" alpha="1" ath="{$x}" scale="{$scale}" atv="{$y}" url="{:CC('web_root')}{$spotrow['file']}" ondown="draghotspot();" keep="true" align="{$edge}" edge="{$edge}"/>
+            <else/>
+            <hotspot name="introimage" alpha="1" ath="{$x}" scale="{$scale}" atv="{$y}" url="{:CC('web_root')}{$spotrow['file']}"
+            ondown="draghotspot();" keep="true" align="{$edge}" edge="{$edge}" crop="0|0|{$spotrow['width']}|{$spotrow['height']}"
+            framewidth="{$spotrow['width']}" frameheight="{$spotrow['height']}" frame="0" lastframe="{$spotrow['len'] - 1}"
+            onloaded="hotspot_animate({$spotrow['speed']}/1000);"
+            />
+        </if>
+        <plugin name="huagan" url="__PUBLIC__/member/images/pano/huagan.png" keep="true" zorder="8" align="right" edge="center" width="36" height="205" x="30" y="0" handcursor="false" alpha="1" />
+        <plugin name="dou" url="__PUBLIC__/member/images/pano/huanggandou.png" keep="true" zorder="2" align="center" width="19" height="19" parent="huagan"  x="0" y="0" enabled="true" capture="true" visible="true" onup="stopluopanslider();" ondown="startluopanslider()"/>
+        <plugin name="back" url="__PUBLIC__/member/images/pano/ok.png" keep="true" zorder="8" align="rightbottom" edge="center" x="35" y="35" handcursor="true" onclick="backdata()" alpha="1" />
+        <contextmenu>
+            <item name="theinfo" caption="选择定位中心点" />
+            <item name="thelefttop" caption="左上" onclick="set(hotspot[introimage].align,lefttop);set(hotspot[introimage].edge,lefttop);" separator="true"/>
+            <item name="theleft" caption="左" onclick="set(hotspot[introimage].align,left);set(hotspot[introimage].edge,left);"/>
+            <item name="theleftbottom" caption="左下" onclick="set(hotspot[introimage].align,leftbottom);set(hotspot[introimage].edge,leftbottom);"/>
+            <item name="thetop" caption="上" onclick="set(hotspot[introimage].align,top);set(hotspot[introimage].edge,top);"/>
+            <item name="thecenter" caption="中" onclick="set(hotspot[introimage].align,center);set(hotspot[introimage].edge,center);"/>
+            <item name="thebottom" caption="下" onclick="set(hotspot[introimage].align,bottom);set(hotspot[introimage].edge,bottom);"/>
+            <item name="therighttop" caption="右上" onclick="set(hotspot[introimage].align,righttop);set(hotspot[introimage].edge,righttop);"/>
+            <item name="theright" caption="右" onclick="set(hotspot[introimage].align,right);set(hotspot[introimage].edge,right);"/>
+            <item name="therightbottom" caption="右下" onclick="set(hotspot[introimage].align,rightbottom);set(hotspot[introimage].edge,rightbottom);"/>
+        </contextmenu>
+        <action name="hotspot_animate">
+            inc(frame,1,get(lastframe),0);
+            mul(ypos,frame,frameheight);
+            txtadd(crop,'0|',get(ypos),'|',get(framewidth),'|',get(frameheight));
+            delayedcall(%1, if(loaded, hotspot_animate(%1) ) );
+        </action>
+    </scene>
+
+
+
+    <action name="backdata">
+        js(parent.backspot(get(hotspot[introimage].ath),get(hotspot[introimage].atv),get(hotspot[introimage].scale),get(hotspot[introimage].edge))));
+    </action>
+
+    <action name="startluopanslider">
+        set(plugin[dou].backup_align, get(plugin[dou].align));
+        set(plugin[dou].backup_edge,  get(plugin[dou].edge));
+        plugin[dou].changeorigin(center,center);
+        sub(mouse_y_offset, plugin[dou].y, mouse.y);
+        set(image_dragging,true);
+        luopanslider();
+    </action>
+    <action name="luopanslider">
+        if(image_dragging,
+        add(ypos, mouse.y, mouse_y_offset);
+        if(ypos LT -80, set(ypos,-80));
+        if(ypos GT 80, set(ypos,80));
+        copy(plugin[dou].y, ypos);
+        setblend(get(val));
+        add(ypos , ypos , 80);
+        div(ypos, ypos , -1);
+        add(ypos , ypos , 160);
+        div(valy, ypos , 80);
+        set(hotspot[introimage].scale , get(valy));
+        delayedcall(0.01, luopanslider() );
+        ,
+        plugin[dou].changeorigin(get(plugin[dou].backup_align), get(plugin[dou].backup_edge));
+        );
+    </action>
+
+    <action name="stopluopanslider">
+        set(image_dragging, false);
+    </action>
+
+    <action name="draghotspot">
+        if(%1 != dragging,
+        spheretoscreen(ath, atv, hotspotcenterx, hotspotcentery);
+        sub(drag_adjustx, mouse.stagex, hotspotcenterx);
+        sub(drag_adjusty, mouse.stagey, hotspotcentery);
+        draghotspot(dragging);
+        ,
+        if(pressed,
+        sub(dx, mouse.stagex, drag_adjustx);
+        sub(dy, mouse.stagey, drag_adjusty);
+        screentosphere(dx, dy, ath, atv);
+        copy(print_ath, ath);
+        copy(print_atv, atv);
+        roundval(print_ath, 3);
+        roundval(print_atv, 3);
+        delayedcall(0, draghotspot(dragging) );
+        );
+        );
+    </action>
+
+
+</krpano>

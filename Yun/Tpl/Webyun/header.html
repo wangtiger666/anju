@@ -1,0 +1,105 @@
+<php>
+$member_id = cookie('member_id');
+$member_name = cookie('member_name');
+if(!empty($member_id)){
+	$headimg = M("Member")->where("id='$member_id'")->getField("headimg");
+	if(empty($headimg)) $headimg = "/Public/member/images/common/no_img.jpg";
+	$vip = M("Member")->where("id='$member_id'")->getField("vip");
+	if($vip==1){
+		$vip="<span class='LoginUserSelect_itype_EPOywy'>VIP账户</span>";					
+	}
+	else{
+		$vip="<span class='LoginUserSelect_itype_EPOywy'>普通账户</span>";			
+	}
+}
+
+</php>
+<div class="Navbar_navbar_2ctnDy">
+  <div class="Navbar_cell1_2l_MWQ">
+  <div class="Navbar_logo_2S35BO">
+  <a href="/"><img src="__PUBLIC__/webyun/images/long.png"></a>
+  </div>
+  <form class="SearchBar_form_3NADgu Navbar_form_1TENvM" method="get" action="/index.php/Webyun/search/" enctype="multipart/form-data">
+	<input type="text" value="" placeholder="" id="keywords" name="keywords" >
+	<button type="button" >
+	<span class="SVGInline SearchBar_svgsearch_QmX9rz">
+		<svg class="SVGInline-svg SearchBar_svgsearch_QmX9rz-svg" width="15" height="16" viewBox="0 0 15 16" xmlns="http://www.w3.org/2000/svg">
+		<title>Group 3</title>
+		<g fill-rule="evenodd">
+			<rect transform="rotate(47 12.118 12.242)" x="8.618" y="11.242" width="7" height="2" rx="1"></rect>
+			<path d="M6.5 13a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13zm0-2a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9z"></path>
+		</g>
+		</svg>
+	</span>
+	</button>
+	</form>
+	</div>
+	<div class="Navbar_nav_sYfYzJ">
+	{$lanmu}
+	<a href="/member/" class="Button_button_9Gj_L9 Button_default_12cP_n" style="width: 63px; height: 24px; padding-left: 0px; padding-right: 0px;">上 传</a>
+	</div>
+	<if condition="!empty($member_id)">	
+		<div class="TopRightPart_member_2OaJnS">
+			<a href="/index.php?s=/Webyun/openvip" class="TopRightPart_vip_7pRNNz"><img src="__PUBLIC__/webyun/images/vip.png">开通VIP</a>
+			<div class="LoginUserSelect_info_N0N-Xc">
+				<div class="Select_select_3SYiKS"  id="info">
+					<div class="Select_header_coOU8v">
+						<div class="LoginUserSelect_user_2y9ujp">
+							<span><img src="{$headimg}" width="25" height="25" style="border-radius: 50%; vertical-align: middle; background-color: rgb(244, 244, 244);"></span>
+							<em>{$member_name}</em>
+						</div>
+					</div>
+					<div class="Select_menu_tkm095" style="left: 50%; margin-left: -55px; top: 50px; width: 110px; padding-bottom: 0px; border-radius: 0px;">
+						{$vip}
+						<div class="LoginUserSelect_block_mDfA66">
+							<a href="/index.php?s=/Webyun/authorlist/id/{$member_id}">个人主页</a>
+							<a href="/member/panolist">作品管理</a>
+						</div>
+						<div class="LoginUserSelect_block_mDfA66">
+							<a href="/member">账户管理</a>
+							<a href="/member/login/logout">退出登录</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="Select_select_3SYiKS"  id="infolin">
+				<div class="Select_header_coOU8v">
+					<a href="/index.php?s=/Webyun/articlelist/lanmuid/7" class="LoginMsgSelect_msg_17teY-"><img src="__PUBLIC__/webyun/images/red-d.png" class="LoginMsgSelect_dot_EPCQGq"></a>
+				</div>
+				<div class="Select_menu_tkm095" style="right: 0px; margin-right: -60px; top: 50px; width: 308px; padding-bottom: 0px; padding-top: 0px; border-radius: 0px;">
+					<div>
+						<div class="LoginMsgSelect_head_W3nXmi">
+							<div class="LoginMsgSelect_h1_3EVIw9">系统公告 </div>
+							
+						</div>
+						<div class="LoginMsgSelect_main_2aSa35">
+						
+						
+						
+						<foreach name="gonggao" item="vo">
+							<div class="MsgItem_row_2IWka4">
+								<div class="MsgItem_maxtext_2VT1Gf"><img src="__PUBLIC__/webyun/images/red-d.png" class="MsgItem_dot_foVrj7">【公告】{$vo.title}</div>
+							</div>
+						</foreach>	
+							
+							
+						</div>
+						<div class="LoginMsgSelect_foot_whhInk"><a href="/index.php?s=/Webyun/articlelist/lanmuid/7" class="LoginMsgSelect_btn2_5bUHsX">查看系统公告</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<else/>
+		<?php   
+			$host = $_SERVER['HTTP_HOST']; 
+			$domain = $host;
+			$regrul = "http://".$domain."/member/reg";
+			$loginrul = "http://".$domain."/member/login";
+		?>
+		<div class="TopRightPart_member_2OaJnS">
+			<a href="" class="TopRightPart_vip_7pRNNz"><img src="__PUBLIC__/webyun/images/vip.png">开通VIP</a>
+			<a href="<?php  echo $regrul;?>" class="TopRightPart_link2_O4Xz5P">注册</a>
+			<a href="<?php  echo $loginrul;?>" class="TopRightPart_link2_O4Xz5P">登录</a>
+		</div>
+		</if>	
+</div>

@@ -1,0 +1,9 @@
+﻿
+>>管理员设置
+>admin_info>系统参数管理
+>admin_main>管理员帐号管理
+>admin_group>用户组权限管理
+>admin_database>数据库全部操作
+>admin_database_in>数据库备份
+>admin_database_out>数据库还原
+>admin_filemaster>在线文件管理

@@ -1,0 +1,143 @@
+<include file="Header" />
+<div id="float_nav"></div>
+<!--float_nav-->
+<link rel="stylesheet" href="__PUBLIC__/webstyle/css/zx_index.css">
+<script type="text/javascript" src="__PUBLIC__/webstyle/js/advert1.js"></script>
+<div class="newsMain">
+  <div class="newsTop">
+       <foreach name="banner" item="vo">
+        <img src="{$vo.thumb}" alt="{$vo.ad_name}"  width="1920" height="250" />
+      </foreach>
+    <div class="newsTopTxt">
+      <h3>{$info.title}</h3>
+      <div class="num"><span class="timer" data-to="{$count}" data-speed="800"></span></div>
+    </div>
+    <!--newsTopTxt--></div>
+  <!--newsTop-->
+  <div class="subNav">
+    <p> <a href="index.php?s=/Website/wzzx" >资讯首页</a>
+     <foreach name="lanmu" item="vo">
+      <span>/</span>
+      <a href="index.php?s=/Website/wzzxlist/lanmuid/{$vo.id}"  <if condition="$lanmuid == $vo.id "> class="curr"  </if> >{$vo.name}</a>
+    </foreach></p>
+  </div>
+  <!--subNav-->
+  <div class="recommendedReadBg marginB0">
+    <div class="currentLocation">
+      <p><a href="index.php?s=/Website/wzzx">全景资讯</a>&nbsp;&gt;&nbsp; <strong>{$info.title}</strong></p>
+    </div>
+    <!--currentLocation--></div>
+  <!--recommendedReadBg-->
+  <div class="newsListBox">
+    <div class="newsListLeft">
+      <div class="newsContTitle">
+        <h2>{$info.title}</h2>
+      </div>
+      <!--newsContTitle-->
+      <div class="sourceCont"><span><?php echo date("Y-m-d H:i",$info['updatetime']); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分享新闻到</span>
+        <div class="shareBd"></div>
+        <div class="clearfloat"></div>
+      </div>
+
+      <div class="newsSummary">
+        <p>{$info.description}</p>
+      </div>
+   
+      <div class="newsContent" style="min-height: 600px;">
+         <?php  echo html_entity_decode($info['content']); ?>
+      </div>
+      <!--newsContent-->
+      <div class="readKeyWord">
+        <p>阅读关键词：{$keywords}</p>
+      </div>
+      <!--readKeyWord-->
+      <div class="shareBdTwo"><span>分享新闻到</span>
+        <div class="shareBd"></div>
+      </div>
+      <!--shareBdTwo-->
+      <div class="readLeft">
+        <div class="readLeftList">
+          <ul>
+            <foreach name="left_article" item="vo">
+            <li><a href="{$vo.ariurl}" target="_blank" class="img"><img src="{$vo.thumb}" alt="{$vo.title}" /></a>
+              <p><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></p>
+            </li>
+          </foreach>
+
+          </ul>
+        </div>
+        </div>
+     
+      <div class="readRight">
+        <div class="relatedReading">
+          <h3>推荐阅读</h3>
+          <ul>
+          <foreach name="tuijian_article" item="vo">
+            <li><a href="{$vo.ariurl}">{$vo.title}</a></li>
+          </foreach>
+          </ul>
+        </div>
+
+        <div class="relatedReading paddingB0">
+          <h3>相关阅读</h3>
+          <ul>
+           <foreach name="xiangguan_article" item="vo">
+            <li><a href="{$vo.ariurl}">{$vo.title}</li>
+          </foreach>
+          </ul>
+        </div>
+       </div>
+
+      <div class="clearfloat"></div>
+    </div>
+  
+    <div class="newsListight">
+      <!--labelHot-->
+      <div class="labelHot" style="margin-top:0px;">
+        <div class="labelHotTitle"><i></i>
+          <h3>热点阅读</h3>
+        </div>
+        <!--labelHotTitle-->
+        <div class="labelHotCont">
+          <p>
+             <foreach name="redian_article" item="vo">
+              <a href="{$vo.ariurl}" target="_blank">{$vo.title}</a>
+            </foreach>
+          </p>
+        </div>
+        <!--labelHotCont--></div>
+      <!--labelHot-->
+        <div class="banner04">
+         <foreach name="ad" item="vo">
+           <a href="{$vo.outlink}" target="_blank">
+            <img src="{$vo.thumb}" width="307px" height="209px">
+           </a>
+           </foreach>
+       </div>
+      <!--banner04-->
+      <div class="recommendedPano">
+        <div class="labelHotTitle"><i></i>
+          <h3>全景推荐</h3>
+        </div>
+        <!--labelHotTitle-->
+        <div class="recommendedPanoList">
+          <ul>
+            
+          <foreach name="zxpano" item="vo">
+                <li><a href="{$vo.panopath}" target="_blank"><img src="{$vo.panothumb}" alt="{$vo.title}" />
+              <p>{$vo.title}</p>
+              </a></li>
+          </foreach>
+          </ul>
+        </div>
+        <!--recommendedPanoList--></div>
+      <!--recommendedPano--></div>
+    <!--newsListight-->
+    <div class="clearfloat"></div>
+  </div>
+  <!--newsBox--></div>
+<!--newsMain-->
+<script src="__PUBLIC__/webstyle/js/zx_main.js"></script>
+
+
+<include file="Footer" />

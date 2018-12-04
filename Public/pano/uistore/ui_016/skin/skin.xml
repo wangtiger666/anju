@@ -1,0 +1,61 @@
+<krpano>
+
+     <include url="ui_skin.xml" />
+     <include url="ui_action.xml" />
+	<include url="showtext.xml" />
+    <include url="plugin.xml" />	
+	
+	<skin_settings  thumbs_opened="false"	               				   
+				    loading="loading..."
+				    gyro="true"
+                    gyro_enabled="false"			   
+	               />
+				   		   
+	
+	<events name="skin_events" keep="true"
+	        onxmlcomplete="set(events[skin_events].onxmlcomplete,null); skin_startup();skin_showloading();"
+	        onnewpano="skin_showloading(); skin_update_scene_infos();skin_deeplinking_update_url();"
+	        onremovepano="skin_showloading();"
+	        onloadcomplete="set(layer[skin_loadingtext].visible, false);"
+			onidle="skin_deeplinking_update_url();"
+	        onresize="skin_onresize();"			
+			onenterfullscreen.fullscreensupport="set(layer[skin_btn_fs].crop, '126|0|63|63');"
+	        onexitfullscreen.fullscreensupport="set(layer[skin_btn_fs].crop, '63|0|63|63');"
+			onmousewheel="image_onmousewheel();"
+			onclick="skin_showthumbs(false);"
+	        />
+
+			
+    <action name="skin_startup">
+		
+		if(skin_settings.thumbs_opened, 
+		   set(layer[skin_thumbs].state,'opened'); 
+		   set(layer[skin_thumbs_container].visible,true); 
+		);
+        
+		if(skin_settings.littleplanetintro AND (device.webgl OR device.flash),
+			skin_setup_littleplanetintro();
+		  );
+		
+		if(skin_settings.gyro AND !device.desktop AND device.html5,
+			copy(plugin[skin_gyro].url, plugin[skin_gyro].html5_url);			
+	    );
+		
+		if(skin_settings.opennews , danmurun1(); );
+		
+		set(scene[get(xml.scene)].password,true); 
+		 
+		skin_addthumbs();
+		skin_onresize();
+		skin_updatescroll();
+		
+		<!-- 密码插件  --> 
+		set(scene[get(xml.scene)].password,true);
+	</action>    
+ 
+ 
+
+
+
+	
+</krpano>

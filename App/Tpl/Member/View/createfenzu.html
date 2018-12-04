@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+		<script type="text/javascript">
+		$(document).ready(function(){
+			$("#postForm").submit(function(){
+				if($("#name").val()==""){
+					alert("请填写分组名称");
+					return false;
+				}
+			});
+		});
+		</script>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+        
+                            <div class="action_main" style="min-height: 390px;">
+                                <div class="action_title">全景分组 - 创建新分组</div>
+                                <form name="form1" id="postForm" action="" enctype="multipart/form-data" method="post">
+                                    <input type="hidden" name="dopost" value="save" />
+                                    <input type="hidden" name="pano_id" value="{$pano_id}" />
+
+                                    <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">                                       
+										
+										<tr class="tr_white" height="40">
+                                            <td align="right" width="120"><b>分组名称：</b></td>
+                                            <td align="left">
+                                                <input type="text" id="name" name="name" class="inputcube cs"/>
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="120"></td>
+                                            <td align="left">
+                                                <input type="submit" class="blackbutton" value="提 交" />
+                                            </td>
+                                        </tr>
+										<tr class="tr_white" height="40">
+                                            <td align="right" width="120"></td>
+                                            <td align="left"><a class="c_tx" href="{:U('view/fenzulist',array('pano_id'=>$pano_id))}" title="返回分组列表">返回分组列表</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>
+                            </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

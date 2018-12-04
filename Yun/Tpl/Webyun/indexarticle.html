@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="{$web_keywords}">
+  <meta name="description" content="{$web_description}" id="metaDescription">
+  <title>{$web_name}</title>
+<meta name="MSSmartTagsPreventParsing" content="True" />
+<meta http-equiv="MSThemeCompatible" content="Yes" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/style_4_common.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/style_4_forum_index.css" />
+<meta name="renderer" content="webkit">
+<link rel="stylesheet" id="css_widthauto" type="text/css" href="__PUBLIC__/webyun/css/style_4_widthauto.css" />
+<link rel="stylesheet" type="text/css"  href="__PUBLIC__/webyun/css/main.css" />
+<script src="__PUBLIC__/webyun/js/jquery-1.11.1.min.js"></script>
+ <script src="__PUBLIC__/webyun/js/find.js"></script>
+</head>
+
+<body id="nv_forum" class="pg_index" onkeydown="if(event.keyCode==27) return false;">
+<include file="header2" />
+<div id="wp" class="wp" style="margin-top:0px;">
+	<div class="main forums-page clearfix">
+		<div class="container-sm container-banner">
+        <!-- *************** 左侧板块列表页 start **************** -->
+			<div class="section">
+				<div class="foldableBox content " data-node="fold_news">
+					<h4>热门<span class="btn-fold"></span></h4>
+					<div id="newsList" class="section-content">
+                    <!--[diy=hl_diy02]-->
+					<div id="hl_diy02" class="area">
+						<div id="frameWqLwTT" class="cl_frame_bm frame move-span cl frame-1">
+							<div id="frameWqLwTT_left" class="column frame-1-c">
+								<div id="frameWqLwTT_left_temp" class="move-span temp"></div>
+								<div id="portal_block_26" class="cl_block_bm block move-span">
+									<div id="portal_block_26_content" class="dxb_bc">
+										<!--    hot start x2    -->
+                                        <foreach name="hot" item="vo">
+										<div class="content-box">
+											<h2><a href="{$vo.ariurl}" target="_blank" >{$vo.title}</a></h2>
+											<ul class="post-info">
+												<li class="author">{$vo.username}</li>
+												<li class="time">发表于<?php echo date("Y-m-d",$vo['createtime']); ?></li>
+											</ul>
+											<div class="content-picture">
+												<a href="{$vo.ariurl}" target="_blank"><img src="{$vo.thumb}" alt="{$vo.title}"></a>
+											</div>
+											<p>{$vo.description}<span><a href="{$vo.ariurl}" target="_blank" href="">查看全文</a></span></p>
+										</div>
+                                        </foreach>
+										<!--    hot end    -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--[/diy]-->
+					</div>
+				</div>
+
+				<div id="discussBox" class="foldableBox discuss " data-node="fold_discuss">
+					<h4>最新<span class="btn-fold"></span></h4>
+					<!--[diy=hl_diy03]-->
+					<div id="hl_diy03" class="area">
+						<div id="frameItFYoO" class="cl_frame_bm frame move-span cl frame-1">
+							<div id="frameItFYoO_left" class="column frame-1-c">
+								<div id="frameItFYoO_left_temp" class="move-span temp"></div>
+								<div id="portal_block_27" class="cl_block_bm block move-span">
+									<div id="portal_block_27_content" class="dxb_bc">
+										<div class="js-list" id="hiddenresult">                
+											<!--    列表循环 20 start   -->
+                                            <foreach name="new" item="vo">
+											<div class="discuss-box">
+												<div class="portrait">
+													<a href="{$vo.ariurl}"><span><img src="{$vo.headimg}" /></span></a>
+												</div>
+												<div class="discuss-content">
+													<h5>
+													<a href="{$vo.ariurl}" target="_blank">{$vo.title}</a>
+													<if condition="!empty($vo['thumb'])">
+													<span title="图片附件" class="icon icon-img"></span>
+													</if>
+													</h5>
+													<ul class="post-info">
+														<li class="author"><a href="">{$vo.username}</a></li>
+														<li class="time">发表于 	<?php echo date("Y-m-d",$vo['createtime']); ?></li>
+														<li class="review"><span id = "sourceId::{$vo.id}" class = "cy_cmt_count" ></span>
+															<script id="cy_cmt_num" src="http://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cytAtwFtX"></script></span></li>
+														<li class="browse">{$vo.hits}</li>
+													</ul>
+												</div>
+											</div>
+                                            </foreach>
+											<!--    列表循环 20 end   -->                       
+										</div>
+
+										<div class="forum-list-pager js-pager " data-total="3">
+											<div class="pager-wrapper cl">
+												<div class="pg"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--[/diy]-->
+				</div>
+			</div>
+        <!-- *************** 左侧板块列表页 end **************** -->
+
+
+        <!-- *************** 右侧模块 start **************** -->
+			<div class="sidebar">
+				<div class="right-module plate-recommend">
+					<h4>版块</h4>
+					<!--[diy=hl_diy04]-->
+					<div id="hl_diy04" class="area">
+						<div id="frameDzjYI7" class="cl_frame_bm frame move-span cl frame-1">
+							<div id="frameDzjYI7_left" class="column frame-1-c">
+								<div id="frameDzjYI7_left_temp" class="move-span temp"></div>
+								<div id="portal_block_28" class="cl_block_bm block move-span">
+									<div id="portal_block_28_content" class="dxb_bc">
+										<ul class="plate-list clearfix">
+										<foreach name="lanmu" item="vo">
+											<li style="background: url() no-repeat 20px center;background-size: 26px 26px;-webkit-background-size: 26px 26px;"><a href="{$vo.ariurl}" title="{$vo.name}" target="_blank">{$vo.name}</a></li>
+										</foreach>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--[/diy]-->
+				</div>
+				<!-- *************** 官方应用下载 start **************** -->
+				<!--[diy=hl_diy05]-->
+				<div id="hl_diy05" class="area">
+					<div id="framecPPj1s" class="frame move-span cl frame-1">
+						<div id="framecPPj1s_left" class="column frame-1-c">
+							<div id="framecPPj1s_left_temp" class="move-span temp"></div>
+						</div>
+					</div>
+				</div><!--[/diy]-->
+            <!--[diy=hl_diy01]-->
+			<div id="hl_diy01" class="area">
+				<div id="portal_block_33" class="block move-span">
+					<div id="portal_block_33_content" class="dxb_bc">
+						<div class="portal_block_summary">
+						<foreach name="articlead" item="vo">
+							<div class="plates">
+								<a target="_blank" href="{$vo.outlink}"><img alt="" src="{$vo.thumb}"></a>
+							</div>
+						</foreach>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--[/diy]-->
+            <!-- *************** 官方应用下载 end **************** -->
+			</div>
+		<!-- *************** 右侧模块 end **************** -->
+		</div>
+	</div>
+</div>              
+<include file="footer2" />
+</body>
+</html>
+    
+
+
+
+
+
+			

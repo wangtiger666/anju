@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        {:W("Easyui")}
+        {:W("Boluoui")}
+        {:W("Uploader")}
+        <script type="text/javascript">
+            function checksb(){
+                boluo_loadding("正在提交中...");
+                var result = true;
+                if(result == true){
+                    result = AutoCheckSub(".cs");
+                }
+                return result;
+            }
+            $(document).ready(function(){
+                onoroff();
+                $('.dd').tooltip({
+                    position: 'right'
+                });
+               
+            });
+            var loadbar_num = 0;
+            var loadon = 0;
+            
+           
+            
+
+
+            
+            
+
+			
+			$(function(){
+                $("#obj720ringup").uploader("obj","obj720ringback");
+            });
+            function obj720ringback(data){
+                $("#obj720ring").val(data);
+            }
+			$(function(){
+                $("#mtl720ringup").uploader("mtl","mtl720ringback");
+            });
+            function mtl720ringback(data){
+                $("#mtl720ring").val(data);
+            }
+			$(function(){
+                $("#musicup").uploader("audio","musicback");
+            });
+            function musicback(data){
+                $("#musicfile").val(data);
+            }
+        </script>
+        <style>
+            .thumbbox{
+                width: 200px; height: 100px; overflow: hidden; margin-right: 10px; border:1px solid #ccc; box-shadow: 2px 2px 2px #eee;
+                background: url(__PUBLIC__/member/images/pano/quanjingbg.png) no-repeat; float: left; cursor: pointer;
+            }
+            .pano_box{
+                width: 100px; height: 100px; overflow: hidden; margin-right: 10px; border:1px solid #ccc; box-shadow: 2px 2px 2px #eee;
+                background: url(__PUBLIC__/member/images/pano/quanjingbg.png) no-repeat; float: left; cursor: pointer;
+            }
+            .pano_font{
+                width: 102px; height: 20px; overflow: hidden; margin-right: 10px; color: #206A9B;
+                float: left; cursor: default; text-align: center; font: bold 14px/20px "微软雅黑";
+            }
+            .proxy{
+                width: 100px; height: 100px; overflow: hidden; background: #f00;
+            }
+        </style>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">全景项目 - {$panorow['title']}</div>
+                        <div title="关闭" data-url="{:U('main/index')}" data-info="确认返回功能首页" class="close delme"></div>
+                        <div title="返回上级" onclick="LinkTo('{$backurl}');" class="goback"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            {:W("Panomenu",array("pano_id"=>$pano_id,"num"=>2))}
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main">
+                                <div class="action_title"><a href="{:U('index',array('pano_id'=>$pano_id))}">720环物</a> - 修改</div>
+                                <form name="form1" action="" onsubmit="return checksb();" enctype="multipart/form-data" method="post">
+                                    <input type="hidden" name="dopost" value="save" />
+                                    <input type="hidden" name="pano_id" value="{$pano_id}" />
+                                    <input type="hidden" name="view_id" value="{$view_id}" />
+                                    <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="120"><b>720环物名称：</b></td>
+                                            <td align="left">
+                                                <input type="text" id="title" name="title" value="{$viewrow['title']}" sbname="720环物名称" class="inputcube cs"/>
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="40">
+                                            <td align="right"><b>开启720环物：</b></td>
+                                            <td>
+                                                <span class="onoff easyui-tooltip dd" title="720环物开关" target="open720ring" value="{$viewrow['open720ring']}"></span>
+                                                <input type="hidden" id="open720ring" name="open720ring" value="{$viewrow['open720ring']}" />
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="120">
+											<b>720环物缩略图：</b><br><b>建议尺寸(500*500)</b>
+											</td>
+                                            <td align="left">
+                                                <div class="thumbbox">
+                                                    <img id="thumb_pic" src="{:CC('web_root')}{$viewrow['thumb']}?{$Think.now}" onload="swichimg2w(this,200);"/>
+                                                </div>
+                                                <input type="hidden" id="thumb" name="thumb" value="#" />
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="20">
+                                            <td align="right" width="120"></td>
+											<td align="left">默认获取 前(第1张) 为缩略图</td>
+                                        </tr>
+                                        {:uploadSend(".thumbbox","#thumb","#thumb_pic")}
+										
+                                       
+                                       
+										<tr class="tr_white" height="40">
+                                            <td align="right"><b>720环物obj文件：</b><br><b>3Dmax直接导出</b></td>
+                                            <td>
+                                                <input type="text" id="obj720ring" name="obj720ring" value="{$viewrow['obj720ring']}" class="longinputcube"/>
+                                                <input type="button" class="btn1" id="obj720ringup" value="点击上传" />
+                                            </td>
+                                        </tr>
+										<tr class="tr_white" height="40">
+                                            <td align="right"><b>720环物mtl文件：</b><br><b>3Dmax直接导出</b></td>
+                                            <td>
+                                                <input type="text" id="mtl720ring" name="mtl720ring" value="{$viewrow['mtl720ring']}" class="longinputcube"/>
+                                                <input type="button" class="btn1" id="mtl720ringup" value="点击上传" />
+                                            </td>
+                                        </tr>
+										
+										<tr class="tr_white" height="40">
+                                            <td align="right" width="120">
+											<b>720环物贴图文件：</b><br><b>导出jpg格式</b>
+											</td>
+                                            <td align="left">
+                                                <div class="thumb720ringbox">
+                                                    <img id="thumb720ring_pic" src="{:CC('web_root')}{$viewrow['thumb720ring']}?{$Think.now}" onload="swichimg2w(this,200);"/>
+                                                </div>
+                                                <input type="hidden" id="thumb720ring" name="thumb720ring" value="#" />
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="20">
+                                            <td align="right" width="120"></td>
+											<td align="left">请上传3Dmax直接导出的贴图文件.jpg格式</td>
+                                        </tr>
+                                        {:uploadSend(".thumb720ringbox","#thumb720ring","#thumb720ring_pic")}
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="120">
+											<b>720环物背景：</b><br><b>jpg格式</b>
+											</td>
+                                            <td align="left">
+                                                <div class="bg720ringbox">
+                                                    <img id="bg720ring_pic" src="{:CC('web_root')}{$viewrow['bg720ring']}?{$Think.now}" onload="swichimg2w(this,200);"/>
+                                                </div>
+                                                <input type="hidden" id="bg720ring" name="bg720ring" value="#" />
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="20">
+                                            <td align="right" width="120"></td>
+											<td align="left">请上传3Dmax直接导出的贴图文件.jpg格式</td>
+                                        </tr>
+                                        {:uploadSend(".bg720ringbox","#bg720ring","#bg720ring_pic")}
+
+                                        <tr class="tr_white" height="40">
+                                            <td align="right"><b>开启场景音效：</b></td>
+                                            <td>
+                                                <span class="onoff easyui-tooltip dd" title="场景音效开关" target="openmusic" value="{$viewrow['openmusic']}"></span>
+                                                <input type="hidden" id="openmusic" name="openmusic" value="{$viewrow['openmusic']}" />
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="40">
+                                            <td align="right"><b>背景音乐MP3文件：</b></td>
+                                            <td>
+                                                <input type="text" id="musicfile" name="musicfile" value="{$viewrow['musicfile']}" class="longinputcube"/>
+                                                <input type="button" class="btn1" id="musicup" value="点击上传" />
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr class="tr_white" height="20">
+                                            <td colspan="2"></td>
+                                        </tr>
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="120"></td>
+                                            <td align="left">
+                                                <input type="submit" class="blackbutton" value="提交" />
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="10">
+                                            <td colspan="2"></td>
+                                        </tr>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

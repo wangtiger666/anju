@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        {:W("Easyui")}
+        {:W("Uploader")}
+        <style type="text/css">
+            .nonumtext{
+                width: auto; min-width: 24px; height: 20px; overflow: hidden; background: #ccc; text-align: center; margin-top: 1px; cursor: pointer;
+                font: 12px/20px "微软雅黑"; color: #fff; position: absolute; border:1px solid #ccc; border-radius:4px; padding: 0 3px;
+            }
+            .numtext{
+                width: auto; min-width: 24px; height: 20px; overflow: hidden; background: #bbb; text-align: center; margin-top: 1px; cursor: pointer;
+                font: 12px/20px "微软雅黑"; color: #fff; position: absolute; border:1px solid #aaa; border-radius:4px; padding: 0 3px;
+            }
+        </style>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">全景项目 - {$panorow['title']}</div>
+                        <div title="关闭" onclick="DoNote('确认返回功能首页？','{:U('main/index')}');" class="close"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            {:W("Panomenu",array("pano_id"=>$pano_id,"num"=>4))}
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main" style="background:  #f3f3f3;">
+                                <div class="pano_table">
+                                
+                                <!-------------------启动加载模块  2018.6.5------------------------------------->   
+                                <div class="pano_cube">
+                                        <div class="pano_up">
+                                            <div class="pic"><img src="__PUBLIC__/member/images/pano/loading.gif" onload="photocenterout(this,200,100);" /></div>
+                                            <div class="ufo">
+                                                <a href="{:U('loading/index',array('pano_id'=>$pano_id))}" class="ufo_previewbox">
+                                                    <div class="ufo_longtxt">设置模块</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="pano_down">
+                                            <div class="midonlytext">启动加载模块</div>
+                                        </div>
+                                    </div>
+                                <!-------------------启动加载模块  2018.6.5------------------------------------->
+								
+                                <!-------------------热点网页模块  2017.6.12------------------------------------->   
+                                <div class="pano_cube">
+                                        <div class="pano_up">
+                                            <div class="pic"><img src="__PUBLIC__/member/images/pano/rewww.jpg" onload="photocenterout(this,200,100);" /></div>
+                                            <div class="ufo">
+                                                <a href="{:U('rewww/index',array('pano_id'=>$pano_id))}" class="ufo_previewbox">
+                                                    <div class="ufo_longtxt">设置模块</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="pano_down">
+                                            <div class="midonlytext">热点网页模块</div>
+                                        </div>
+                                    </div>
+                                <!-------------------热点网页模块   2017.6.12------------------------------------->
+                                
+                             <!-------------------热点音乐模块------------------------------------->   
+                                <div class="pano_cube">
+                                        <div class="pano_up">
+                                            <div class="pic"><img src="__PUBLIC__/member/images/pano/musicrd.jpg" onload="photocenterout(this,200,100);" /></div>
+                                            <div class="ufo">
+                                                <a href="{:U('Musicpoint/index',array('pano_id'=>$pano_id))}" class="ufo_previewbox">
+                                                    <div class="ufo_longtxt">设置模块</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="pano_down">
+                                            <div class="midonlytext">音乐热点模块</div>
+                                        </div>
+                                    </div>
+                                <!-------------------热点音乐模块------------------------------------->
+                                <!-------------------启动画面模块------------------------------------->
+                                <div class="pano_cube">
+                                        <div class="pano_up">
+                                            <div class="pic"><img src="__PUBLIC__/member/images/pano/qdhm.jpg" onload="photocenterout(this,200,100);" /></div>
+                                            <div class="ufo">
+                                                <a href="{:U('splash/index',array('pano_id'=>$pano_id))}" class="ufo_previewbox">
+                                                    <div class="ufo_longtxt">设置模块</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="pano_down">
+                                            <div class="midonlytext">启动画面模块</div>
+                                        </div>
+                                    </div>
+                                  <!-------------------启动画面模块------------------------------------->   
+
+									<div class="pano_cube">
+                                        <div class="pano_up">
+                                            <div class="pic"><img src="__PUBLIC__/member/images/pano/daohangcaidan.jpg" onload="photocenterout(this,200,100);" /></div>
+                                            <div class="ufo">
+                                                <a href="{:U('daohang/index',array('pano_id'=>$pano_id))}" class="ufo_previewbox">
+                                                    <div class="ufo_longtxt">设置模块</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="pano_down">
+                                            <div class="midonlytext">导航菜单模块</div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="pano_cube">
+                                        <div class="pano_up">
+                                            <div class="pic"><img src="__PUBLIC__/member/images/pano/mapone.png" onload="photocenterout(this,200,100);" /></div>
+                                            <div class="ufo">
+                                                <a href="{:U('toolmap/index',array('pano_id'=>$pano_id))}" class="ufo_previewbox">
+                                                    <div class="ufo_longtxt">设置模块</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="pano_down">
+                                            <eq name="tmap" value="1"><div class="numtext">开</div></eq>
+                                            <eq name="tmap" value="0"><div class="numtext">关</div></eq>
+                                            <div class="midonlytext">单地图模块</div>
+                                        </div>
+                                    </div>
+                                    <div class="pano_cube">
+                                        <div class="pano_up">
+                                            <div class="pic"><img src="__PUBLIC__/member/images/pano/mapduo.png" onload="photocenterout(this,200,100);" /></div>
+                                            <div class="ufo">
+                                                <a href="{:U('toolmaps/index',array('pano_id'=>$pano_id))}" class="ufo_previewbox">
+                                                    <div class="ufo_longtxt">设置模块</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="pano_down">
+                                            <eq name="tmaps" value="1"><div class="numtext">开</div></eq>
+                                            <eq name="tmaps" value="0"><div class="numtext">关</div></eq>
+                                            <div class="midonlytext">多地图模块</div>
+                                        </div>
+                                    </div>
+                                    <div class="pano_cube">
+                                        <div class="pano_up">
+                                            <div class="pic"><img src="__PUBLIC__/member/images/pano/requ.png" onload="photocenterout(this,200,100);" /></div>
+                                            <div class="ufo">
+                                                <a href="{:U('hotpoly/index',array('pano_id'=>$pano_id))}" class="ufo_previewbox">
+                                                    <div class="ufo_longtxt">设置模块</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="pano_down">
+                                            <div class="midonlytext">多边形热区</div>
+                                        </div>
+                                    </div>
+                                    <div class="pano_cube">
+                                        <div class="pano_up">
+                                            <div class="pic"><img src="__PUBLIC__/member/images/pano/videodian.png" onload="photocenterout(this,200,100);" /></div>
+                                            <div class="ufo">
+                                                <a href="{:U('vpoint/index',array('pano_id'=>$pano_id))}" class="ufo_previewbox">
+                                                    <div class="ufo_longtxt">设置模块</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="pano_down">
+                                            <div class="midonlytext">热点弹出视频</div>
+                                        </div>
+                                    </div>
+									<div class="pano_cube">
+                                        <div class="pano_up">
+                                            <div class="pic"><img src="__PUBLIC__/member/images/pano/videoqu.jpg" onload="photocenterout(this,200,100);" /></div>
+                                            <div class="ufo">
+                                                <a href="{:U('polyvideo/index',array('pano_id'=>$pano_id))}" class="ufo_previewbox">
+                                                    <div class="ufo_longtxt">设置模块</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="pano_down">
+                                            <div class="midonlytext">多边形热区弹出视频</div>
+                                        </div>
+                                    </div>
+                                    <div class="pano_cube">
+                                        <div class="pano_up">
+                                            <div class="pic"><img src="__PUBLIC__/member/images/pano/videoqu.jpg" onload="photocenterout(this,200,100);" /></div>
+                                            <div class="ufo">
+                                                <a href="{:U('vspot/index',array('pano_id'=>$pano_id))}" class="ufo_previewbox">
+                                                    <div class="ufo_longtxt">设置模块</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="pano_down">
+                                            <div class="midonlytext">场景中直接播放视频</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="pano_cube">
+                                        <div class="pano_up">
+                                            <div class="pic"><img src="__PUBLIC__/member/images/pano/intro.png" onload="photocenterout(this,200,100);" /></div>
+                                            <div class="ufo">
+                                                <a href="{:U('intro/index',array('pano_id'=>$pano_id))}" class="ufo_previewbox">
+                                                    <div class="ufo_longtxt">设置模块</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="pano_down">
+                                            <div class="midonlytext">初始提示图片</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="pano_cube">
+                                        <div class="pano_up">
+                                            <div class="pic"><img src="__PUBLIC__/member/images/pano/rediantuwen.jpg" onload="photocenterout(this,200,100);" /></div>
+                                            <div class="ufo">
+                                                <a href="{:U('linkspot/index',array('pano_id'=>$pano_id))}" class="ufo_previewbox">
+                                                    <div class="ufo_longtxt">设置模块</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="pano_down">
+                                            <div class="midonlytext">热点图文</div>
+                                        </div>
+                                    </div>
+                                    <div class="pano_cube">
+                                        <div class="pano_up">
+                                            <div class="pic"><img src="__PUBLIC__/member/images/pano/zhushi.jpg" onload="photocenterout(this,200,100);" /></div>
+                                            <div class="ufo">
+                                                <a href="{:U('zhuspot/index',array('pano_id'=>$pano_id))}" class="ufo_previewbox">
+                                                    <div class="ufo_longtxt">设置模块</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="pano_down">
+                                            <div class="midonlytext">热点注释</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="pano_cube">
+                                        <div class="pano_up">
+                                            <div class="pic"><img src="__PUBLIC__/member/images/pano/luopan.png" onload="photocenterout(this,200,100);" /></div>
+                                            <div class="ufo">
+                                                <a href="{:U('luopan/index',array('pano_id'=>$pano_id))}" class="ufo_previewbox">
+                                                    <div class="ufo_longtxt">设置模块</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="pano_down">
+                                            <div class="midonlytext">罗盘图</div>
+                                        </div>
+                                    </div> -->
+                                    
+									<div class="pano_cube">
+                                        <div class="pano_up">
+                                            <div class="pic"><img src="__PUBLIC__/member/images/pano/zhuchiren.jpg" onload="photocenterout(this,200,100);" /></div>
+                                            <div class="ufo">
+                                                <a href="{:U('zhuchiren/index',array('pano_id'=>$pano_id))}" class="ufo_previewbox">
+                                                    <div class="ufo_longtxt">设置模块</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="pano_down">
+                                            <div class="midonlytext">视频主持人</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

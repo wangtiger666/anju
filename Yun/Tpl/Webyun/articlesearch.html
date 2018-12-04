@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="{$web_keywords}">
+<meta name="description" content="{$web_description}" id="metaDescription">
+<title>{$web_name}</title>
+
+<meta name="MSSmartTagsPreventParsing" content="True" />
+<meta http-equiv="MSThemeCompatible" content="Yes" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/style_4_common.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/style_4_forum_forumdisplay.css" />
+<meta name="renderer" content="webkit">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/style_4_widthauto.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/main.css" />
+<script src="__PUBLIC__/webyun/js/jquery-1.11.1.min.js"></script>
+ <script src="__PUBLIC__/webyun/js/find.js"></script>
+</head>
+
+<body id="nv_forum" class="pg_forumdisplay" onkeydown="if(event.keyCode==27) return false;">
+<include file="header2" />
+<div id="wp" class="wp" style="margin-top:0px;">
+	<div id="main" class="main forums-page clearfix" data-page="forumdisplay">
+		<div class="container-sm">
+			<!-- *************** 左侧帖子列表 start **************** -->
+			<div class="section">
+				<div class="content">
+				<!-- *************** 左侧帖子列表页 start **************** -->
+					<div class="forum-list-panel" style="height:58px;">
+						<div class="forum-list-panel-top">
+							<!-- *************** 帖子分类 start **************** -->
+							<ul class="forum-list-panel-category"><p style="font-size:15px;">搜索"<strong style="color:red;">{$keywords}</strong>" 找到<span style="color:red;">{$count}</span>个结果</p></ul>
+						</div>
+						
+					</div>
+				<div id="threadlist">
+					<div>
+							<table summary="forum_2" cellspacing="0" cellpadding="0" id="threadlisttableid">
+							<!-- *************** 帖子列表 start **************** -->
+                            <tbody id="separatorline" >
+								<tr>
+									<td >
+										<div class="hl_forum-list-content">
+											<ul class="js-threadList">
+												<li class="operate-moderator"><a title="搜索结果" class="forumrefresh">搜索结果</a></li>
+											</ul>
+										</div>
+									</td>
+								</tr>
+                            </tbody>
+							<!------- 列表循环 start x20 ----------->
+							<foreach name="arclist" item="vo">
+							<tbody id="normalthread_4369">
+								<tr>
+									<td>
+										<div class="forum-list-content">
+											<ul class="js-threadList">
+												<li >
+													<a class="forum-list-item-avatar" target="_blank" href=""><img src="{$vo.headimg}" /></a>
+													<dl class="forum-list-item-summary">
+														<dt>
+															<h3>
+																{$vo.lanmucha}
+																<a href="/index.php?s=/Webyun/content/id/{$vo.id}" title="{$vo.title}">{$vo.title}</a>
+																<if condition="!empty($vo['thumb'])">
+																<span title="图片附件" class="icon icon-img"></span>
+																</if>
+															</h3>
+														</dt>
+														<dd><a href="" target="_blank">{$vo.author}</a><span>发表于 <?php echo date("Y-m-d",$vo['createtime']); ?></span></dd>
+													</dl>
+													<div class="forum-list-item-info">
+														<span><i class="icon-forum-view"></i>{$vo.hits}</span>
+														<span><i class="icon-forum-comment"></i>
+															<span id = "sourceId::{$vo.id}" class = "cy_cmt_count" ></span>
+															<script id="cy_cmt_num" src="http://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cytAtwFtX"></script></span>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</td>
+								</tr>
+                            </tbody>
+							</foreach>
+							<!------- 列表循环 end x20 ----------->
+                            <!-- *************** 当有帖子时 end **************** -->
+							<!-- *************** 帖子列表 end **************** -->
+							</table>
+
+					</div>
+				</div>
+				<div  class="forum-list-pager clearfix">
+					<div class="pager-wrapper clearfix">
+						<div class="pg">{$page}</div>
+					</div>
+				</div>
+			<!-- *************** 左侧帖子列表页 start **************** -->
+			</div>
+		</div>
+		<!-- *************** 左侧帖子列表 end **************** -->
+		<!-- *************** 右侧模块 start **************** -->
+		<div class="sidebar">
+			<!-- *************** 用户信息模块 start **************** -->
+			<div class="profile">
+				<div class="profile-card">
+					<span class="avatar"><img src="__PUBLIC__/webyun/images/default_forum.png" alt=""/></span>
+					<p><span class="name">搜索页</span></p>
+					<p class="url"><a></a></p>
+				</div>
+				
+			</div>
+			<!-- *************** 用户信息模块 end **************** -->
+			<!-- *************** 论坛公告 start **************** -->
+			<!--
+			<div class="right-module">
+				<h4>论坛公告</h4>
+				<div class="right-module-notice">
+					<div>本版本规则在这里显示</div>
+				</div>
+			</div>
+			-->
+			<!-- *************** 版块推荐 start **************** -->
+			<!-- *************** 版块推荐 end **************** -->
+			<!-- *************** 论坛公告 end **************** -->
+			<!-- *************** 广告位 start **************** -->
+			<!--[diy=hl_diy01]-->
+			<div id="hl_diy01" class="area">
+				<div id="portal_block_33" class="block move-span">
+					<div id="portal_block_33_content" class="dxb_bc">
+						<div class="portal_block_summary">
+						<foreach name="articlead" item="vo">
+							<div class="plates">
+								<a target="_blank" href="{$vo.outlink}"><img alt="" src="{$vo.thumb}"></a>
+							</div>
+						</foreach>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--[/diy]-->
+			<!-- *************** 广告位 end **************** -->
+
+		</div>
+		<!-- *************** 右侧模块 end **************** -->
+	</div>
+</div>
+</div>                            
+<include file="footer2" />
+</body>
+</html>

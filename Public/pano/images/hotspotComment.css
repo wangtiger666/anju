@@ -1,0 +1,118 @@
+#optionForm{
+	position: fixed;
+	bottom: 50%;
+	left: 50%;
+	margin-left: -170px;
+	margin-top: -70px;
+	width: 300px;
+	min-height: 100px;
+	background-color: rgba(0,0,0,.5);
+	padding: 20px;
+	z-index: 10000;
+}
+#optionForm_m{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: rgba(0,0,0,.7);
+	padding: 20px;
+	z-index: 10000;
+}
+.button{
+	width: 100%;
+	height: 34px;
+	text-align: center;
+	line-height: 34px;
+	border: 1px solid #fff;
+	display: inline-block;
+	cursor: pointer;
+	transition: all 0.1s;
+}
+.button:hover{
+	background: #00a3d8;
+	border-color: #00a3d8;
+	color: #fff;
+	transition: all 0.1s;
+}
+#bnB,#bnConfirm,#bnCancel{
+	margin-top: 6px;
+}
+#alertFormText,#optionFormText{
+	text-align: center;
+	margin: 0;
+	margin-bottom: 10px;
+	line-height: 24px;
+	word-break: break-all;
+}
+#alertForm{
+	position: fixed;
+	bottom: 50%;
+	left: 50%;
+	margin-left: -170px;
+	margin-top: -50px;
+	width: 300px;
+	min-height: 70px;
+	background-color: rgba(0,0,0,.5);
+	padding: 20px;
+	z-index: 10000;
+}
+
+#alertForm_m{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: rgba(0,0,0,.7);
+	padding: 20px;
+	z-index: 10000;
+}
+#addGui{
+	position: fixed;
+	bottom: 100px;
+	left: 50%;
+	margin-left: -170px;
+	width: 300px;
+	background-color: rgba(0,0,0,.5);
+	padding: 20px;
+	z-index: 10000;
+}
+#addGui_m{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: rgba(0,0,0,.7);
+	padding: 20px;
+	z-index: 10000;
+}
+#inputText{
+	width: 100%;
+	height: 26px;
+	line-height: 26px;
+	outline: 0;
+	border: none;
+	padding: 5px 10px;
+	-webkit-appearance: none;
+	border-radius: 0;
+}
+#addGui .button,#addGui_m .button{
+	width: 47%;
+}
+#codeImg{
+	margin-bottom: 4px;
+	width: 160px;
+	height: 40px;
+	float: left;
+	cursor: pointer;
+}
+#inputCode{
+	height: 30px;
+	line-height: 30px;
+	outline: 0;
+	border: none;
+	padding: 5px 10px;
+	margin-left: 4px;
+	-webkit-appearance: none;
+	border-radius: 0;
+}

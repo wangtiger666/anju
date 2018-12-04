@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano>
+    <plugin name="soundinterface"
+	        url="__PUBLIC__/pano/plugins/soundinterface.swf"
+	        alturl="__PUBLIC__/pano/plugins/soundinterface.js"
+	        rootpath="" preload="true" keep="true"
+                         loops="1"
+	        />
+    <action name="stopme">
+        js(stopplay(););
+    </action>
+</krpano>

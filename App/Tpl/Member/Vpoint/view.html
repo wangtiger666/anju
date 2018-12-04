@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        {:W("Easyui")}
+        {:W("Uploader")}
+        <script type="text/javascript">
+            function checksb(){
+                var result = true;
+                if(result == true){
+                    result = AutoCheckSub(".cs");
+                }
+                return result;
+            }
+            $(document).ready(function(){
+                onoroff();
+                $('.dd').tooltip({
+                    position: 'right'
+                });
+                $(".move_cube").mouseover(function(){
+                    var temp = $(this).children(".movebox");
+                    var w = temp.data("w");
+                    var h = temp.data("h");
+                    var len = temp.data("len");
+                    var n = temp.data("n");
+                    var sp = temp.data("speed");
+                    $("body").stopTime("move");
+                    $("body").everyTime(sp+"ms","move",function(){
+                        n = temp.data("n");
+                        n++;
+                        if(n==len){
+                            n=0;
+                        }
+                        mv_h = -n*h;
+                        temp.children("img").css("marginTop",mv_h+"px");
+                        temp.data("n",n);
+                    });
+                });
+                $(".move_cube").mouseout(function(){
+                    $("body").stopTime("move");
+                });
+            });
+        </script>
+        <style>
+            .action_left{
+                width: 140px; min-height: 200px; overflow: hidden; float: left;
+            }
+            .action_myphoto{
+                width: 120px; height: auto; overflow: hidden; border:1px solid #dbdbdb;
+                box-shadow:2px 2px 4px #e2e2e2; margin-bottom: 12px;
+            }
+            .action_mytext{
+                width: auto; height: 22px; overflow: hidden; text-align: left; font: 12px/22px "微软雅黑"; color: #333; cursor: default;
+            }
+            .action_right{
+                width: 660px; min-height: 200px; overflow: hidden; float: left;
+            }
+            .pano_table{
+                background: #f3f3f3;
+            }
+            .roambox{
+                width: auto; height: 70px; overflow: hidden; border:1px solid #dbdbdb; background: #fff; margin-bottom: 6px; border-radius:4px;
+            }
+            .roambox:hover{
+                border-color: #aac5e7;
+            }
+
+            .roambox_left{
+                width: 496px; height: 60px; overflow: hidden; float: left; margin-left: 5px; margin-top: 5px;
+            }
+            .roambox_right{
+                width: 72px; height: 60px; overflow: hidden; margin: 4px;
+                float: right;
+            }
+            .spot_box{
+                width: 128px; height: 58px; overflow: hidden; border:1px solid #e2e2e2; float: left; background: #f3f3f3;
+                font: 12px/28px "微软雅黑"; color: #666;
+            }
+            .target_box{
+                width: 230px; height: 58px; overflow: hidden; border:1px solid #e2e2e2; float: right; background: #f3f3f3;
+                font: 12px/28px "微软雅黑"; color: #666;
+            }
+            .roambox_img{
+                width: 80px; height: 60px; overflow: hidden;
+                float: right; margin-right: 5px;
+            }
+            .topline{
+                width: auto; height: 24px; overflow: hidden; padding: 0 6px; text-align: center;
+                font: bold 12px/24px "微软雅黑"; color: #256786; margin-top: 3px; cursor: default;
+            }
+            .downline{
+                width: auto; height: 24px; overflow: hidden; margin: 0 6px; text-align: center; cursor: default;
+                font: 12px/24px "微软雅黑"; color: #666; background: #fff; border: 1px solid #dbdbdb;
+            }
+            .downline span{
+                margin: 0 5px;
+            }
+            .tartet_road{
+                width: 50px; height: 40px; overflow: hidden; float: left; background: url(__PUBLIC__/member/images/common/tartjian.jpg) no-repeat; margin: 10px 5px;
+            }
+            .spot_img{
+                width: 58px; height: 58px; overflow: hidden; border:1px solid #e2e2e2; border-radius:3px; background: #f6f6f6; float: left; margin-left: 5px;
+            }
+            .spot_imgbox{
+                width: 50px; height: 50px; overflow: hidden; border:1px solid #e2e2e2; margin: 3px; border-radius:3px; background: url(__PUBLIC__/member/images/common/psbg.png) #fff;
+            }
+            .roambox_html{
+                width: 58px; height: 70px; overflow: hidden; float: left; margin-left: 5px;
+            }
+            .htm_cube{
+                width: 56px; height: 24px; overflow: hidden; border:1px solid #dbdbdb; text-align: center; cursor: default;
+                font: 12px/24px "微软雅黑"; color: #fff; background: #dfdfdf; margin: 6px 0; border-radius:3px;
+            }
+            .htm_cube.me{
+                background: #5FC6DA; border-color: #5FC6DA;
+            }
+            .roamrline{
+                width: auto; height: 24px; overflow: hidden; margin: 4px 0; text-align: center;
+            }
+            .movebox{
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">全景项目 - {$panorow['title']}</div>
+                        <div title="关闭" data-url="{:U('main/index')}" data-info="确认返回功能首页" class="close delme"></div>
+                        <div title="返回上级" onclick="LinkTo('{$backurl}');" class="goback"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            {:W("Panomenu",array("pano_id"=>$pano_id,"num"=>4))}
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main">
+                                <div class="action_nick">
+                                    <span class="hd">导航栏</span>
+                                    <a href="{:U('toolbox/index',array('pano_id'=>$pano_id))}">模块管理</a>
+                                    <a href="{:U('vpoint/index',array('pano_id'=>$pano_id))}">视频热点</a>
+                                    <span class="me">场景 - {$viewrow['title']}</span>
+                                    <span class="bd"></span>
+                                </div>
+                                <div class="action_web">
+                                    <div class="action_left">
+                                        <div class="action_myphoto"><img src="{:CC('web_root')}{$viewrow['thumb']}" onload="swichimg2w(this,120);"/></div>
+                                        <div class="action_mytext"><b>当前场景：</b>{$viewrow['title']}</div>
+                                    </div>
+                                    <div class="action_right">
+                                        <a href="{:U('roam_add',array('view_id'=>$view_id))}" class="button_add">添加视频热点</a>
+                                        <div class="pano_table">
+                                            <volist name="roamrow" id="row">
+                                                <div class="roambox">
+                                                    <div class="roambox_html">
+                                                        <if condition="$row['is_flash'] eq 1"><div class="htm_cube me">FLASH</div><else/><div class="htm_cube">FLASH</div></if>
+                                                        <if condition="$row['is_html5'] eq 1"><div class="htm_cube me">HTML5</div><else/><div class="htm_cube">HTML5</div></if>
+                                                    </div>
+                                                    <div class="roambox_left">
+                                                        <div class="spot_box">
+                                                            <div class="topline">热点名称</div>
+                                                            <div class="downline">{$row.title}</div>
+                                                        </div>
+                                                        <div class="spot_img">
+                                                            <if condition="$row['spot_type'] eq 1">
+                                                                <div class="spot_imgbox">
+                                                                    <img src="{:CC('web_root')}{$row.spotphoto}" onload="photocenterin(this,50,50);" />
+                                                                </div>
+                                                                <elseif  condition="$row['spot_type'] eq 2"/>
+                                                                <if condition="$row['width'] lt 50 and $row['height'] lt 50">
+                                                                    <div class="spot_imgbox move_cube">
+                                                                        <div class="movebox" data-w="{$row.width}" data-h="{$row.height}" data-len="{$row.len}" data-n="0" data-speed="{$row.speed}" style="width: {$row.width}px; height: {$row['height']}px; margin-left: {$row['width']*(-1)/2+25}px; margin-top: {$row['height']*(-1)/2+25}px;"><img src="{:CC('web_root')}{$row.spotphoto}" /></div>
+                                                                    </div>
+                                                                    <else/>
+                                                                    <div class="spot_imgbox move_cube">
+                                                                        <div class="movebox" data-w="{$row['width']/2}" data-h="{$row['height']/2}" data-len="{$row['len']}" data-n="0" data-speed="{$row['speed']}" style="width: {$row['width']/2}px; height: {$row['height']/2}px; margin-left: {$row['width']*(-1)/4+25}px; margin-top: {$row['height']*(-1)/4+25}px;"><img width="{$row['height']/2}" src="{:CC('web_root')}{$row.spotphoto}" /></div>
+                                                                    </div>
+                                                                </if>
+                                                                <elseif  condition="$row['spot_type'] eq 3"/>
+                                                                <div class="spot_imgbox">
+                                                                    <img src="{:CC('web_root')}{$row.spoturl}" onload="photocenterin(this,50,50);" />
+                                                                </div>
+                                                            </if>
+                                                        </div>
+                                                        <div class="tartet_road"></div>
+                                                        <div class="target_box">
+                                                            <div class="topline">视频支持</div>
+                                                            <div class="downline">
+                                                                <neq name="row.file" value=""><span>FLASH</span></neq>
+                                                                <neq name="row.open_apple" value="0"><span>HTML5</span></neq>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="roambox_right">
+                                                        <div class="roamrline">
+                                                            <a href="{:U('roam_edit',array('roam_id'=>$row['id']))}" class="btn11">设置</a>
+                                                        </div>
+                                                        <div class="roamrline">
+                                                            <a href="{:U('roam_del',array('roam_id'=>$row['id']))}" class="btn11">删除</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </volist>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

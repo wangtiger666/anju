@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="keywords" content="{$web_keywords}">
+  <meta name="description" content="{$web_description}" id="metaDescription">
+  <meta name="robots" content="all">
+  <title>{$web_name}</title>
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/channel.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/listpano.css"> 
+  <script src="__PUBLIC__/webyun/js/jquery-1.11.1.min.js"></script>
+  <script src="__PUBLIC__/webyun/js/find.js"></script>
+ 
+
+</head>
+<body>
+<div id="app"><div>
+<include file="header" />
+<div class="PageWithNavbar_container_2kXkuW App_page_ps6DUw">
+	<div class="IndexPage_main_21O9Xr">
+		<div class="Filterbar_filter_3od7YE">
+			<div class="container">
+				<ul class="Filterbar_nav1_35y1Dw">
+					<li><a href="/index.php?s=/webyun/listpano" class="Filterbar_active_21ag0C">全景图片</a></li>
+				</ul>
+	
+	
+	<div class="Filterbar_nav2_2EkTsV">
+	<div class="Filterbar_cell_2495v1">
+		<div class="Checkbox_container_jYKPxJ">
+			<a href="http://<?php echo $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]; ?>/">
+			<div class="Checkbox_checkbox_2hIu2H Checkbox_checked_3yFHX3" style="width: 14px; height: 14px;"><span class="SVGInline"><svg class="SVGInline-svg" fill="#fff" style="width: 10px;height: 10px;" width="8" height="7" viewBox="0 0 8 7" xmlns="http://www.w3.org/2000/svg"><path d="M7.146 0l-4.36 4.39L.81 2.412 0 3.371l2.757 2.756L8 .854z" fill-rule="evenodd"></path></svg></span></div>
+			</a>
+		</div>
+		<label class="Filterbar_label_1Bovzy ">只看精选</label>
+	</div>
+	<div class="Filterbar_cell_2495v1">
+		<div class="Select_select_3SYiKS" id="listpanok">
+			<div class="Select_header_coOU8v Select_down_3plElh Filterbar_menuhead_T5jPFB">{$paixu}</div>
+			<div class="Select_menu_tkm095" style="right: -10px; top: 50px; display: flex; flex-flow: row wrap;">
+				<img src="__PUBLIC__/webyun/images/top.png" class="Select_up_1bAWg5" style="right: 38px;">
+				{$paixulist}
+			</div>
+		</div>
+	</div>
+	<div class="Filterbar_cell_2495v1 Filterbar_heavy_36-MSf">
+		<span>频道：</span>
+		<div class="Select_select_3SYiKS" id="pingdaoxiala">
+			<div class="Select_header_coOU8v Select_down_3plElh Filterbar_menuhead_T5jPFB">{$hangyename}</div>
+			<div class="Select_menu_tkm095" style="right: -20px; top: 50px; width: 290px;">
+				<img src="__PUBLIC__/webyun/images/top.png" class="Select_up_1bAWg5" style="right: 38px;">
+				<div class="Filterbar_channels_25btbo">
+				<volist name="channel_list" id="vo">
+					<span class="Filterbar_channel_1vGrvx"><a href="/index.php?s=/webyun/listpano/channelid/{$vo.id}">{$vo.name}</a></span>
+				</volist>
+				</div>
+			</div>
+		</div>
+		<div class="Contribute2_c2c__gJTQ5">
+			<a href="/member" class="Button_button_9Gj_L9 Button_important_3OCTZM" style="width: 63px; height: 24px; padding-left: 0px; padding-right: 0px;">投稿</a><a target="_blank" href="" class="Contribute2_icon_Br8Ae5 Contribute2_help_3ZRURY">help</a></div></div></div>
+	
+			</div>
+		</div>
+		<!--        列表 start         -->
+		<div class="ProductList_list_1aYd5h">
+		<!--        列表32条循环 start         -->
+        <volist name="pano_list" id="vo">
+			<div class="Product_pro_2oysOO">
+				<div>
+					<p>
+						<a href="{$vo.panopath}" target="_blank" class="ResPanoImg_proimg_1ydNS8" style="width: 280px; height: 280px; background-image: url({$vo.panothumb});"></a>
+					</p>
+					<div class="Product_anmiarea_2jsTyL">
+						<div>
+							<a href="{$vo.panopath}" target="_blank" class="Product_h3_wxnOHA ellipsis">{$vo.title}</a>
+						</div>
+						<div class="Product_author_BLxFrp">
+							<a href="/index.php?s=/webyun/authorlist/id/{$vo.member_id}" target="_blank">{$vo.author}</a>
+							<if condition="$vo['rengzheng'] eq 1">
+                            <a href="/index.php?s=/Webyun/author" target="_blank" class="Product_icon_HYgTMM Product_cert_ovExuh">cert</a>
+							</if> 
+							<if condition="$vo['vip'] eq 1">
+                            <a href="" target="_blank" class="Product_icon_HYgTMM Product_vip_3CePjs">vip</a>
+							</if> 
+						</div>
+						<p>
+							<span class="Product_pv_1qSsJI">{$vo.hits}</span>
+							<span class="Product_like_3esRuD">{$vo.zan}</span>
+						</p>
+					</div>
+				</div>
+			</div>
+         </volist>
+         <!--        列表32条循环 end         -->   
+        </div>
+		<!--        列表 end         -->
+		
+		<!--        分布 start         -->
+		<div class="ResPagination_pagination_2GmSW-">
+			<div class="container">
+				<ul class="rc-pagination ant-pagination" unselectable="unselectable">{$page}</ul>
+			</div>
+		</div>
+		<!--        分布 end         -->
+		
+	</div>
+</div>
+<div class="Notification_container_3kJM0z">
+	<span></span>
+</div>
+<include file="footer" />
+</div>
+</div>
+  <!--<script src="./channel_files/common.d05a559b9f7ca4255e74.js"></script>
+  <script src="./channel_files/channel.169e3c6b9687fa131c3c.js"></script>
+  -->
+</body></html>

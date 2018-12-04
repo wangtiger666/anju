@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/pano/pano.js"></script>
+        <script type="text/javascript">
+            var playing = 0;
+            var pause = 0;
+            $(function(){
+                $(".play").click(function(){
+                    var temp = $(this).parent().data("checked");
+                    if(temp){
+                        if(temp == 1){
+                            return;
+                        }else{
+                            stopplay();
+                        }
+                    }else{
+                        stopplay();
+                    }
+                    if(playing == 0){
+                        playing = 1;
+                        pause = 0;
+                        var music = $(this).data("url");
+                        var krpano = document.getElementById("krpano");
+                        krpano.call("playsound(bgsnd, '"+music+"', 1,stopme);");
+                        $(".play").removeClass("me");
+                        $(this).addClass("me");
+                        $(this).parent().data("checked",1);
+                        $(this).parent().children(".stop").addClass("stoper");
+                    }else{
+                        showMsg("请先停止，才能重新播放或播放其它！");
+                    }
+                });
+                $(".pause").click(function(){
+                    var temp = $(this).parent().data("checked");
+                    if(temp){
+                        if(temp == 1){
+                            if(playing == 1){
+                                var krpano = document.getElementById("krpano");
+                                if(pause == 0){
+                                    pause = 1;
+                                    $(".pause").removeClass("me");
+                                    $(this).addClass("me");
+                                    krpano.call("pausesound(bgsnd);");
+                                }else{
+                                    pause = 0;
+                                    $(".pause").removeClass("me");
+                                    $(this).data("check",0);
+                                    krpano.call("resumesound(bgsnd);");
+                                }
+                            }
+                        }
+                    }
+                });
+                $(".stop").click(function(){
+                    var temp = $(this).parent().data("checked");
+                    if(temp){
+                        if(temp == 1){
+                            if(playing == 1){
+                                stopplay();
+                            }
+                        }
+                    }
+                });
+                $(".checkplay").click(function(){
+                    var name = $(this).data("name");
+                    var file = $(this).data("file");
+                    var music_id = $(this).data("music_id");
+                    parent.getback(name,file,music_id);
+                });
+            });
+            function stopplay(){
+                    var krpano = document.getElementById("krpano");
+                    krpano.call("stopsound(bgsnd);");
+                    $(".stoper").removeClass("stoper");
+                    $(".play").removeClass("me");
+                    $(".pause").removeClass("me");
+                    playing = 0;
+                    pause = 0;
+                    $(".musicbox").data("checked",0);
+                }
+        </script>
+        <style type="text/css">
+            body{
+                background: #f8f8f8;
+            }
+            .pick_top{
+                width: auto; height: 24px; margin: 6px 15px 4px 15px; overflow: hidden;
+                font: bold 12px/24px "微软雅黑"; color: #199372; cursor: default;
+            }
+            .pick_down{
+                min-height: 340px; width: auto; overflow: hidden; margin: 0 15px; border:1px solid #bbb;
+                background: #fff; border-radius: 4px; padding: 4px;
+            }
+            .pick_page{
+                width: auto; height: 30px; margin: 0px 20px 4px 20px; overflow: hidden;
+            }
+
+            .musicbox{
+                width: auto; height: 30px; overflow: hidden; border:1px solid #bbb; border-radius: 5px; margin: 5px; background: #eee;
+            }
+            .musicbox .title{
+                min-width: 200px; height: 22px; overflow: hidden; background: #f8f8f8; font: 12px/22px "微软雅黑"; padding: 0 6px;
+                border:1px solid #bbb; margin: 3px; border-radius: 4px; float: left; cursor: default;
+            }
+            .play{
+                width: 24px; height: 24px; overflow: hidden; margin: 3px; cursor: pointer; float: left;
+                background: url(__PUBLIC__/member/images/pano/playpic.png) no-repeat;
+            }
+            .play.me{
+                background-position: -27px 0;
+            }
+            .pause{
+                width: 24px; height: 24px; overflow: hidden; margin: 3px; cursor: pointer; float: left;
+                background: url(__PUBLIC__/member/images/pano/playpic.png) -53px 0 no-repeat;
+            }
+            .pause.me{
+                background-position: -53px -26px;
+            }
+            .stop{
+                width: 24px; height: 24px; overflow: hidden; margin: 3px; cursor: pointer; float: left;
+                background: url(__PUBLIC__/member/images/pano/playpic.png) -80px 0 no-repeat;
+            }
+            .stoper:hover{
+                background-position: -80px -26px;
+            }
+            .checkplay{
+                width: 80px; height: 22px; overflow: hidden; margin: 3px; cursor: pointer; float: right; display: block;
+                border:1px solid #bbb; border-radius:3px; background: #e3e3e3; font: bold 12px/24px "微软雅黑"; color: #666; text-align: center;
+            }
+            .checkplay:hover{
+                background: #e0e0e0; color: #333; border-color: #aaa;
+            }
+            .pano{
+                width: 0px; height: 0px; overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="pano" class="pano"></div>
+        <script type="text/javascript">
+            embedpano({
+                id:"krpano",
+                swf:"__PUBLIC__/pano/pano.swf",
+                xml:"{:U('musicstore/musicxml')}",
+                target:"pano",
+                html5:"auto",wmode:"transparent"
+            });
+        </script>
+        <div class="pick_top">提示：点击下方音乐，即可选择生效。</div>
+        <div class="pick_down">
+            <volist id="music" name="list">
+                <div class="musicbox">
+                    <div class="title">{$music.title}</div>
+                    <div class="play" data-url="{$music.file}"></div>
+                    <div class="pause"></div>
+                    <div class="stop"></div>
+                    <div class="checkplay" data-name="{$music.title}" data-file="{$music.file}" data-music_id="{$music.id}">确认选择</div>
+                </div>
+            </volist>
+        </div>
+        <div class="pick_page">
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" align="center">
+                <tr  class="tr_white" align="center">
+                    <td id="page_list" height="40" style="padding: 0px 10px;">
+                        {$page}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

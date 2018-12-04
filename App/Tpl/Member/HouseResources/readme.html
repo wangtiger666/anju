@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+    <script src="__PUBLIC__/common/js/jquery-1.10.2.js" language="javascript" type="text/javascript"></script>
+    <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+    {:W("Easyui")}
+    {:W("Boluoui")}
+    {:W("Uploader")}
+    <script charset="utf-8" src="__PUBLIC__/bootstrap/js/bootstrap.js"></script>
+    <script charset="utf-8" src="__PUBLIC__/bootstrap/js/bootstrap-select.js"></script>
+    <link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/bootstrap/css/bootstrap-select.css" rel="stylesheet">
+    <style type="text/css">
+        .box{
+            width: auto; height: 50px; overflow: hidden; border:1px solid #c6c6c6; margin: 5px; float: left; border-radius: 5px; background: #eee; cursor: pointer;
+        }
+        .box.me{
+            background: #e0f5ff; border-color: #ace;
+        }
+        .box:hover{
+            background: #e5ffcb;
+        }
+        .box.me:hover{
+            background: #e0f5ff;
+        }
+        .boxtext{
+            width: 60px; height: 36px; overflow: hidden; float: left; background: #fff; padding: 2px 0;
+            text-align: center; font: 12px/36px "微软雅黑"; cursor: default; margin-top: 5px; margin-left: 5px;
+        }
+        .boxbag{
+            width: auto; height: 50px; overflow: hidden; float: left; padding-right: 5px;
+        }
+        .boxbag .pigbox{
+            width: 38px; height: 38px; overflow: hidden; float: left; background: #fff; margin-left: 5px; border:1px solid #ccc;
+            margin-top: 5px;
+        }
+        .box.me .boxbag .pigbox{
+            border-color: #ace;
+        }
+        .cursorout{
+            overflow: hidden; background: #f8f8f8; padding: 5px; border:1px solid #c6c6c6; float: left; border-radius:5px;
+        }
+        .cursormarket{
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+{:W("Bg")}
+<div id="upmain">
+    <div class="main">
+        <div class="main_mid">
+            <div class="main_mid_left"></div>
+            <div class="main_mid_right"></div>
+            <div class="main_mid_main">
+                <div class="none_main">
+                    <div class="action_main">
+                        <div class="action_title">房源信息编辑说明文档</font></div>
+                        <div class="action_web">
+                            <ul  style="font-size: 16px;"  type="circle">
+                                <li>1:全景图类型为《小区全景》，只需要选择所属省份地区和小区名称即可</li>
+                                <li>2:全景图类型为《房屋全景》，所有信息都需要填写</li>
+                                <li>3:提交信息后会判断小区是否已录入，如果没有会自动记录到数据中，同时需要进入<a href="/admin" target="_blank">管理后台</a>=>系统数据管理=>行政区域管理=>编辑对应小区的坐标、描述、平面图等信息</li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

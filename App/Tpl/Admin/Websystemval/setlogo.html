@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <script src="__PUBLIC__/common/js/jquery.js" language="javascript" type="text/javascript"></script>
+        <script src="__PUBLIC__/common/js/common.js" language="javascript" type="text/javascript"></script> 
+        <script type="text/javascript" src="/App/Tools/Uploader/uploader.js"></script>
+        <link href="/App/Tools/Uploader/uploader.css" rel="stylesheet" type="text/css"/>
+
+        <link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/animate.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/style.css" rel="stylesheet">
+        {:W("Uploader")}
+        <style type="text/css">
+        .topbox{overflow: hidden;}
+        .downbox{overflow: hidden; margin-top: 6px;}
+        .input2a{display:block; text-align: center; text-decoration: none;}
+        .input2a:hover{text-decoration: none;}
+        .btn3{float: left;}
+        .btn {display: inline-block;background-color: #0072C6;-moz-border-radius: 2px; -webkit-border-radius: 2px; border: 0;color: #FFF;padding: 0px 15px;font-weight: bold;text-transform: capitalize;cursor: pointer;-webkit-appearance: none;}
+        .menuboxt {width: 186px;height: auto; margin-top: 8px;}
+        .menuboxt .cubet { width: 186px;height: auto;}
+        .menuboxt .cubet .titlet {width: 186px;height: 28px;overflow: hidden;background: url(../images/index/menubtbg.png) repeat-x;font: bold 12px/28px "微软雅黑";color: #000;text-align: center;border: 1px solid #dbdbdb;cursor: pointer;}
+        </style>
+    </head>
+    <body>
+        <div class="main" style="margin-top: -6px;">
+            <div class="downbox  ibox-content">
+            <form action=""  class="form-horizontal"  >  
+               <input type="text" name="step" value="save" size="80" class="inpMain" style="display:none;" />
+               <table width="100%" border="0" cellpadding="2" cellspacing="1"  style="height: 1500px;" class="table" >
+               <tbody>
+                        <tr class="tr_hui" height="30" align="center">
+                            <td style="width: 17%;">
+                                <b>名称</b>
+                            </td>
+                            <td style="width: 83%;">
+                                <b>内容</b>
+                            </td>
+                        </tr>
+
+                        <tr class="tr_white">
+                            <td align="right" style="padding-right:20px;">
+                                  平台头部LOGO                          
+                            </td>
+                            <td align="left" style="padding-left:20px;">
+
+                                 <div class="uploaddiv" style="margin-top:30px;">
+                                    <div class="thumbbox2" id="imgbox1" style="cursor: pointer; height: auto;">                   
+                                        <img src="{$panoheaderlogo}?{:mt_rand(0,999)}" style="max-width:900px;">
+                                    </div>  
+                                   <div style="margin-top:10px;">
+                                       <input type="button" id="imagebtn1" class="btn3" value="点击上传">
+                                    </div>        
+                                </div>
+                                 <input  id="image1"  type="hidden" name="panoheaderlogo" value="{$panoheaderlogo}" />
+                                <input type="hidden" name="old_image1" value="{$panoheaderlogo}" />
+                                <script type="text/javascript">
+                                    $(function(){
+                                        $("#imagebtn1").uploader("image", "file1");
+                                    })
+                                    function file1(data){
+                                        $("#image1").val(data);
+                                        $("#imgbox1").html('<img src="'+data+'" onload="photocenterin(this,150,150)" />');
+                                    }
+                                </script>
+
+                            </td>
+                        </tr>
+
+                        <tr class="tr_white">
+                            <td align="right" style="padding-right:20px;">
+                                    平台底部LOGO                      
+                            </td>
+                            <td align="left" style="padding-left:20px;">
+                                     <div class="uploaddiv" style="margin-top:30px;">
+                                    <div class="thumbbox2" id="imgbox2" style="cursor: pointer; height: auto;">                   
+                                        <img src="{$panofooterlogo}?{:mt_rand(0,999)}" style="max-width:900px;">
+                                    </div>  
+                                   <div style="margin-top:10px;">
+                                       <input type="button" id="imagebtn2" class="btn3" value="点击上传">
+                                    </div>        
+                                </div>
+                                 <input id="image2"  type="hidden" name="panofooterlogo" value="{$panofooterlogo}" />
+                                <input type="hidden" name="old_image2" value="{$panofooterlogo}" />
+                                <script type="text/javascript">
+                                    $(function(){
+                                        $("#imagebtn2").uploader("image", "file2");
+                                    })
+                                    function file2(data){
+                                        $("#image2").val(data);
+                                        $("#imgbox2").html('<img src="'+data+'" onload="photocenterin(this,150,150)" />');
+                                    }
+                                </script>
+                            </td>
+                        </tr>
+                        <tr class="tr_white">
+                            <td align="right" style="padding-right:20px;">
+                                  关于头部LOGO                         
+                            </td>
+                                <td align="left" style="padding-left:20px;">
+                                     <div class="uploaddiv" style="margin-top:30px;">
+                                    <div class="thumbbox2" id="imgbox3" style="cursor: pointer; height: auto;">                   
+                                        <img src="{$aboutheaderlogo}?{:mt_rand(0,999)}" style="max-width:900px;">
+                                    </div>  
+                                   <div style="margin-top:10px;">
+                                       <input type="button" id="imagebtn3" class="btn3" value="点击上传">
+                                    </div>        
+                                </div>
+                                <input  id="image3" type="hidden" name="aboutheaderlogo" value="{$aboutheaderlogo}" />
+                                <input type="hidden" name="old_image3" value="{$aboutheaderlogo}" />
+                                <script type="text/javascript">
+                                    $(function(){
+                                        $("#imagebtn3").uploader("image", "file3");
+                                    })
+                                    function file3(data){
+                                        $("#image3").val(data);
+                                        $("#imgbox3").html('<img src="'+data+'" onload="photocenterin(this,150,150)" />');
+                                    }
+                                </script>
+                            </td>
+                            </td>
+                        </tr>
+
+                        <tr class="tr_white">
+                            <td align="right" style="padding-right:20px;">
+                                  关于底部LOGO                            
+                            </td>
+                                <td align="left" style="padding-left:20px;">
+                                     <div class="uploaddiv" style="margin-top:30px;">
+                                    <div class="thumbbox2" id="imgbox4" style="cursor: pointer; height: auto;">                   
+                                        <img src="{$aboutfooterlogo}?{:mt_rand(0,999)}" style="max-width:900px;">
+                                    </div>  
+                                   <div style="margin-top:10px;">
+                                       <input type="button" id="imagebtn4" class="btn3" value="点击上传">
+                                    </div>        
+                                </div>
+                                <input type="hidden"  id="image4" name="aboutfooterlogo" value="{$aboutfooterlogo}" />
+                                <input type="hidden" name="old_image4" value="{$aboutfooterlogo}" />
+                                <script type="text/javascript">
+                                    $(function(){
+                                        $("#imagebtn4").uploader("image", "file4");
+                                    })
+                                    function file4(data){
+                                        $("#image4").val(data);
+                                        $("#imgbox4").html('<img src="'+data+'" onload="photocenterin(this,150,150)" />');
+                                    }
+                                </script>
+                            </td>
+                            </td>
+                        </tr>
+
+                        <tr class="tr_white">
+                            <td align="right" style="padding-right:20px;">
+                                  手机二维码                        
+                            </td>
+                            <td align="left" style="padding-left:20px;">
+                                     <div class="uploaddiv" style="margin-top:30px;">
+                                    <div class="thumbbox2" id="imgbox5" style="cursor: pointer; height: auto;">                   
+                                        <img src="{$phone}?{:mt_rand(0,999)}" style="max-width:900px;">
+                                    </div>  
+                                   <div style="margin-top:10px;">
+                                       <input type="button" id="imagebtn5" class="btn3" value="点击上传">
+                                    </div>        
+                                </div>
+                                 <input  id="image5"  type="hidden" name="phone" value="{$phone}" />
+                                <input type="hidden" name="old_image5" value="{$phone}" />
+                                <script type="text/javascript">
+                                    $(function(){
+                                        $("#imagebtn5").uploader("image", "file5");
+                                    })
+                                    function file5(data){
+                                        $("#image5").val(data);
+                                        $("#imgbox5").html('<img src="'+data+'" onload="photocenterin(this,150,150)" />');
+                                    }
+                                </script>
+                            </td>
+                            </td>
+                        </tr>
+
+                         <tr class="tr_white">
+                            <td align="right" style="padding-right:20px;">
+                                  微信二维码                        
+                            </td>
+                            <td align="left" style="padding-left:20px;">
+                                     <div class="uploaddiv" style="margin-top:30px;">
+                                    <div class="thumbbox2" id="imgbox6" style="cursor: pointer; height: auto;">                   
+                                        <img src="{$weixin}?{:mt_rand(0,999)}" style="max-width:900px;">
+                                    </div>  
+                                   <div style="margin-top:10px;">
+                                       <input type="button" id="imagebtn6" class="btn3" value="点击上传">
+                                    </div>        
+                                </div>
+                                 <input  id="image6" name="weixin" type="hidden" value="{$weixin}" />
+                                <input type="hidden" name="old_image6" value="{$weixin}" />
+                                <script type="text/javascript">
+                                    $(function(){
+                                        $("#imagebtn6").uploader("image", "file6");
+                                    })
+                                    function file6(data){
+                                        $("#image6").val(data);
+                                        $("#imgbox6").html('<img src="'+data+'" onload="photocenterin(this,150,150)" />');
+                                    }
+                                </script>
+                            </td>
+                            </td>
+                            </td>
+                        </tr>
+
+                        <tr class="tr_white">
+                            <td align="right" style="padding-right:20px;">
+                                 会员后台LOGO                    
+                            </td>
+                            <td align="left" style="padding-left:20px;">
+                                     <div class="uploaddiv" style="margin-top:30px;">
+                                    <div class="thumbbox2" id="imgbox7" style="cursor: pointer; height: auto;">                   
+                                        <img src="{$memberlogo}?{:mt_rand(0,999)}" style="max-width:900px;">
+                                    </div>  
+                                   <div style="margin-top:10px;">
+                                       <input type="button" id="imagebtn7" class="btn3" value="点击上传">
+                                    </div>        
+                                </div>
+                                <input  id="image7"  type="hidden" name="memberlogo" value="{$memberlogo}" />
+                                <input type="hidden" name="old_image7" value="{$memberlogo}" />
+                                <script type="text/javascript">
+                                    $(function(){
+                                        $("#imagebtn7").uploader("image", "file7");
+                                    })
+                                    function file7(data){
+                                        $("#image7").val(data);
+                                        $("#imgbox7").html('<img src="'+data+'" onload="photocenterin(this,150,150)" />');
+                                    }
+                                </script>
+                            </td>
+                            </td>
+                            </td>
+                        </tr>
+
+                        <!--  <tr class="tr_white">
+                            <td align="right" style="padding-right:20px;">
+                                 管理后台LOGO                    
+                            </td>
+                            <td align="left" style="padding-left:20px;">
+                                     <div class="uploaddiv" style="margin-top:30px;">
+                                    <div class="thumbbox2" id="imgbox8" style="cursor: pointer; height: auto;">                   
+                                        <img src="{$adminlogo}" style="max-width:900px;">
+                                    </div>  
+                                   <div style="margin-top:10px;">
+                                       <input type="button" id="imagebtn8" class="btn3" value="点击上传">
+                                    </div>        
+                                </div>
+                                <input  id="image8" type="hidden"  name="adminlogo" value="{$adminlogo}" />
+                                <input type="hidden" name="old_image8" value="{$adminlogo}" />
+                                <script type="text/javascript">
+                                    $(function(){
+                                        $("#imagebtn8").uploader("image", "file8");
+                                    })
+                                    function file8(data){
+                                        $("#image8").val(data);
+                                        $("#imgbox8").html('<img src="'+data+'" onload="photocenterin(this,150,150)" />');
+                                    }
+                                </script>
+                            </td>
+                            </td>
+                            </td>
+                        </tr> -->
+                        <tr class="tr_white" >
+                            <td align="right" style="padding-right:20px;">              
+                              </td>
+                            <td align="left" style="padding-left:20px;padding-top: 20px ;padding-bottom: 20px ;" >
+                                <input id="sub_btn" class="btn"  type="submit" value="提交" >
+                            </td>
+                        </tr>
+                </tbody>
+                </table>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#form1").submit(function(){
+        if($("#ad_name").val() == "")
+        {
+            alert("请填写LOGO名称");
+            return false;
+        }
+        else if ($("#thumb").val()=="")
+        {
+            alert("请上传LOGO图片");
+            return false;
+        }
+        else if ($("#positionid").val()=="")
+        {
+            alert("请选择LOGO位置");
+            return false;
+        }
+    });
+});
+</script>
+
+
+
+    </body>
+</html>

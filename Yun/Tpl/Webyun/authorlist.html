@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-cn"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="keywords" content="{$web_keywords}">
+  <meta name="description" content="{$web_description}" id="metaDescription">
+  <meta name="robots" content="all">
+  <title>{$web_name}</title>
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/member.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/listpano.css"> 
+  <script src="__PUBLIC__/webyun/js/jquery-1.11.1.min.js"></script>
+  <script src="__PUBLIC__/webyun/js/find.js"></script>
+</head>
+<body>
+  <div id="app">
+	<div>
+	<php>
+$member_id = cookie('member_id');
+$member_name = cookie('member_name');
+if(!empty($member_id)){
+	$headimg = M("Member")->where("id='$member_id'")->getField("headimg");
+	if(empty($headimg)) $headimg = "/Public/member/images/common/no_img.jpg";
+	
+	$vip = M("Member")->where("id='$member_id'")->getField("vip");
+	if($vip==1){
+		$vip="<span class='LoginUserSelect_itype_EPOywy'>VIP账户</span>";					
+	}
+	else{
+		$vip="<span class='LoginUserSelect_itype_EPOywy'>普通账户</span>";			
+	}
+	
+	
+}
+</php>
+		<div class="PageWithNavbar_container_2kXkuW App_page_3VYgF_"><div>
+			<div class="ProductsPage_cover_M_1Ent">
+				<div class="Navbar_navbar_2ctnDy" style="background-color: transparent;">
+					<div class="Navbar_cell1_2l_MWQ">
+						<div class="Navbar_logo_2S35BO"><a href="/"><img src="__PUBLIC__/webyun/images/long.png"></a></div>
+						<form class="SearchBar_form_3NADgu Navbar_form_1TENvM" method="get" action="/index.php/Webyun/search/" enctype="multipart/form-data">
+							<input type="text" value="" placeholder="" id="keywords" name="keywords" >
+							<button type="button" >
+								<span class="SVGInline SearchBar_svgsearch_QmX9rz">
+									<svg class="SVGInline-svg SearchBar_svgsearch_QmX9rz-svg" width="15" height="16" viewBox="0 0 15 16" xmlns="http://www.w3.org/2000/svg">
+										<title>Group 3</title>
+										<g fill-rule="evenodd">
+											<rect transform="rotate(47 12.118 12.242)" x="8.618" y="11.242" width="7" height="2" rx="1"></rect>
+											<path d="M6.5 13a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13zm0-2a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9z"></path>
+										</g>
+									</svg>
+								</span>
+							</button>
+						</form>
+					</div>
+					<div class="Navbar_nav_sYfYzJ">
+						{$lanmu}
+						<a href="/member/" class="Button_button_9Gj_L9 Button_default_12cP_n" style="width: 63px; height: 24px; padding-left: 0px; padding-right: 0px;">上 传</a>
+					</div>
+		
+		<if condition="!empty($member_id)">	
+		<div class="TopRightPart_member_2OaJnS">
+			<a href="/index.php?s=/Webyun/openvip" class="TopRightPart_vip_7pRNNz"><img src="__PUBLIC__/webyun/images/vip.png">开通VIP</a>
+			<div class="LoginUserSelect_info_N0N-Xc">
+				<div class="Select_select_3SYiKS"  id="info">
+					<div class="Select_header_coOU8v">
+						<div class="LoginUserSelect_user_2y9ujp">
+							<span><img src="{$headimg}" width="25" height="25" style="border-radius: 50%; vertical-align: middle; background-color: rgb(244, 244, 244);"></span>
+							<em>{$member_name}</em>
+						</div>
+					</div>
+					<div class="Select_menu_tkm095" style="left: 50%; margin-left: -55px; top: 50px; width: 110px; padding-bottom: 0px; border-radius: 0px;">
+					{$vip}	
+						<div class="LoginUserSelect_block_mDfA66">
+							<a href="/index.php?s=/Webyun/authorlist/id/{$member_id}">个人主页</a>
+							<a href="/member/panolist">作品管理</a>
+						</div>
+						<div class="LoginUserSelect_block_mDfA66">
+							<a href="/member">账户管理</a>
+							<a href="/member/login/logout">退出登录</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="Select_select_3SYiKS"  id="infolin">
+				<div class="Select_header_coOU8v">
+					<a href="/index.php?s=/Webyun/articlelist/lanmuid/7" class="LoginMsgSelect_msg_17teY-"><img src="__PUBLIC__/webyun/images/red-d.png" class="LoginMsgSelect_dot_EPCQGq"></a>
+				</div>
+				<div class="Select_menu_tkm095" style="right: 0px; margin-right: -60px; top: 50px; width: 308px; padding-bottom: 0px; padding-top: 0px; border-radius: 0px;">
+					<div>
+						<div class="LoginMsgSelect_head_W3nXmi">
+							<div class="LoginMsgSelect_h1_3EVIw9">系统公告 </div>
+							
+						</div>
+						<div class="LoginMsgSelect_main_2aSa35">
+						
+						
+						
+						<foreach name="gonggao" item="vo">
+							<div class="MsgItem_row_2IWka4">
+								<div class="MsgItem_maxtext_2VT1Gf"><img src="__PUBLIC__/webyun/images/red-d.png" class="MsgItem_dot_foVrj7">【公告】{$vo.title}</div>
+							</div>
+						</foreach>	
+							
+							
+						</div>
+						<div class="LoginMsgSelect_foot_whhInk"><a href="/index.php?s=/Webyun/articlelist/lanmuid/7" class="LoginMsgSelect_btn2_5bUHsX">查看系统公告</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<else/>
+		<?php   
+			$host = $_SERVER['HTTP_HOST']; 
+			$domain = $host;
+			$regrul = "http://".$domain."/member/reg";
+			$loginrul = "http://".$domain."/member/login";
+		?>
+		<div class="TopRightPart_member_2OaJnS">
+			<a href="" class="TopRightPart_vip_7pRNNz"><img src="__PUBLIC__/webyun/images/vip.png">开通VIP</a>
+			<a href="<?php  echo $regrul;?>" class="TopRightPart_link2_O4Xz5P">注册</a>
+			<a href="<?php  echo $loginrul;?>" class="TopRightPart_link2_O4Xz5P">登录</a>
+		</div>
+		</if>
+        
+        </div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<div class="ProductsPage_kr360_1gdJ0Q" id="panoContainer">
+			<iframe width="100%" height="100%" src="{$userinfo.index_pano}"  frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes" runat="server"></iframe>
+		
+		</div>
+		<div class="ProductsPage_linear_3e7nk8"></div>
+	</div>
+	
+	<div class="Author_author_1m1RbA">
+    	<div class="container">
+        	<ul class="Author_nav1_bSI6lA">
+            	<li><span><img src="{$userinfo.headimg}" width="60" height="60" style="border-radius: 50%; vertical-align: middle; background-color: rgb(244, 244, 244);"></span></li>
+				<li class="Author_cell2_3Iyy9P">
+					<h1 class="Author_h1_3GTvs0">
+						<span>{$userinfo.nickname}</span>
+						<if condition="$userinfo['rengzheng'] eq 1">
+							<a href="" class="Author_icon_3g4xnI Author_cert_WdF20-">cert</a>
+						</if> 
+						<if condition="$userinfo['vip'] eq 1">
+							<a href="" class="Author_icon_3g4xnI Author_vip_1-oUzl">vip</a>
+						</if> 
+					</h1>
+					<div class="Author_feature_39G7wg">
+						<span class="Author_icon_3g4xnI Author_geo_LUajkC">{$dizhi}</span>
+						<span class="Author_icon_3g4xnI Author_pv_9d116C">{$hiscount}</span>
+					</div>
+				</li>
+			</ul>
+				<ul class="Author_nav2_1IUX7i">
+					<li><div><a href="javascript:showBg();"  class="Button_button_9Gj_L9 Button_default_12cP_n" style="width: 86px; height: 30px; padding-left: 0px; padding-right: 0px;">个人资料</a></div></li>
+				</ul>
+		</div>
+	</div>
+	<div class="Filterbar_filter_1y_ai-">
+		<div class="container">
+			<ul class="Filterbar_nav1_1sEkze">
+				<li><a class="Filterbar_active_Mcj0Yq" name="1">全景图片</a></li>
+
+			</ul>
+			<div class="Filterbar_nav2_1B7fEY">
+				<div class="Filterbar_cell_jnxpXX">
+					<div class="Select_select_3SYiKS" id="authork">
+						<div class="Select_header_coOU8v Select_down_3plElh Filterbar_menuhead_374IQI">{$paixuname}</div>
+						<div class="Select_menu_tkm095" style="left: -10px; top: 50px;">
+							<img src="__PUBLIC__/webyun/images/top.png" class="Select_up_1bAWg5" style="right: 38px;">
+							{$paixulist}	
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="ProductsPage_list_1fKdek"><div class="ProductsPage_loading_nvC6US"><div><div class="container"><div class="Products_flow_263quf">
+    
+    
+    
+    
+    
+    
+    <volist name="list" id="vo">
+    <div class="Product_pro_mR_mUf">
+    	<p><a href="{$vo.panopath}" target="_blank" class="ResPanoImg_proimg_1ydNS8" style="width: 280px; height: 280px; background-image: url(&quot;{$vo.panothumb}&quot;);"></a></p>
+        <div class="Product_bottom_2dF4r9"><a href="{$vo.panopath}" class="Product_h3_sIN4l1 ellipsis">{$vo.title}</a></div>
+        <p class="Product_top_1hj6pT"><span class="Product_pv_1gAMyE">{$vo.zan}</span><span class="Product_like_2ulNuh">{$vo.hits}</span></p>
+     </div>
+    </volist>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    </div>
+	<div class="ResPagination_pagination_2GmSW-">
+		<div class="container">
+			<ul class="rc-pagination ant-pagination" unselectable="unselectable">
+				{$page}
+			</ul>
+		</div>
+	</div>
+</div></div></div></div></div>
+	
+
+	<div class="Notification_container_3kJM0z"><span></span></div>
+	<include file="footer" />
+	</div>
+</div>
+
+
+
+<div class="ReactModalPortal" >
+	<div class="ReactModal__Overlay ReactModal__Overlay--after-open Modal_overlay_3xL3Qo" aria-modal="true">
+		<div class="ReactModal__Content ReactModal__Content--after-open Modal_content_qVxweC" tabindex="-1" aria-label="modal">
+			<a onclick="closeBg();" class="Modal_close_36ySNs">close</a>
+			<div class="PersonalInfo_detail_TGqBVm">
+				<div class="PersonalInfo_left_2iGugm">
+					<div>
+						<span><img src="{$userinfo.headimg}" width="100" height="100" style="border-radius: 50%; vertical-align: middle; background-color: rgb(244, 244, 244);"></span>
+						<p class="PersonalInfo_nickname_1SWPLq"><span>{$userinfo.nickname}</span></p>
+						<p> </p>
+						<p class="PersonalInfo_popular_2Tn8Xe">人气：<em>{$hiscount}</em></p>
+					</div>
+					<div class="PersonalInfo_code_1mpX7V">
+						<p>作者二维码</p>
+						<a class="PersonalInfo_qrimg_1q57SV">
+						<if condition="!empty($row['ewm'])">
+							<img class="PersonalInfo_qr_2LY7po" width='120' height='120' src="{$userinfo.ewm}">
+							<else/>
+							<img class="headimg" width='120' height='120' src="__PUBLIC__/member/images/common/no_img.jpg">
+						</if>						
+						</a>
+					</div>
+				</div>
+				<div class="PersonalInfo_right_3Dz-C_">
+					<h2>基本资料</h2>
+						<div class="PersonalInfo_row_1iSmS_">
+							<label>昵称：<span>{$userinfo.nickname}</span></label>
+						</div>
+						<div class="PersonalInfo_row_1iSmS_"><label>现居：<span>{$dizhi}</span></label></div>
+						<div class="PersonalInfo_row2_1NDAvy">
+							<label>简介：</label>
+							<div class="PersonalInfo_remark_1eejl8" style="position: relative; overflow: hidden; width: 100%; height: 270px;">
+								<div style="position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; overflow: scroll; margin-right: -17px; margin-bottom: -17px;">{$userinfo.intro}</div>
+								<div style="position: absolute; height: 6px; right: 2px; bottom: 2px; left: 2px; border-radius: 3px;">
+									<div style="position: relative; display: block; height: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2); width: 0px;"></div>
+								</div>
+								<div style="position: absolute; width: 6px; right: 2px; bottom: 2px; top: 2px; border-radius: 3px;">
+									<div style="position: relative; display: block; width: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2); height: 0px;"></div>
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

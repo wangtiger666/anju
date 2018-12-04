@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>远景全景精准住房平台</title>
+    <link rel="stylesheet" href="__PUBLIC__/welcome/css/head.css">
+    <link rel="stylesheet" href="__PUBLIC__/welcome/css/pay.css">
+</head>
+</head>
+
+<body>
+    <nav>
+        <img src="/Public/welcome/images/CCBlogo.png" class="logo">
+        <if condition="empty($accountSession)">
+        <ol class="user">
+            <img src="/Public/welcome/images/user-img.png" id="user-img">
+            <li id="logbtn">登录</li>
+            <div class="separator"></div>
+            <li id="regbtn">注册</li>
+        </ol>
+        <else/>
+           <img src="{$accountSession['head_img']}" id="login_user_img" onclick="mycenter()">
+        </if>
+    </nav>
+    <!-- 加载登录注册界面 -->
+    <include file="LoginReg/index" />
+    <main>
+        <div class="tip">
+            <img src="__PUBLIC__/welcome/images/adress.png">
+            <span id="location">您的位置 : 首页 >> 个人中心</span>
+        </div>
+
+        <div class="user-center">
+            <img src="__PUBLIC__/welcome/images/tri.png">
+            <div class="title">
+                确认订单
+            </div>
+
+            <div class="item">
+                <div class="img-wrap">
+                    <img src="__PUBLIC__/welcome/images/concern.png">
+                </div>
+                <div class="main">
+                    <div class="name">正规三房低价出租</div>
+                    <div class="tag">三房两厅 | 整租 | 南</div>
+                    <div class="area">海沧区</div>
+                    <div class="belong">XX小区</div>
+                </div>
+                <div class="price">3500/月
+                    <span>(押一付三)</span>
+                </div>
+                <button>房屋详情</button>
+            </div>
+
+            <div class="sub-wrap">
+                <div class="radio">
+                    <span class="radio-desc">请选择看房时间：</span>
+                    <input type="radio" name="sub-time" id="sub-time-0">
+                    <label for="sub-time-0">3天内</label>
+                    <input type="radio" name="sub-time" id="sub-time-1">
+                    <label for="sub-time-1">7天内</label>
+                    <input type="radio" name="sub-time" id="sub-time-2">
+                    <label for="sub-time-2">15天内</label>
+                </div>
+                <div class="desc">
+                        预约金说明：<br />
+                        成功预约后，前3内免费看房，超过3天后看房，每天扣除意向金/预约天数；<br />
+                        预约期间完成看房或者租赁，将退还剩余意向金支付至您的支付账户上；<br />
+                        若有效时间内失约，定金将不进行退还。
+                </div>
+            </div>
+
+            <div class="pay-wrap">
+                <p class="desc">预约<span class="warn">3</span>天内看房应付意向金&ensp;&ensp;&ensp;<span class="warn">￥300</span></p>
+
+                <div class="pay-type">
+                    <input type="radio" name="pay-type" id="pay-type-alipay">
+                    <label for="pay-type-alipay"><img src="__PUBLIC__/welcome/images/alipay.png" alt=""></label>
+                    <input type="radio" name="pay-type" id="pay-type-wxpay">
+                    <label for="pay-type-wxpay"><img src="__PUBLIC__/welcome/images/wxpay.png" alt=""></label>
+                    <input type="radio" name="pay-type" id="pay-type-unionpay">
+                    <label for="pay-type-unionpay"><img src="__PUBLIC__/welcome/images/unionpay.png" alt=""></label>
+                </div>
+
+                <div class="tip">
+                    <span>温馨提示：</span>预约期间该房源将为您单独开放浏览，若您为如期看房或租赁，将无法退还意向金。
+                </div>
+
+                <button class="buy">确认订单</button>
+            </div>
+        </div>
+
+
+    </main>
+    <footer><img src="__PUBLIC__/welcome/images/chaoyou.png"><img src="__PUBLIC__/welcome/images/chaowu.png">厦门市超娱网络科技有限公司丨网络经营许可证 [2016]2515-041号 ICP编号 闽B2-20160157 丨Copyright2016-2018 瞄房网orzunion.com版权所有 <img src="__PUBLIC__/welcome/images/beian.png"> 闽公网安备35020302032761号</footer>
+</body>
+<script type="text/javascript" src="__PUBLIC__/welcome/js/pay.js"></script>
+<script type="text/javascript">
+    $(".logo").on("click",function(){
+        window.location.href="/Welcome/index"
+    })
+</script>
+</html>

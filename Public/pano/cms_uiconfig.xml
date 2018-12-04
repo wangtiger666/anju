@@ -1,0 +1,16 @@
+<krpano> 
+	<layer name="cms_card" style="krpanocms_skin1" crop="0|504|63|63" x="9"  y="230" 
+	visible="get:skin_settings.opencard" onclick="opencard(get(skin_settings.domainlink),get(skin_settings.pano_id))" onhover="showtext(展商名片,skintext)" />
+		<action name="opencard">
+		txtadd(cardurl,%1,'/my.php?s=/Member/Panoapi/tuwen/type/card/id/',%2);
+        	txtadd(mcardurl,%1,'/my.php?s=/Member/Panoapi/tuwen/type/card/id/',%2,'/m_type/1');
+		openIframe(820,540,get(cardurl),get(mcardurl));
+		</action>
+		<layer name="cms_erweima" style="krpanocms_skin1" crop="0|315|63|63" x="9" y="290" visible="get:skin_settings.erweima" onclick="openwindow('./share.html',25%,35%)" onhover="showtext(场景分享,skintext)" />
+			   
+<!-- 手机端显示比例 -->
+<krpano devices="mobile">
+	 <layer name="cms_card" y="295" />
+     <layer name="cms_erweima" y="375" onclick="openwindow('./share.html',70%,60%)" />		 
+</krpano>
+</krpano>

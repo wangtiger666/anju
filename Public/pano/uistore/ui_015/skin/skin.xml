@@ -1,0 +1,121 @@
+<krpano>	 
+    <include url="ui_action.xml" />
+	<include url="plugin.xml" />
+	<include url="showtext.xml" />
+	<include url="html5_vr.xml" />
+	<skin_settings title="true"
+	               thumbs="true"
+	               thumbs_width="120" thumbs_height="80" thumbs_padding="10" thumbs_crop="0|40|240|160"
+	               thumbs_opened="false"
+	               thumbs_text="true"
+	               thumbs_dragging="true"
+	               thumbs_onhoverscrolling="false"
+	               thumbs_scrollbuttons="FALSE"
+	               thumbs_scrollindicator="false"
+	               thumbs_loop="FALSE"
+	               tooltips_thumbs="true"
+				   loading="场景加载中"
+	               
+	               loadscene_flags="MERGE"
+	               loadscene_blend="BLEND(0.5)"
+				   
+				   layout_width="100%"
+				   layout_bgcolor="0x000000"
+	               layout_bgalpha="0.5"
+	               layout_bgborder="0"
+	               layout_bgroundedge="0"
+	               layout_bgshadow="0 4 10 0x000000 0.3"
+				   
+	               controlbar_offset="20"
+				   
+				   design_thumbborder_padding="2"
+				   design_thumbborder_bgborder="3 0xFFFFFF 1.0"
+				   design_bgroundedge="1"
+				   
+				   design_text_css="color:#FFFFFF; font-family:Arial;"
+	               design_text_shadow="1"
+				   
+				   gyro="true"
+                   gyro_enabled="false"	
+				   
+	               />
+				   
+				   
+
+	<events name="skin_events" keep="true"
+	        onxmlcomplete="set(events[skin_events].onxmlcomplete,null); skin_startup();skin_showloading()"
+	        onnewpano="skin_showloading(); skin_deeplinking_update_url();skin_update_scene_infos();"
+	        onremovepano="skin_showloading();"
+	        onloadcomplete="set(layer[skin_loadingtext].visible, false);"
+			onidle="skin_deeplinking_update_url();"
+	        onresize="skin_onresize();"			
+			onenterfullscreen.fullscreensupport="set(layer[skin_btn_fs].crop, '64|315|64|88');"
+	        onexitfullscreen.fullscreensupport="set(layer[skin_btn_fs].crop, '0|315|64|88');"
+			onmousewheel="image_onmousewheel();"
+			onclick=""
+	        />
+
+    <action name="skin_startup">
+        
+		if(skin_settings.littleplanetintro AND (device.webgl OR device.flash),
+			skin_setup_littleplanetintro();
+		  );
+		
+		if(skin_settings.gyro AND !device.desktop AND device.html5,
+			copy(plugin[skin_gyro].url, plugin[skin_gyro].html5_url);			
+	    );
+		
+		if(skin_settings.opennews , danmurun1(); );
+		
+		set(scene[get(xml.scene)].password,true); 
+		 
+		
+     ifnot(device.mobile, 
+	        copy(layer[skin_control_bar].y_opened,0);
+			add(layer[skin_scroll_window].y, layer[skin_control_bar].height, layer[skin_control_bar].y);
+			add(layer[skin_scroll_window].y_opened, layer[skin_control_bar].height, layer[skin_control_bar].y_opened);
+	    );
+	  
+	  if(group_id[group_id].item.count GT 1, 
+	       set(group_id_x,1);
+		   for(set(i,0), i LT group_id[group_id].item.count, inc(i),
+ 		       set(group_id_name,get(group_id[group_id].item[get(i)].name));
+			   addlayer(get(group_id_name));
+			   layer[get(group_id_name)].loadstyle(group_id_txt);
+			   set(layer[get(group_id_name)].html,get(group_id[group_id].item[get(i)].title));
+			   set(layer[get(group_id_name)].parent,layer[skin_album]);
+			   set(layer[get(group_id_name)].x,get(group_id_x));
+			   set(group_id_s,calc(group_id[group_id].item[get(i)].title.length + 2 ));
+			   
+			   if(device.mobile, 
+			         mul(group_id_s,get(group_id_s),22);
+					 , 
+					 mul(group_id_s,get(group_id_s),14);
+			   );
+			   set(layer[get(group_id_name)].width,get(group_id_s));add(group_id_x,group_id_s);
+		   );
+		   copy(layer[skin_album].width,group_id_x);
+		   if(device.mobile, set(layer[skin_thumbs].y, 40);, set(layer[skin_thumbs].y, 30););
+		   skin_addthumbs(group_id,get(group_id[group_id].item[0].name));, skin_addthumbs(all);
+	    
+	    );
+	  
+	  
+	  if(skin_settings.thumbs_opened,
+	      delayedcall(1,skin_showthumbs(););
+		);
+	  
+	  skin_updatescroll();
+	  
+	  skin_update_scene_infos();
+	  
+		
+	</action>  
+	
+
+
+	
+	
+	
+	
+</krpano>

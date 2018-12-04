@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano showerrors="false">
+
+    <view hlookat="0" vlookat="0" hlookat_bak="" vlookat_bak="" fov="80" />
+
+    <display flash10="off" details="24" />
+
+    <events onloadcomplete="js(dostar(););" />
+
+    <action name="becomestar">
+        set(display.flash10, off);
+        set(view.stereographic,true);
+        set(view.fisheye,1);
+        set(view.fov,155);
+        set(view.vlookat,90);
+    </action>
+    <action name="normalview">
+            tween(view.hlookat, 0, 2, easeInOutQuad);
+            tween(view.vlookat, 0, 2, easeInOutQuad);
+            tween(view.fov,     85,  2, easeInOutQuad);
+            tween(view.fisheye, 0.0, 2, easeInOutQuad);
+            wait(2.7);
+            set(display.flash10, on);
+    </action>
+
+    <image>
+        <left url="{:CC('web_root')}{$viewrow['left']}" />
+        <front url="{:CC('web_root')}{$viewrow['front']}" />
+        <right url="{:CC('web_root')}{$viewrow['right']}" />
+        <back url="{:CC('web_root')}{$viewrow['back']}" />
+        <up url="{:CC('web_root')}{$viewrow['up']}" />
+        <down url="{:CC('web_root')}{$viewrow['down']}" />
+    </image>
+
+</krpano>

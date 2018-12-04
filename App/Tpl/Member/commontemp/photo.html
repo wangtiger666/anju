@@ -1,0 +1,115 @@
+<style type="text/css">
+    .photostation{
+        width: auto; height: auto; overflow: hidden; min-height: 100px; padding-top: 10px;
+    }
+    .photobox{
+        width: 134px; height: 168px; overflow: hidden; float: left; border: 1px solid #999;  cursor: pointer;
+        border-radius: 4px; background: #f8f8f8; margin-right: 12px; margin-top: 6px; margin-bottom: 6px;
+    }
+    .photobox.hav{
+        border-color: #ffb400; background: #ffeab9;
+    }
+    .photoboxb{
+        width: 134px; height: 168px; border: 1px solid #999;  cursor: pointer; z-index: 40;
+        border-radius: 4px; background: #f8f8f8; margin-right: 12px; margin-top: 6px; margin-bottom: 6px;
+    }
+    .photodel{
+        width: 16px; height: 16px; overflow: hidden; background: url(__PUBLIC__/member/images/common/photoclose.png) no-repeat; 
+        position: absolute; z-index: 20; margin-left: 126px; margin-top: -8px; cursor: pointer;
+    }
+    .photoin{
+        width: 130px; height: 168px; overflow: hidden; position: absolute; z-index: 10;
+    }
+    .photoimg{
+        width: 120px; height: 120px; overflow: hidden; border: 1px solid #bbb; margin: 6px; border-radius: 3px;
+        background: #fff; 
+    }
+    .photobox.hav .photoimg{
+        border-color: #ffb400;
+    }
+    .phototxt{
+        width: 122px; height: 28px; overflow: hidden; margin-left: 6px;
+    }
+    .photoinput{
+        width: 112px; height: 22px; overflow: hidden; border: 1px solid #ccc; padding: 2px 4px;
+        font: 12px/22px "微软雅黑"; color: #666; border-radius:3px;
+    }
+</style>
+<div class="photostation" id="<?php echo $action_to; ?>">
+    <?php foreach($photoarr as $photo){ ?>
+    <div class="photobox">
+        <input name="<?php echo $action_key; ?>_url[]" type="hidden" value="<?php echo $photo['imageurl']; ?>" />
+        <input name="<?php echo $action_key; ?>_id[]" type="hidden" value="<?php echo $photo['id']; ?>" />
+        <div class="photodel" onclick="<?php echo $action_key; ?>_boxdel(this);"></div>
+        <div class="photoin">
+            <div class="photoimg"><img src="<?php CC('web_root'); ?><?php echo $photo['imageurl']; ?>" onload="photocenterin(this,120,120);" /></div>
+            <div class="phototxt">
+                <input name="<?php echo $action_key; ?>_text[]" type="text" class="photoinput" value="<?php echo $photo['imagename']; ?>" />
+            </div>
+        </div>
+    </div>
+    <?php } ?>
+</div>
+<script type="text/javascript">
+    var changeF_word = "";
+    var changeT_word = "";
+    $("<?php echo $action_chu; ?>").uploader("images","<?php echo $action_key; ?>_upback");
+    function <?php echo $action_key; ?>_upback(data){
+        var datas = data.split("|");
+        for (i = 0; i < datas.length; i++) {
+            var html = "";
+            html += '<div class="photobox">';
+            html += '<input name="<?php echo $action_key; ?>_url[]" type="hidden" value="'+datas[i]+'" />';
+            html += '<input name="<?php echo $action_key; ?>_id[]" type="hidden" value="" />';
+            html += '<div class="photodel" onclick="<?php echo $action_key; ?>_boxdel(this);"></div>';
+            html += '<div class="photoin">';
+            html += '<div class="photoimg"><img src="' + upload_root + datas[i]+'" onload="photocenterin(this,120,120);" /></div>';
+            html += '<div class="phototxt">';
+            html += '<input type="text" name="<?php echo $action_key; ?>_text[]" class="photoinput" value="图片标题" />';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+            $("#<?php echo $action_to; ?>").append(html);
+            <?php echo $action_key; ?>_freshDrag("#<?php echo $action_to; ?>");
+        }
+    }
+    <?php echo $action_key; ?>_freshDrag("#<?php echo $action_to; ?>");
+    function <?php echo $action_key; ?>_freshDrag(temp){
+        $(temp + ' .photobox').draggable({
+            revert:true,
+            handle:".photoimg",
+            proxy:function(source){
+                var bbb = $(this).children(".photoin").children(".phototxt").children(".photoinput").val();
+                changeF_word = bbb;
+                var n = $('<div class="photoboxb"></div>');
+                n.html($(source).html()).appendTo(temp);
+                $(".photoboxb").children(".photoin").children(".phototxt").children(".photoinput").val(changeF_word);
+                return n;
+            }
+        });
+        $(temp + ' .photobox').droppable({
+            accept: '.photobox',
+            onDragEnter:function(e,source){
+                $(this).addClass("hav");
+            },
+            onDragLeave: function(e,source){
+                $(this).removeClass("hav");
+            },
+            onDrop: function(e,source){
+                $(this).removeClass("hav");
+                var html1 = $(this).html();
+                var html2 = $(source).html();
+                var ddd = $(this).children(".photoin").children(".phototxt").children(".photoinput").val();
+                changeT_word = ddd;
+                $(this).html(html2);
+                $(source).html(html1);
+                $(this).children(".photoin").children(".phototxt").children(".photoinput").val(changeF_word);
+                $(source).children(".photoin").children(".phototxt").children(".photoinput").val(changeT_word);
+                <?php echo $action_key; ?>_freshDrag("#<?php echo $action_to; ?>");
+            }
+        });
+    }
+    function <?php echo $action_key; ?>_boxdel(temp){
+        $(temp).parent().remove();
+    }
+</script>

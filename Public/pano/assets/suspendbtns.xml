@@ -1,0 +1,132 @@
+
+<krpano>
+	<skin_settings
+		showtext="true"
+		panel_bgcolor="#3E3F2E"
+		panel_bgalpha="0.8"
+		panel_bgshadow="2 2 6 0.8 0x906676 0.5"
+		/>
+
+	
+
+	<include url="showtext.xml" />
+
+	<textstyle name="STYLE4"
+	           font="Arial" fontsize="16" bold="true"
+	           background="true" backgroundcolor="0x000000" backgroundalpha="0.5"
+	           border="true" borderwidth="1" bordercolor="0xFFFFFF" roundedge="6"
+	           textcolor="0xFFFFFF"
+	           padding="6 10"
+	           textalign="center"
+	           yoffset="-5"
+	           />
+
+	<style name="suspend_skin_style" url="suspend_skin.png" scale="0.5" />
+	
+	<!--菜单按钮-->
+	<layer name="suspend_menu" keep="true" type="container" align="left" width="60" height="60" bgroundedge="50" x="40" y="200" bgalpha="0.6" bgcolor="#3B3835" edge="center" bgcapture="true" bgshadow="2 2 6 0.8 0x949294 0.4" maskchildren="true" children="true" zorder="3" >
+		<layer name="menu_btn" style="suspend_skin_style" crop="100|0|100|100" scale="0.4" align="center" edge="center" onovercrop="0|100|100|100" onoutcrop="100|0|100|100" onhover="if(skin_settings.showtext,showtext(菜单,STYLE4))" ondown="draglayer2()" onclick="toggle_suspenditems()" />
+	</layer>
+
+	<!--子菜单圆环-->
+	<layer name="suspend_items" keep="true" type="container" align="left" edge="center" width="200" height="200" alpha="0" visible="false" scale="0" bgroundedge="200" bgalpha="get:skin_settings.panel_bgalpha" bgcolor="get:skin_settings.panel_bgcolor" bgshadow="get:skin_settings.panel_bgshadow" maskchildren="true" >
+		<!--导航-->
+		<layer name="nav_btn" style="suspend_skin_style" item="true" crop="200|0|100|100" scale="0.55" onovercrop="300|0|100|100" onoutcrop="200|0|100|100" onhover="if(skin_settings.showtext,showtext(导航,STYLE4))" align="center" y="-70" onclick="openurl(get(user_infos.navurl),_blank)" />
+		<!--电话-->
+		<layer name="phone_btn" style="suspend_skin_style" item="true" crop="400|0|100|100" scale="0.5" onovercrop="500|0|100|100" onoutcrop="400|0|100|100" onhover="if(skin_settings.showtext,showtext(calc('电话：'+ user_infos.phonenumber),STYLE4))" align="center" x="67" y="-18" onclick="if(device.mobile,openurl(calc('tel:' + user_infos.phonenumber),_self))" />
+		<!--主页-->
+		<layer name="homepage_btn" style="suspend_skin_style" item="true" crop="0|0|100|100" scale="0.45" onovercrop="100|100|100|100" onoutcrop="0|0|100|100" onhover="if(skin_settings.showtext,showtext(主页,STYLE4))" align="center" x="35" y="55" onclick="openurl(get(user_infos.homeurl),_blank)" />
+		<!--分享-->
+		<layer name="share_btn" style="suspend_skin_style" item="true" crop="200|100|100|100" scale="0.45" onovercrop="300|100|100|100" onoutcrop="200|100|100|100" onhover="if(skin_settings.showtext,showtext(分享,STYLE4))" align="center" x="-50" y="55" onclick="openshare(get(skin_settings.domainlink),get(skin_settings.pano_id))" />
+		<!--店铺-->
+		<layer name="shop_btn" style="suspend_skin_style" item="true" crop="400|100|100|100" scale="0.45" onovercrop="500|100|100|100" onoutcrop="400|100|100|100" onhover="if(skin_settings.showtext,showtext(店铺,STYLE4))" align="center" x="-67" y="-18" onclick="openurl(get(user_infos.shopurl),_blank)" />
+	</layer>
+
+	<layer name="qrcode_layer" keep="true" type="container" width="80%" maxwidth="280" height="86%" maxheight="400" bgalpha="1" bgcolor="0xffffff" align="center" visible="false" >
+		<layer name="qrcode_title" type="text" align="top" width="100%" height="50" bgalpha="1" bgcolor="0xE9E8E9" html="手机扫描二维码" css="font-family:Arial;padding:10px; font-size:16px; color:#000000;" />
+		<layer name="close_qrcode" url="close.png" align="righttop" scale="0.2" x="15" y="15" onclick="set(layer[qrcode_layer].visible,false)" />
+		<layer name="qrcode_img" url="get:user_infos.shareqrcode" width="80%" height="prop" align="top" y="80" />
+	</layer>
+
+	
+	<!--子元素带动父元素-->
+	<action name="draglayer2">
+		copy(parentlayer,layer[get(name)].parent);
+
+		copy(drag_currentx, layer[get(parentlayer)].x);
+		copy(drag_currenty, layer[get(parentlayer)].y);
+		copy(drag_stagex, mouse.stagex);
+		copy(drag_stagey, mouse.stagey);
+		indexoftxt(align_contains_right, get(layer[get(parentlayer)].align), 'right');
+		indexoftxt(align_contains_bottom, get(layer[get(parentlayer)].align), 'bottom');
+		calc(drag_align_x, align_contains_right GE 0 ? -1 : +1);
+		calc(drag_align_y, align_contains_bottom GE 0 ? -1 : +1);
+		asyncloop(pressed,
+			calc(layer[get(parentlayer)].x, drag_currentx + (mouse.stagex - drag_stagex)*drag_align_x);
+			calc(layer[get(parentlayer)].y, drag_currenty + (mouse.stagey - drag_stagey)*drag_align_y);
+
+			stopoverflow(layer[get(parentlayer)]);
+		  );
+		  
+		  
+	</action>
+
+	<!--菜单按钮点击事件，弹出子菜单，动态定位子菜单-->
+	<action name="toggle_suspenditems" >
+		copy(distoright,layer[get(parentlayer)].x);
+		set(distoleft,calc(stagewidth - distoright));
+		set(distotop,calc(stageheight/2 + layer[get(parentlayer)].y));
+		set(distobottom,calc(stageheight/2 - layer[get(parentlayer)].y));
+		copy(posx,layer[get(parentlayer)].x);
+		copy(posy,layer[get(parentlayer)].y);
+
+
+
+		ifnot(layer[suspend_items].visible,
+			tween(layer[suspend_items].bgroundedge,100,0.3);
+			set(layer[suspend_items].visible,true);
+			tween(layer[suspend_items].alpha,1);
+			tween(layer[suspend_items].scale,1.3,0.3,default,tween(layer[suspend_items].scale,1,0.2));
+			if(distotop GT 100 AND distobottom GT 100 AND distoleft GT 100 AND distoright GT 100,
+				copy(layer[suspend_items].x,layer[get(parentlayer)].x);
+				copy(layer[suspend_items].y,layer[get(parentlayer)].y);
+				,
+				set(layer[suspend_items].x,calc(stagewidth/2));
+				set(layer[suspend_items].y,0);
+			 );
+			 ,
+			 tween(layer[suspend_items].alpha,0);
+			 tween(layer[suspend_items].scale,1.3,0.2,easeOutQuart,tween(layer[suspend_items].scale,0,0.4));
+			 delayedcall(0.5,set(layer[suspend_items].visible,false));
+		);
+
+
+	</action>
+
+	<!--防止溢出-->
+	<action name ="stopoverflow" >
+		set(maxwidth,calc(stagewidth - layer[suspend_menu].width/2));
+		set(maxheight,calc((stageheight - layer[suspend_menu].height)/2));
+
+		Math.abs(absY,%1.y);
+		div(halfwidth,%1.width,2);
+			
+		<!--左侧超出停止-->
+		if(%1.x GT maxwidth,
+			set(%1.x,get(maxwidth));
+		);
+		<!--右侧超出停止-->
+		if(%1.x LT halfwidth,
+			set(%1.x,get(halfwidth));
+		);
+		<!--底部超出停止-->
+		if(%1.y GT maxheight,
+			set(%1.y,get(maxheight));
+		);
+		if(%1.y LT 0 AND absY GT maxheight,
+			set(%1.y,calc(0-maxheight));
+		);
+
+	</action>
+
+</krpano>

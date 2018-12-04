@@ -1,0 +1,308 @@
+<include file="Header" />
+<!--float_nav-->
+<link rel="stylesheet" href="__PUBLIC__/webstyle/css/zx_index.css">
+<script type="text/javascript" src="__PUBLIC__/webstyle/js/advert1.js"></script>
+<div class="newsMain">
+
+  <div class="newsTop">
+      <foreach name="banner" item="vo">
+        <img src="{$vo.thumb}" alt="{$vo.ad_name}"  width="1920" height="250" />
+      </foreach>
+    <div class="newsTopTxt">
+      <h3>全景资讯</h3>
+      <div class="num"><span class="timer" data-to="{$count}" data-speed=""></span>{$count}篇资讯</div>
+    </div>
+    <!--newsTopTxt--></div>
+  <!--newsTop-->
+  <div class="subNav">
+    <p>
+    <a href="index.php?s=/Website/wzzx" class="curr">资讯首页</a>
+    
+     <foreach name="lanmu" item="vo">
+      <span>/</span>
+      <a href="index.php?s=/Website/wzzxlist/lanmuid/{$vo.id}" >{$vo.name}</a>
+    </foreach>
+    </p>
+  </div>
+  <!--subNav-->
+
+  <!--recommendedReadBg-->
+  <div class="newsIndexBox">
+    <div class="newsIndexLeft">
+      <div class="headlines">
+        
+        <foreach name="zixun" item="vo">
+        <if condition="$key == 0 ">
+           <h3><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></h3>
+        </if>
+        </foreach>
+        
+        <ul>
+         <foreach name="zixun" item="vo">
+        <if condition="($key != 0) AND ($key elt 3)">
+          <li><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></li>
+             </if>
+        </foreach>
+        </ul>
+
+        <foreach name="zixun2" item="vo">
+        <if condition="$key == 0 ">
+        <h3><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></h3>
+          </if>
+        </foreach>
+        <ul>
+           <foreach name="zixun2" item="vo">
+            <if condition="($key != 0) AND ($key elt 3)">
+              <li><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></li>
+            </if>
+        </foreach>
+        </ul>
+
+        <foreach name="zixun3" item="vo">
+            <if condition="$key == 0 ">
+              <h3><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></h3>
+         </if>
+        </foreach>
+        <ul>
+
+        <foreach name="zixun3" item="vo">
+            <if condition="($key != 0) AND ($key elt 3)">
+                <li><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></li>
+         </if>
+        </foreach>
+        </ul>
+      </div>
+      <!--headlines-->
+      <div class="panoNews">
+        <div class="newsTitle01"><b></b>
+          <h3><a href="index.php?s=/Website/wzzxlist/lanmuid/34" target="_blank">全景新闻</a></h3>
+        </div>
+        <!--newsTitle01-->
+        <div class="panoNewsCont">
+          
+        <foreach name="xinwen" item="vo">
+            <if condition="$key == 0 ">
+          <h4><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></h4>
+            </if>
+         </foreach>
+
+          <ul class="newsList01">
+            <foreach name="xinwen" item="vo">
+            <if condition="($key != 0) AND ($key elt 6)">
+            <li><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></li>
+             </if>
+            </foreach>
+          </ul>
+        </div>
+        <!--panoNewsCont--></div>
+      <!--panoNews--></div>
+    <!--newsIndexLeft-->
+    <div class="newsIndexRight">
+      <div class="focus">
+        <ul>
+          <!-- 广告 -->
+            <foreach name="ad1" item="vo">
+              <li><a href="{$vo.outlink}" target="_blank"><img src="{$vo.thumb}" alt="{$vo.ad_name}" /></a></li>
+            </foreach>
+        </ul>
+        <div class="clearfloat"></div>
+      </div>
+      <!--focus-->
+      <div class="focusKeyWord">
+        <p></p>
+      </div>
+      <!--focusKeyWord-->
+      <div class="recommendedImg">
+        <ul>
+          <foreach name="pano1" item="vo">
+            <li><a href="{$vo.panopath}" target="_blank"><img src="{$vo.panothumb}" alt="{$vo.title}"  width="297" height="200"  style="margin-top: -40px;" /><i></i>
+              <p>{$vo.title}</p></a></li>
+          </foreach>
+        </ul>
+        <div class="clearfloat"></div>
+      </div>
+      <!--recommendedImg-->
+      <div class="panoNews">
+        <div class="newsTitle01"><b></b>
+          <h3><a href="index.php?s=/Website/wzzxlist/lanmuid/35" target="_blank">全景知识</a></h3>
+        </div>
+        <!--newsTitle01-->
+        <div class="panoNewsCont">
+          <foreach name="zhishi" item="vo">
+            <if condition="$key == 0 ">
+          <h4><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></h4>
+            </if>
+         </foreach>
+          <ul class="newsList01">
+            <foreach name="zhishi" item="vo">
+            <if condition="($key != 0) ">
+            <li><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></li>
+             </if>
+            </foreach>
+          </ul>
+        </div>
+        <!--panoNewsCont--></div>
+      <!--panoNews--></div>
+    <!--newsIndexRight-->
+    <div class="clearfloat"></div>
+  </div>
+  <!--newsIndexBox-->
+ 
+<div class="bannerT01">
+<div class="slider" id="ad0">
+<ul>
+    <foreach name="ad2" item="vo">
+      <li style="display: list-item;" ><a href="{$vo.outlink}" target="_blank"><img src="{$vo.thumb}" width="1190" height="90"></a></li>
+   </foreach>
+</ul>
+
+<ol style="margin-top: -10px;">
+
+</ol>
+</div>
+</div>
+
+  <!--bannerT01-->
+  <div class="newsIndexBox">
+    <div class="newsIndexLeft">
+      <div class="tabbox">
+        <div class="tabTitle"><i></i>
+          <ul>
+            <li><a href="index.php?s=/Website/wzzxlist/lanmuid/36" target="_blank">行业资讯</a></li>
+          </ul>
+          <div class="clearfloat"></div>
+        </div>
+        <!--tabTitle-->
+        <div class="tabContBox">
+          <div class="tabCont" style="display:block;">
+            <div class="tabContList01">
+              <foreach name="hangye" item="vo">
+                  <if condition="$key == 0 ">
+                       <h3><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></h3>
+                  </if>
+               </foreach>
+
+              <ul class="newsList01">
+                   <foreach name="hangye" item="vo">
+                  <if condition="($key != 0) AND ($key elt 5)">
+                  <li><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></li>
+                   </if>
+                 </foreach>
+              </ul>
+            </div>
+            <!--tabContList01-->
+            <div class="tabContList02">
+                 <foreach name="hangye" item="vo">
+                  <if condition="($key == 5)">
+                       <h3><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></h3>
+                  </if>
+               </foreach>
+              <ul class="newsList01">
+                    <foreach name="hangye" item="vo">
+                  <if condition="($key gt 5) AND ($key elt 10)">
+                  <li><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></li>
+                   </if>
+                 </foreach>
+              </ul>
+            </div>
+            <!--tabContList02--></div>
+          <!--tabCont--></div>
+        <!--tabContBox--></div>
+      <!--tabbox-->
+      <div class="expodynamicNews">
+        <div class="newsTitle01"><b></b>
+          <h3><a href="index.php?s=/Website/wzzxlist/lanmuid/38" target="_blank">全景动态</a></h3>
+        </div>
+        <!--newsTitle01-->
+        <div class="expodynamicCont01">
+        <foreach name="wzdt" item="vo">
+            <if condition="$key eq 0">
+          <h4><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></h4>
+           </if>
+          </foreach>
+          <ul class="newsList01">
+               <foreach name="wzdt" item="vo">
+                  <if condition="($key elt 5) and ($key != 0)">
+                         <li><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></li>
+                  </if>
+              </foreach>
+          </ul>
+        </div>
+        <!--expodynamicCont01-->
+
+        <!--expodynamicCont02--></div>
+      <!--expodynamicNews--></div>
+    <!--newsIndexLeft-->
+
+      <div class="newsIndexRight">
+     
+      <div class="banner02">
+      <foreach name="ad3" item="vo">
+      <a href="{$vo.outlink}" target="_blank"><img src="{$vo.thumb}" width="1190px" height="90px"></a>
+      </foreach>
+      </div>
+
+      <!--banner02-->
+      <div class="mjdpNews">
+        <div class="newsTitle01"><b></b>
+          <h3><a href="index.php?s=/Website/wzzxlist/lanmuid/37" target="_blank">企业专栏</a></h3>
+        </div>
+        <!--newsTitle01-->
+        <ul class="newsList01">
+              <foreach name="zhuanlan" item="vo">
+                  <if condition="$key elt 5">
+                         <li><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></li>
+                  </if>
+              </foreach>
+        </ul>
+      </div>
+      <!--mjdpNews-->
+      <div class="expoVideo">
+        <ul class="videoList">
+         <foreach name="ad4" item="vo">
+          <li class="videoFirst" video-url=""><img src="{$vo.thumb}" alt="{$vo.ad_name}"  width="600" height="383" /><i><span></span></i>
+            <div></div>
+            <b></b>
+            <p>{$vo.ad_name}</p>
+          </li>
+          </foreach>
+
+        </ul>
+        <div class="clearfloat"></div>
+      </div>
+      <!--expoVideo--></div>
+    <!--newsIndexRight-->
+    <div class="clearfloat"></div>
+  </div>
+ 
+ <div class="bannerT01">
+    <foreach name="ad5" item="vo">
+      <a href="{$vo.outlink}" target="_blank"><img src="{$vo.thumb}" width="1190px" height="90px"></a>
+    </foreach>
+ </div>
+
+  
+  <div class="panoIndexList">
+    <ul>
+      
+     <foreach name="pano2" item="vo">
+       <li><a href="{$vo.panopath}" target="_blank" class="img"><img src="{$vo.panothumb}" alt="{$vo.title}" /><i></i><span>点击进入</span></a>
+        <p><a href="{$vo.panopath}" target="_blank">{$vo.title}</a></p>
+       </li>
+    </foreach>
+
+    </ul>
+    <div class="clearfloat"></div>
+  </div>
+  <!--panoIndexList--></div>
+<!--newsMain-->
+<div class="videoMain">
+  <div class="videoCont">
+    <div class="videoClose"><a></a></div>
+    <div id="video"></div>
+  </div>
+  <!--videoCont--></div>
+<div class="videoMainBg"></div>
+<script type="text/javascript" src="__PUBLIC__/webstyle/js/ckplayer.js" charset="utf-8"></script>
+<script src="__PUBLIC__/webstyle/js/zx_main.js"></script>
+<include file="Footer" />

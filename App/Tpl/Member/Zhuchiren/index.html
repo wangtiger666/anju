@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jscolor/jscolor.js"></script>
+        {:W("Easyui")}
+        {:W("Uploader")}
+        <script type="text/javascript">
+            function checksb(){
+                var result = true;
+                if(result == true){
+                    result = AutoCheckSub(".cs");
+                }
+                return result;
+            }
+            $(document).ready(function(){
+                onoroff();
+            });
+        </script>
+
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">全景项目 - {$panorow['title']}</div>
+                        <div title="关闭" data-info="确认返回功能首页？" data-url="{:U('main/index')}" class="delaction close"></div>
+                        <div title="返回上级" onclick="LinkTo('{$backurl}');" class="goback"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            {:W("Panomenu",array("pano_id"=>$pano_id,"num"=>4))}
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main">
+                                <div class="action_title"><a href="{:U('toolbox/index',array('pano_id'=>$pano_id))}">模块管理</a> - <a href="{:U('index',array('pano_id'=>$pano_id))}">视频主持人</a>
+								<span class="vrback"><a href="{:U('toolbox/index',array('pano_id'=>$pano_id))}">返回上级</a></span></div>
+                                <div class="action_web">
+                                    <form name="form1" action="" onsubmit="return checksb();" enctype="multipart/form-data" method="post">
+                                        <input name="dopost" value="save" type="hidden" />
+                                        <input name="member_id" value="{$member_id}" type="hidden" />
+                                        <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">
+                                            <tr class="tr_white" height="40">
+                                                <td align="right"><b>开启开关：</b></td>
+                                                <td>
+                                                    <span class="onoff" target="open" value="{$row['open']}"></span>
+                                                    <input type="hidden" id="open" name="open" value="{$row['open']}" />
+													（仅支持PC端使用）
+                                                </td>
+                                            </tr>
+
+											<tr class="tr_white" height="40">
+                                                    <td align="right" width="100"><b>视频文件：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" id="file" name="file" value="{$row['file']}" sbname="FLV文件" style="width: 200px;" class="inputstyle cs"/>
+                                                        <input type="hidden" name="old_file" value="{$roamrow['file']}" />
+                                                        <input type="button" class="btn" value="上传文件" id="flvbtn" />
+														（请上传透明的flv视频文件）
+                                                        <script type="text/javascript">
+                                                            $("#flvbtn").uploader("video","flvback");
+                                                            function flvback(data){
+                                                                $("#file").val(data);
+                                                            }
+                                                        </script>
+                                                    </td>
+                                            </tr>
+
+											<tr class="tr_white" height="40">
+                                            <td align="right" width="80"><b>视频播放大小：</b></td>
+                                            <td align="left">
+                                                宽：<input type="text" class="shortinputcube" value="{$row['width']}" name="width" />&nbsp;&nbsp;
+                                                高：<input type="text" class="shortinputcube" value="{$row['height']}" name="height" />
+                                            </td>
+											</tr>
+
+
+											<tr class="tr_white" height="40">
+                                            <td align="right" width="80"><b>播放位置：</b></td>
+                                            <td align="left">
+                                                <input type="radio" value="left" name="position" id="position1" <if condition="$row['position'] eq 'left'">checked="true"</if> /><label for="position1">左侧</label>
+                                                <input type="radio" value="right" name="position" id="position2" <if condition="$row['position'] eq 'right'">checked="true"</if> /><label for="position2">右侧</label>
+                                            </td>
+											</tr>
+
+
+                                            <!-- <tr class="tr_white" height="40">
+                                                <td align="right" width="100"><b>图片上传：</b></td>
+                                                <td align="left">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="floatimg" id="imageimg">
+                                                                    <neq name="row['image']" value=""><img src="{:CC('web_root')}{$row['image']}" onload="photocenterin(this,120,120);" /></neq>
+                                                                </div>
+                                                                <input type="hidden" id="image" name="image" value="{$row['image']}" />
+                                                                <input type="hidden" name="old_image" value="{$row['image']}" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="button" value="点击上传" id="imagebtn" class="btn" />
+                                                                （建议图片不超过400×400）
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    {:uploadFill("#imagebtn", "#image", "#imageimg", 120 , 120)}
+                                                </td>
+                                            </tr> -->
+
+                                            <tr class="tr_white" height="10">
+                                                <td colspan="2"></td>
+                                            </tr>
+                                            <tr class="tr_white" height="40">
+                                                <td align="right" width="120"></td>
+                                                <td align="left">
+                                                    <input type="submit" class="blackbutton" value="提交" />
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="10">
+                                                <td colspan="2"></td>
+                                            </tr>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

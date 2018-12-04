@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" class="">
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<meta name="renderer" content="webkit">
+	    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+	    <title>720vr全景云 - 登录</title>
+		<meta name="keywords" content="登录" />
+		<meta name="description" content="登录" />
+		<meta http-equiv="Cache-Control" content="no-transform" />
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/member/login/css/base.css">
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/member/login/css/sign.css" />
+
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/member/login/js/common.js"></script>   
+<script type="text/javascript">
+
+function change_denglu(flag){
+    if(flag=="weixin"){
+        $("#weixin").addClass("active")
+        $("#change_weixin").css("display","block");
+        $("#zhanghao").removeClass("active");
+        $("#change_zhanghao").css("display","none");
+    }
+    if(flag=="zhanghao"){
+        $("#zhanghao").addClass("active")
+        $("#change_weixin").css("display","none");
+        $("#weixin").removeClass("active");
+        $("#change_zhanghao").css("display","block");
+    }
+}
+
+function formsub(){
+		$('#login_form').submit();
+	}
+
+
+/*function toLogin()
+    {
+   //以下为按钮点击事件的逻辑。注意这里要重新打开窗口
+   //否则后面跳转到QQ登录，授权页面时会直接缩小当前浏览器的窗口，而不是打开新窗口
+   var A=window.open("http://www.local360vr.com/member/login/qq_login","TencentLogin", 
+   "width=450,height=320,menubar=0,scrollbars=1,resizable=1,status=1,titlebar=0,toolbar=0,location=1");
+    } */
+</script>
+
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="__PUBLIC__/member/login/js/html5shiv.min.js"></script>  
+			<script src="__PUBLIC__/member/login/js/respond.min.js"></script>
+		<![endif]-->
+</head>
+<body class="" onkeydown="keyLogin();">
+	<!-- content start -->
+	<section id="section" class="fuwo-sign">
+	<!-- <a href="/"><i class="icon-logo"></i></a> -->
+    <div class="sign-wrap">
+        <div class="top-tab">
+        <a href="javascript:;" class="tab-opt active"  id="weixin" onclick="change_denglu('weixin')"   >微信登录</a>
+        <a href="javascript:;" class="tab-opt "      id="zhanghao"  onclick="change_denglu('zhanghao')" >账号登录</a>
+        </div>
+
+<div class="tab-panels">
+            <div class="tab-panel weixin-panel" style="display:block;" id="change_weixin" >
+            <div id="open_weixin" class="open-weixin">
+                <div class="qr-code">
+                    <div class="qr-img">
+                              <script src="__PUBLIC__/member/login/js/wxLogin.js"></script>
+                              <div id="login_container"  style="margin-top: -5px;">
+                                    <script type="text/javascript">
+                                            var redirect_uri="{$domainlink}";
+                                            var appid ="{$appid}";
+                                            redirect_uri = encodeURIComponent(redirect_uri);
+                                            var obj = new WxLogin({
+                                            id:"login_container", 
+                                            appid: appid, 
+                                            scope: "snsapi_login", 
+                                            redirect_uri: redirect_uri+"%2Fmember%2Flogin%2Fweixinlogin",
+                                            state: "STATE",
+                                            style: "black",
+                                            href: "{$domainlink}/Public/member/login/css/weixin.css"
+                                        });
+                                    </script>
+                                </div>
+                    </div>
+                <!-- <div class="tip-text J-Tip" style="position:relative;">
+                <p class="til">微信扫码，快速登录</p>
+                </div> -->
+                <div>
+                    
+                </div>
+                </div>
+                </div>
+            </div>
+    </div>
+
+    <div class="tab-panel form-panel" style="display: none;" id="change_zhanghao" >
+                <form class="login-form" id="login_form" name="form1" method="post">
+                	<input type="hidden" name="dopost" value="login" />
+                    <div class="form">
+                        <div class="inputline-wrap">
+                        <div class="inputline">
+                            <p class="input">
+                            <input class="control" id="userid" name="userid" type="text" autocomplete="off" placeholder="手机号/邮箱">
+                            <i class="icon share-icon-user"></i></p>
+                        </div>
+                        <div class="inputline">
+                            <p class="input">
+
+                            <input class="control" id="sign_pwd" name="pwd" type="password" autocomplete="off" placeholder="密码">
+                            <i class="icon share-icon-password"></i></p>
+                        </div>
+                        </div>
+                        <div class="inputline margin-bottom-20">
+
+                            <div class="float-left">
+							<label class="rem hover">
+							<div class="icheckbox_square-green checked" id="remid"  style="position: relative;">
+							
+							<input class="rem_i" id="sign_remember" checked="checked"  name="sign_remember" type="checkbox" onclick="changestatus()"  style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">
+							<ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; cursor: pointer; background: rgb(255, 255, 255);"></ins>
+							</div>
+							 记住我</label>
+							</div>
+
+							<script type="text/javascript">
+								function changestatus(){
+									var res = $("#sign_remember").attr("checked");
+									if(res=="checked"){
+											$("#remid").addClass("checked");
+									}else{
+											$("#remid").removeClass("checked");
+									}
+
+								}
+							</script>
+                            <a  href="/member/repass" class="float-right" style="cursor:pointer;">忘记密码？</a>
+                        </div>
+                        <div class="btn-box">
+                            <span class="btn btn-success" id="sign_submit" onclick="formsub()" >登录</span>
+                        </div>
+                    </div>
+                </form>
+                <script language="JavaScript">
+							function keyLogin(){
+							  if (event.keyCode==13)   //回车键的键值为13
+							     document.getElementById("sign_submit").click();  //调用登录按钮的登录事件
+							}
+				</script>
+                <div class="open-login f12">
+                    <!-- <a class="qq"   onclick='toLogin()' href="#" ><i class="icon share-icon-qq"></i>QQ</a> -->
+                    <a class="weixin"    href="{$weixinlogin_url}"><i class="icon share-icon-blog" style="background-position: -18px -146px;"></i>微信</a>
+                 
+                    <a class="float-right sign" href="/member/reg" style="cursor:pointer;" >免费注册</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="next_to" value=""/>
+	</section>
+</body>
+</html>

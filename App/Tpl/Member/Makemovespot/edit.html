@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        {:W("Easyui")}
+        {:W("Uploader")}
+        <script type="text/javascript">
+            function checksb(){
+                var result = true;
+                if(result == true){
+                    result = AutoCheckSub(".cs");
+                }
+                return result;
+            }
+            $(document).ready(function(){
+                photorun();
+            });
+            function photorun(){
+                var temp = $(".movebox");
+                var w = temp.data("w");
+                var h = temp.data("h");
+                var len = temp.data("len");
+                var n = temp.data("n");
+                var sp = $("#speed").val();
+                $("body").stopTime("move");
+                $("body").everyTime(sp+"ms","move",function(){
+                    n = temp.data("n");
+                    n++;
+                    if(n==len){
+                        n=0;
+                    }
+                    mv_h = -n*h;
+                    temp.children("img").css("marginTop",mv_h+"px");
+                    temp.data("n",n);
+                });
+            }
+        </script>
+        <style>
+            #imgbox{
+                background: url(__PUBLIC__/member/images/common/psbg.png); float: left; padding: 10px;
+            }
+            .movebox{
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">静态热点设置</div>
+                        <div title="关闭" onclick="DoNote('确认返回功能首页？','{:U('main/index')}');" class="close"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            <a class="pano_menu_bottom me">静态热点</a>
+                            <a href="{:U('makemovespot/index')}" class="pano_menu_bottom">动态热点</a>
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main">
+                                <div class="action_title"><a href="{:U('index')}">静态热点</a> - 查看</div>
+                                <form name="form1" action="" onsubmit="return checksb();" enctype="multipart/form-data" method="post">
+                                    <input type="hidden" name="dopost" value="save" />
+                                    <input type="hidden" name="id" value="{$row['id']}" />
+                                    <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">
+                                        <tr class="tr_white" height="10">
+                                            <td align="right" width="120"></td>
+                                            <td align="left">
+                                                <div id="imgbox">
+                                                    <div class="movebox" data-w="{$row['width']}" data-h="{$row['height']}" data-len="{$row['len']}" data-n="0" data-speed="{$row['speed']}" style="width: {$row['width']}px; height: {$row['height']}px;"><img src="{:CC('web_root')}{$row['file']}" /></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="120"><b>静态热点名称：</b></td>
+                                            <td align="left">
+                                                <input type="text" id="title" name="title" value="{$row['title']}" sbname="静态热点名称" class="inputcube cs"/>
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="8">
+                                            <td colspan="2"></td>
+                                        </tr>
+                                        <tr class="tr_white" height="50">
+                                            <td align="right" width="120"><b>旋转速度：</b></td>
+                                            <td align="left">
+                                                <input class="easyui-slider" style="width:300px" name="speed" id="speed" value="{$row['speed']}" data-options="
+                                                       showTip:true,
+                                                       min:1,
+                                                       max:80,
+                                                       rule: [1,'|',10,'|',20,'|',30,'|',40,'|',50,'|',60,'|',70,'|',80],
+                                                       tipFormatter: function(value){
+                                                       photorun();return value+'ms';
+                                                       }
+                                                       "/>
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="10">
+                                            <td colspan="2"></td>
+                                        </tr>
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="120"></td>
+                                            <td align="left">
+                                                <input type="submit" class="blackbutton" value="提交" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

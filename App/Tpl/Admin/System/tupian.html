@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=100"/>
+        <title>邮件参数配置</title>
+        <script src="__PUBLIC__/common/js/jquery.js" language="javascript" type="text/javascript"></script>
+        <script language="javascript" type="text/javascript">
+            function showadd(){
+                $("#addvar").show();                
+            }
+            function ShowConfig(n){
+                n--;
+                $(".result_back_box").hide();
+                $(".result_back_box").eq(n).show();
+            }
+            $(document).ready(function(){
+                $(".result_back_box").first().show();
+            });
+        </script>
+        <!-- bootstrap START-->
+        <link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/animate.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/style.css" rel="stylesheet">
+        <style type="text/css">
+            body{
+                background: #FFF;
+            }
+        </style>
+        <!-- bootstrap END -->
+    </head>
+    <body>
+  	
+  	  <div class="main">
+            <div class="downbox">
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5>图片存储配置：</h5>
+                            <div class="ibox-tools">
+                                <a  href="https://www.aliyun.com" target="_blank" class="btn btn-primary btn-xs">访问官网</a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                         <form action="" method="post" name="form1"  class="form-horizontal">
+                            <input name="dopost" value="save" type="hidden">
+                  			<input name="id" value="1" type="hidden">
+                            <table class="footable table table-stripped toggle-arrow-tiny footable-loaded default breakpoint" data-page-size="15">
+                                <thead>
+                                <tr>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">名称<span class=""></span></th>
+                                    <th data-hide="phone" class="footable-sortable footable-visible" style="display: table-cell;">参数值<span class=""></span></th>
+                                    <th data-hide="phone" class="footable-sortable footable-visible" style="display: table-cell;">说明<span class=""></span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                 <tr class="footable-even"  >
+                                    <td class="footable-visible footable-first-column">存储ID：</td>
+                                    <td class="footable-visible"  ><input name="cid" id="cfg_smtp_server" value="{$row['cid']}" style="width:60%" type="text" class="form-control" ></td>
+                                    <td >存储ID</td>
+                                </tr>
+                                 <tr class="footable-odd"  >
+                                    <td class="footable-visible footable-first-column">secretKEY：</td>
+                                    <td class="footable-visible"  >	<input name="secretKEY" id="cfg_smtp_port" value="{$row['secretKEY']}" style="width:60%" type="text" class="form-control" ></td>
+                                    <td >secretKEY</td>
+                                </tr>
+
+                                <tr class="footable-even"  >
+                                    <td class="footable-visible footable-first-column">bucket：</td>
+                                    <td class="footable-visible"  > <input name="bucket" id="cfg_smtp_usermail" value="{$row['bucket']}" style="width:60%" type="text" class="form-control" ></td>
+                                    <td >bucket</td>
+                                </tr>
+
+                                <tr class="footable-odd"  >
+                                    <td class="footable-visible footable-first-column">CDN域名：</td>
+                                    <td class="footable-visible"  > <input name="cdn" id="cfg_smtp_user" value="{$row['cdn']}" style="width:60%" type="text" class="form-control" ></td>
+                                    <td >CDN域名</td>
+                                </tr>
+                                  <tr class="footable-even"  >
+                                    <td class="footable-visible footable-first-column">存储区：</td>
+                                    <td class="footable-visible"  > <input name="area" id="cfg_smtp_pwd" value="{$row['area']}" style="width:60%" type="text" class="form-control" ></td>
+                                    <td >区域选择</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                     		 <table width="100%" border="0" cellspacing="1" cellpadding="1"  >
+					                <tr>
+					                    <td height="50" colspan="3">
+					                        <table width="100%" border="0" cellspacing="1" cellpadding="1">
+					                            <tr>
+					                                <td width="11%">&nbsp;</td>
+					                                <td width="11%">
+					                                <button type="submit" class="btn btn-outline btn-primary">保存</button>
+					                                </td>
+					                            </tr>
+					                        </table>
+					                    </td>
+					                </tr>
+           					 </table>
+           					</form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+
+<!-- smtp服务器：    
+smtp.dm.aliyun.com
+cfg_smtp_server
+smtp服务器端口：  
+25
+cfg_smtp_port
+SMTP服务器的用户邮箱：   
+no-reply@notice.lywww.com
+cfg_smtp_usermail
+SMTP服务器的用户帐号：   
+no-reply@notice.lywww.com
+cfg_smtp_user
+SMTP服务器的用户密码： -->

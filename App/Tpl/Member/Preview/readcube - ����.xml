@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano>
+    <skin_settings cube{$cube_id}_id="1" cube{$cube_id}_total="{$row['len']}" cube{$cube_id}_autogo="{$cuberow['is_auto']}" 
+            cube{$cube_id}_speed="0" cube{$cube_id}_go="0" cube{$cube_id}_dir="-1" 
+            cube{$cube_id}_mx="0" cube{$cube_id}_my="0" cube{$cube_id}_fd="{$fd}" cube{$cube_id}_sp="{$speed}"
+        />
+    <events onresize="action(setcube{$cube_id}wh);" />
+    <layer name="cube{$cube_id}" visible="False" enabled="True" keep="false" type="container" bgcolor="0xffffff" bgalpha="0.5" align="center" width="100%" height="100%" x="0" y="0" zorder="1000">
+        <layer name="infotext{$cube_id}" url="__PUBLIC__/pano/plugins/textfield.swf" enabled="true" border="false" background="false" zorder="1003"
+		align="righttop" x="10" y="10" width="80" autoheight="true" onclick="set(layer[cube{$cube_id}].visible,false);"
+		css="text-align:center; color:#FF0000; font-family:微软雅黑; font-weight:bold; font-size:14px;"
+		html="点击关闭"
+		/>
+        <layer name="cube{$cube_id}_eventpage" url="__PUBLIC__/member/images/common/none.png" ondown="cube{$cube_id}start();" onup="cube{$cube_id}stop();" visible="True" keep="false" align="center"  edge="center" width="100%" height="100%" x="0" y="0" zorder="1002"></layer>
+        <layer name="cube{$cube_id}_photoshow" keep="false" type="container" bgcolor="0x000000" bgalpha="0" scalechildren="true" align="center" width="{$row['width']}" height="{$row['height']}" x="0" y="0" zorder="1001">
+            <for start="0" end="$row['len']">
+                <if condition="$i eq 0">
+                    <layer  name="cube{$cube_id}_img{$i+1}" visible="True" handcursor="False" url="{:CC('web_root')}{$row['file']}/cube{$i}.{$end[$row['imagetype']]}" align="center" edge="center" width="{$row['width']}" height="{$row['height']}" x="0" y="0"/>
+                    <else/>
+                    <layer  name="cube{$cube_id}_img{$i+1}" visible="false" handcursor="False" url="{:CC('web_root')}{$row['file']}/cube{$i}.{$end[$row['imagetype']]}" align="center"  edge="center"  width="{$row['width']}" height="{$row['height']}" x="0" y="0"/>
+                </if>
+            </for>
+        </layer>
+    </layer>
+    <action name="setcube{$cube_id}wh">
+        set(winw,get(stagewidth));
+        set(winh,get(stageheight));
+        div(wxp,winw,{$row['width']});
+        div(whp,winh,{$row['height']});
+        if(wxp GT whp,
+            if(winh LT {$row['height']},set(layer[cube{$cube_id}_photoshow].scale,get(whp)););
+            ,
+            if(winw LT {$row['width']},set(layer[cube{$cube_id}_photoshow].scale,get(wxp)););
+        );
+    </action>
+    <action name="cube{$cube_id}start">        
+            set(skin_settings.cube{$cube_id}_go,1);
+            set(skin_settings.cube{$cube_id}_speed,0);
+            set(skin_settings.cube{$cube_id}_mx,get(mouse.stagex));
+            set(skin_settings.cube{$cube_id}_my,get(mouse.stagey));
+            action("cube{$cube_id}doing");
+            action("cube{$cube_id}next");
+    </action>
+    <action name="cube{$cube_id}stop">
+            set(skin_settings.cube{$cube_id}_go,0);
+            set(skin_settings.cube{$cube_id}_mx,0);
+            set(skin_settings.cube{$cube_id}_my,0);
+    </action>
+    <action name="cube{$cube_id}doing">
+            set(cube_mx,get(skin_settings.cube{$cube_id}_mx));
+            set(cube_nx,get(mouse.stagex));
+            sub(cube_xx,cube_nx,cube_mx);
+
+            set(cube_fd,get(skin_settings.cube{$cube_id}_fd));
+            set(cube_sp,get(skin_settings.cube{$cube_id}_sp));
+
+            if(cube_xx GT 0,
+                set(cube_dr,1);
+                mul(cube_ds,cube_sp,1)
+                ,
+                set(cube_dr,-1);
+                mul(cube_ds,cube_sp,1)
+            );
+            if(cube_xx EQ 0,
+                set(cube_dr,1);
+                set(cube_ds,0)
+            );
+            mul(cube_dr,cube_fd);
+            set(skin_settings.cube{$cube_id}_speed,get(cube_ds));
+            set(skin_settings.cube{$cube_id}_dir,get(cube_dr));
+            set(skin_settings.cube{$cube_id}_mx,get(cube_nx));
+
+            set(cube_ono,get(skin_settings.cube{$cube_id}_go));
+            if(cube_ono GT 0,
+                delayedcall(cube{$cube_id}reads,0.00001, cube{$cube_id}doing());
+            );
+    </action>
+    <action name="cube{$cube_id}next">
+            set(cube_d,get(skin_settings.cube{$cube_id}_dir));
+            set(cube_sp,get(skin_settings.cube{$cube_id}_speed));
+            if(cube_sp GT 0,
+                if(cube_d GT 0,
+                    if(skin_settings.cube{$cube_id}_id LT skin_settings.cube{$cube_id}_total,
+                        set(cubenow,get(skin_settings.cube{$cube_id}_id));
+                        add(cubenext,get(skin_settings.cube{$cube_id}_id),1);
+                        ,
+                        set(cubenow,get(skin_settings.cube{$cube_id}_id));
+                        set(cubenext,1);
+                    );
+                    ,
+                    if(skin_settings.cube{$cube_id}_id GT 1,
+                        set(cubenow,get(skin_settings.cube{$cube_id}_id));
+                        sub(cubenext,get(skin_settings.cube{$cube_id}_id),1);
+                        ,
+                        set(cubenow,get(skin_settings.cube{$cube_id}_id));
+                        set(cubenext,get(skin_settings.cube{$cube_id}_total));
+                    );
+                );
+                txtadd(cubenowlayer,cube{$cube_id}_img,get(cubenow));
+                txtadd(cubenextlayer,cube{$cube_id}_img,get(cubenext));
+                set(layer[get(cubenowlayer)].visible,false);
+                set(layer[get(cubenextlayer)].visible,true);
+                set(skin_settings.cube{$cube_id}_id,get(cubenext));
+            );
+            set(cube_on,get(skin_settings.cube{$cube_id}_go));
+            set(skin_settings.cube{$cube_id}_autogo,0);
+
+            if(cube_on GT 0,
+                delayedcall(cube{$cube_id}action,get(cube_sp), cube{$cube_id}next());
+            );
+    </action>
+    <action name="cube{$cube_id}autonext">
+            set(cube_d,get(skin_settings.cube{$cube_id}_dir));
+            set(cube_sp,get(skin_settings.cube{$cube_id}_sp));
+            set(cube_on,get(skin_settings.cube{$cube_id}_autogo));
+            if(cube_on GT 0,
+                if(cube_sp GT 0,
+                    if(cube_d GT 0,
+                        if(skin_settings.cube{$cube_id}_id LT skin_settings.cube{$cube_id}_total,
+                            set(cubenow,get(skin_settings.cube{$cube_id}_id));
+                            add(cubenext,get(skin_settings.cube{$cube_id}_id),1);
+                            ,
+                            set(cubenow,get(skin_settings.cube{$cube_id}_id));
+                            set(cubenext,1);
+                        );
+                        ,
+                        if(skin_settings.cube{$cube_id}_id GT 1,
+                            set(cubenow,get(skin_settings.cube{$cube_id}_id));
+                            sub(cubenext,get(skin_settings.cube{$cube_id}_id),1);
+                            ,
+                            set(cubenow,get(skin_settings.cube{$cube_id}_id));
+                            set(cubenext,get(skin_settings.cube{$cube_id}_total));
+                        );
+                    );
+                    txtadd(cubenowlayer,cube{$cube_id}_img,get(cubenow));
+                    txtadd(cubenextlayer,cube{$cube_id}_img,get(cubenext));
+                    set(layer[get(cubenowlayer)].visible,false);
+                    set(layer[get(cubenextlayer)].visible,true);
+                    set(skin_settings.cube{$cube_id}_id,get(cubenext));
+                ); 
+            
+                delayedcall(cube{$cube_id}action,get(cube_sp), cube{$cube_id}autonext());
+            );
+    </action>
+</krpano>

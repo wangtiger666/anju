@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>上传</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        {:W("Uploadweb")}
+        <script type="text/javascript">
+            function push() {
+                if ($(".imgbox").children("img").length == 1) {
+                    var data = $(".imgbox").children("img").attr("result");
+                } else {
+                    var data = "";
+                    for (i = 0; i < $(".imgbox").children("img").length; i++) {
+                        if (i > 0) {
+                            data += "|";
+                        }
+                        data += $(".imgbox").children("img").eq(i).attr("result");
+                    }
+                }
+                parent.{$jsname}(data);
+                parent.closethewin();
+            }
+        </script>
+    </head>
+    <body style="padding: 5px 10px;">
+        <div id="control">
+            <div id="flash">
+                <object id="myFlash" codeBase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="300" align="middle" height="30">
+                    <param name="allow script Access" value="sameDomain"/>
+                    <param name="movie" value="{$swfurl}"/>
+                    <param name="quality" value="high"/>
+                    <param name="bgcolor" value="#ffffff"/>
+                    <param name="menu" value="false"/>
+                    <param name="flashvars" value="phpurl={$phpdir}&filetype={$filetp}&filemax={$upload_size}&filetypeinfo={$tp}"/>
+                    <param name="wmode" value="Transparent"/>
+                    <embed width="300" height="30" flashvars="phpurl={$phpdir}&filetype={$filetp}&filemax={$upload_size}&filetypeinfo={$tp}" name="myFlash" wmode="Transparent" type="application/x-shockwave-flash" align="middle" pluginspage="http://www.macromedia.com/go/getflashplayer" src="{$swfurl}" swLiveConnect="true" Access="sameDomain" menu="false" bgcolor="#ffffff" quality="high"/>
+                </object>
+            </div>
+        </div>
+        <div id="selected"></div>
+        <div id="result"></div>
+        <div id="subbox"><input type="button" class="btn1" value="提交" onclick="push();" /></div>
+    </body>
+</html>

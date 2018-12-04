@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano>
+    <skin_settings toolboxmap_open="0" toolboxmap_btn1="{:CC('web_root')}{$maprow['openmapimg']}" toolboxmap_btn2="{:CC('web_root')}{$maprow['hidemapimg']}" ></skin_settings>
+    <layer name="toolboxmapbg" visible="False"  keep="true" type="container" align="center" width="{$photo['bw']}" x="0" y="0" height="{$photo['bh']}" bgcolor="0xFFFFFF" bgalpha="0.3" >
+        <layer name="toolboxmapscrollarea" url="%SWFPATH%/plugins/scrollarea.swf" alturl="%SWFPATH%/plugins/scrollarea.js" align="center" width="{$maparr[0]}" height="{$maparr[1]}" direction="all">
+            <layer name="toolboxmap" url="{:CC('web_root')}{$maprow['mapimg']}" align="center">
+                <volist name="viewlist" id="vrow">
+                    <eq name="vrow['maparr']['open']" value="1">
+                        <layer name="mappoint{$vrow['sort']}" url="{:CC('web_root')}{$maprow['pointimg']}" visible="True" align="lefttop" edge="center"
+                         keep="true" enabled="true" zorder="2" x="{$vrow['maparr']['map_x']}" y="{$vrow['maparr']['map_y']}" onhover="showtext({$vrow['title']});"
+                          onclick="loadscene(scene{$vrow['sort']},null, MERGE,BLEND(1));" open="1" h="{$vrow['maparr']['heading']}"
+                          />
+                    </eq>
+                    <eq name="vrow['maparr']['open']" value="0">
+                        <layer name="mappoint{$vrow['sort']}" url="{:CC('web_root')}{$maprow['pointimg']}" visible="False" align="lefttop" edge="center"
+                         keep="true" enabled="true" zorder="2" x="{$vrow['maparr']['map_x']}" y="{$vrow['maparr']['map_y']}"
+                          open="0"
+                         />
+                    </eq>
+                </volist>
+                <layer name="radar" keep="true" visible="true" zorder="0"
+                       url="%SWFPATH%/plugins/radar.swf" alturl="%SWFPATH%/plugins/radar.js"
+                       align="lefttop" edge="center" x="0" y="0"
+                       fillcolor="0x{$maprow['radercolor']||str_replace='#','',###}" fillalpha="{$maprow['raderalpha']}" linecolor="0x{$maprow['raderlinecolor']||str_replace='#','',###}" linewidth="{$maprow['raderlinewidth']}" linealpha="{$maprow['raderlinealpha']}"
+                       scale="{$maprow['radersize']}" heading="0" headingoffset="0" ></layer>
+            </layer>
+        </layer>
+    </layer>
+
+    <plugin name="toolboxmap_onbtn" url="{:CC('web_root')}{$maprow['openmapimg']}" edge="{$maprow['conrtolmap_center']}" keep="true" zorder="0"
+        align="{$maprow['conrtolmap_center']}" x="{$maprow['conrtolmap_x']}" y="{$maprow['conrtolmap_y']}" alpha="1" scale="1" visible="True" rotate="0"
+        onhover="showtext('打开地图');" onclick="set(layer[toolboxmapbg].visible,true);set(layer[toolboxmap_onbtn].visible,false);set(layer[toolboxmap_offbtn].visible,true);"
+        />
+        <plugin name="toolboxmap_offbtn" url="{:CC('web_root')}{$maprow['hidemapimg']}" edge="{$maprow['conrtolmap_center']}" keep="true" zorder="0"
+        align="{$maprow['conrtolmap_center']}" x="{$maprow['conrtolmap_x']}" y="{$maprow['conrtolmap_y']}" alpha="1" scale="1" visible="False" rotate="0"
+        onhover="showtext('关闭地图');" onclick="set(layer[toolboxmapbg].visible,false);set(layer[toolboxmap_onbtn].visible,true);set(layer[toolboxmap_offbtn].visible,false);"
+        />
+    <action name="toolboxmapto">
+        txtadd(prevname,'mappoint',get(skin_settings.toolboxmap_prev));
+        set(layer[get(pname)].url,"{:CC('web_root')}{$maprow['pointimg']}");
+        txtadd(pname, 'mappoint', %1);
+        set(opendata,get(layer[get(pname)].open));
+        if(opendata EQ 1,
+        set(layer[get(pname)].url,"{:CC('web_root')}{$maprow['thepointimg']}");
+        set(layer['radar'].visible,true);
+        set(mx,get(layer[get(pname)].x));
+        set(my,get(layer[get(pname)].y));
+        set(layer['radar'].x,get(mx));
+        set(layer['radar'].y,get(my));
+        set(layer['radar'].headingoffset,get(layer[get(pname)].h));
+        layer[toolboxmapscrollarea].scrolltocenter(get(mx),get(my))
+        ,
+        set(layer['radar'].visible,false);
+        );
+        set(skin_settings.toolboxmap_prev,%1);
+    </action>
+</krpano>

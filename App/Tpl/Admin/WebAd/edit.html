@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <script src="__PUBLIC__/common/js/jquery.js" language="javascript" type="text/javascript"></script>
+        <script src="__PUBLIC__/common/js/common.js" language="javascript" type="text/javascript"></script> 
+        <!-- bootstrap START-->
+        <link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/plugins/footable/footable.core.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/animate.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/style.css" rel="stylesheet">
+        <link href="__PUBLIC__/common/style/recovebootstrap.css" rel="stylesheet" type="text/css" /> 
+        <!-- bootstrap END -->
+           {:W("Uploader")}
+    </head>
+    <body>
+    	   <div  class="main" >
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>修改广告 <small></small></h5> 
+                              <div class="ibox-tools">
+                                <a   onclick="window.location.href='{:U('WebAd/imgindex')}'" class="btn btn-primary btn-xs">返回管理</a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                             <form name='form1' method='post' class="form-horizontal" onsubmit="return checksb();">
+                                <input type='hidden' name='dopost' value='save'/>
+                                <div class="form-group"><label class="col-sm-2 control-label">广告名称：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="ad_name" name="ad_name" tname="广告名称" value="{$info.ad_name}" />  
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group"><label class="col-sm-2 control-label">广告图片：</label>
+                                    <div class="col-sm-10">
+                                    <div class="thumbbox2" id="imgbox" style="cursor: pointer; height: auto;">                   
+                                        <img src="{$info.thumb}" style="max-width:900px;">
+                                    </div>  
+                                    <input type="button" id="imagebtn2" class="form-control" value="点击上传">
+                                </div>
+                                <input type="hidden" id="image" name="image" value="{$info.thumb}" />
+                                <input type="hidden" name="old_image" value="{$info.thumb}" />
+                                <script type="text/javascript">
+                                    $(function(){
+                                        $("#imagebtn2").uploader("image", "file");
+                                    })
+                                    function file(data){
+                                        $("#image").val(data);
+                                        $("#imgbox").html('<img src="'+data+'" onload="photocenterin(this,150,150)" />');
+                                    }
+                                </script>
+                                    </div>
+                             
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group"><label class="col-sm-2 control-label">广告外链：</label>
+                                    <div class="col-sm-10">
+                                          <input type="text" class="form-control" id="outlink" value="{$info.outlink}" tname="广告外链" name="outlink"/>
+                                    </div>
+                                </div>
+                               
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group"><label class="col-sm-2 control-label">广告外链：</label>
+                                    <div class="col-sm-10">
+                                          <input type="text" class="form-control"  id="listorder" name="listorder" tname="广告排序" value="{$info.listorder}" /> 
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+
+                                <div class="form-group"><label class="col-sm-2 control-label">广告位置：</label>
+                                    <div class="col-sm-10"> {$group}</div>
+                                </div>
+
+                                 <div class="hr-line-dashed"></div>
+                                 <div class="form-group"><label class="col-sm-2 control-label">是否显示:</label>
+                                    <div class="col-sm-10">
+                                        <select name="is_show">
+                                         <option value="">请选择</option>
+                                             <if condition="$info['is_show'] eq 1">
+                                                <option value="1"   selected="true" >是</option>
+                                                <option value="0"   >否</option>
+                                             </if>
+                                             <if condition="$info['is_show'] eq 0">
+                                                <option value="1"  >是</option>
+                                                <option value="0"  selected="true" >否</option>
+                                             </if>
+                                       </select>
+                                    </div>
+                                </div>
+
+                                 <div class="hr-line-dashed"></div>
+                                <div class="form-group">
+                                    <div class="col-sm-4 col-sm-offset-2">
+                                        <button class="btn btn-primary" type="submit">保存</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+			<script type="text/javascript">
+			$(document).ready(function(){
+			    $("#form1").submit(function(){
+			        if($("#ad_name").val() == "")
+			        {
+			            alert("请填写广告名称");
+			            return false;
+			        }
+			        else if ($("#thumb").val()=="")
+			        {
+			            alert("请上传广告图片");
+			            return false;
+			        }
+			        else if ($("#positionid").val()=="")
+			        {
+			            alert("请选择广告位置");
+			            return false;
+			        }
+			    });
+			});
+			</script>
+    </body>
+</html>

@@ -1,0 +1,161 @@
+<krpano >
+<action name="hotspot_animate_action">
+inc(frame,1,get(lastframe),0);
+mul(ypos,frame,frameheight);
+txtadd(crop,'0|',get(ypos),'|',get(framewidth),'|',get(frameheight));
+if(frameoff LT 1,
+delayedcall(get(framespeed), if(loaded, hotspot_animate() ) );
+);
+</action>
+<style name="hotspotname" url="%SWFPATH%/plugins/textfield.swf" scale="1.0" padding="5" backgroundcolor="#000000" backgroundalpha="0.5" roundedge="5" css="font-family:微软雅黑; font-size:12px; color:#ffffff;" edge="top" oy="-55" />
+<style name="hotspotname" url="%SWFPATH%/plugins/textfield.swf" scale="1.0" padding="5" backgroundcolor="#000000" backgroundalpha="0.5" roundedge="5" 
+css="font-family:微软雅黑; font-size:23px; color:#ffffff;" edge="top" oy="-50" devices="mobile"  />
+
+   
+<action name="showtxt_action">
+    showtxt_name(get(name),get(title),get(ath),get(atv));
+</action>
+
+
+<action name="showtxt_name">
+  if(view.fovmax == 170,
+        delayedcall(8,
+             txtadd(hotname,'hotsoptname_',%1);
+             addhotspot(get(hotname));
+             set(hotspot[get(hotname)].html,%2);
+             set(hotspot[get(hotname)].ath,%3);
+             set(hotspot[get(hotname)].atv,%4);
+             set(hotspot[get(hotname)].onclick,get(onclick));
+             hotspot[get(hotname)].loadstyle(hotspotname);   
+        );  
+    ,
+         txtadd(hotname,'hotsoptname_',%1);
+         addhotspot(get(hotname));
+         set(hotspot[get(hotname)].html,%2);
+         set(hotspot[get(hotname)].ath,%3);
+         set(hotspot[get(hotname)].atv,%4);
+         set(hotspot[get(hotname)].onclick,get(onclick));
+         hotspot[get(hotname)].loadstyle(hotspotname);   
+    );   
+</action>
+
+
+<style name="hotspotname_j" scale="1" url="%SWFPATH%/plugins/textfield.swf"  padding="5" backgroundcolor="#000000" backgroundalpha="0.5" roundedge="5" css="font-family:Arial,宋体; font-size:12px; color:#ffffff;" edge="top" oy ="-50" />
+<style name="hotspotname_j" devices="mobile" scale="1.0" oy ="-40" />
+
+<action name="showtxt_action_j">
+    showtxt_name_j(get(name),get(title),get(ath),get(atv));
+</action>
+
+<action name="showtxt_name_j">
+   txtadd(hotname,'hotsoptname_',%1);
+   addhotspot(get(hotname));
+   set(hotspot[get(hotname)].html,%2);
+   set(hotspot[get(hotname)].ath,%3);
+   set(hotspot[get(hotname)].atv,%4);
+   set(hotspot[get(hotname)].onclick,get(onclick));
+   hotspot[get(hotname)].loadstyle(hotspotname_j);
+</action>
+
+<action name="gotoscene_1">
+if(linkedscene, 
+   loadscene(get(linkedscene),null,MERGE,ZOOMBLEND(1,3));
+   if(hlookat,lookat(get(hlookat),get(vlookat),110));   
+   set(currscene,get(linkedscene)); 
+   getduihao();
+   switchscene();
+   );
+</action>
+
+<action name="gotoscene_2">
+if(linkedscene, 
+   loadscene(get(linkedscene),null,MERGE,BLEND(0.5));
+   if(hlookat,lookat(get(hlookat),get(vlookat),110));   
+   set(currscene,get(linkedscene)); 
+   getduihao();
+   switchscene();
+   );
+</action>
+
+
+
+<events name="onautorotateevents" keep="true" onautorotateoneround="nextscene()"/>
+
+<action name="nextscene">
+	autorotate.stop();wait(0);
+	set(ns, get(scene[get(xml.scene)].index));
+	set(maxs, get(scene.count));
+	add(ns,1);
+	if(ns == maxs, set(ns,0));
+	loadscene(get(scene[get(ns)].name), null, MERGE, BLEND(1.5));
+	autorotate.start();
+</action>
+
+
+<action name="item_action">
+   if(autorotate.enabled == true ,		
+	  set(autorotate.enabled,false);
+	  stopdelayedcall(bomb); 
+	  ,
+	  set(autorotate.enabled,true);
+	  bombtimer(0);
+	);
+</action>
+
+<action name="control_action">
+     switch(control.mousetype,moveto,drag2d);
+	 switch(control.touchtype,moveto,drag2d);
+</action>
+
+<action name="view_normal">
+     skin_view_look_straight();
+	 tween(view.architectural, 0.0, distance(1.0,0.5));
+	 tween(view.pannini,       0.0, distance(1.0,0.5));
+	 tween(view.distortion,    0.0, distance(1.0,0.5));
+</action>
+
+<action name="skin_view_look_straight">
+  if(view.vlookat LT -80 OR view.vlookat GT +80,
+			tween(view.vlookat, 0.0, 1.0, easeInOutSine);
+			tween(view.fov,     120, distance(120,0.8));
+	);
+   set_hotspot_visible(true);		  
+  if(skin_settings.opehttp == true OR 
+	 skin_settings.opedaohang == true OR 
+	 skin_settings.opetel == true OR 
+	 skin_settings.bgyunyin == true ,
+	 set(layer[hidden].visible,true);
+	);
+  set(layer[skin_scroll_window].visible,true);
+  tween(layer[skin_layer].alpha,1,1);
+  set(layer[skin_control_bar].visible,true);
+  
+</action>
+
+<action name="view_littleplanet">
+ set(display.flash10,off);
+ tween(view.architectural, 0.0, 0.25);
+ tween(view.vlookat,  90, distance(179, 1.50), easeoutquad);
+ set(backtonormalfirst,false);
+ if(view.pannini       == true,  set(backtonormalfirst,true) );
+ if(view.stereographic == false, set(backtonormalfirst,true) );
+ if(backtonormalfirst, tween(view.fisheye, 0.0 ,distance(1.0, 0.25), easeoutquad, WAIT); );
+ set(view.pannini, false);
+ set(view.stereographic, true);
+ set(view.fovmax, 150);
+ tween(view.fisheye, 1.0, distance(1.0, 0.75), easeoutquad);
+ tween(view.fov,     150, distance(179, 0.75), easeoutquad);
+		
+ set_hotspot_visible(false);		  
+ if(skin_settings.opehttp == true OR 
+	 skin_settings.opedaohang == true OR 
+	 skin_settings.opetel == true OR 
+	 skin_settings.bgyunyin == true ,
+	 set(layer[hidden].visible,false);
+	);
+ set(layer[skin_scroll_window].visible,false);
+ tween(layer[skin_layer].alpha,0,1);
+ set(layer[skin_control_bar].visible,false);
+ 
+</action>
+</krpano>

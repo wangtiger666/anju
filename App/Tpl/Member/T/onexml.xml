@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano showerrors="false">
+    <events name="beginevent" />
+    <view hlookat="0" vlookat="0" fov="80" />
+    <image>
+        <left url="{:CC('web_root')}{$viewrow['left']}" />
+        <front url="{:CC('web_root')}{$viewrow['front']}" />
+        <right url="{:CC('web_root')}{$viewrow['right']}" />
+        <back url="{:CC('web_root')}{$viewrow['back']}" />
+        <up url="{:CC('web_root')}{$viewrow['up']}" />
+        <down url="{:CC('web_root')}{$viewrow['down']}" />
+    </image>
+</krpano>

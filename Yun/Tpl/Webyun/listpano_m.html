@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-cn"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="keywords" content="{$web_keywords}">
+  <meta name="description" content="{$web_description}" id="metaDescription">
+  <title>{$web_name}_手机版</title>
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/channel.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/listpano.css">  
+  <script src="__PUBLIC__/webyun/js/jquery-1.11.1.min.js"></script>
+  <script src="__PUBLIC__/webyun/js/find.js"></script>
+
+
+</head>
+<body>
+  <div id="app">
+	<div>
+		<include file="header_m" />
+		<div class="PageWithNavbar_mobile_10Xw1C App_page_ps6DUw">
+			<div class="IndexPage_main_21O9Xr">
+				<div class="Filterbar_filter_3od7YE">
+					<div class="Filterbar_mobile_6Uqffc">
+						<ul class="Filterbar_nav1_35y1Dw">
+							<li><a href="/index.php?s=/webyun/listpano" class="Filterbar_active_21ag0C">全景图片</a></li>
+						</ul>
+						<div class="Filterbar_nav2_2EkTsV">
+							<div class="Filterbar_cell_2495v1">
+								<span>频道：</span>
+								<div class="Select_select_3SYiKS" id="pingdaoxialam">
+									<div class="Select_header_coOU8v Select_down_3plElh Filterbar_menuhead_T5jPFB">{$hangyename}</div>
+									<div class="Select_menu_tkm095" style="right: -20px; top: 50px; width: 290px;"><img src="__PUBLIC__/webyun/images/top.png" class="Select_up_1bAWg5" style="right: 38px;">
+										<div class="Filterbar_channels_25btbo">
+											<volist name="channel_list" id="vo">
+												<span class="Filterbar_channel_1vGrvx"><a href="/index.php?s=/webyun/listpano/channelid/{$vo.id}">{$vo.name}</a></span>
+											</volist>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="ProductList_mlist_n57hAx">
+					<volist name="pano_list" id="vo">
+					<div class="Product_pro_2oysOO Product_mobile_eSHc_m">
+						<div>
+							<p>
+								<a href="{$vo.panopath}" target="_blank" class="ResPanoImg_mproimg_3eXcwj" style="background-image: url(&quot;{$vo.panothumb}&quot;);"></a>
+							</p>
+							<div class="Product_anmiarea_2jsTyL">
+								<div><a href="{$vo.panopath}" target="_blank" class="Product_h3_wxnOHA ellipsis">{$vo.title}</a></div>
+								<div class="Product_author_BLxFrp ellipsis">
+									<a href="/index.php?s=/webyun/authorlist/id/{$vo.member_id}" target="_blank">{$vo.author}</a>
+									<if condition="$vo['rengzheng'] eq 1">
+									<a href="/index.php?s=/Webyun/author" target="_blank" class="Product_icon_HYgTMM Product_cert_ovExuh">cert</a>
+									</if> 
+									<if condition="$vo['vip'] eq 1">
+									<a href="" target="_blank" class="Product_icon_HYgTMM Product_vip_3CePjs">vip</a>
+									</if> 
+								</div>
+								<p>
+									<span class="Product_pv_1qSsJI">{$vo.hits}</span>
+									<span class="Product_like_3esRuD">{$vo.zan}</span>
+								</p>
+							</div>
+						</div>
+					</div>
+					</volist>	
+						
+
+						
+						
+						
+						
+				</div>
+				
+				<div class="ResPagination_pagination_2GmSW-">
+					<ul class="rc-pagination ant-pagination" unselectable="unselectable">{$page}</ul>
+				</div>
+				
+				
+			</div>
+		</div>
+		
+		<div class="Notification_container_3kJM0z"><span></span></div>
+<include file="footer_m" />	
+</div>
+</div>
+</body>
+</html>

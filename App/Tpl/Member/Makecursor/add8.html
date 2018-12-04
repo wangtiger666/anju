@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        {:W("Easyui")}
+        {:W("Uploader")}
+        <style type="text/css">
+            .photobox{
+                width: 52px; height: 52px; overflow: hidden; float: left; margin-right: 10px;
+                border:1px solid #c6c6c6; padding: 5px; border-radius:4px; background: #f3f3f3; cursor: pointer;
+            }
+            .inbox{
+                width: 50px; height: 50px; overflow: hidden; border:1px solid #c6c6c6; background: url(__PUBLIC__/member/images/common/psbg.png) #fff;
+            }
+        </style>
+        <script type="text/javascript">
+            function checksb(){
+                var result = true;
+                if(result == true){
+                    result = AutoCheckSub(".cs");
+                }
+                return result;
+            }
+            $(function(){
+                $('.photobox').tooltip({
+                    position: 'right'
+                });
+                $("#movebox").uploader("image","moveback");
+                $("#dragbox").uploader("image","dragback");
+                $("#topbox").uploader("image","topback");
+                $("#downbox").uploader("image","downback");
+                $("#leftbox").uploader("image","leftback");
+                $("#rightbox").uploader("image","rightback");
+
+                $("#lefttopbox").uploader("image","lefttopback");
+                $("#righttopbox").uploader("image","righttopback");
+                $("#leftdownbox").uploader("image","leftdownback");
+                $("#rightdownbox").uploader("image","rightdownback");
+            });
+            function moveback(data){
+                var imgurl = upload_root+data;
+                var theImage = new Image();
+                theImage.src = imgurl;
+                var w = theImage.width;
+                var h = theImage.height;
+                $("#w").val(w);
+                $("#h").val(h);
+                $("#move").val(data);
+                $("#movebox").html('<img src="'+imgurl+'" onload="photocenterin(this,50,50);"/>');
+            }
+            function dragback(data){
+                var imgurl = upload_root+data;
+                var theImage = new Image();
+                theImage.src = imgurl;
+                var w = theImage.width;
+                var h = theImage.height;
+                var ow = $("#w").val();
+                var oh = $("#h").val();
+
+                if(w == ow && h == oh){
+                    $("#drag").val(data);
+                    $("#dragbox").html('<img src="'+imgurl+'" onload="photocenterin(this,50,50);"/>');
+                }else{
+                    showMsg("尺寸不一致！",0);
+                }
+            }
+
+            function topback(data){
+                var imgurl = upload_root+data;
+                var theImage = new Image();
+                theImage.src = imgurl;
+                var w = theImage.width;
+                var h = theImage.height;
+                var ow = $("#w").val();
+                var oh = $("#h").val();
+
+                if(w == ow && h == oh){
+                    $("#top").val(data);
+                    $("#topbox").html('<img src="'+imgurl+'" onload="photocenterin(this,50,50);"/>');
+                }else{
+                    showMsg("尺寸不一致！",0);
+                }
+            }
+
+            function downback(data){
+                var imgurl = upload_root+data;
+                var theImage = new Image();
+                theImage.src = imgurl;
+                var w = theImage.width;
+                var h = theImage.height;
+                var ow = $("#w").val();
+                var oh = $("#h").val();
+
+                if(w == ow && h == oh){
+                    $("#down").val(data);
+                    $("#downbox").html('<img src="'+imgurl+'" onload="photocenterin(this,50,50);"/>');
+                }else{
+                    showMsg("尺寸不一致！",0);
+                }
+            }
+
+            function leftback(data){
+                var imgurl = upload_root+data;
+                var theImage = new Image();
+                theImage.src = imgurl;
+                var w = theImage.width;
+                var h = theImage.height;
+                var ow = $("#w").val();
+                var oh = $("#h").val();
+
+                if(w == ow && h == oh){
+                    $("#left").val(data);
+                    $("#leftbox").html('<img src="'+imgurl+'" onload="photocenterin(this,50,50);"/>');
+                }else{
+                    showMsg("尺寸不一致！",0);
+                }
+            }
+
+            function rightback(data){
+                var imgurl = upload_root+data;
+                var theImage = new Image();
+                theImage.src = imgurl;
+                var w = theImage.width;
+                var h = theImage.height;
+                var ow = $("#w").val();
+                var oh = $("#h").val();
+
+                if(w == ow && h == oh){
+                    $("#right").val(data);
+                    $("#rightbox").html('<img src="'+imgurl+'" onload="photocenterin(this,50,50);"/>');
+                }else{
+                    showMsg("尺寸不一致！",0);
+                }
+            }
+
+            function lefttopback(data){
+                var imgurl = upload_root+data;
+                var theImage = new Image();
+                theImage.src = imgurl;
+                var w = theImage.width;
+                var h = theImage.height;
+                var ow = $("#w").val();
+                var oh = $("#h").val();
+
+                if(w == ow && h == oh){
+                    $("#lefttop").val(data);
+                    $("#lefttopbox").html('<img src="'+imgurl+'" onload="photocenterin(this,50,50);"/>');
+                }else{
+                    showMsg("尺寸不一致！",0);
+                }
+            }
+
+            function righttopback(data){
+                var imgurl = upload_root+data;
+                var theImage = new Image();
+                theImage.src = imgurl;
+                var w = theImage.width;
+                var h = theImage.height;
+                var ow = $("#w").val();
+                var oh = $("#h").val();
+
+                if(w == ow && h == oh){
+                    $("#righttop").val(data);
+                    $("#righttopbox").html('<img src="'+imgurl+'" onload="photocenterin(this,50,50);"/>');
+                }else{
+                    showMsg("尺寸不一致！",0);
+                }
+            }
+
+            function leftdownback(data){
+                var imgurl = upload_root+data;
+                var theImage = new Image();
+                theImage.src = imgurl;
+                var w = theImage.width;
+                var h = theImage.height;
+                var ow = $("#w").val();
+                var oh = $("#h").val();
+
+                if(w == ow && h == oh){
+                    $("#leftdown").val(data);
+                    $("#leftdownbox").html('<img src="'+imgurl+'" onload="photocenterin(this,50,50);"/>');
+                }else{
+                    showMsg("尺寸不一致！",0);
+                }
+            }
+
+            function rightdownback(data){
+                var imgurl = upload_root+data;
+                var theImage = new Image();
+                theImage.src = imgurl;
+                var w = theImage.width;
+                var h = theImage.height;
+                var ow = $("#w").val();
+                var oh = $("#h").val();
+
+                if(w == ow && h == oh){
+                    $("#rightdown").val(data);
+                    $("#rightdownbox").html('<img src="'+imgurl+'" onload="photocenterin(this,50,50);"/>');
+                }else{
+                    showMsg("尺寸不一致！",0);
+                }
+            }
+        </script>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">鼠标样式</div>
+                        <div title="关闭" onclick="DoNote('确认返回功能首页？','{:U('main/index')}');" class="close"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            <a href="{:U('index')}" class="pano_menu_bottom">极简型</a>
+                            <a href="{:U('d4')}" class="pano_menu_bottom">四向型</a>
+                            <a class="pano_menu_bottom me">八向型</a>
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main">
+                                <div class="action_title"><a href="{:U('index')}">鼠标样式八向型</a> - 添加</div>
+                                <form name="form1" action="" onsubmit="return checksb();" enctype="multipart/form-data" method="post">
+                                    <input type="hidden" name="dopost" value="save" />
+                                    <input type="hidden" id="w" name="w" value="0" />
+                                    <input type="hidden" id="h" name="h" value="0" />
+                                    <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="100"><b>注意：</b></td>
+                                            <td align="left">
+                                                <font color="#008800">【极简型】鼠标样式由两张PNG图片构成，请根据提示进行上传！</font>
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="20">
+                                            <td colspan="2"></td>
+                                        </tr>
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="100"><b>正常状态：</b></td>
+                                            <td align="left">
+                                                <input type="hidden" name="move" id="move" class="cs" sbname="正常状态图片" />
+                                                <div class="photobox easyui-tooltip" title="点击上传">
+                                                    <div class="inbox" id="movebox"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="100"><b>左上、上、右上：</b></td>
+                                            <td align="left">
+                                                <input type="hidden" name="lefttop" id="lefttop" class="cs" sbname="左上图片"/>
+                                                <div class="photobox easyui-tooltip" title="左上">
+                                                    <div class="inbox" id="lefttopbox"></div>
+                                                </div>
+
+                                                <input type="hidden" name="top" id="top" class="cs" sbname="上图片"/>
+                                                <div class="photobox easyui-tooltip" title="上">
+                                                    <div class="inbox" id="topbox"></div>
+                                                </div>
+
+                                                <input type="hidden" name="righttop" id="righttop" class="cs" sbname="右上图片"/>
+                                                <div class="photobox easyui-tooltip" title="右上">
+                                                    <div class="inbox" id="righttopbox"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="100"><b>左、拖拽、右：</b></td>
+                                            <td align="left">
+                                                <input type="hidden" name="left" id="left" class="cs" sbname="左图片"/>
+                                                <div class="photobox easyui-tooltip" title="左">
+                                                    <div class="inbox" id="leftbox"></div>
+                                                </div>
+
+                                                <input type="hidden" name="drag" id="drag" class="cs" sbname="拖动状态图片"/>
+                                                <div class="photobox easyui-tooltip" title="点击上传">
+                                                    <div class="inbox" id="dragbox"></div>
+                                                </div>
+
+                                                <input type="hidden" name="right" id="right" class="cs" sbname="右图片"/>
+                                                <div class="photobox easyui-tooltip" title="右">
+                                                    <div class="inbox" id="rightbox"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="100"><b>左下、下、右下：</b></td>
+                                            <td align="left">
+                                                <input type="hidden" name="leftdown" id="leftdown" class="cs" sbname="左下图片"/>
+                                                <div class="photobox easyui-tooltip" title="左下">
+                                                    <div class="inbox" id="leftdownbox"></div>
+                                                </div>
+
+                                                <input type="hidden" name="down" id="down" class="cs" sbname="下图片"/>
+                                                <div class="photobox easyui-tooltip" title="下">
+                                                    <div class="inbox" id="downbox"></div>
+                                                </div>
+
+                                                <input type="hidden" name="rightdown" id="rightdown" class="cs" sbname="右下图片"/>
+                                                <div class="photobox easyui-tooltip" title="右下">
+                                                    <div class="inbox" id="rightdownbox"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="20">
+                                            <td colspan="2"></td>
+                                        </tr>
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="120"></td>
+                                            <td align="left">
+                                                <input type="submit" class="blackbutton" value="提交" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

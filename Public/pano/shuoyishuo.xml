@@ -1,0 +1,59 @@
+﻿<krpano>	
+<style name="hcMainGui_text" url="%SWFPATH%/plugins/textfield.swf" align="bottom" x="14" oy="23" keep="true" backgroundcolor="0xFFFFFF" backgroundalpha="0.0" roundedge="0" css="font-family:STXihei; font-size:12px; color:#FFFFFF;text-shadow: rgb(0, 0, 0) 0px 0px 3.2px;" width="60" autoheight="" />
+	   
+	<layer name="hcMainGui" keep="true" url="%SWFPATH%/images/hcs_2.png"
+	       align="rightbottom" x="10" y="95" scale="0.5" 
+	       visible="false"  
+	       onclick="toggleGui();
+		   if(layer[hcMainGui_btn].html==隐藏,
+		      set(layer[hcMainGui_btn].html,说一说);
+		      set(layer[hcMainGui_btn].ox,-4);
+			  ,
+			  set(layer[hcMainGui_btn].html,隐藏);
+			  set(layer[hcMainGui_btn].ox,2);
+	         )"
+			 />
+	
+	<layer name="hcMainGui_btn" style="hcMainGui_text" ox="2" parent="hcMainGui" html="隐藏" />	
+	<layer name="toggle_gui" keep="true" url="%SWFPATH%/images/hc_open.png" align="rightbottom" x="10" y="165" scale="0.5" visible="false" onclick="toggleAddGui()"/>
+	<layer name="toggle_btn" style="hcMainGui_text" ox="-4" parent="toggle_gui" html="说一说" />
+
+	
+<krpano devices="mobile">
+<style name="hcMainGui_text" x="15" oy="23" css="font-family:STXihei; font-size:12px; color:#FFFFFF;text-shadow: rgb(0, 0, 0) 0px 0px 3.2px;" />
+<layer name="toggle_gui" x="10" y="175" scale="0.6" />
+<layer name="toggle_btn" />
+<layer name="hcMainGui" x="10" y="105" scale="0.6" />
+<layer name="hcMainGui_btn" />
+</krpano>
+	
+    <action name="showGui">
+		setJsVar(showGui, true);
+		set(toggle_gui, true);
+		set(layer[toggle_gui].visible, true);
+		set(layer[hcMainGui].url, "%SWFPATH%/images/hcs_2.png");
+		showComments();
+	</action>
+	
+	<action name="hideGui">
+		setJsVar(showGui, false);
+		set(toggle_gui, false);
+		set(layer[toggle_gui].visible, false);
+		set(layer[hcMainGui].url, "%SWFPATH%/images/hcs_1.png");
+		hideComments();
+	</action>
+    
+	<action name="showAddGui_c">
+		set(toggle_addgui, true);
+		set(layer[toggle_gui].url, "%SWFPATH%/images/hc_close.png");
+		if(%1 != 1, js(showAddGui(true)));
+	</action>
+    
+    <action name="hideAddGui">
+		set(toggle_addgui, false);
+		set(layer[toggle_gui].url, "%SWFPATH%/images/hc_open.png");
+		if(%1 != 1, js(hideAddGui(true)));
+		set(hotspot[addGui].visible, false);
+	</action>	
+	
+</krpano>

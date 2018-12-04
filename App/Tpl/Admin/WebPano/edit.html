@@ -1,0 +1,125 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="__PUBLIC__/admin/style/artedit.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/common/js/jquery.js" language="javascript" type="text/javascript"></script>
+<script src="__PUBLIC__/common/js/common.js" language="javascript" type="text/javascript"></script> 
+
+
+<link rel="stylesheet" href="__PUBLIC__/kindeditor/themes/default/default.css" />
+<script charset="utf-8" src="__PUBLIC__/kindeditor/kindeditor-min.js"></script>
+<script charset="utf-8" src="__PUBLIC__/kindeditor/lang/zh_CN.js"></script>
+<script charset="utf-8" src="__PUBLIC__/kindeditor/jquery-1.9.1.min.js"></script>
+</head>
+<body width="100%" style="padding-top: 20px;padding-left: 20px;">
+<div id="result" class="result none"></div>
+<div class="mainbox">
+   {:W("Uploader")}
+<form name="myform" id="myform" action="{:U('WebPano/edit')}" method="post">
+<input type='hidden' name='dopost' value='save'/>
+<input type='hidden' name='id' value='{$info.id}'/>
+
+<table cellpadding=0 cellspacing=0 class="table_form" width="100%">
+	
+			<tr>
+				<td width="10%" ><font color="red">*</font>全景标题</td>
+				<td width="90%" id="box_title" style="min-height: 30px;">
+				<input type="text"   class="input-text input-title f_l" name="title"  id="title" value="{$info.title}" size="55"  validate=" minlength:1, maxlength:80, required:true"  title="标题必须为1-80个字符"  /> 
+				</td>
+			</tr>
+
+			<tr>
+				<td width="10%" >关键词</td>
+				<td width="90%" id="box_keywords">
+				<input type="text"   class="input-text " name="keywords"  id="keywords" value="{$info.keywords}" size="55"  validate=" maxlength:80" /> </td>
+			</tr>
+			<tr>
+				<td width="10%" >全景简介</td>
+				<td width="90%" id="box_description">
+				<textarea  class="" name="description"  rows="4" cols="55"  id="description"   />{$info.description}</textarea>				</td>
+			</tr>
+
+			<tr>
+				<td width="10%" >全景缩略图</td>
+				<td width="90%" id="box_pics">
+				<fieldset class="images_box" style="width: 40%;">
+       			<legend>图片上传</legend>
+
+
+      	 		<input type="hidden" id="file" name="file" value="">
+                <input type="button" id="imgbtn" class="button" value="点击上传">
+                <div class="thumbbox2" id="imgbox" style="cursor: pointer; height: auto;width: auto ;height:auto ;" >
+                <img  width="auto" height="auto"   style="overflow: hidden;"  src="{$info.thumb}" />
+ 				</div>
+                 <input  id="image" name="image" value="{$info.thumb}" />
+                 <input  name="old_image" value="{$info.thumb}" />
+                
+				</fieldset>
+ 				</td>
+ 				<script type="text/javascript">
+                     $(function(){
+                        $("#imgbtn").uploader("image", "file");
+                     })
+                                    
+                    function file(data){
+                            $("#image").val(data);
+                            $("#imgbox").html('<img src="'+data+'" onload="photocenterin(this,150,150)" />');
+                   }
+            	</script>
+			</tr>
+
+			<tr>
+				<td width="10%" >全景外链</td>
+				<td width="90%" id="box_description">
+				<input type="text"   class="input-text " name="outlink"  id="outlink" value="" size="55"  validate=" maxlength:80" />	
+				</td>
+			</tr>
+			<tr>
+				<td width="10%" >全景推荐位</td>
+				<td width="90%" id="box_catid">
+				{$tuijianwei}
+				</td>
+			</tr>
+
+			<tr>
+				<td width="10%" >全景所属行业</td>
+				<td width="90%" id="box_catid">
+				{$hangye}
+				</td>
+			</tr>
+
+			<tr>
+				<td width="10%" >全景地区</td>
+				<td width="90%" id="box_catid">
+				{$area}
+				</td>
+			</tr>
+			<tr>
+				<td width="10%" >排序</td>
+				<td width="90%" id="box_description">
+				<input type="text"   class="input-text " name="listorder"  id="listorder" value="{$info.listorder}" size="55"  validate=" maxlength:80" />	
+				</td>
+			</tr>
+			<tr>
+				<td width="10%" >是否显示</td>
+				<td width="90%" id="box_posid">
+				<select id="status" name="status" >
+					<option value="1"   <if condition="$info['status'] eq 1" >   selected </if> >是</option>
+					<option value="0"   <if condition="$info['status'] eq 0" >   selected </if> >否</option>
+				</select>				
+				</td>
+			</tr>
+</table>
+<div id="bootline"></div>
+<div id="btnbox" class="btn">
+<INPUT TYPE="submit"  value="提交" class="button" >
+<input TYPE="reset"  value="取消" class="button">
+</div>
+</form>
+</div>
+
+</body>
+</html>

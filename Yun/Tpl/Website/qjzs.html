@@ -1,0 +1,235 @@
+<include file="Header" />
+
+<!--float_nav-->
+<link rel="stylesheet"  href="__PUBLIC__/webstyle/css/css.css" />
+<div class="wlzgMain">
+  <div class="wlzgTop">
+    <foreach name="banner" item="vo">
+    <div class="wlzgBanner">
+      <a href="{$vo.outlink}" target="_blank">
+        <img src="{$vo.thumb}" width="1920" height="600"  alt="{$vo.ad_name}"/>
+      </a>
+    </div>
+    </foreach>
+
+    <div class="wlzgTopFenLei">
+      <div class="wlzgTopFenLeiList">
+        <div class="wlzgTopLeft">
+          <div class="wlzgTopLeftName"><span>行业分类</span></div>
+          <div class="wlzgTopLeftList">
+            <p>
+            <foreach name="hangye" item="vo">
+              <if condition="$key elt 5 ">
+                <a href="index.php?s=/Website/qjzscat/hangyeid/{$vo.id}"  target="_blank">{$vo.name}</a>
+              </if>
+            </foreach>
+            </p>
+          </div>
+          <!--wlzgTopLeftList-->
+          </div>
+        <!--wlzgTopLeft-->
+        <div class="wlzgTopRList">
+          <p>
+            <foreach name="hangye" item="vo">
+              <if condition="$key egt 6 ">
+                <a href="index.php?s=/Website/qjzscat/hangyeid/{$vo.id}" target="_blank">{$vo.name}</a>
+              </if>
+            </foreach>
+          </p>
+        </div>
+        <!--wlzgTopRList--></div>
+      <!--wlzgTopFenLeiList-->
+      <div class="wlzgTopFenLeiList wlzgTopArea">
+        <div class="wlzgTopLeft">
+          <div class="wlzgTopLeftName"><span>地区分类</span></div>
+          <div class="wlzgTopLeftList">
+            <p>
+               <foreach name="area" item="vo">
+                  <if condition="$key elt 5 ">
+                    <a href="index.php?s=/Website/qjzscat/areaid/{$vo.id}" target="_blank">{$vo.name}</a>
+                  </if>
+              </foreach>
+            </p>
+          </div>
+          <!--wlzgTopLeftList--></div>
+        <!--wlzgTopLeft-->
+        <div class="wlzgTopRList">
+          <p>
+            <foreach name="area" item="vo">
+              <if condition="$key egt 6 ">
+               <a href="index.php?s=/Website/qjzscat/areaid/{$vo.id}" target="_blank">{$vo.name}</a>
+              </if>
+            </foreach>
+          </p>
+        </div>
+        <!--wlzgTopRList--></div>
+      <!--wlzgTopFenLeiList--></div>
+    <!--wlzgTopFenLei--></div>
+  <!--wlzgTop-->
+  <div class="wlzgTitMain">
+    <div class="wlzgTit">
+      <h3>全景案例</h3>
+      <span>全景，我们能让世界找到你！</span></div>
+    <div class="wlzgLiucheng">
+      <ul>
+        <li class="icon01">
+          <div><span></span>
+            <p>注册账号</p>
+          </div>
+        </li>
+        <li class="icon02">
+          <div><span></span>
+            <p>申请展示</p>
+          </div>
+        </li>
+        <li class="icon03">
+          <div><span></span>
+            <p>待审核</p>
+          </div>
+        </li>
+        <li class="icon04">
+          <div><span></span>
+            <p>审核完毕</p>
+          </div>
+        </li>
+        <li class="icon05">
+          <div><span></span>
+            <p>全景展示</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!--wlzgLiucheng--></div>
+  <!--wlzgTitMain-->
+  <div class="wlzgHotMain">
+    <div class="wlzgHotTitMain">
+      <div class="wlzgHotTit">
+        <p>
+            <foreach name="hangye" item="vo">
+              <if condition="$key elt 2 ">
+                 <a    href="index.php?s=/Website/qjzscat/hangyeid/{$vo.id}"   <if condition="$key eq 0 "> class="selected" </if> data-index="{$key}"  target="_blank" >{$vo.name}</a>
+               </if>
+            </foreach>
+            <a href="index.php?s=/Website/qjzscat" target="_blank"  class="wlzgHotTitMore">更多</a></p>
+        <h3>热门行业</h3>
+      </div>
+      <!--wlzgHotTit-->
+      </div>
+    <!--wlzgHotTitMain-->
+    <div class="wlzgHotCont">
+      <ul >
+      <foreach name="hangyepano1" item="vo">
+        <li><a class="blhImg" href="{$vo.panopath}"><img src="{$vo.thumb}" alt="{$vo.title}" width="365" height="365"></a>
+          <p><a href="{$vo.panopath}" target="_blank">{$vo.title}</a></p>
+          <b><a href="{$vo.panopath}" target="_blank">点击进入</a></b>
+          <div class="blackBg"><a href="{$vo.panopath}" target="_blank">&nbsp;</a></div>
+        </li>
+      </foreach>
+      </ul>
+      <ul style="display: none;">
+          <foreach name="hangyepano2" item="vo">
+            <li><a class="blhImg" href="{$vo.panopath}"><img src="{$vo.thumb}" alt="{$vo.title}" width="365" height="216" ></a>
+              <p><a href="{$vo.panopath}" target="_blank">{$vo.title}</a></p>
+              <b><a href="{$vo.panopath}" target="_blank">点击进入</a></b>
+              <div class="blackBg"><a href="{$vo.panopath}" target="_blank">&nbsp;</a></div>
+            </li>
+          </foreach>
+      </ul>
+      <ul style="display: none;">
+          <foreach name="hangyepano3" item="vo">
+            <li><a class="blhImg" href="{$vo.panopath}"><img src="{$vo.thumb}" alt="{$vo.title}" width="365" height="216" ></a>
+              <p><a href="{$vo.panopath}" target="_blank">{$vo.title}</a></p>
+              <b><a href="{$vo.panopath}" target="_blank">点击进入</a></b>
+              <div class="blackBg"><a href="{$vo.panopath}" target="_blank">&nbsp;</a></div>
+            </li>
+          </foreach>
+      </ul>
+    </div>
+    <!--wlzgHotCont-->
+    <div class="clearfloat"></div>
+  </div>
+  <!--wlzgHotMain-->
+
+  <div class="bannerT01">
+    <foreach name="ad" item="vo">
+      <a href="{$vo.outlink}" target="_blank">
+             <img src="{$vo.thumb}" width="1190px" height="90px">
+      </a>
+    </foreach>
+  </div>
+
+   <!--wlzgTitMain-->
+  <div class="wlzgHotMain">
+    <div class="wlzgHotTitMain">
+      <div class="wlzgHotTit">
+        <p>
+            <foreach name="area" item="vo">
+              <if condition="$key elt 2 ">
+                 <a   href="/index.php?s=/Website/qjzscat/areaid/{$vo.id}"  <if condition="$key eq 0 "> class="selected" </if> data-index="{$key}"  target="_blank">{$vo.name}</a>
+               </if>
+            </foreach>
+            <a href="index.php?s=/Website/qjzscat" target="_blank"  class="wlzgHotTitMore">更多</a></p>
+        <h3>热门地区</h3>
+      </div>
+      <!--wlzgHotTit-->
+      </div>
+    <!--wlzgHotTitMain-->
+    <div class="wlzgHotCont">
+      <ul >
+      <foreach name="areapano1" item="vo">
+        <li><a class="blhImg" href="{$vo.panopath}"><img src="{$vo.thumb}" alt="{$vo.title}" width="365" height="216"></a>
+          <p><a href="{$vo.panopath}" target="_blank">{$vo.title}</a></p>
+          <b><a href="{$vo.panopath}" target="_blank">点击进入</a></b>
+          <div class="blackBg"><a href="{$vo.panopath}" target="_blank">&nbsp;</a></div>
+        </li>
+      </foreach>
+      </ul>
+      <ul style="display: none;">
+          <foreach name="areapano2" item="vo">
+            <li><a class="blhImg" href="{$vo.panopath}"><img src="{$vo.thumb}" alt="{$vo.title}" width="365" height="216" ></a>
+              <p><a href="{$vo.panopath}" target="_blank">{$vo.title}</a></p>
+              <b><a href="{$vo.panopath}" target="_blank">点击进入</a></b>
+              <div class="blackBg"><a href="{$vo.panopath}" target="_blank">&nbsp;</a></div>
+            </li>
+          </foreach>
+      </ul>
+      <ul style="display: none;">
+          <foreach name="areapano3" item="vo">
+            <li><a class="blhImg" href="{$vo.panopath}"><img src="{$vo.thumb}" alt="{$vo.title}" width="365" height="216" ></a>
+              <p><a href="{$vo.panopath}" target="_blank">{$vo.title}</a></p>
+              <b><a href="{$vo.panopath}" target="_blank">点击进入</a></b>
+              <div class="blackBg"><a href="{$vo.panopath}" target="_blank">&nbsp;</a></div>
+            </li>
+          </foreach>
+      </ul>
+    </div>
+    <!--wlzgHotCont-->
+    <div class="clearfloat"></div>
+  </div>
+  <!--wlzgHotMain-->
+
+  <!--wlzgHotMain-->
+  </div>
+
+<!--wlzgMain-->
+<include file="Footer" />
+<script src="__PUBLIC__/webstyle/js/top.js"></script><span class="none"><script src="__PUBLIC__/webstyle/js/footer.js" language="javascript"></script></span>
+</body>
+<script src="__PUBLIC__/webstyle/js/main.js"></script><script type="text/javascript" src="__PUBLIC__/webstyle/js/advert1.js"></script>
+<script type="text/javascript">$(function() {
+    $(".wlzgHotTit a").live('mouseover', function() {
+        var index = $(this).attr("data-index");
+        if(index) {
+            var ulitem = $(this).parents(".wlzgHotTitMain").next(".wlzgHotCont").find("ul").eq(index);
+            $(this).addClass("selected").siblings().removeClass("selected");
+            ulitem.show().siblings("ul").hide();
+        }
+    });
+	$(".wlzgHotCont ul li b").each(function(){
+		$(this).after("<div class='whiteBroder'>"+$(this).html()+"</div>");
+    });
+});
+;
+</script>
+  
+</html>

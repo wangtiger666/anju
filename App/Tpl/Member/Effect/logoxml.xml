@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano showerrors="false" onstart="js(beginaction(););">
+
+    <view hlookat="0" vlookat="90" vlookatmin="90" vlookatmax="90" limitview="fullrange" fov="80" />
+
+    <image>
+        <left url="{:CC('web_root')}{$viewrow['left']}" />
+        <front url="{:CC('web_root')}{$viewrow['front']}" />
+        <right url="{:CC('web_root')}{$viewrow['right']}" />
+        <back url="{:CC('web_root')}{$viewrow['back']}" />
+        <up url="{:CC('web_root')}{$viewrow['up']}" />
+        <down url="{:CC('web_root')}{$viewrow['down']}" />
+    </image>
+
+    <hotspot name="nadirlogo"
+         url=""
+         ath="0"
+         atv="90"
+         distorted="true"
+         scale="1.0"
+         rotate="0.0"
+         rotatewithview="false"
+         />
+
+</krpano>

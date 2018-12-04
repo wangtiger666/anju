@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-cn"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="{$web_keywords}">
+  <meta name="description" content="{$web_description}">
+  <meta name="robots" content="all">
+  <title>{$web_name}</title>
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/yun/css/channel.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/yun/css/footer.v2.min.css">
+  <script src="__PUBLIC__/yun/js/jquery-1.10.2.js"></script>
+</head>
+<body>
+  <div id="root">
+    <div>
+        <div id="navbar">
+        <div class="p4b9YXf9RfoBkQjb" style="height: 50px;">
+            <div class="notifications-wrapper">
+            </div>
+            <div class="_2xfu_lq1CjrY3ElJ">
+                <include file="Public:header" />            
+            </div>
+            <span></span>
+        </div>
+        </div>
+        <div class="HVx4c9z6zEn-a1UZ" style="margin-top: 50px;">
+            <div class="_2Emzb2391gRUy5Io">
+                <div class="_1EAV3WKTgHERqfEZ">
+                    <div class="_1nEHRJhSaj8NySLJ">
+                        <div class="_2QZzJKxjX0cNap0a _3uTxpboYI2bgdLBM">
+                            <div class="ztQXZBZdcYmIYDwb">
+                                <div class="K49u7I5PoQgbcOYK">
+                                    频道
+                                </div>
+                                <div class="hLFwSfWM1f1zf-7R">
+									<volist name="channel_list" id="vo">
+                                    <a href="index.php?s=/channel/index/id/{$vo.id}">
+                                        <div class='_1CZxGUGuNkNEzcae <if condition="$id eq $vo[id]">_1SWXOklzUCPRjIud</if>'>
+                                            {$vo.name}
+                                        </div>
+                                    </a>
+									</volist>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <style>
+                                .showtip{display: none;position: absolute;height: 30px;width: 100%;}
+                                .loadingmore{clear: both;width: 100%;text-align: center;display: none}
+                            </style>
+                           
+                            <div class="_1SKVZ2X8IKPqa4QT" style="min-height: 800px;">
+								
+								<volist name="pano_list" id="vo">
+                                <div class="_2QZzJKxjX0cNap0a _2IoczLodDnShr81q" onmouseover="xiala({$vo.id})" onmouseout="xiala_hidden({$vo.id})" >
+                                    <div class="_12sH0hajsiXdBPOr">
+                                       	
+                                        <span>
+                                        <script type="text/javascript">
+                                           function xiala(xialaid){
+                                            var xiala = "xial_"+xialaid;
+                                             $("#"+xiala).css("display","block");
+                                             $("#"+xiala).animate({height:35,opacity:1},300);
+                                           }
+
+                                          function xiala_hidden(xialaid){
+                                            var xiala = "xial_"+xialaid;
+                                            $("#"+xiala).animate({height:0,opacity:0},300);
+                                           }
+                                          </script>
+
+                                        <div class="_3IIOkjQq8bSM2S5b"  id="xial_{$vo.id}" style="display:none;height: 0px;" >
+                                        				<div class="_lmg9AgZFrlOvlEet" style="display: inline-block;float: right;margin-right:5px;">
+                                        					<i class="icon icon-eye _2Tt-zTxm4RhlTwfw"> </i>
+                                        					<span class="_3ZAMESFTY7t-h-1N">{$vo.zan} </span>
+                                        				</div>
+                                        				<div class="_lmg9AgZFrlOvlEet" style="display: inline-block;float: right;margin-right:5px;">
+                                        					<i class="icon icon-like _2Tt-zTxm4RhlTwfw"> </i>
+                                        					<span class="_3ZAMESFTY7t-h-1N">{$vo.hits} </span>
+                                        				</div>
+                                        		</div>
+                                        </span>
+                                        <a href="{$vo.panopath}" target="_blank">
+                                            <div class="_3IlSnabohXEvKZZV" >
+                                                <img class="_3FY52TIlSp5gnYU0" src="{$vo.panothumb}">
+                                            </div>
+                                        </a>
+                                        <div class="_2D-Z9iXSwFJo3Bym">
+                                            <span class="_2-yD9btGwWN4UtMp">
+                                                {$vo.title}
+                                            </span>
+                                            <a href="index.php?s=/author/pannolist/id/{$vo.member_id}" class="_3aH86UWEG7r7osgQ">
+                                                <div class="IKvhFYgShVBc3MMb" title="{$vo.author}">
+                                                    <img class="_3FY52TIlSp5gnYU0" src="{$vo.headimg}"
+                                                    alt="{$vo.author}">
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+								</volist>
+                            </div>
+                            <div class="page" id="page" style="margin-left:10px;">{$page}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  <nav class="nav">
+
+    <div class="n-footer">
+      <a href="/">
+        <img src="__PUBLIC__/yun/images/footer.png" class="n-img">
+      </a>
+      <div class="n-copyright">
+        <div>
+          <a href="tel:4000123720" class="n-number">合作电话：4000-123-720</a>
+          <span>工作时间: 8:00 - 18:00</span>
+          <!-- <a href="http://form.mikecrm.com/f.php?t=Qn8cfc" class="n-btn" target="_blank">在线约拍</a> -->
+        </div>
+        <div>© Copyright 2016 360VR.cn Inc. All Rights Reserved 鲁ICP备13006441号</div>
+      </div>
+    </div>
+  </nav>
+<script src="__PUBLIC__/yun/js/commoncheck.js"></script>
+</body>
+</html>

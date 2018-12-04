@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="keywords" content="{$web_keywords}">
+  <meta name="description" content="{$web_description}" id="metaDescription">
+  <title>{$web_name}_手机版</title>
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/find.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/index.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/index_m.css">
+  <script src="__PUBLIC__/webyun/js/jquery-1.11.1.min.js"></script>
+  <script src="__PUBLIC__/webyun/js/find.js"></script>
+  <script src="__PUBLIC__/webyun/js/jquery.flexslider-min.js"></script>
+
+  </head>
+<body>
+<div id="app">
+	<div>
+		<include file="header_m" />
+		<div class="PageWithNavbar_mobile_10Xw1C">
+			<div class="mobile">
+				<!--幻灯片 开始-->
+				<script type="text/javascript">          
+					$(document).ready(function() {
+						$('.flexslider').flexslider({
+								controlNav: true, 
+								directionNav: false,
+								animation: "slide",
+								//manualControls: ".myflexslider .slidenav"
+							});
+				});
+				</script>
+				<div id="banner" class="flexslider" >
+					<ul class="slides">
+					<foreach name="bannerm" item="vo">
+						<li><a href="{$vo.outlink}"><img src="{$vo.thumb}" /></a></li>
+					</foreach>
+					</ul>
+				</div>
+				<!--幻灯片 结束-->
+				
+				<div style="width: 100%; height: 64px; overflow: hidden;">
+					<div class="banner1">
+					<foreach name="bannerad" item="vo">
+						<div class="block"><a target="_blank" title="{$vo.thumb}" id="{$vo.id}" onclick="showdiv(this)" ><img src="{$vo.thumb}" alt="{$vo.ad_name}"></a></div>
+					</foreach>    
+					</div>
+				</div>
+				<div class="good-list">
+					<h2>精选作品</h2>
+					<div class="sub-title">分享最美丽和有趣的全景图片</div>					
+					<div class="list">
+						<!--------- hot *12 start ----------->
+						<!-- <volist name="hot_pano" id="vo">
+						<div class="cell">
+                    	<p><a href="{$vo.panopath}" target="_blank" class="img" title="{$vo.title}" style="background-image: url({$vo.panothumb});"></a></p>
+                        <h3><a href="{$vo.panopath}" target="_blank" class="ellipsis">{$vo.title}</a></h3>
+                        <div class="pinfo">
+                        	<a class="author" href="/index.php?s=/webyun/authorlist/id/{$vo.member_id}" target="_blank">{$vo.author}</a>
+							<if condition="$vo['rengzheng'] eq 1">
+                            <a target="_blank" href="/index.php?s=/Webyun/author" class="icon cert"></a>
+							</if> 
+							<if condition="$vo['vip'] eq 1">
+                            <a target="_blank" href="" class="icon vip"></a>
+							</if> 						
+                            <a href="{$vo.hangyeid}" target="_blank" class="album ellipsis">{$vo.hangye}</a>
+                         </div>
+                      </div>
+						</volist> -->
+					<!--------- hot *12 end ----------->   
+					</div>			
+				</div>
+				<div class="article-list">
+					<h2>精选文章</h2>
+					<div class="sub-title">
+						<a href="" target="_blank" class="link">公众号</a>
+						<a href="/index.php?s=/Webyun/articlelist/lanmuid/11" target="_blank" class="link">720yun功能详解</a>
+						<a href="/index.php?s=/Webyun/articlelist/lanmuid/3" target="_blank" class="link">基础知识</a>
+						<a href="/index.php?s=/webyun/indexarticle" target="_blank" class="rlink">查看更多文章</a>
+					</div>
+					<div class="body">
+						<div class="first">
+							<div class="cell"><a href="{$articlefirst.outlink}" target="_blank" class="img"  style="background-image: url({$articlefirst.thumb});"></a></div>
+						</div>
+						<div class="second">
+						<foreach name="articletwo" item="vo">
+							<div class="cell"><a href="{$vo.outlink}" target="_blank" class="img" style="background-image: url({$vo.thumb});"></a></div>
+						</foreach>
+						</div>
+                     </div>
+				</div>
+				
+				
+				<div class="banner2"><a target="_blank" href="{$hengtiaoad.outlink}" title="{$hengtiaoad.ad_name}"><img src="{$hengtiaoad.thumb}"></a></div>
+				
+				
+				
+				<div class="cameramen">
+					<div class="certmen">
+						<h2>认证作者</h2>
+						<div class="sub-title"><span>中国最优秀的全景摄影师</span><a href="/index.php?s=/webyun/author" target="_blank" class="rlink">更多</a></div>
+						<div class="body">
+						<volist name="author_member" id="vo">
+							<div class="man">
+											<a target="_blank" class="headimg" href=""><img src="{$vo.headimg}" alt="{$vo.author}"></a>
+											<p>
+												<strong><a target="_blank" href="">{$vo.nickname}</a></strong>
+												<if condition="$vo['rengzheng'] eq 1">
+													<a target="_blank" href="/index.php?s=/Webyun/author" class="icon cert"></a>
+												</if> 
+												<if condition="$vo['vip'] eq 1">
+													<a target="_blank" href="" class="icon vip"></a>
+												</if> 
+											</p>
+							</div>                           
+							<div class="desc"><a target="_blank" href="">{$vo.intro}</a></div>
+							<div class="products">                            
+							<!--认证摄影师 4个作品展示 start-->
+							<volist name="vo['zhuozhevip']" id="vop">
+								<a href="{$vop.panopath}" target="_blank"><img src="{$vop.panothumb}"></a>
+							</volist>
+							<!--认证摄影师 4个作品展示 end-->
+							</div>
+						</volist>
+						</div>
+					</div>
+					<div class="hotmen">
+						<h2>热门摄影师</h2>
+						<div class="sub-title"><span>发现身边的摄影爱好者</span></div>
+						<div class="body">
+							<div class="list">
+							<volist name="sheys_member" id="vo">
+								<div class="cell">
+											<a href="" target="_blank" class="headimg"><img src="{$vo.headimg}"></a>
+											<p class="p1">
+												<a href="" target="_blank"><strong>{$vo.nickname}</strong></a>
+												<if condition="$vo['rengzheng'] eq 1">
+													<a target="_blank" href="/index.php?s=/Webyun/author" class="icon cert"></a>
+												</if> 
+												<if condition="$vo['vip'] eq 1">
+													<a target="_blank" href="" class="icon vip"></a>
+												</if> 
+											</p>
+											<p class="p2">
+												<span class="icon geo">{$vo.sheng}</span>
+												<span class="icon pv">{$vo.renqi}</span></p>
+								</div>
+							</volist>												
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
+				
+			</div>
+		</div>
+		<div class="Notification_container_3kJM0z"><span></span></div>
+<include file="footer_m" />			
+</div>
+</div>
+</body>
+<script type="text/javascript">
+	function infoDiv(item){
+		var infodiv='<div class="cell">'+
+                    	'<p><a class="img""></a></p>'+
+                        '<h3><a target="_blank" class="ellipsis">'+item.title+'</a></h3>'+
+                        '<div class="pinfo">'+
+                        	'<a class="author" target="_blank">'+item.author+'</a>'+
+                            '<a target="_blank" class="icon vip"></a>'+						
+                         '</div>'+
+                      '</div>';
+        $(".list"),append(infodiv)
+	}
+
+	function showdiv(e){
+		var category;
+		if(e.id=='6'){
+			category:'1'
+		}else{
+			id(e.id=='7'){
+				category:'2'
+			}
+		}
+		$.ajax({
+			url:{:U('/HouseResources/pano_img')},
+			type:'post',
+			data:{category:category},
+			dataType:'json',
+			success:function(data){
+				console.log(data)
+				$.each(data,function(i,s){
+					infoDiv(data)
+				})
+			},
+			error:function(){
+				alert('请求超时')
+			}
+		})
+	}
+</script>
+</html>

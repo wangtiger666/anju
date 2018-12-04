@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<krpano showerrors="false">
+    <events name="readyaction" onxmlcomplete="start();" />
+    <action name="start">
+        loadscene(scene1, null, MERGE);
+    </action>
+    <scene name="scene1">
+        <view hlookat="0" vlookat="0" fov="80" fisheye="0" fovmin="60" fovmax="120" />
+        <image type="CUBE">
+            <left url="{:CC('web_root')}{$viewrow['left']}" />
+            <front url="{:CC('web_root')}{$viewrow['front']}" />
+            <right url="{:CC('web_root')}{$viewrow['right']}" />
+            <back url="{:CC('web_root')}{$viewrow['back']}" />
+            <up url="{:CC('web_root')}{$viewrow['up']}" />
+            <down url="{:CC('web_root')}{$viewrow['down']}" />
+        </image>
+    </scene>
+        
+    <layer name="sidebar" keep="true" type="container" align="leftbottom" width="300" x="0" y="34" height="300" bgcolor="0x00FFFF" bgalpha="0.3">
+        <layer name="scrollarea" url="%SWFPATH%/plugins/scrollarea.swf" alturl="%SWFPATH%/plugins/scrollarea.js" align="center" width="{$maparr[0]+100}" height="{$maparr[1]+100}" direction="all" onloaded="setcenter({$porow['map_x']+50},{$porow['map_y']+50});">
+            <layer name="map" url="{:CC('web_root')}{$maprow['mapimg']}" align="center">
+                <layer name="point" url="{:CC('web_root')}{$maprow['thepointimg']}" align="lefttop" edge="center" zorder="1"
+                     keep="true" devices="all" visible="true" enabled="true" x="{$porow['map_x']}" y="{$porow['map_y']}" ></layer>
+               <layer name="radar" keep="true" visible="true" zorder="0"
+                   url="%SWFPATH%/plugins/radar.swf" alturl="%SWFPATH%/plugins/radar.js"
+                   align="lefttop" edge="center" x="{$porow['map_x']}" y="{$porow['map_y']}"
+                   fillcolor="0x{$maprow['radercolor']||str_replace='#','',###}" fillalpha="{$maprow['raderalpha']}" linecolor="0x{$maprow['raderlinecolor']||str_replace='#','',###}" linewidth="{$maprow['raderlinewidth']}" linealpha="{$maprow['raderlinealpha']}"
+                   scale="{$maprow['radersize']}" heading="0" headingoffset="{$headingoffset}" ></layer>
+            </layer>
+        </layer>
+    </layer>
+    <plugin name="back" url="__PUBLIC__/member/images/pano/ok.png" keep="true" zorder="8"
+        align="rightbottom" edge="center" x="35" y="65" handcursor="true" onclick="backdata()" alpha="1" />
+   <action name="backdata">
+        js(parent.backface(get(layer[radar].headingoffset)))));
+    </action>
+</krpano>

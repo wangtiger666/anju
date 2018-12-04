@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+   RewriteEngine on
+   RewriteCond %{REQUEST_FILENAME} !-d
+   RewriteCond %{REQUEST_FILENAME} !-f
+   RewriteRule ^(?!(member|admin|channel|author|t)).*$ index.php?/$1 [QSA,PT,L]
+   RewriteRule ^member/(.*)$ my.php/member/$1 [QSA,PT,L]
+   RewriteRule ^admin/(.*)$ my.php/admin/$1 [QSA,PT,L]
+   RewriteRule ^channel/(.*)$ index.php/Channel/$1 [QSA,PT,L]
+   RewriteRule ^author/(.*)$ index.php/Author/$1 [QSA,PT,L]
+   RewriteRule ^t/([a-zA-Z0-9_]+)$ my.php/member/t/view/guid/$1 [QSA,L]
+</IfModule>

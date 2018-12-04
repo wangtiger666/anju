@@ -1,0 +1,173 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="__PUBLIC__/admin/style/artedit.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/common/js/jquery.js" language="javascript" type="text/javascript"></script>
+<script src="__PUBLIC__/common/js/common.js" language="javascript" type="text/javascript"></script> 
+
+
+<link rel="stylesheet" href="__PUBLIC__/kindeditor/themes/default/default.css" />
+<script charset="utf-8" src="__PUBLIC__/kindeditor/kindeditor-min.js"></script>
+<script charset="utf-8" src="__PUBLIC__/kindeditor/lang/zh_CN.js"></script>
+<script charset="utf-8" src="__PUBLIC__/kindeditor/jquery-1.9.1.min.js"></script>
+
+<!-- bootstrap START-->
+<link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="__PUBLIC__/bootstrap/font-awesome/css/font-awesome.css" rel="stylesheet">
+<link href="__PUBLIC__/bootstrap/css/plugins/footable/footable.core.css" rel="stylesheet">
+<link href="__PUBLIC__/bootstrap/css/animate.css" rel="stylesheet">
+<link href="__PUBLIC__/bootstrap/css/style.css" rel="stylesheet">
+<link href="__PUBLIC__/common/style/recovebootstrap.css" rel="stylesheet" type="text/css" /> 
+  {:W("Uploader")}
+<!-- bootstrap END -->
+</head>
+
+<body >
+		<style type="text/css">
+			.hr-line-dashed{
+				margin: 7px 0;
+			}
+		</style>
+	   <div  class="main" >
+    	        <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>修改文章 <small></small></h5>
+                              <div class="ibox-tools">
+                               <a  onclick="window.location.href='/admin/YunArticle/index'"  class="btn btn-primary btn-xs" style="height: 25px;">返回管理</a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+						<form name="myform" id="myform" action="{:U('YunArtdanye/edit')}" method="post" class="form-horizontal">
+							<input type='hidden' name='dopost' value='save'/>
+							<input type='hidden' name='id' value='{$info.id}'/>
+
+                                <div class="form-group"><label class="col-sm-2 control-label">文章标题：</label>
+                                    <div class="col-sm-10"> 
+                                    <input type="text"   class="form-control" name="title"  id="title"  value="{$info.title}" size="55"  validate=" minlength:1, maxlength:80, required:true"  title="标题必须为1-80个字符"  />  
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+
+                                <div class="form-group"><label class="col-sm-2 control-label">关键词：</label>
+                                    <div class="col-sm-10">
+                                    <input type="text"   class="form-control" name="keywords"  id="keywords" value="{$info.keywords}" size="55"  validate=" maxlength:80" /> 
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+
+                                <div class="form-group"><label class="col-sm-2 control-label">文章简介：</label>
+                                    <div class="col-sm-10">
+                                    	<textarea  class="" name="description"  rows="4" cols="55"  id="description"   />{$info.description}</textarea>		
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group"><label class="col-sm-2 control-label">文章缩略图：</label>
+                                    <div class="col-sm-10">
+                                    	<td width="90%" id="box_pics">
+												<fieldset class="images_box" style="width: 40%;">
+								       			<legend style="font-size: 12px;">图片上传</legend>
+
+
+								      	 		<input type="hidden" id="file" name="file" value="">
+								                <input type="button" id="imgbtn" class="button" value="点击上传">
+								                <div class="thumbbox2" id="imgbox" style="cursor: pointer; height: auto;width: auto ;height:auto ;" >
+								                <img  width="auto" height="auto"   style="overflow: hidden;"  src="{$info.thumb}" />
+								 				</div>
+								                 <input  id="image" name="image" value="{$info.thumb}" style="display: none;" />
+								                 <input  name="old_image" value="{$info.thumb}" style="display: none;" />
+								                
+												</fieldset>
+								 				</td>
+								 				<script type="text/javascript">
+								                     $(function(){
+								                        $("#imgbtn").uploader("image", "file");
+								                     })
+								                                    
+								                    function file(data){
+								                            $("#image").val(data);
+								                            $("#imgbox").html('<img src="'+data+'" onload="photocenterin(this,150,150)" />');
+								                   }
+								            	</script>
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+
+                                 <div class="form-group"><label class="col-sm-2 control-label">文章外链：</label>
+                                    <div class="col-sm-10"> 
+                                    <input type="text"  class="form-control" name="outlink"  id="outlink" value="" size="55"  validate=" maxlength:80" />
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group"><label class="col-sm-2 control-label">文章推荐位：</label>
+                                    <div class="col-sm-10"> 
+                                   		{$group}
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group"><label class="col-sm-2 control-label">文章内容：</label>
+                                    <div class="col-sm-10"> 
+                                   					<td width="90%" id="box_content">
+													<div class="editor_box"><div style="display:none;" id="content_aid_box"></div>
+													<textarea name="content" class=""  id="content"  boxid="content"   style="width:99%;height:300px;visibility:hidden;">
+														{$info.content}
+													</textarea>
+
+													<script type="text/javascript">
+													$(function(){
+														    var editor;
+														    KindEditor.ready(function(K) {
+														        editor = K.create('textarea[name="content"]', {
+														            allowFileManager : true,
+														            autoHeightMode : true,
+														            afterCreate : function() {
+														                this.loadPlugin('autoheight');
+														            },
+														            afterUpload : function(url) {
+														                var firstimageoption = '<option value="' + url + '">' + url + '</option>';
+														                var selectoption = '<option value="' + url + '" selected="selected">' + url + '</option>';
+														                $("#firstimage").append(firstimageoption);
+														                $("#images").append(selectoption);
+														            }
+														        });
+														    });
+														})
+													</script>
+											<div  class='editor_bottom2'>
+											</div>
+											</div>				
+										</td>
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>	
+                                <div class="form-group"><label class="col-sm-2 control-label">文章排序：</label>
+                                    <div class="col-sm-10"> 
+                                   		<input type="text"  class="form-control" name="listorder"  id="listorder" value="{$info.listorder}" size="55"  validate=" maxlength:80" />
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group"><label class="col-sm-2 control-label">是否显示：</label>
+                                    <div class="col-sm-10"> 
+                                   				<select id="status" name="status" >
+													<option value="1"   <if condition="$info['status'] eq 1" >   selected </if> >是</option>
+													<option value="0"   <if condition="$info['status'] eq 0" >   selected </if> >否</option>
+												</select>
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+									<div id="btnbox" class="btn form-group"  style="margin-bottom: 45px;">
+									 <button class="btn btn-primary" type="submit">保存</button>
+                                        <button class="btn btn-primary" type="reset">重置</button>
+									</div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    	</div>
+   </body>
+</html>

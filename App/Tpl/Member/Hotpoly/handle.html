@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jscolor/jscolor.js"></script>
+        {:W("Easyui")}
+        <!---------多边形热区名称显示 start-------------->
+        {:W("Boluoui")}
+        <!---------多边形热区名称显示 end-------------->
+        {:W("Uploader")}
+		{:W("Kindediter")}
+        <script type="text/javascript">
+            function checksb(){
+                var result = true;
+                if(result == true){
+                    result = AutoCheckSub(".cs");
+                }
+                return result;
+            }
+            $(document).ready(function(){
+				//多边形热区名称显示 start
+				boluo_autocheckui();
+				//多边形热区名称显示 end
+                onoroff();
+                $('.dd').tooltip({
+                    position: 'right'
+                });
+            });
+            function setPoly(){
+                var ploydata = $("#ploydata").val();
+                var url = "{:UOne('ployset',array('view_id'=>$view_id))}" + "&ploydata="+ploydata;
+                openwin("设置多边形热区",url,800,600);
+            }
+            function getPolyback(data){
+                $("#ploydata").val(data);
+                var ployarr = data.split("$");
+                var num = ployarr.length;
+                $("#polycount").html(num);
+                closewin();
+            }
+        </script>
+        <style>
+            .action_left{
+                width: 140px; min-height: 200px; overflow: hidden; float: left;
+            }
+            .action_myphoto{
+                width: 120px; height: auto; overflow: hidden; border:1px solid #dbdbdb;
+                box-shadow:2px 2px 4px #e2e2e2; margin-bottom: 12px;
+            }
+            .action_mytext{
+                width: auto; height: 22px; overflow: hidden; text-align: left; font: 12px/22px "微软雅黑"; color: #333; cursor: default;
+            }
+            .action_right{
+                width: 1000px; min-height: 200px; overflow: hidden; float: left;
+            }            
+        </style>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">全景项目 - {$panorow['title']}</div>
+                        <div title="关闭" data-info="确认返回功能首页？" data-url="{:U('main/index')}" class="delaction close"></div>
+                        <div title="返回上级" onclick="LinkTo('{$backurl}');" class="goback"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            {:W("Panomenu",array("pano_id"=>$pano_id,"num"=>4))}
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main">
+                                <div class="action_title"><a href="{:U('toolbox/index',array('pano_id'=>$pano_id))}">模块管理</a> - <a href="{:U('index',array('pano_id'=>$pano_id))}">多边形热区</a>
+								<span class="vrback"><a href="{:U('hotpoly/ployview',array('view_id'=>$view_id))}">返回上级</a></span></div>
+                                <div class="action_web">
+                                    <div class="action_left">
+                                        <div class="action_myphoto"><img src="{:CC('web_root')}{$viewrow['thumb']}" onload="swichimg2w(this,120);"/></div>
+                                        <div class="action_mytext"><b>当前场景：</b>{$viewrow['title']}</div>
+                                    </div>
+                                    <div class="action_right">
+                                        <form name="form1" action="" onsubmit="return checksb();" enctype="multipart/form-data" method="post">
+                                            <input name="dopost" value="save" type="hidden" />
+                                            <input name="member_id" value="{$member_id}" type="hidden" />
+                                            <input name="view_id" value="{$view_id}" type="hidden" />
+                                            <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">
+                                                <tr class="tr_white" height="40">
+                                                    <td align="right" width="100"><b>多边形热区名称：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" id="title" name="title" value="{$row['title']}" sbname="多边形热区名称" class="inputstyle cs"/>
+                                                    </td>
+                                                </tr>
+                                                <!---------多边形热区名称显示 start-------------->
+                                                <tr class="tr_white" height="40">
+                                                    <td align="right" width="100"><b>热点显示：</b></td>
+                                                    <td align="left">
+                                                        <i class="boluo_checkbox "><input type="hidden" id="is_hover" name="is_hover" value="{$row['is_hover']}" /></i>全景中显示热点名称
+                                                    </td>
+                                                </tr>
+                                                <!---------多边形热区名称显示 end-------------->
+                                                <tr class="tr_white" height="40">
+                                                    <td align="right" width="100"><b>多边形热区抓取：</b></td>
+                                                    <td align="left">
+                                                        <input type="hidden" id="ploydata" sbname="多边形热区" name="ploydata" value="{$row['ploydata']}" class="cs" />
+                                                        <input type="button" class="btn" onclick="setPoly();" value="点击设置热区" />
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white" height="40">
+                                                    <td align="right" width="100"><b>多边形热区点数：</b></td>
+                                                    <td align="left"><span id="polycount">{$row["polycount"]}</span> 个</td>
+                                                </tr>
+                                                <tr class="tr_white" height="20">
+                                                    <td colspan="2"></td>
+                                                </tr>
+                                                <tr class="tr_white" height="40">
+                                                    <td align="right" width="100"><b>边框宽度：</b></td>
+                                                    <td align="left">
+                                                        <select name="borderwidth" class="selectstyle">
+                                                            <option value="1" {:Selected(1,$row["borderwidth"]);}>1像素</option>
+                                                            <option value="2" {:Selected(2,$row["borderwidth"]);}>2像素</option>
+                                                            <option value="3" {:Selected(3,$row["borderwidth"]);}>3像素</option>
+                                                            <option value="4" {:Selected(4,$row["borderwidth"]);}>4像素</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white" height="40">
+                                                    <td align="right" width="100"><b>填充透明度：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" id="fillalpha" name="fillalpha" value="{$row['fillalpha']}" style="width: 40px;" sbname="填充透明度" class="inputstyle cs"/>
+                                                        （0~1的小数）
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white" height="40">
+                                                    <td align="right" width="100"><b>选中填充颜色：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" name="fillcolor" value="{$row['fillcolor']}" class="colorinput color cname_color"/>
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white" height="40">
+                                                    <td align="right" width="100"><b>边框透明度：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" id="borderalpha" name="borderalpha" value="{$row['borderalpha']}" style="width: 40px;" sbname="边框透明度" class="inputstyle cs"/>
+                                                        （0~1的小数）
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white" height="40">
+                                                    <td align="right" width="100"><b>边框颜色：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" name="bordercolor" value="{$row['bordercolor']}" class="colorinput color cname_color"/>
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white" height="10">
+                                                    <td colspan="2"></td>
+                                                </tr>
+                                                <tr class="tr_white" height="40">
+                                                    <td align="right" width="100"><b>选中边框宽度：</b></td>
+                                                    <td align="left">
+                                                        <select name="borderwidthhover" class="selectstyle">
+                                                            <option value="1" {:Selected(1,$row["borderwidthhover"]);}>1像素</option>
+                                                            <option value="2" {:Selected(2,$row["borderwidthhover"]);}>2像素</option>
+                                                            <option value="3" {:Selected(3,$row["borderwidthhover"]);}>3像素</option>
+                                                            <option value="4" {:Selected(4,$row["borderwidthhover"]);}>4像素</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white" height="40">
+                                                    <td align="right" width="100"><b>选中填充透明度：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" id="fillalphahover" name="fillalphahover" value="{$row['fillalphahover']}" style="width: 40px;" sbname="选中填充透明度" class="inputstyle cs"/>
+                                                        （0~1的小数）
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white" height="40">
+                                                    <td align="right" width="100"><b>选中填充颜色：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" name="fillcolorhover" value="{$row['fillcolorhover']}" class="colorinput color cname_color"/>
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white" height="40">
+                                                    <td align="right" width="100"><b>选中边框透明度：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" id="borderalphahover" name="borderalphahover" value="{$row['borderalphahover']}" style="width: 40px;" sbname="边框透明度" class="inputstyle cs"/>
+                                                        （0~1的小数）
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white" height="40">
+                                                    <td align="right" width="100"><b>选中边框颜色：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" name="bordercolorhover" value="{$row['bordercolorhover']}" class="colorinput color cname_color"/>
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="tr_white" height="10">
+                                                    <td colspan="2"></td>
+                                                </tr>
+
+                                                <tr class="tr_white" height="40">
+                                                    <td align="right" width="100"><b>事件类型：</b></td>
+                                                    <td align="left">
+                                                        <input type="hidden" name="action_type" id="action_type" value="{$row['action_type']}" />
+                                                        <input type="button" data-tb="1" class="selectbn btn me" value="场景切换" />
+                                                        <input type="button" data-tb="2" class="selectbn btn" value="弹出图片" />
+                                                        <input type="button" data-tb="3" class="selectbn btn" value="弹出图文" />
+                                                        <input type="button" data-tb="4" class="selectbn btn" value="弹出图集" />
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="tr_white tb tb1" height="36">
+                                                    <td align="right" width="100"><b>目标场景：</b></td>
+                                                    <td align="left">
+                                                        <div class="pick_scene">
+                                                            <input class="scene_id" id="scene_id" name="scene_id" type="hidden" value="{$row['scene_id']}" />
+                                                            <div class="pick_scene_head">{$row["scene_sort"]}</div>
+                                                            <div class="pick_scene_body">{$row["scene_name"]}</div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="tr_white tb tb2" height="36">
+                                                    <td align="right" width="100"><b>弹出图片：</b></td>
+                                                    <td align="left">
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="floatimg" id="photo1img">
+                                                                        <neq name="row['photo1']" value=""><img src="{:CC('web_root')}{$row['photo1']}" onload="photocenterin(this,120,120);" /></neq>
+                                                                    </div>
+                                                                    <input type="hidden" id="photo1" name="photo1" value="{$row['photo1']}" />
+                                                                    <input type="hidden" name="old_photo1" value="{$row['photo1']}" />
+                                                                </td>
+                                                                <td>
+                                                                    <input type="button" value="点击上传" id="photo1btn" class="btn" />
+                                                                    （建议图片不超过400×400）
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                        {:uploadFill("#photo1btn", "#photo1", "#photo1img", 120 , 120)}
+                                                    </td>
+                                                </tr>
+
+                                                <!-- <tr class="tr_white tb tb3" height="36">
+                                                    <td align="right" width="100"><b>总宽度：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" id="textbox_width" style="width: 60px" name="textbox_width" value="{$row['textbox_width']}" class="inputstyle"/> px
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white tb tb3" height="36">
+                                                    <td align="right" width="100"><b>总宽度：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" id="textbox_height" style="width: 60px" name="textbox_height" value="{$row['textbox_height']}" class="inputstyle"/> px
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white tb tb3" height="36">
+                                                    <td align="right" width="100"><b>图文图片：</b></td>
+                                                    <td align="left">
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="floatimg" id="photo2img">
+                                                                        <neq name="row['photo2']" value=""><img src="{:CC('web_root')}{$row['photo2']}" onload="photocenterin(this,120,120);" /></neq>
+                                                                    </div>
+                                                                    <input type="hidden" id="photo2" name="photo2" value="{$row['photo2']}" />
+                                                                    <input type="hidden" name="old_photo2" value="{$row['photo2']}" />
+                                                                </td>
+                                                                <td>
+                                                                    <input type="button" value="点击上传" id="photo2btn" class="btn" />
+                                                                    （建议图片不超过200×200）
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                        {:uploadFill("#photo2btn", "#photo2", "#photo2img", 120 , 120)}
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white tb tb3" height="36">
+                                                    <td align="right" width="100"><b>图片宽度：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" id="photobox_width" style="width: 60px" name="photobox_width" value="{$row['photobox_width']}" class="inputstyle"/> px
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white tb tb3" height="36">
+                                                    <td align="right" width="100"><b>文本内容：</b></td>
+                                                    <td align="left">
+                                                        <textarea name="text2" class="textacube" style="width: 360px; height: 160px;">{$row['text2']}</textarea>
+                                                    </td>
+                                                </tr> -->
+
+												
+
+												<tr class="tr_white tb tb3" height="36">
+                                                    <td align="right" width="100"><b>弹框窗口宽度：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" id="textbox_width" style="width: 60px" name="textbox_width" value="{$row['textbox_width']}" class="inputstyle"/> px
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white tb tb3" height="36">
+                                                    <td align="right" width="100"><b>弹框窗口高度：</b></td>
+                                                    <td align="left">
+                                                        <input type="text" id="textbox_height" style="width: 60px" name="textbox_height" value="{$row['textbox_height']}" class="inputstyle"/> px
+                                                    </td>
+                                                </tr>
+												
+                                                <tr class="tr_white tb tb3" height="36">
+                                                    <td align="right" width="100"><b>图文内容：</b></td>
+                                                    <td align="left">
+														<script>
+														var editor;
+														KindEditor.ready(function(K) {
+															editor = K.create('textarea[name="text2"]', {
+																allowFileManager : true,
+																uploadJson : '/App/Tools/kindeditor/php/upload_json.php?pano_id={$pano_id}',
+																width : '800px',
+																height: '540px',
+																resizeType: 0   //固定宽高
+															});
+														});
+														</script>
+                                                        <textarea name="text2" class="textacube">{$row['text2']}</textarea>
+                                                    </td>
+                                                </tr>
+
+
+
+
+                                                <tr class="tr_white tb tb4" height="36">
+                                                    <td align="right" width="100"><b>图集图片：</b></td>
+                                                    <td align="left">
+                                                        <input type="button" value="多图片上传" id="photo3btn" class="btn" />
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white tb tb4" height="36">
+                                                    <td align="right" width="100"></td>
+                                                    <td align="left">                                                        
+                                                        {:CreatPhoto("#photo3btn","tubie","tupian",$photoarr);}
+                                                    </td>
+                                                </tr>
+                                                <script type="text/javascript">                                                    
+                                                    var action_id = $("#action_type").val();
+                                                    actionto(action_id);
+                                                    $(".selectbn").click(function(){
+                                                        var tbname = $(this).data("tb");
+                                                        actionto(tbname);                                                        
+                                                    });
+                                                    function actionto(n){
+                                                        $("#action_type").val(n);
+                                                        $(".selectbn").removeClass("me");
+                                                        $(".selectbn").eq(n-1).addClass("me");
+                                                        $(".tb").hide();
+                                                        $(".tb" + n).show();
+                                                    }
+                                                    
+                                                    var scene_temp;
+                                                    $(".pick_scene").click(function(){
+                                                        scene_temp = $(this);
+                                                        var url = "{:U('pick/scene',array('pano_id'=>$pano_id,'view_id'=>$view_id))}";
+                                                        openwin("选择场景",url,700,500);
+                                                    });
+                                                    function getscene(id,name,sort){
+                                                        scene_temp.children(".scene_id").val(id);
+                                                        scene_temp.children(".pick_scene_head").html("场景" + sort);
+                                                        scene_temp.children(".pick_scene_body").html(name);
+                                                        closewin();
+                                                    }
+                                                </script>
+
+                                                <tr class="tr_white" height="10">
+                                                    <td colspan="2"></td>
+                                                </tr>
+                                                <tr class="tr_white" height="40">
+                                                    <td align="right" width="120"></td>
+                                                    <td align="left">
+                                                        <input type="submit" class="blackbutton" value="提交" />
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_white" height="10">
+                                                    <td colspan="2"></td>
+                                                </tr>
+                                            </table>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

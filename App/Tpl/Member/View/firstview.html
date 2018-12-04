@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        {:W("Easyui")}
+        {:W("Uploader")}
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $(".pano_cube").click(function(){
+                    var theid = $(this).data("id");
+                    $.ajax({
+                        url:"{:U('ajax/view')}",
+                        type:"POST",
+                        dataType:"script",
+                        data:{
+                            dopost:"firstview",
+                            pano_id:"{$pano_id}",
+                            theid:theid
+                        }
+                    });
+                });
+            });
+        </script>
+        <style type="text/css">
+            .pano_cube{
+                cursor: pointer;
+            }
+            .pano_cube.me{
+                border-color: #ebb4a9; background: #fff0ed;
+            }
+            .pano_cube.me .pano_up{
+                border-color: #ebb4a9;
+            }
+        </style>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">全景项目 - {$panorow['title']}</div>
+                        <div title="关闭" onclick="DoNote('确认返回功能首页？','{:U('main/index')}');" class="close"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            {:W("Panomenu",array("pano_id"=>$pano_id,"num"=>2))}
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main" style="background:  #f3f3f3;">
+                                <div class="pano_top">
+                                    <a href="{:U('index',array('pano_id'=>$pano_id))}" class="button_add floatmod">返回上级</a>
+                                </div>
+                                <div class="pano_table">
+									<if condition="!empty($viewlist)">
+                                    <volist id="ovo" name="viewlist">
+                                        <if condition="$ovo['first_read'] eq 0">
+                                            <div id="view_{$ovo.id}" class="pano_cube" data-id="{$ovo.id}">
+                                                <div class="pano_up" style="position: static;">
+                                                    <div class="dpic"><img src="{:CC('web_root')}{$ovo.thumb}" onload="photocenterout(this,200,100);" /></div>
+                                                </div>
+                                                <div class="pano_down" data-viewid="{$ovo.id}">
+                                                    <div class="midonlytext">{$ovo.title}</div>
+                                                </div>
+                                            </div>
+                                            <else/>
+                                            <div id="view_{$ovo.id}"  class="pano_cube me" data-id="{$ovo.id}">
+                                                <div class="pano_up" style="position: static;">
+                                                    <div class="dpic"><img src="{:CC('web_root')}{$ovo.thumb}" onload="photocenterout(this,200,100);" /></div>
+                                                </div>
+                                                <div class="pano_down" data-viewid="{$ovo.id}">
+                                                    <div class="midonlytext">{$ovo.title}</div>
+                                                </div>
+                                            </div>
+                                        </if>
+                                    </volist>
+									<else />
+									<div class="page_msg mini plugin_update_tips">
+										<div class="inner group">尚未添加任何场景&nbsp;&nbsp;请先<a href="/member/view/add/pano_id/{$pano_id}" class="a_detail">创建场景</a></div>
+									</div>
+									</if>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

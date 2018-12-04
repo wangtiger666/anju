@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<krpano showerrors="false" onstart="action(start);">
+    <action name="start">
+        loadscene(scene1, null, MERGE);
+    </action>
+
+    <scene name="scene1">
+        <view hlookat="{:cookie('hlookat')}" vlookat="{:cookie('vlookat')}" fov="80" fisheye="0" fovmin="60" fovmax="120" />
+        <image type="CUBE">
+            <left url="{:cookie('left')}" />
+            <front url="{:cookie('front')}" />
+            <right url="{:cookie('right')}" />
+            <back url="{:cookie('back')}" />
+            <up url="{:cookie('up')}" />
+            <down url="{:cookie('down')}" />
+        </image>
+        <layer name="infotext" url="__PUBLIC__/pano/plugins/textfield.swf" enabled="false" border="false" background="false"
+		align="top" x="0" y="10" width="90%" autoheight="true"
+		css="text-align:center; color:#FF0000; font-family:微软雅黑; font-weight:bold; font-size:14px;"
+		html="转动到目标方向，点击中心图示，即可获得位置坐标"
+		/>
+        <plugin name="introimage" alpha="0.6" url="__PUBLIC__/member/images/pano/introimage.png" onover="tween(alpha,1.0);" onout="tween(alpha,0.6);" onclick="getback();"  keep="true" align="center"/>
+        <action name="getback">
+            js(parent.hback(get(VIEW.hlookat),get(VIEW.vlookat)));
+        </action>
+    </scene>
+
+</krpano>

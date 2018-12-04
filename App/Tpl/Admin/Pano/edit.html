@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <script src="__PUBLIC__/common/js/jquery.js" language="javascript" type="text/javascript"></script>
+        <script src="__PUBLIC__/common/js/common.js" language="javascript" type="text/javascript"></script> 
+        <!-- bootstrap START-->
+        <link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/plugins/footable/footable.core.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/animate.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/style.css" rel="stylesheet">
+        <link href="__PUBLIC__/common/style/recovebootstrap.css" rel="stylesheet" type="text/css" /> 
+        <!-- bootstrap END -->    
+    </head>
+    <body>
+        
+            <div  class="main" >
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>全景作品修改 <small></small></h5>
+                              <div class="ibox-tools">
+                                <a  onclick="window.location.href='{:U('pano/index')}'"  class="btn btn-primary btn-xs">返回管理</a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                             <form name='form1' id="form1" method='post' class="form-horizontal" >
+                                <input type='hidden' name='dopost' value='save'/>
+                                <input type='hidden' name='id' value='{$id}'/>
+
+                                <div class="form-group"><label class="col-sm-2 control-label">全景ID：</label>
+                                    <div class="col-sm-10"> 
+                                        <input type="text"  class="form-control" id="id" name="id" tname="全景ID" value="{$info.id}" disabled />  
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+
+                                <div class="form-group"><label class="col-sm-2 control-label">全景名称:</label>
+                                    <div class="col-sm-10"> 
+                                        <input type="text" class="form-control" id="id" name="id"  value="{$info.title}" disabled />
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+
+                                <div class="form-group"><label class="col-sm-2 control-label">全景作者：</label>
+                                <div class="col-sm-10"> 
+                                    <input disabled type="text" class="form-control" id="member_id" tname="全景作者" name="member_id" value='<?php  $auth = M("member")->where(array("id"=>$info[member_id]))->getField('nickname'); echo $auth; ?>' />
+                                     </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+
+                                <div class="form-group"><label class="col-sm-2 control-label">地区：</label>
+                                    <div class="col-sm-10">{$web_area}</div>
+                                </div>
+                                 <div class="hr-line-dashed"></div>
+
+                                <div class="form-group"><label class="col-sm-2 control-label">行业：</label>
+                                    <div class="col-sm-10"> {$web_hangye}</div>
+                                </div>
+                                 <div class="hr-line-dashed"></div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-4 col-sm-offset-2">
+                                        <button class="btn btn-primary" type="submit">保存</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

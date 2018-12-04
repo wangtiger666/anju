@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        {:W("Easyui")}
+        {:W("Uploader")}
+        <style type="text/css">
+            .nonumtext{
+                width: auto; min-width: 24px; height: 20px; overflow: hidden; background: #ccc; text-align: center; margin-top: 1px; cursor: pointer;
+                font: 12px/20px "微软雅黑"; color: #fff; position: absolute; border:1px solid #ccc; border-radius:4px; padding: 0 3px;
+            }
+            .numtext{
+                width: auto; min-width: 24px; height: 20px; overflow: hidden; background: #bbb; text-align: center; margin-top: 1px; cursor: pointer;
+                font: 12px/20px "微软雅黑"; color: #fff; position: absolute; border:1px solid #aaa; border-radius:4px; padding: 0 3px;
+            }
+            .pano_table{
+                padding-top: 20px;
+            }
+            .mapbox{
+                width: auto; min-height: 100px; overflow: hidden;
+            }
+            .mapout{
+                width: 220px; height: 150px; overflow: hidden; border:1px solid #dbdbdb; margin: 6px; float: left; border-radius: 4px; background: #f3f3f3;
+            }
+            .mapout.over{
+                border-color: #ffbc00; background: #fff5d6;
+            }
+            .maptop{
+                width: 200px; height: 100px; overflow: hidden; border:1px solid #dbdbdb; margin: 0 auto; padding: 1px; margin-top: 8px; background: #fff;
+                position: relative;
+            }
+
+            .maptop .dpic{
+                width: 200px; height: 100px; overflow: hidden;
+            }
+            .maptop .pic{
+                width: 200px; height: 100px; overflow: hidden; position: absolute; z-index: 5; background: #fbfbfb;
+            }
+            .maptop .ufo{
+                width: 200px; height: 100px; overflow: hidden; text-decoration: none; position: absolute; z-index: 10; display: none; background: url(__PUBLIC__/member/images/common/black.png) repeat; cursor: pointer;
+            }
+            .mapout:hover .maptop .ufo{
+                display: block; text-decoration: none;
+            }
+            .mapdown{
+                width: 200px; height: 24px; overflow: hidden; margin: 0 auto; margin-top: 6px;
+            }
+        </style>
+        <script type="text/javascript">
+            var pano_id = "{$pano_id}";
+            $(document).ready(function(){
+                $(".mapopen").click(function(){
+                    pon = $(this).data("on");
+
+                    if(pon == 1){
+                        $(this).data("on",0);
+                        $(this).addClass("off");
+                        open = 0;
+                    }else{
+                        $(this).data("on",1);
+                        $(this).removeClass("off");
+                        open = 1;
+                    }
+
+                    $.ajax({
+                        url:"{:U('openmap')}",
+                        type:"POST",
+                        dataType:"script",
+                        data:{
+                            pano_id:pano_id,
+                            open:open
+                        }
+                    });
+                });
+				
+				
+				
+				 $(".map_open").click(function(){
+                    pon = $(this).data("on");
+
+                    if(pon == 1){
+                        $(this).data("on",0);
+                        $(this).addClass("off");
+                        open = 0;
+                    }else{
+                        $(this).data("on",1);
+                        $(this).removeClass("off");
+                        open = 1;
+                    }
+
+                    $.ajax({
+                        url:"{:U('open_map')}",
+                        type:"POST",
+                        dataType:"script",
+                        data:{
+                            pano_id:pano_id,
+                            open:open
+                        }
+                    });
+                });
+            });
+        </script>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">全景项目 - {$panorow['title']}</div>
+                        <div title="关闭" onclick="DoNote('确认返回功能首页？','{:U('main/index')}');" class="close"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            {:W("Panomenu",array("pano_id"=>$pano_id,"num"=>4))}
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main" style="background:  #f3f3f3;">
+                                <div class="action_title"><a href="{:U('toolbox/index',array('pano_id'=>$pano_id))}">模块管理</a> - 多地图模块
+								<span class="vrback"><a href="{:U('toolbox/index',array('pano_id'=>$pano_id))}">返回上级</a></span>
+								</div>
+                                <div class="pano_top">
+                                    <span class="pano_topbtnb">全局设置</span>
+                                    <a class="pano_topbtn" href="{:U('point',array('pano_id'=>$pano_id))}">标记设置</a>
+                                    <a class="pano_topbtn" href="{:U('position',array('pano_id'=>$pano_id))}">地图位置</a>
+                                    <a class="pano_topbtn" href="{:U('faceto',array('pano_id'=>$pano_id))}">雷达方向</a>
+                                </div>
+                                <div class="pano_table">
+                                    <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="100"><b>启动模块：</b></td>
+                                            <td align="left">
+                                                <span class="mapopen onoff <eq name="mapsrow['open']" value="0">off</eq>" data-on="{$mapsrow['open']}"></span>
+                                            </td>
+                                        </tr>
+										<tr class="tr_white" height="40">
+                                            <td align="right" width="100"><b>默认是否展开：</b></td>
+                                            <td align="left">
+                                                <span class="map_open onoff <eq name="mapsrow['map_open']" value="0">off</eq>" data-on="{$mapsrow['map_open']}"></span>
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="10">
+                                            <td colspan="2"></td>
+                                        </tr>
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="100"><b>地图上传：</b></td>
+                                            <td align="left">
+                                                <a class="btn3 input2a" style="float:left;" href="{:U('addmap',array('pano_id' => $pano_id))}">添加地图</a>
+												<span style="float:left;padding-top:7px;padding-left:10px;">(可添加多张地图以供不同场景使用)</span>
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="100"><b>地图：</b></td>
+                                            <td align="left">
+                                                <div class="mapbox">
+                                                    <volist name="maplist" id="mp">
+                                                        <div class="mapout">
+                                                            <div class="maptop">
+                                                                <div class="pic"><img src="{:CC('web_root')}{$mp.mapurl}" onload="photocenterout(this,200,100);" /></div>
+                                                                <div class="ufo">
+                                                                    <a href="{:U('editmap',array('maps_id'=>$mp['id']))}" class="ufo_editbox">
+                                                                        <div class="ufo_longtxt">修改</div>
+                                                                    </a>
+                                                                    <a href="{:U('delmap',array('maps_id'=>$mp['id']))}" class="ufo_delbox">
+                                                                        <div class="ufo_longtxt">删除</div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mapdown">
+                                                                <div class="midonlytext">{$mp.mapname}</div>
+                                                            </div>
+                                                        </div>
+                                                    </volist>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

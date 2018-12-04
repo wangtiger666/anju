@@ -1,0 +1,89 @@
+<include file="Header" />
+
+<div id="float_nav"></div>
+<!--float_nav-->
+<link rel="stylesheet" href="/Public/webstyle/css/zx_index.css">
+<script type="text/javascript" src="/Public/webstyle/js/advert1.js"></script>
+<div class="newsMain">
+  <div class="newsTop">
+  <foreach name="banner" item="vo">
+        <img src="{$vo.thumb}" alt="{$vo.ad_name}"  width="1920" height="250" />
+      </foreach>
+    <div class="newsTopTxt">
+      <h3>{$name}</h3>
+      <div class="num"><span class="timer" data-to="0" data-speed="800">{$count}</span> 篇资讯</div>
+    </div>
+    <!--newsTopTxt-->
+  </div>
+  <!--newsTop-->
+  <div class="subNav">
+      <p>
+    <a href="index.php?s=/Website/wzzx" >资讯首页</a>
+     <foreach name="lanmu" item="vo">
+      <span>/</span>
+      <a href="index.php?s=/Website/wzzxlist/lanmuid/{$vo.id}"   <if condition="$id == $vo.id "> class="curr"  </if>  >{$vo.name}</a>
+    </foreach>
+    </p>
+  </div>
+  <div class="newsListBox">
+    <div class="newsListLeft">
+      <foreach name="list" item="vo">
+      <div class="newsContList" id="vo">
+        <a href="index.php?s=/Website/content/id/{$vo.id}" target="_blank" class="img"><img   <if condition="empty($vo['thumb']) eq true">  src='/Public/webstyle/images/srcdefault.jpg' <else/> src='{$vo.thumb}'  </if>     alt="{$vo.title}"   width="270" height="180" /></a>
+        <div class="text">
+          <h3><a href="index.php?s=/Website/content/id/{$vo.id}" target="_blank">{$vo.title}</a></h3>
+          <span><?php echo date("Y-m-d H:i",$vo['createtime']); ?></span>
+          <p><a href="index.php?s=/Website/content/id/{$vo.id}" target="_blank">{$vo.description}<b>查看全文</b></a></p>
+        </div>
+      </div>
+      </foreach>
+      <div class="newsListPage">
+   
+      </div>
+      </div>
+    
+    <div class="newsListight">
+   
+      <div class="labelHot" style="margin-top:0px;">
+        <div class="labelHotTitle"><i></i>
+          <h3>热点阅读</h3>
+        </div>
+        <!--labelHotTitle-->
+        <div class="labelHotCont">
+          <p>  <foreach name="redian_article" item="vo">
+              <a href="{$vo.ariurl}" target="_blank">{$vo.title}</a>
+            </foreach></p>
+        </div>
+        <!--labelHotCont--></div>
+      <!--labelHot-->
+        <div class="banner04">
+         <foreach name="ad" item="vo">
+           <a href="{$vo.outlink}" target="_blank">
+            <img src="{$vo.thumb}" width="307px" height="209px">
+           </a>
+           </foreach>
+       </div>
+      <!--banner04-->
+      <div class="recommendedPano">
+        <div class="labelHotTitle"><i></i>
+          <h3>全景推荐</h3>
+        </div>
+        <!--labelHotTitle-->
+        <div class="recommendedPanoList">
+          <ul>
+            <foreach name="zxpano" item="vo">
+            <li><a href="{$vo.panopath}" target="_blank"><img src="{$vo.panothumb}" alt="{$vo.title}" />
+              <p>{$vo.title}</p>
+              </a></li>
+              </foreach>
+          </ul>
+        </div>
+        <!--recommendedPanoList--></div>
+      <!--recommendedPano--></div>
+    <!--newsListight-->
+    <div class="clearfloat"></div>
+  </div>
+  <!--newsBox--></div>
+<!--newsMain--><script src="js/zx_main.js"></script>
+<include file="Footer" />
+

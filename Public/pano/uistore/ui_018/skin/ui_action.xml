@@ -1,0 +1,593 @@
+<krpano>
+
+<!-- 顶部场景标题  STAR-->
+   <layer name="text_biaoti" keep="true" url="%SWFPATH%/plugins/textfield.swf" align="top" x="0" y="35"
+       html=""
+       css="font-family:微软雅黑; font-size:17px; color:#ffffff;letter-spacing:2px;"
+       autowidth="true" autoheight="auto" vcenter="true"
+       padding="4" roundedge="5" 
+	   background="false"
+       backgroundcolor="0xFFFFFF" backgroundalpha="1.5" handcursor="false" enabled="false"
+       /> 
+	   
+	<layer name="skin_loadingtext" keep="true" url="../images/roading.png" scale="0.8" align="center" x="5" y="-5" visible="false" autoheight="true" background="false" border="false" enabled="false" /> 
+	
+	
+	
+	<krpano devices="mobile">
+		<!-- 顶部场景标题  STAR-->
+        <layer name="text_biaoti" x="10" y="50" css="font-family:黑体; font-size:26px; color:#FFFFFF;"/> 		
+
+		<layer name="skin_loadingtext" keep="true" url="../images/roading.png" scale="0.8" align="center" x="5" y="-5" visible="false" autoheight="true" background="false" border="false" enabled="false" /> 
+		
+	</krpano>	
+
+	<action name="skin_update_scene_infos">
+	    set(layer[text_biaoti].html,get(scene[get(xml.scene)].title));
+		
+	</action>	
+	<!-- 加载进度 -->
+	<!-- VR模式下不显示加载字样 -->
+	<action name="skin_showloading">
+		if(display.stereo == true,
+			set(layer[skin_loadingtext].visible, false);
+		  ,
+			set(loadingpercent_isloading, true);
+		   set(layer[skin_loadingtext].visible, true);
+		
+		    asyncloop(loadingpercent_isloading,
+			mul(pv, progress.progress, 100);
+			roundval(pv,0);
+			txtadd(layer[skin_loadingtext].html, get(skin_settings.loading), get(pv), '%');
+		     );
+		);
+	</action>
+		
+	<action name="loadingpercent_stoploading">
+		set(loadingpercent_isloading, false); 
+		set(layer[skin_loadingtext].visible, false);
+	</action>
+	<!-- 加载进度 -->
+   
+      <skin_settings groups_width="120"
+                     groups_height="24"
+                     groups_padding="8"
+                     thumbs_width="100"
+                     thumbs_height="70"
+                     thumbs_padding="10"
+                     loadscene_flags="MERGE"
+                     loadscene_blend="BLEND(0.5)"
+                   />
+
+    <style name="groupstyle" keep="true" align="lefttop" parent="groupList" url="%SWFPATH%/plugins/textfield.swf" background="true" backgroundcolor="0x000000" border="false" backgroundalpha="0.3" css="color:#999999; font-family:Arial; font-size:14px; text-align:center;line-height:26px;" roundedge="30" padding="0 10"  vcenter="true" />
+
+    <style name="groupstyle" devices="flash" padding="4 10"  vcenter="true" />
+
+    <style name="grouponstyle" keep="true" align="lefttop" parent="groupList" url="%SWFPATH%/plugins/textfield.swf" background="true" backgroundcolor="0xffffff" border="false" backgroundalpha="1.0" css="color:#000000; font-family:Arial; font-size:14px; text-align:center;line-height:26px;" roundedge="30" padding="0 10" vcenter="true"  />
+
+    <style name="grouponstyle" devices="flash" padding="4 10" />
+
+    <style name="thumbstyle" type="container" keep="true" align="lefttop" parent="thumbList" bgborder="1 0xcccccc" bgcolor="0xffffff" bgalpha="0.3"/>
+
+    <style name="thumbonstyle" type="container" keep="true" align="lefttop" parent="thumbList" bgborder="2 0xf5a623" bgcolor="0xffffff" bgalpha="0.3" />
+
+    <style name="thumbtipstyle" keep="true" url="%SWFPATH%/plugins/textfield.swf" align="bottom" background="false" css="color:#ffffff; font-family:Arial; font-size:12px; font-weight:bold; text-align:center;" padding="2" width="100%" textshadow="1" textshadowrange="2" textshadowangle="0" />
+	
+	
+    <layer name="groupLayer" keep="true" type="container" width="100%" height="131" align="leftbottom" x="0" y="-132" opened="false" scene_index="0" zorder="5">
+
+        <layer name="groupListBg" keep="true" type="container" width="100%" height="40" align="bottom" x="0" y="0" bgcolor="0x000000" bgalpha="0.5" maskchildren="true" bgborder="1,0,0,0 0xffffff 0.5">
+
+            <layer name="group_scrollleft"  style="iconstyle|skin_glow" crop="79|578|20|20"  align="lefttop"  edge="left"  x="5" y="22" scale="1" zorder="2" alpha="1.0" ondown2="stopdelayedcall(tipThumbEvent);asyncloop(pressed, layer[groupList].scrollby(+2,0));" visible="false" />
+
+            <layer name="group_scrollright" style="iconstyle|skin_glow" crop="100|578|20|20" align="righttop" edge="right" x="5" y="22" scale="1" zorder="2" alpha="1.0" ondown2="stopdelayedcall(tipThumbEvent);asyncloop(pressed, layer[groupList].scrollby(-2,0));" visible="false" />
+
+            <layer name="groupList" state="closed" url="%SWFPATH%/plugins/scrollarea.swf" alturl="%SWFPATH%/plugins/scrollarea.js" direction="h" align="top" width="100%" height="24" zorder="1" onloaded="group_updatescroll();" onscroll="updategroupscroll();" ondown="stopdelayedcall(tipThumbEvent);" />
+
+        </layer>
+
+        <layer name="thumbListBg" keep="true" type="container" width="100%" height="90" align="top" y="0" bgcolor="0x000000" bgalpha="0.2">
+
+            <layer name="thumbs_scrollleft"  style="iconstyle|skin_glow" crop="220|500|58|50"  align="lefttop"  edge="left"  x="5" y="50" scale="0.5" zorder="2" alpha="1.0" ondown2="stopdelayedcall(tipThumbEvent);asyncloop(pressed, layer[thumbList].scrollby(+2,0));" visible="false" />
+
+            <layer name="thumbs_scrollright" style="iconstyle|skin_glow" crop="287|500|58|50" align="righttop" edge="right" x="5" y="50" scale="0.5" zorder="2" alpha="1.0" ondown2="stopdelayedcall(tipThumbEvent);asyncloop(pressed, layer[thumbList].scrollby(-2,0));" visible="false" />
+
+            <layer name="thumbList" state="closed" url="%SWFPATH%/plugins/scrollarea.swf" alturl="%SWFPATH%/plugins/scrollarea.js" direction="h" align="top" width="100%" height="90" zorder="1" onloaded="thumb_updatescroll();" onscroll="updatethumbscroll();" ondown="stopdelayedcall(tipThumbEvent);" />
+
+        </layer>
+
+    </layer>	
+
+	<layer name="groupArray" keep="true" type="container" visible="false" />
+
+<!-- 手机端皮肤设置 -->
+	<krpano devices="mobile">
+    <style name="groupstyle" css="color:#999999; font-family:微软雅黑; font-size:23px; text-align:center;line-height:26px;" padding="0 3" vcenter="true" />
+	
+    <style name="grouponstyle" css="color:#000000; font-family:微软雅黑; font-size:23px; text-align:center;line-height:26px;" padding="0 3" vcenter="true" />
+	
+    <style name="thumbstyle" bgborder="1 0xcccccc" bgcolor="0xffffff" bgalpha="0.5"/>
+
+    <style name="thumbonstyle" bgborder="3 0xf5a623" bgcolor="0xffffff" bgalpha="0.5" />
+
+    <style name="thumbtipstyle" css="color:#ffffff; font-family:Arial; font-size:23px; font-weight:bold; text-align:center;" />
+	
+	
+    <layer name="groupLayer" height="139" y="-232" >
+
+        <layer name="groupListBg" height="60" >
+            <layer name="group_scrollleft" />
+            <layer name="group_scrollright" />
+            <layer name="groupList" />
+        </layer>
+
+        <layer name="thumbListBg" height="160" y="-80" bgcolor="0x000000" bgalpha="0.35">
+            <layer name="thumbs_scrollleft" />
+            <layer name="thumbs_scrollright" />
+            <layer name="thumbList" height="120" />
+        </layer>
+
+    </layer>	
+
+	<layer name="groupArray" keep="true" type="container" visible="false" />
+		
+	</krpano>
+<!-- 手机端皮肤设置 -->	
+   <action name="panoIn">
+        txtadd(group_name,"group_",get(scene[get(xml.scene)].group_id));
+        copy(scenename_txt,config.groups[KRpanocms].group[get(group_name)].pano[get(xml.scene)].info.title);
+        set(layer[scenenamelayer].html,get(scenename_txt));
+        setGroupStyle();
+        set(layer[thumbList].group_id,get(scene[get(xml.scene)].group_id));
+    </action>
+	
+	<!-- 文本分组 -->
+     <action name="loadGroups" autorun="preinit">
+        copy(groupwidth, skin_settings.groups_width);
+        copy(groupheight, skin_settings.groups_height);
+        copy(grouppadding,skin_settings.groups_padding);
+
+       if(device.mobile,
+			mul(groupwidth,1.5);
+			mul(groupheight,1.5);
+			mul(grouppadding,1.5);
+		);
+			  
+        add(groupxoffset, groupwidth, grouppadding);
+        mul(groupxcenter, groupxoffset, 0.5);
+        copy(group_count,config.groups[KRpanocms].group.count);
+        mul(groupList_width,groupxoffset,group_count);
+        copy(layer[groupList].width,groupList_width);
+        
+		if(group_count GT 1,
+            for(set(i,0), i LT group_count, inc(i),
+                    txtadd(groupname,'skin_group_',get(i));
+                    addlayer(get(groupname));
+                    set(layer[get(groupname)].html, get(config.groups[KRpanocms].group[get(i)].title));
+                    set(layer[get(groupname)].tooltip, get(config.groups[KRpanocms].group[get(i)].title));
+                    set(layer[get(groupname)].linkedscene, get(config.groups[KRpanocms].group[get(i)].pano[0].name));
+                    
+					layer[get(groupname)].loadstyle(groupstyle|tooltip);
+					
+                    copy(layer[get(groupname)].width, groupwidth);
+                    copy(layer[get(groupname)].height, groupheight);
+                    copy(layer[get(groupname)].groupIndex, i);
+                    mul(groupx, i, groupxoffset);
+                    add(groupx, grouppadding);
+                    copy(layer[get(groupname)].x, groupx);
+                    copy(layer[get(groupname)].y, grouppadding);
+                    add(config.groups[KRpanocms].group[get(i)].groupx, groupx, groupxcenter);
+                    copy(config.groups[KRpanocms].group[get(i)].groupy, grouppadding);
+                    set(layer[get(groupname)].onclick, loadThumbs(groupIndex);setGroupOn(name);thumb_updatescroll());
+                    set(layer[get(groupname)].ondown, stopdelayedcall(tipThumbEvent));
+                    if(i == 0,
+                        set(layer[groupList].onIndex,get(groupname));
+                        loadThumbs(i);
+                        copy(this_group_name, config.groups[KRpanocms].group[0].name);
+                        txtreplace(g_id,this_group_name,"group_","");
+                        set(layer[thumbList].group_id,get(g_id));
+                    );
+                    getGroupNameArray(get(i));
+            );
+            ,
+            copy(this_thumb_count,config.groups[KRpanocms].group[0].pano.count);
+            if(this_thumb_count GE 1,
+                sub(index_val,group_count,1);
+                loadThumbs(index_val);
+            );
+            getGroupNameArray(0);
+            set(layer[groupListBg].visible,false);
+        );
+
+    </action>
+
+    <action name="setGroupOn">
+        copy(on_index,layer[groupList].onIndex);
+        copy(thisIndex,%1);
+        set(layer[get(on_index)].style,"");
+		
+        layer[get(on_index)].loadstyle(groupstyle|tooltip);
+		
+        set(layer[get(thisIndex)].style,"");
+		
+        layer[get(thisIndex)].loadstyle(grouponstyle|tooltip);
+		
+        set(layer[groupList].onIndex,get(thisIndex));
+        copy(g_id,scene[get(xml.scene)].group_id);
+        txtadd(group_name,"group_",get(g_id));
+        copy(group_index,config.groups[KRpanocms].group[get(group_name)].index);
+        txtadd(now_group_name,"skin_group_",get(group_index));
+        if(now_group_name == thisIndex,
+            copy(g_id,scene[get(xml.scene)].group_id);
+            txtadd(group_name,"group_",get(g_id));
+            copy(now_thumbindex,config.groups[KRpanocms].group[get(group_name)].pano[get(xml.scene)].index);
+            txtadd(thumb_name,"skin_thumb_",get(now_thumbindex));
+            setThumbOn(thumb_name);
+        );
+    </action>
+
+    <action name="group_updatescroll">
+        if(layer[groupList].loaded,
+            txtadd(this_group,"group_",get(scene[get(xml.scene)].group_id));
+            layer[groupList].setcenter(get(config.groups[KRpanocms].group[get(this_group)].groupx), get(config.groups[KRpanocms].group[get(this_group)].groupy));
+          );
+    </action>
+                      
+    <action name="loadThumbs">
+        removeThumbs();
+        copy(group_index,%1);
+        copy(thumb_count,config.groups[KRpanocms].group[get(%1)].pano.count);
+        set(layer[groupLayer].scenecount,get(thumb_count));
+        
+		copy(thumbwidth, skin_settings.thumbs_width);
+        copy(thumbheight, skin_settings.thumbs_height);
+        copy(thumbpadding,skin_settings.thumbs_padding);
+		
+			if(device.mobile,
+				mul(thumbwidth,1.7);
+				mul(thumbheight,1.7);
+				mul(thumbpadding,1.7);
+			  );
+			  
+        add(thumbxoffset, thumbwidth, thumbpadding);
+        add(thumbxoffset, thumbxoffset, 2);
+        mul(thumbxcenter, thumbxoffset, 0.5);
+        mul(thumbList_width,thumbxoffset,thumb_count);
+        copy(layer[thumbList].width,thumbList_width);
+        for(set(j,0),j LT thumb_count,inc(j),
+            copy(scenename,config.groups[KRpanocms].group[get(%1)].pano[get(j)].name);
+            copy(thumburl,config.groups[KRpanocms].group[get(%1)].pano[get(j)].info.thumburl);
+            copy(thumbtip,config.groups[KRpanocms].group[get(%1)].pano[get(j)].info.title);
+            copy(start_hlookat,config.groups[KRpanocms].group[get(%1)].pano[get(j)].view.hlookat);
+            txtadd(hlookat_data,"view.hlookat=",get(start_hlookat));
+            txtadd(thumbname,'skin_thumb_',get(j));
+            addlayer(get(thumbname));
+            copy(layer[get(thumbname)].keep,true);
+            copy(layer[get(thumbname)].width,thumbwidth);
+            copy(layer[get(thumbname)].height,thumbheight);
+            copy(layer[get(thumbname)].thumbIndex, get(i));
+            layer[get(thumbname)].loadstyle(thumbstyle);
+            txtadd(thumbImgname,get(thumbname),"_img");
+            addlayer(get(thumbImgname));
+            copy(layer[get(thumbImgname)].dataUrl,thumburl);
+            set(layer[get(thumbImgname)].loadOk,true);
+            
+			div(show_thumb,stagewidth,110);
+            Math.ceil(show_thumb);
+            if(j GE show_thumb,
+                set(thumburl,"%SWFPATH%/images/transparent.png");
+                set(layer[get(thumbImgname)].loadOk,false);
+            );
+
+            set(layer[keepInfo].showThumbIndex,get(show_thumb));
+            copy(layer[get(thumbImgname)].url,thumburl);
+
+            copy(layer[get(thumbImgname)].width,thumbwidth);
+
+            copy(layer[get(thumbImgname)].height,thumbheight);
+
+            copy(layer[get(thumbImgname)].keep,true);
+
+            copy(layer[get(thumbImgname)].parent,thumbname);
+
+            set(layer[get(thumbImgname)].zorder, 1);
+
+            set(layer[get(thumbImgname)].linkedscene, get(scenename));
+
+            set(layer[get(thumbImgname)].linkedlookat, get(hlookat_data));
+
+            set(
+                layer[get(thumbImgname)].onclick,
+                set(layer[keepInfo].changeStyle,false);
+                loadscene(get(linkedscene),null,get(skin_settings.loadscene_flags),get(skin_settings.loadscene_blend));
+            );
+
+            set(layer[get(thumbImgname)].ondown, stopdelayedcall(tipThumbEvent));
+
+
+
+            txtadd(thumbTipname,get(thumbname),"_tip");
+
+            addlayer(get(thumbTipname));
+
+            copy(layer[get(thumbTipname)].html,thumbtip);
+
+            copy(layer[get(thumbTipname)].keep,true);
+
+            copy(layer[get(thumbTipname)].parent,thumbname);
+
+            layer[get(thumbTipname)].loadstyle(thumbtipstyle);
+
+            set(layer[get(thumbTipname)].zorder, 2);
+
+            set(layer[get(thumbTipname)].linkedscene, get(scenename));
+
+            set(layer[get(thumbTipname)].linkedlookat, get(hlookat_data));
+
+            set(
+                layer[get(thumbTipname)].onclick,
+                set(layer[keepInfo].changeStyle,false);
+                loadscene(get(linkedscene),null,get(skin_settings.loadscene_flags),get(skin_settings.loadscene_blend));
+            );
+
+            set(layer[get(thumbTipname)].ondown, stopdelayedcall(tipThumbEvent));
+
+
+
+            mul(thumbx, j, thumbxoffset);
+
+            add(thumbx, thumbpadding);
+
+            copy(layer[get(thumbname)].x, thumbx);
+
+            copy(layer[get(thumbname)].y, thumbpadding);
+
+
+
+            add(scene[get(scenename)].thumbx, thumbx, thumbxcenter);
+
+            copy(scene[get(scenename)].thumby, thumbpadding);
+
+            if(j == 0,
+
+                set(layer[thumbList].onIndex,get(thumbname));
+
+            );
+
+        );
+
+        if(layer[thumbList].width GT stagewidth,
+
+            set(layer[thumbList].align,"lefttop");
+
+            ,
+
+            set(layer[thumbList].align,"top");
+
+        );
+
+        ifnot(layer[thumbIcon].visible,
+
+            set(layer[thumbIcon].visible,true);
+
+        );
+
+    </action>
+
+    <action name="removeThumbs">
+
+        copy(thumb_count,layer[groupLayer].scenecount);
+
+        ifnot(thumb_count == null,
+
+            for(set(i,0),i LT thumb_count,inc(i),
+
+                txtadd(thumbname,'skin_thumb_',get(i));
+
+                txtadd(thumbimg,'skin_thumb_',get(i),'_img');
+
+                txtadd(thumbtip,'skin_thumb_',get(i),'_tip');
+
+                removelayer(get(thumbname));
+
+                removelayer(get(thumbimg));
+
+                removelayer(get(thumbtip));
+
+            );
+
+        );
+
+    </action>
+
+    <action name="setThumbOn">
+        copy(on_index,layer[thumbList].onIndex);
+        copy(thisIndex,%1);
+        set(layer[get(on_index)].style,"");
+        layer[get(on_index)].loadstyle(thumbstyle);
+        set(layer[get(thisIndex)].style,"");
+        layer[get(thisIndex)].loadstyle(thumbonstyle);
+        set(layer[thumbList].onIndex,get(thisIndex));
+        loadThumbUrl();
+    </action>
+
+
+
+    <action name="loadThumbUrl">
+        copy(g_id,scene[get(xml.scene)].group_id);
+        txtadd(group_name,"group_",get(g_id));
+        copy(now_thumbindex,config.groups[KRpanocms].group[get(group_name)].pano[get(xml.scene)].index);
+        div(now_oneshowthumb,stagewidth,110);
+        div(now_showthumb,now_oneshowthumb,2);
+        Math.ceil(now_showthumb);
+         add(this_showcount,get(now_thumbindex),get(now_showthumb));
+         if(this_showcount LT now_oneshowthumb,
+            set(this_showcount,now_oneshowthumb);
+           );
+
+        for(set(j,0),j LE this_showcount,inc(j),
+            txtadd(now_thumbname,"skin_thumb_",get(j),"_img");
+            ifnot(layer[get(now_thumbname)].loadOk,
+                copy(now_thumburl,layer[get(now_thumbname)].dataUrl);
+                set(layer[get(now_thumbname)].url,get(now_thumburl));
+                set(layer[get(now_thumbname)].loadOk,true);
+            );
+        );
+
+    </action>
+
+
+
+    <action name="thumb_updatescroll">
+        if(layer[keepInfo].changeStyle,
+             if(layer[thumbList].loaded,
+                layer[thumbList].setcenter(get(scene[get(xml.scene)].thumbx), get(scene[get(xml.scene)].thumby));
+              );
+        );
+        set(layer[keepInfo].changeStyle,true);
+        div(now_showthumb,stagewidth,110);
+        Math.ceil(now_showthumb);
+        for(set(j,0),j LE now_showthumb,inc(j),
+            txtadd(now_thumbname,"skin_thumb_",get(j),"_img");
+            ifnot(layer[get(now_thumbname)].loadOk,
+                copy(now_thumburl,layer[get(now_thumbname)].dataUrl);
+                set(layer[get(now_thumbname)].url,get(now_thumburl));
+                set(layer[get(now_thumbname)].loadOk,true);
+            );
+        );
+    </action>
+
+
+
+    <action name="updatethumbscroll">
+
+            copy(max_thumbcount,layer[groupLayer].scenecount);
+
+            copy(this_thumbIndex,layer[keepInfo].showThumbIndex);
+
+
+
+            div(this_move,loverflow,110);
+
+            Math.floor(this_move);
+
+
+
+            add(now_thumbIndex,get(this_thumbIndex),get(this_move));
+
+            txtadd(now_thumbname,"skin_thumb_",get(now_thumbIndex),"_img");
+
+            ifnot(layer[get(now_thumbname)].loadOk,
+
+                copy(now_thumburl,layer[get(now_thumbname)].dataUrl);
+
+                set(layer[get(now_thumbname)].url,get(now_thumburl));
+
+                set(layer[get(now_thumbname)].loadOk,true);
+
+            );
+
+            if(loverflow GT 0, set(layer[thumbs_scrollleft].visible,true),  set(layer[thumbs_scrollleft].visible,false) );
+
+            if(roverflow GT 0, set(layer[thumbs_scrollright].visible,true), set(layer[thumbs_scrollright].visible,false) );
+
+    </action>
+
+
+
+    <action name="updategroupscroll">
+
+            if(loverflow GT 0, set(layer[group_scrollleft].visible,true),  set(layer[group_scrollleft].visible,false) );
+
+            if(roverflow GT 0, set(layer[group_scrollright].visible,true), set(layer[group_scrollright].visible,false) );
+
+    </action>
+
+
+    <action name="showthumbs">
+        stopdelayedcall(tipThumbEvent);
+        set(thumb_y,60);
+        if(layer[groupListBg].visible,
+            set(thumb_y,100);
+        );
+        if(layer[groupLayer].opened,
+		    if(device.mobile,
+				tween(layer[groupLayer].y,-230,0.5,easeOutQuint,resoreThumbLayer());
+				,
+				tween(layer[groupLayer].y,-150,0.5,easeOutQuint,resoreThumbLayer());
+			  );            
+            set(layer[groupLayer].opened,false);
+            ,
+            set(layer[groupLayer].visible,true);
+            tween(layer[groupLayer].y,get(thumb_y),easeOutQuint);
+            set(layer[groupLayer].opened,true);
+        );
+    </action>
+
+    <action name="resoreThumbLayer">
+        copy(on_index,layer[groupList].onIndex);
+        set(layer[groupLayer].visible,false);
+        copy(g_id,scene[get(xml.scene)].group_id);
+        txtadd(group_name,"group_",get(g_id));
+        setGroupOn(g_name);
+        copy(g_index,config.groups[KRpanocms].group[get(group_name)].index);
+        txtreplace(on_thisIndex,on_index,"skin_group_","");
+        ifnot(on_thisIndex == g_index,
+            loadThumbs(g_index);
+        );
+        copy(thumb_index,config.groups[KRpanocms].group[get(group_name)].pano[get(xml.scene)].index);
+        txtadd(thumb_name,"skin_thumb_",get(thumb_index));
+        setThumbOn(thumb_name);
+    </action>
+
+
+
+    <action name="setGroupStyle">
+        copy(g_id,scene[get(xml.scene)].group_id);
+        txtadd(group_name,"group_",get(g_id));
+        if(config.groups[KRpanocms].group.count GT 1,
+            copy(old_g_id,layer[thumbList].group_id);
+            ifnot(old_g_id == g_id,
+                copy(g_index,config.groups[KRpanocms].group[get(group_name)].index);
+                if(layer[keepInfo].changeStyle,
+                    loadThumbs(g_index);
+                );
+                setMap(get(g_id));
+            );
+            copy(group_index,config.groups[KRpanocms].group[get(group_name)].index);
+            txtadd(g_name,"skin_group_",get(group_index));
+            setGroupOn(g_name);
+        );
+        copy(thumb_index,config.groups[KRpanocms].group[get(group_name)].pano[get(xml.scene)].index);
+        txtadd(thumb_name,"skin_thumb_",get(thumb_index));
+        setThumbOn(thumb_name);
+    </action>
+
+
+
+    <action name="getGroupNameArray">
+        copy(group_count,config.groups[KRpanocms].group.count);
+        copy(max_scene_count,scene.count);
+        copy(thumb_count,config.groups[KRpanocms].group[%1].pano.count);
+        for(set(j,0),j LT thumb_count,inc(j),
+            copy(scenename,config.groups[KRpanocms].group[%1].pano[get(j)].name);
+            txtadd(array_item_name,"array_",get(scenename));
+            addlayer(get(array_item_name));
+            set(layer[get(array_item_name)].parent,groupArray);
+            set(layer[get(array_item_name)].keep,true);
+            add(next_index,get(j),1);
+             if(next_index GE thumb_count,
+                add(this_group,%1,1);
+                 if(this_group GE group_count,
+                    set(this_group,0);
+                );
+                set(next_index,0);
+                ,
+                add(this_group,%1,0);
+            );
+            copy(next_scenename,config.groups[KRpanocms].group[get(this_group)].pano[get(next_index)].name);
+            set(layer[get(array_item_name)].nextScene,get(next_scenename));
+        );
+    </action>
+	
+</krpano>

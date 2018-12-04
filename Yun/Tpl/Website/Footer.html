@@ -1,0 +1,120 @@
+
+<div id="footer">
+  <div class="footer_top">
+    <div class="footer_logo fl"><a href=""><img src="__PUBLIC__/webstyle/images/footer_logo.jpg" alt="全景-让互联网更真实"></a></div>
+    <div class="footer_list_warp fl">
+     
+      <div class="footer_list">
+           <foreach name="footernav1" item="vo" >
+                <if condition="$key=='0' ">
+                 <a href="{$vo.outlink}"  <if condition="$vo['outlink']=='' "> style="cursor:text;text-decoration:none;" </if>  <if condition="$vo['isblank']=='1' " > target="_blank" </if> ><span>{$vo.name}</span></a>
+                 </if>
+          </foreach>
+        <ul>
+          <foreach name="footernav12" item="vo">
+
+          		<li>
+                  <a href="{$vo.outlink}" <if condition="$vo['outlink']=='' " > style="cursor:text;text-decoration:none;" </if>  <if condition="$vo['isblank']=='1' " > target="_blank" </if>  >{$vo.name}</a>
+          		</li>
+
+          </foreach>
+        </ul>
+      </div>
+  
+      <div class="footer_list">
+            <foreach name="footernav1" item="vo">
+             <if condition="$key=='1' ">
+                 <a href="{$vo.outlink}"  <if condition="$vo['outlink']=='' "> style="cursor:text;text-decoration:none;" </if>  <if condition="$vo['isblank']=='1' " > target="_blank" </if> ><span>{$vo.name}</span></a>
+                 </if>
+          </foreach>
+        <ul>
+           <foreach name="footernav22" item="vo">
+          		<li>
+                  <a href="{$vo.outlink}" <if condition="$vo['outlink']=='' " > style="cursor:text;text-decoration:none;" </if>  <if condition="$vo['isblank']=='1' " > target="_blank" </if>  >{$vo.name}</a>
+          		</li>
+          </foreach>
+        </ul>
+      </div>
+     
+      <div class="footer_list">
+            <foreach name="footernav1" item="vo">
+               <if condition="$key=='2' ">
+                 <a href="{$vo.outlink}"  <if condition="$vo['outlink']=='' "> style="cursor:text;text-decoration:none;" </if>  <if condition="$vo['isblank']=='1' " > target="_blank" </if> ><span>{$vo.name}</span></a>
+                 </if>
+          </foreach>
+        <ul>
+          <foreach name="footernav32" item="vo">
+          		<li>
+                  <a href="{$vo.outlink}" <if condition="$vo['outlink']=='' " > style="cursor:text;text-decoration:none;" </if>  <if condition="$vo['isblank']=='1' " > target="_blank" </if>  >{$vo.name}</a>
+          		</li>
+          </foreach>
+        </ul>
+      </div>
+     
+      <div class="footer_list">
+          <foreach name="footernav1" item="vo">
+          <if condition="$key=='3' ">
+                 <a href="{$vo.outlink}"  <if condition="$vo['outlink']=='' "> style="cursor:text;text-decoration:none;" </if>  <if condition="$vo['isblank']=='1' " > target="_blank" </if> ><span>{$vo.name}</span></a>
+                 </if>
+          </foreach>
+        <ul>
+          <foreach name="footernav42" item="vo">
+          		<li>
+                  <a href="{$vo.outlink}" <if condition="$vo['outlink']=='' " > style="cursor:text;text-decoration:none;" </if>  <if condition="$vo['isblank']=='1' " > target="_blank" </if>  >{$vo.name}</a>
+          		</li>
+          </foreach>
+        </ul>
+      </div>
+
+    </div>
+    <div class="footer_ewm fr">
+      <div class="ewm">
+   
+      <img src="__PUBLIC__/webstyle/images/web_tel.jpg" alt="全景手机版">
+        <p>全景手机版</p>
+
+      </div>
+      <div class="ewm">
+      <img src="__PUBLIC__/webstyle/images/web_weixin.jpg" alt="关注全景微信">
+        <p>关注全景微信</p>
+      </div>
+    </div>
+  </div>
+  <!--footer_top-->
+  <div class="footerBorder">&nbsp;</div>
+  <div class="footerFriend">
+    <p>  <volist name="link" id="vo">
+                  <a href="{$vo.value}" title="{$vo.name}" target="_blank">{$vo.name}</a>&nbsp&nbsp&nbsp
+            </volist></p>
+  </div>
+  <!--footerFriend-->
+  <div class="footer_bottom">
+    <p>合作电话：{$tel} </p>
+    <p>{$banquan} {$beian}</p>
+  </div>
+</div>
+<div id="side_bar">
+  <ul>
+    <li class="top"></li>
+    <li class="wx"></li>
+    <li class="app"></li>
+    <li class="phone"></li>
+  </ul>
+  <div class="top_con">返回顶部</div>
+  <div class="wx_con">
+  
+    <img  src="__PUBLIC__/webstyle/images/web_tel.jpg" alt="全景手机版" width="163" height="163">
+
+  </div>
+  <div class="app_con">
+
+        <img src="__PUBLIC__/webstyle/images/web_weixin.jpg" alt="关注全景微信">
+ 
+  </div>
+  <div class="phone_con">{$tel}</div>
+</div>
+<script src="__PUBLIC__/webstyle/js/top.js"></script><span class="none"><script src="__PUBLIC__/webstyle/js/footer.js" language="javascript"></script></span><span style="display:none">
+
+</span>
+</body>
+</html>

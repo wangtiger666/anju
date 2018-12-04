@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        <script type="text/javascript">
+            $(function(){
+                $(".spot_box").click(function(){
+                    var me_file = $(this).data("file");
+                    var me_id = $(this).data("id");
+                    var me_w = $(this).data("w");
+                    var me_h = $(this).data("h");
+                    var me_len = $(this).data("len");
+                    parent.getmoveSpot(me_id,me_file,me_w,me_h,me_len);
+                });
+
+                $(".spot_cube").mouseover(function(){
+                    var temp = $(this).children(".movebox");
+                    var w = temp.data("w");
+                    var h = temp.data("h");
+                    var len = temp.data("len");
+                    var n = temp.data("n");
+                    var sp = temp.data("speed");
+                    $("body").stopTime("move");
+                    $("body").everyTime(sp+"ms","move",function(){
+                        n = temp.data("n");
+                        n++;
+                        if(n==len){
+                            n=0;
+                        }
+                        mv_h = -n*h;
+                        temp.children("img").css("marginTop",mv_h+"px");
+                        temp.data("n",n);
+                    });
+                });
+                $(".spot_cube").mouseout(function(){
+                    $("body").stopTime("move");
+                });
+            });
+        </script>
+        <style>
+            body{
+                background: #f8f8f8;
+            }
+            .pick_btnbox{
+                width: auto; height: 30px; margin: 12px 16px 4px 16px; overflow: hidden;
+                font: bold 12px/30px "微软雅黑"; color: #199372; cursor: default;
+            }
+            .pick_top{
+                width: auto; height: 24px; margin: 4px 24px 4px 24px; overflow: hidden;
+                font: bold 12px/24px "微软雅黑"; color: #199372; cursor: default;
+            }
+            .pick_down{
+                min-height: 340px; width: 746px; overflow: hidden; margin: 0 15px; border:1px solid #bbb;
+                background: #fff; border-radius: 4px; padding: 4px;
+            }
+
+            .pick_page{
+                width: auto; height: 30px; margin: 0px 20px 4px 20px; overflow: hidden;
+            }
+            .pickbuttom{
+                width: 100px; height: 28px; overflow: hidden; border:1px solid #bbb; background: #fff; cursor: pointer;
+                text-align: center; font: bold 12px/30px "微软雅黑"; color: #666; float: left; margin-right: 6px; display: block;
+            }
+            .pickbuttom:hover{
+                text-decoration: none;
+            }
+            .pickbuttom.me{
+                width: 100px; height: 28px; overflow: hidden; border:1px solid #4f94d9; background: #e0f7ff; cursor: pointer;
+                text-align: center; font: bold 12px/30px "微软雅黑"; color: #4f94d9; float: left; margin-right: 6px;
+            }
+
+
+            .lubox{
+                width: 360px; height: 164px; overflow: hidden; float: left; border-radius: 4px;
+                border:1px solid #bbb; background: #fafafa; margin: 5px;
+            }
+            .lubox .top{
+                width: 360px; height: 60px; overflow: hidden;
+            }
+            .lubox .down{
+                width: 360px; height: 40px; overflow: hidden;
+            }
+            .info_head{
+                width: 48px; height: 22px; overflow: hidden; border:1px solid #bbb; border-radius: 4px; cursor: default;
+                text-align: center; margin-left: 5px; float: left; background: #eee;
+                font: bold 12px/22px "微软雅黑"; color: #666;
+            }
+            .info_body{
+                width: 282px; height: 32px; overflow: hidden; border:1px solid #bbb; border-radius: 4px; cursor: default;
+                float: right; margin-right: 6px; font: 12px/16px "微软雅黑"; color: #666; background: #f3f3f3; padding: 3px 5px;
+            }
+			.info_bodypic{
+                width: 155px; height: 42px; overflow: hidden; border:1px solid #bbb; border-radius: 4px; cursor: default;
+                float: left; margin-left: 6px; font: 12px/16px "微软雅黑"; color: #666; background: #f3f3f3; padding: 3px 3px;
+            }
+            .lupic{
+                width: 50px; height: 50px; overflow: hidden; border-radius: 4px; float: left;
+                background: url(__PUBLIC__/member/images/pano/uigroup.jpg) no-repeat; margin-top: 5px; margin-left: 5px;
+            }
+            .lutitle{
+                width: 160px; height: 48px; overflow: hidden; float: left; margin-top: 5px; margin-left: 5px; border:1px solid #bbb; border-radius: 4px; cursor: default;
+            }
+
+            .lutb{
+                width: 60px; height: 48px; overflow: hidden; float: left; margin-top: 5px; margin-left: 5px; border:1px solid #bbb; border-radius: 4px; cursor: default;
+            }
+            .lutop{
+                width: auto; height: 24px; overflow: hidden; background: #ddd; text-align: center;
+                font: bold 12px/24px "微软雅黑"; color: #333;
+            }
+            .ludown{
+                width: auto; height: 24px; overflow: hidden; background: #f3f3f3; text-align: center;
+                font: 12px/24px "微软雅黑"; color: #555;
+            }
+            .lubtnbox{
+                width: 60px; height: 60px; overflow: hidden; float: left; margin-top: 2px; margin-left: 5px;
+            }
+            .lubtnbox div{
+                height: 48px; overflow: hidden; background: #f3f3f3; border:1px solid #999; display: block; border-radius: 4px; text-decoration: none;
+                text-align: center;font: 12px/48px "微软雅黑"; color: #555; margin-top: 3px; cursor: pointer;
+            }
+            .lubtnbox div:hover{
+                background: #666; border-color: #666; color: #fff;
+            }
+			.uipic{
+				width:360px; height:50px; margin-top:5px;overflow: hidden;
+				}
+        </style>
+    </head>
+    <body>
+        <div class="pick_top">提示：点击下方UI选取，即可选择生效。</div>
+        <div class="pick_down">
+            <volist name="list" id="uirow">
+                <div class="lubox">
+                    <div class="top">
+                        <div class="lupic"></div>
+                        <div class="lutitle">
+                            <div class="lutop">UI名称</div>
+                            <div class="ludown">{$uirow.title}</div>
+                        </div>
+                        <if condition="$tp eq 1">
+                            <div class="lutb">
+                                <div class="lutop">元素个数</div>
+                                <div class="ludown">{$uirow.len}</div>
+                            </div>
+                            <else/>
+                            <div class="lutb">
+                                <div class="lutop">所属</div>
+                                <div class="ludown">系统默认</div>
+                            </div>
+                        </if>
+
+                        <div class="lubtnbox">
+                            <if condition="$tp eq 1 AND $devices eq flash">
+                                <div onclick="parent.backui('{$uirow.id}','{$tp}');">选择</div>
+                                <elseif condition="$tp eq 1 AND $devices eq mobile"/>
+                                <div onclick="parent.backmbui('{$uirow.id}','{$tp}');">选择</div>
+                                <else/>
+                                <div onclick="parent.backsysui('{$uirow.id}','{$tp}');">选择</div>
+                            </if>
+
+                        </div>
+                    </div>
+                    <div class="down">
+                        <div class="info_head">注释</div>
+                        <div class="info_body">{$uirow.info}</div>
+                    </div>
+                    <div class="uipic">
+                        <div class="info_head">皮肤预览</div>
+                        <div class="info_bodypic"><img src="{$uirow.uipic}" width="155" height="42"/> </div>
+                    </div>
+                </div>
+            </volist>
+        </div>
+        <div class="pick_page">
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" align="center">
+                <tr  class="tr_white" align="center">
+                    <td id="page_list" height="40" style="padding: 0px 10px;">
+                        {$page}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

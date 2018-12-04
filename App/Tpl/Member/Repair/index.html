@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>全景通</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=100"/>
+        <link href="__PUBLIC__/install/style.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="__PUBLIC__/install/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/install/inclode.js"></script>
+        <script type="text/javascript">
+            function updataie(){
+                $.ajax({
+                    url: "{:U('install/index/updataie')}",
+                    type: "POST",
+                    data: {step: 125},
+                    beforeSend: function(data) {
+
+                    },
+                    success: function(data) {
+                        LinkTo("{:U('install/index/index',array('step'=>2))}");
+                    }
+                });
+            }
+            function updataie64(){
+                $.ajax({
+                    url: "{:U('install/index/updataie64')}",
+                    type: "POST",
+                    data: {step: 125},
+                    beforeSend: function(data) {
+
+                    },
+                    success: function(data) {
+                        LinkTo("{:U('install/index/index',array('step'=>2))}");
+                    }
+                });
+            }
+            function updatafull(){
+                $.ajax({
+                    url: "{:U('install/index/updatafull')}",
+                    type: "POST",
+                    data: {step: 125},
+                    beforeSend: function(data) {
+
+                    },
+                    success: function(data) {
+                        LinkTo("{:U('install/index/index',array('step'=>2))}");
+                    }
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <object type="application/x-rockey3plugin" id="ROCKEY3" style="width: 0px; height: 0px;position: absolute;"></object>
+        <object id="ry3" classid="clsid:8934A89B-4995-4E09-88BB-563871BEC8AF" style="width: 0px; height: 0px;position: absolute;"></object>
+        <div id="main" style="margin-top: 100px; padding-bottom: 20px;">
+            <div class="printer">
+                <div class="printer_title">加密锁驱动检测</div>
+                <div class="printer_body">
+                    <table width="860" border="0" align="center" cellpadding="0" cellspacing="0" class="twbox">
+                        <tr>
+                            <th width="200" align="left"><strong>密锁状态（至少安装一种）</strong></th>
+                            <th width="300"><strong>状态</strong></th>
+                            <th width="380"><strong>实际状态及建议</strong></th>
+                        </tr>
+                        <tr>
+                            <td>IE模式密锁状态</td>
+                            <td align="center" id="mi1">检测中...</td>
+                            <td id="mt1" align="center"></td>
+                        </tr>
+                        <tr>
+                            <td>兼容型密锁状态</td>
+                            <td align="center" id="mi2">检测中...</td>
+                            <td id="mt2" align="center"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

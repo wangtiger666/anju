@@ -1,0 +1,88 @@
+
+<krpano>
+    <events name="backbutton_adjust" keep="true" onxmlcomplete="if(layer[backbutton], set(layer[backbutton].y,106));" />
+
+    <progress showload="none" showwait="none" />
+
+    <!-- Skin Events -->
+    <events name="skin_events" keep="true"
+            onxmlcomplete="set(events[skin_events].onxmlcomplete,null); skin_startup();"
+            onnewpano="skin_update_scene_infos();"
+    />
+
+    <layer name="thumbs" keep="true" type="container" align="leftbottom" width="100%" height="86" bgcolor="0x000000" bgalpha="0.3">
+        <layer name="arrow_left"  url="arrow2_l.png" align="left"  scale="0.5" zorder="2" alpha="0.3" onover="tween(alpha,1);" onout="tween(alpha,0.3);" ondown="onover(); asyncloop(pressed, layer[scrollarea].scrollby(+2,0));" onup="onout();" />
+        <layer name="arrow_right" url="arrow2_r.png" align="right" scale="0.5" zorder="2" alpha="0.3" onover="tween(alpha,1);" onout="tween(alpha,0.3);" ondown="onover(); asyncloop(pressed, layer[scrollarea].scrollby(-2,0));" onup="onout();" />
+
+        <layer name="scrollarea" url="%SWFPATH%/plugins/scrollarea.swf" alturl="%SWFPATH%/plugins/scrollarea.js" align="center" width="0" height="0" zorder="1" direction="h" onloaded="setcenter(0,0);">
+
+        </layer>
+    </layer>
+
+    <action name="hit">
+        tween(scale, 0.9, 0.1, default, tween(scale, 1.0, 0.1, easeOutBounce));
+    </action>
+
+    <action name="skin_startup">
+        copy(thumbwidth, skin_settings.thumbs_width);
+        copy(thumbheight, skin_settings.thumbs_height);
+        set(thumbpadding, 10);
+        add(thumbhh, thumbheight, get(thumbpadding));
+        add(thumbhh, get(thumbpadding));
+        copy(layer[thumbs].height, thumbhh);
+        copy(layer[scrollarea].height, thumbhh);
+
+        add(thumbhhh,thumbhh, 5);
+        copy(plugin[control_box].y, thumbhhh);
+
+        add(thumbxoffset, thumbwidth, get(thumbpadding));
+        mul(scrollareawidth, scene.count, thumbxoffset);
+        add(scrollareawidth,get(thumbpadding));
+        copy(layer[scrollarea].width, scrollareawidth);
+        layer[scrollarea].setcenter(0,0);
+        skin_addthumbs();
+    </action>
+
+    <action name="skin_addthumbs">
+        copy(thumbwidth, skin_settings.thumbs_width);
+        copy(thumbheight, skin_settings.thumbs_height);
+        div(thumbwidthharf,get(skin_settings.thumbs_width),2);
+        set(thumbpadding, 10);
+        add(thumbxoffset, thumbwidth, get(thumbpadding));
+
+        for(set(i,0), i LT scene.count, inc(i),
+            txtadd(thumbname,'thumb',get(i));
+            addlayer(get(thumbname));
+            copy(layer[get(thumbname)].url, scene[get(i)].thumburl);
+            set(layer[get(thumbname)].keep, true);
+            set(layer[get(thumbname)].parent, 'thumbs');
+            set(layer[get(thumbname)].align, left);
+            set(layer[get(thumbname)].edge, center);
+            copy(layer[get(thumbname)].width, thumbwidth);
+            copy(layer[get(thumbname)].height, thumbheight);
+            set(layer[get(thumbname)].linkedscene, get(scene[get(i)].name) );
+            set(layer[get(thumbname)].onclick, hit();loadscene(get(linkedscene), null, MERGE, ZOOMBLEND(1,3)); );
+            set(layer[get(thumbname)].scenename, get(scene[get(i)].title) );
+            set(layer[get(thumbname)].onhover,showtext(get(scenename)););
+
+            mul(thumbx, i, thumbxoffset);
+            add(thumbx, thumbpadding);
+
+            add(thumbx, thumbwidthharf);
+            copy(layer[get(thumbname)].x, thumbx);
+            copy(layer[get(thumbname)].y, 0);
+        );
+    </action>
+
+    <events onexitfullscreen="set(plugin[control_openfs].visible,true); set(control_plugin[control_closefs].visible,false);" onenterfullscreen="set(plugin[control_openfs].visible,false); set(plugin[control_closefs].visible,true);"/>
+    <style name="controlskin" keep="true" url="control.png"/>
+    <textstyle fadetime="0.1" fadeintime="0.1" showtime="0.1" yoffset="-5" xoffset="15" edge="bottom" origin="cursor" effect="glow(0xFFFFFF,0.85,4,4);dropshadow(2,45,0x000000,4,1);" blendmode="layer" border="false" background="false" textcolor="0x000000" bold="true" fontsize="14" font="Arial" name="buttonstyle"/>
+    <plugin name="control_box" url="none.png" zorder="100" alpha="1" blendmode="NORMAL" align="bottom" edge="bottom" x="0" y="200" ox="0" oy="0" width="261" height="27" refreshrate="" scale="1" smoothing="True" mask="" rotate="0" visible="True" enabled="True" capture="True" handcursor="True" keep="True" children="True" preload="False" scalechildren="False" autosize="none" background="False" devices="desktop|tablet"/>
+    <plugin name="control_in" parent="control_box" onup="set(vlookat_moveforce,0);" ondown="set(vlookat_moveforce,-1);" ondowncrop="0|0|53|30" onovercrop="0|29|53|60" crop="0|0|53|30" style="controlskin" y="0" x="-103" align="bottom" devices="desktop|tablet"/>
+    <plugin name="control_out" parent="control_box" onup="set(vlookat_moveforce,0);" ondown="set(vlookat_moveforce,+1);" ondowncrop="53|0|56|30" onovercrop="53|29|56|30" crop="53|0|56|30" style="controlskin" y="0" x="-50" align="bottom" devices="desktop|tablet"/>
+    <plugin name="control_up" parent="control_box" onup="set(hlookat_moveforce,0);" ondown="set(hlookat_moveforce,-1);" ondowncrop="109|0|49|30" onovercrop="109|29|49|30" crop="109|0|49|30" style="controlskin" y="0" x="0" align="bottom" devices="desktop|tablet"/>
+    <plugin name="control_down" parent="control_box" onup="set(hlookat_moveforce,0);" ondown="set(hlookat_moveforce,+1);" ondowncrop="158|0|51|30" onovercrop="158|29|51|30" crop="158|0|51|30" style="controlskin" y="0" x="50" align="bottom" devices="desktop|tablet"/>
+    <plugin name="control_openfs" parent="control_box" ondowncrop="209|0|55|30" onovercrop="209|29|55|30" crop="210|0|55|30" style="controlskin" y="0" x="103" align="bottom" devices="desktop|tablet" visible="true" onclick="set(fullscreen,true);" onhover="showtext(全屏, buttonstyle);"/>
+    <plugin name="control_closefs" parent="control_box" ondowncrop="209|0|55|30" onovercrop="209|29|55|30" crop="209|0|55|30" style="controlskin" y="0" x="103" align="bottom" devices="desktop|tablet" visible="false" onclick="set(fullscreen,false);" onhover="showtext(退出全屏,buttonstyle);"/>
+
+</krpano>

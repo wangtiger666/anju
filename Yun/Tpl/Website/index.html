@@ -1,0 +1,199 @@
+<include file="Header" />
+<script type="text/javascript" src="__PUBLIC__/webstyle/js/index_main.js"></script>
+<script type="text/javascript" src="__PUBLIC__/webstyle/js/top.js"></script>
+
+<!--float_nav-->
+<link rel="stylesheet" href="__PUBLIC__/webstyle/css/index.css" />
+<div id="content">
+  <div class="banner_warp">
+    <ul>
+     <foreach name="banner" item="vo">
+     	 <li <if condition="$key == 0 "> style="display:block;" </if> ><a href="{$vo.outlink}" target="_blank"><img  height="600" src="{$vo.thumb}" _src="{$vo.thumb}" alt="{$vo.ad_name}"></a></li>
+   	</foreach>
+    </ul>
+    <ol>
+      <foreach name="banner" item="vo">
+     	 <li <if condition="$key == 0 "> class="cur" </if> ></li>
+  	  </foreach>
+    </ol>
+    <a href="javascript:;" class="left"></a><a href="javascript:;" class="right"></a></div>
+  <div class="we_can_do">
+    <h3>我们能做什么？</h3>
+    <p class="introduce">为客户提供全景展示策划、拍摄、制作和发布。秉着创造、创新、开放、<br>
+      深耕的态度，构建全景互动服务平台，为千万家企业提供稳定可靠的诚信服务。</p>
+    <ul class="can_do">
+      <li>
+        <div class="icon icon1"></div>
+        <span>跨平台展示</span>
+        <p>强大的站外嵌入功能，可自由嵌入到各大平台网站。</p>
+      </li>
+      <li>
+        <div class="icon icon2"></div>
+        <span>深度互动</span>
+        <p>10大深度交互功能研发，视觉、听觉、触觉，全方位的用户体验。</p>
+      </li>
+      <li>
+        <div class="icon icon3"></div>
+        <span>高速浏览</span>
+        <p>图像碎片压缩处理与高速缓存技术，让你的浏览顺畅无阻。</p>
+      </li>
+      <li class="no_margin">
+        <div class="icon icon4"></div>
+        <span>移动互联</span>
+        <p>适配各移动终端设备，全套数字系统开发，让全景网络展览易如反掌。</p>
+      </li>
+    </ul>
+  </div>
+  <div class="network_exhibition">
+    <h3>全景案例</h3>
+    <div class="network_link_warp">
+      <div class="network_line"></div>
+      <p class="network_link">
+      <foreach name="area" item="vo">
+              <if condition="$key elt 5 ">
+                  <a href="index.php?s=/Website/qjzscat/areaid/{$vo.id}" target="_blank">{$vo.name}</a><span>/</span>
+              </if>
+      </foreach>
+      <a href="index.php?s=/Website/qjzscat" target="_blank">更多</a></p>
+    </div>
+    <div class="network_exhibition_list_warp">
+      <ul class="network_exhibition_list" id="auto_list" >
+        <foreach name="hangyepano1" item="vo">
+        <li >
+        <a href="{$vo.panopath}" target="_blank"><img src="{$vo.thumb}" alt="{$vo.title}"  style="margin-top: -43px" >
+          <p>{$vo.title}</p>
+        </a>
+        </li>
+        </foreach>
+     
+       
+      </ul>
+      <div class="hot_tip">
+        <p class="fl">全景展示均支持手机，平板浏览，无需安装任何插件</p>
+        <a href="index.php?s=/Website/qjzscat" target="_blank" class="more_case fr">查看更多推荐</a></div>
+    </div>
+  </div>
+  <div class="exhibition_express">
+    <h3>全景新闻</h3>
+    <p class="introduce">为您提供2017年最新最全的国内国际VR行业动向、全景新闻资讯，
+    <a href="index.php?s=/Website/wzzx" target="_blank">点击查看更多&gt;&gt;</a></p>
+    <div class="news">
+      <div class="news_top">
+      	<foreach name="leftarticle" item="vo">
+      	<if condition="$key == 0 ">
+        <dl class="fl">
+          <dt><a href="{$vo.ariurl}" target="_blank"><img alt="{$vo.title}" src="{$vo.thumb}" width="140" height="90"></a></dt>
+          <dd><span><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></span>
+            <p><a href="{$vo.ariurl}" target="_blank">{$vo.description}</a></p>
+          </dd>
+        </dl>
+       </if>
+        </foreach>
+        
+ 		<foreach name="rightarticle" item="vo">
+ 		<if condition="$key == 0 ">
+        <dl class="fr">
+          <dt><a href="{$vo.ariurl}" target="_blank"><img alt="{$vo.title}" src="{$vo.thumb}" width="140" height="90"></a></dt>
+          <dd><span><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></span>
+            <p><a href="{$vo.ariurl}" target="_blank">{$vo.description}</a></p>
+          </dd>
+        </dl>
+        </if>
+        </foreach>
+
+      </div>
+
+      <div class="news_bottom">
+        <ul class="fl">
+	        <foreach name="leftarticle" item="vo">
+	        		<if condition="($key neq 0) and ($key elt 5 )">
+	         		 <li><span><?php echo date("Y-m-d",$vo['updatetime']);?></span><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></li>
+	         		 </if>
+	          </foreach>
+        </ul>
+
+
+        <ul class="fr">
+      			  <foreach name="rightarticle" item="vo">
+	        		<if condition="($key neq 0) and ($key elt 5 )">
+	         		 <li><span><?php echo date("Y-m-d",$vo['updatetime']);?></span><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></li>
+	         		 </if>
+	          </foreach>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="hot_industry">
+    <h3>全景行业应用</h3>
+    <div class="hot_link_warp">
+      <div class="hot_line"></div>
+      <p class="hot_link">
+        <foreach name="hangye" item="vo">
+              <if condition="$key elt 5 ">
+                  <a href="index.php?s=/Website/qjzscat/hangyeid/{$vo.id}" target="_blank" >{$vo.name}</a><span>/</span>
+              </if>
+      </foreach>
+      <a href="index.php?s=/Website/qjzscat" target="_blank">更多</a></p>
+    </div>
+    <div class="hot_industry_list_warp">
+      <ul>
+       <foreach name="areapano1" item="vo">
+        <li ><a href="{$vo.panopath}" target="_blank">
+          <div class="img" ><img alt="{$vo.title}" src="{$vo.thumb}" width="364" height="216"    >
+            <p>{$vo.title}</p>
+          </div>
+          </a>
+        </li>
+        </foreach>
+
+      </ul>
+    </div>
+  </div>
+  <div class="network_expo" id="bgParallax">
+    <h3>全景专题</h3>
+    <div class="network_expo_list_warp">
+      <ul class="left fl">
+       <foreach name="zhuantiarticle" item="vo">
+       			<if condition=" ($key elt 4)" >
+        			<li><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></li>
+        		</if>
+        </foreach>
+     
+      </ul>
+      <ul class="right fl">
+       <foreach name="zhuantiarticle" item="vo">
+        		<if condition="($key gt 5) AND ($key elt 9)" >
+        			<li><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></li>
+        		</if>
+        </foreach>
+   
+      </ul>
+    </div>
+  </div>
+  <div class="achievement">
+    <ul>
+      <li>
+        <div class="achievement_icon"></div>
+        <div class="achievement_number timer" data-to="9" data-speed="1500"></div>
+        <p>9全景技术开发经验</p>
+      </li>
+      <li>
+        <div class="achievement_icon2"></div>
+        <div class="achievement_number timer" data-to="10" data-speed="1500"></div>
+        <p>10大全景创新研发</p>
+      </li>
+      <li>
+        <div class="achievement_icon3"></div>
+        <div class="achievement_number"><span class="timer" data-to="200" data-speed="1500"></span>+</div>
+        <p>200+小鲜肉团队全力支持</p>
+      </li>
+      <li class="no_margin">
+        <div class="achievement_icon4"></div>
+        <div class="achievement_number"><span class="timer" data-to="10000" data-speed="1500"></span>+</div>
+        <p>10000多家企业用户</p>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<include file="Footer" />

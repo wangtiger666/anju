@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        {:W("Easyui")}
+        {:W("Boluoui")}
+        {:W("Uploader")}
+        <style type="text/css">
+            .ban_box{
+                width: 440px; height: 30px; overflow: hidden; border: 1px solid #ccc; background: #eee;
+                margin: 5px 0; border-radius: 4px;
+            }
+            .ban_title{
+                width: 240px; height: 24px; overflow: hidden; border: 1px solid #ccc; background: #f3f3f3; margin: 2px; float: left;
+                border-radius: 4px; color: #333; line-height: 24px; text-align: left; text-indent: 10px;
+            }
+            .ban_tool{
+                width: 60px; height: 24px; overflow: hidden; border: 1px solid #ccc; background: #f3f3f3; margin: 2px; float: right;
+                border-radius: 4px; cursor: pointer; font: 12px/24px "微软雅黑"; color: #999; text-align: center;
+            }
+            .ban_a{
+                width: 48px; height: 24px; overflow: hidden; border: 1px solid #ccc; background: #f3f3f3; margin: 2px 0; float: left;
+                border-radius: 4px; cursor: pointer; font: 12px/24px "微软雅黑"; color: #999; text-align: center; margin-left: 2px; text-decoration: none;
+            }
+            .ban_a:hover{
+                text-decoration: none; border-color: #999; color: #666;
+            }
+        </style>
+        <script type="text/javascript">
+            function checksb(){
+                var result = true;
+                if(result == true){
+                    result = AutoCheckSub(".cs");
+                }
+                return result;
+            }
+            $(document).ready(function(){
+                $('.dd').tooltip({
+                    position: 'right'
+                });
+            });
+        </script>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">全景项目 - {$panorow['title']} - 右键版权信息</div>
+                        <div title="关闭" onclick="DoNote('确认返回功能首页？','{:U('main/index')}');" class="close"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            {:W("Panomenu",array("pano_id"=>$pano_id,"num"=>8))}
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main">
+                                <div class="action_title">右键版权信息</div>
+                                <div class="action_web">
+                                    <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">
+                                        <tr class="tr_white" height="36">
+                                            <td align="right" width="100"><b>全景项目名称：</b></td>
+                                            <td align="left">
+                                                {$panorow['title']}
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="10">
+                                            <td colspan="2"></td>
+                                        </tr>
+
+                                        <tr class="tr_white" height="36">
+                                            <td align="right" width="100"><b>版权信息内容：</b></td>
+                                            <td align="left">
+                                                <div>
+													<if condition="!empty($row)">
+                                                    <volist name="row" id="ban">
+                                                        <div class="ban_box">
+                                                            <div class="ban_title">{$ban.title}</div>
+                                                            <a href="{:U('edit',array('pano_id'=>$pano_id,'ban_id'=>$ban['id']))}" class="ban_a">修改</a>
+                                                            <a href="{:U('del',array('pano_id'=>$pano_id,'ban_id'=>$ban['id']))}" class="ban_a">删除</a>
+                                                            <switch name="ban['type']">
+                                                            <case value="none">
+                                                                <div class="ban_tool">无</div>
+                                                            </case>
+                                                            <case value="link">
+                                                                <div class="ban_tool easyui-tooltip dd" title="{$ban.link}">超链接</div>
+                                                            </case>
+                                                            <default /><div class="ban_tool easyui-tooltip dd" title="{$banarr[$ban['type']]}">事件</div>
+                                                            </switch>
+                                                        </div>
+                                                    </volist>
+													<else />
+													<span>等待添加</span>
+													</if>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="36">
+                                            <td align="right" width="100"><b></b></td>
+                                            <td align="left">
+                                                <a href="{:U('add',array('pano_id'=>$pano_id))}" class="btn3 input2a">添加版权信息</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

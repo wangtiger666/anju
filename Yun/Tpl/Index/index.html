@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="{$web_keywords}">
+  <meta name="description" content="{$web_description}">
+<meta name="robots" content="all">
+<title>{$web_name}</title>
+<link rel="shortcut icon" href="/favicon.ico">
+<link href="__PUBLIC__/yun/css/normalize.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/yun/css/index.css">
+<script src="__PUBLIC__/yun/js/jquery.min-1.10.2.js"></script>
+<script src="__PUBLIC__/yun/js/jquery.flexslider-min.js"></script>
+</head>
+<body id="yunbody">
+<!-- banner -->
+<style type="text/css">
+	.flex-direction-nav li{height: 0px;}
+	.slides li{line-height: 0px;margin:0px;padding-left: 0px;}
+	.flex-next{margin-top: -5px;}
+</style>
+
+<if condition="$banner_flag == '1' ">
+		<div class="flexslider"   style="height: 240px;" >
+				<ul class="slides"  style="height: 240px;" >
+				 <foreach name="banner" item="vo">
+						<li style="background-image: url({$vo.thumb});background-position:center;height: 240px;"></li>
+				</foreach>
+				</ul>
+		</div>
+    <else /> 
+			<div class="flexslider" style="margin-top:50px;" >
+				<ul class="slides" >
+				 <foreach name="banner" item="vo">
+					<li style="background-image: url({$vo.thumb});background-position:center;"></li>
+				</foreach>
+				</ul>
+			</div>
+</if>
+
+<script>
+$(function(){
+	$('.flexslider').flexslider({
+		directionNav: true,
+		pauseOnAction: false
+	});
+});
+</script>
+
+<!-- banner -->
+  <div class="main">
+    <div id="slide"></div>
+    <div class="container">
+        <div id="navbar">
+            <div data-reactroot="">
+				<include file="Public:login" />
+				<include file="Public:reg" />
+                <div class="p4b9YXf9RfoBkQjb" style="height: 50px;">
+                    <div class="notifications-wrapper"></div>
+                    <div class="_2xfu_lq1CjrY3ElJ">
+						<include file="Public:header" />
+                    </div>
+            <span>
+            </span>
+                </div>
+            </div>
+        </div>
+
+    <div class="group mobile-hide">
+        <div class="grid clearfix line2">
+			<div class="img2-box"><a href="{$getPosAd1.outlink}" title="{$getPosAd1.name}"><img src="{$getPosAd1.thumb}" class="img2-ad" alt=""></a></div>
+
+			<div class="img2-box"><a href="{$getPosAd2.outlink}" title="{$getPosAd2.name}"><img src="{$getPosAd2.thumb}" class="img2-ad" alt=""></a></div>
+
+			<div class="img2-box"><a href="{$getPosAd3.outlink}" title="{$getPosAd3.name}"><img src="{$getPosAd3.thumb}" class="img2-ad" alt=""></a></div>
+
+			<div class="img2-box"><a href="{$getPosAd4.outlink}" title="{$getPosAd4.name}"><img src="{$getPosAd4.thumb}" class="img2-ad" alt=""></a></div>
+
+			<div class="img2-box"><a href="{$getPosAd5.outlink}" title="{$getPosAd5.name}"><img src="{$getPosAd5.thumb}" class="img2-ad" alt=""></a></div>
+
+			<div class="img2-box"><a href="{$getPosAd6.outlink}" title="{$getPosAd6.name}"><img src="{$getPosAd6.thumb}" class="img2-ad" alt=""></a></div>
+        </div>
+     </div>
+
+    <div class="group">
+        <div class="menu">
+            <div class="menu-title"><h1 class="h1z2">VR全景推荐</h1><span class="group-subtitle">虚拟现实全景内容推荐</span></div>
+            <div class="menu-subtitle">
+                 <!-- <strong><a href="http://bbs.720yun.com/forum.php?mod=viewthread&amp;tid=729&amp;extra=" class="group-more" title="我要上首页" style="color:#fb666a" target="_blank">我要上首页</a></strong> -->
+            </div>
+        </div>
+
+        <div class="grid clearfix">
+          <div class="grid-item-xl">
+			<volist name="left_pano" id="vo">
+            <a href="{$vo.panopath}" title="{$vo.title}" target="_blank"><img class="cover-xl" src="{$vo.panothumb}" alt="{$vo.title}"></a>
+              <div class="cover-statr">{$vo.title}<br><span class="f14">作者：{$vo.author}</span></div>
+			</volist>
+          </div>
+
+		<volist name="right_pano" id="vo">
+        <div class="grid-item">
+            <div class="cover-img">
+                 <a href="{$vo.panopath}" title="{$vo.title} - 全景图片" target="_blank"><img class="cover" src="{$vo.panothumb}" alt="{$vo.title}"></a>
+            </div>
+			<if condition="!empty($vo['posidmark'])">
+			<div class="tab-video">{$vo.posidmark}</div>
+			</if>
+            <div class="cover-title">{$vo.title} <a href="javascript:void(0);" class="linkauthor" target="_blank" title="全景云个人主页">{$vo.author}</a></div>
+        </div>
+		</volist>
+
+        </div>
+      </div>
+
+
+    <div class="group">
+
+
+      <div class="ad-box mobile-hide"><a href="{$getPosAd7.outlink}"><img class="ad-img" src="{$getPosAd7.thumb}"></a></div>
+
+
+
+    <div class="group">
+          <div class="menu">
+            <div class="menu-title"><h1 class="h1z2">VR全景精选</h1></div>
+            <div class="menu-subtitle">
+                 <a href="index.php?s=/Channel" class="group-more" target="_blank" title="VR全景精选 vr全景图片">更多...</a>
+            </div>
+          </div>
+
+
+        <div class="grid clearfix">
+		<volist name="recommend_pano" id="vo">
+           <div class="grid-item">
+            <div class="cover-img">
+            <a href="{$vo.panopath}" title="{$vo.title}" target="_blank"><img class="cover" src="{$vo.panothumb}" alt="{$vo.title} 全景云 全景vr图片 虚拟现实 vr 360°"></a>
+            </div>
+            <div class="cover-title">{$vo.title} <a href="" class="linkauthor" target="_blank" title="全景VR个人站">{$vo.author}</a></div>
+          </div>
+		</volist>
+
+        </div>
+      </div>
+
+      <div class="ad-box mobile-hide"><a href="{$getPosAd8.outlink}"><img class="ad-img" src="{$getPosAd8.thumb}"></a></div>
+
+
+		<include file="Public:footer" />
+
+    </div>
+
+
+  </div>
+<script>
+  $(document).ready(function(){
+	  var hasover=true;
+	  $(".jH-mjoooHg2LVWQ2").mouseover(function(){
+		  if(hasover){
+			  $(this).find(".searchdiv").find("input").removeClass("hidesearch");
+			  $(this).find(".searchdiv").find("input").addClass("_1QYfXoKNUksBqeCg");
+			  $(this).find(".searchdiv").find("input").animate({width:"180px"}).focus();//第一个div
+			  hasover=false;
+		  }
+	  }).mouseleave(function(){
+		 if(!hasover){
+			  var thisinput=$(this).find(".searchdiv").find("input");
+			  $(this).find(".searchdiv").find("input").animate({width:"0px"},"fast",function(){
+				  thisinput.removeClass("_1QYfXoKNUksBqeCg");
+				  thisinput.addClass("hidesearch");
+				  hasover=true;
+			  });
+		 }
+	  })
+  })
+</script>
+<script src="__PUBLIC__/yun/js/commoncheck.js"></script>
+</div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<krpano>
+
+	<skin_settings 
+
+		lng=""
+		lat=""
+		mini_weather_bgcolor="0x000000"
+		mini_weather_bgalpha="0.5"
+		mini_weather_border_radius="3 3 3 3"
+		mini_weather_css="color:#FFFFFF; font-family:Arial;"
+
+		/>
+
+	<plugin name="weather" keep="true"
+		url="weather.js"
+		width="200"
+		height="160"
+		align="lefttop"
+		x="get:skin_settings.weatheropen"
+		y="110"
+		zorder="2"
+		onloaded="plugin[weather].getdata"
+
+
+	/>
+
+	<events name="weather_event" />
+	
+	<!--mini天气图-->
+	<layer name="mini-weather" keep="true" type="container" align="lefttop" x="get:skin_settings.weatheropen" y="110" width="200" height="160" bgcolor="get:skin_settings.mini_weather_bgcolor" bgalpha="get:skin_settings.mini_weather_bgalpha" bgroundedge="get:skin_settings.mini_weather_border_radius" bgcapture="true" children="false" scalechildren="true" >
+		
+		<layer name="head_block" align="top" type="container" width="100%" height="19%" bgcolor="0xff0000" bgalpha="0" >
+			<!--城市名称-->
+			<layer name="city-title" type="text" align="lefttop" x="20px" y="22%" bgalpha="0" bgcolor="0xff0000" html="--" css="calc:skin_settings.mini_weather_css + 'font-size:18px'" />
+			<!--温度区间-->
+			<layer name="temp_range" type="text" bgalpha="0" bgcolor="0xB519AA" align="righttop" x="5%" y="33%" html="--" css="calc:skin_settings.mini_weather_css + 'font-size:14px'" />
+		</layer>
+		<layer name="middle_block" align="top" type="container" width="100%" height="75%" y="19%" bgcolor="0x13A086" bgalpha="0"  >
+			<!--天气图-->
+			<layer name="weather-img" url="" width="27%" height="32%" align="lefttop" x="113%" y="96%" />
+			<!--温度-->
+			<layer name="temperature" type="text" align="lefttop" bgalpha="0" x="55%" y="17%" html="N/A" css="calc:skin_settings.mini_weather_css + 'font-size:50px'" />
+		</layer>
+		
+		<!--底部信息-->
+		<layer name="bottom_block" type="container" align="bottom" width="100%" height="19%" bgcolor="B519AA" bgalpha="0"  >
+			<!--现象描述-->
+			<layer name="desc_text" type="text" align="leftbottom" bgalpha="0" x="20px" y="33%" html="--" css="calc:skin_settings.mini_weather_css + 'font-size:16px'" onloaded="delayedcall(0.5,render_text())" />
+			<!--风向-->
+			<layer name="wind_direction" align="rightbottom" type="text" bgalpha="0" x="5%" y="33%" html="--" css="calc:skin_settings.mini_weather_css + 'font-size:14px'" />
+		</layer>
+		
+
+	</layer>
+
+	<!--test button-->
+	<layer name="toggle_pan" keep="true" url="toggle_.png" scale="0.3" align="lefttop" x="10" y="275" alpha="0.5" onover="tween(alpha,1)" onout="tween(alpha,0.5)" onclick="toggle_weather()" />
+
+	<action name="toggle_weather" >
+		if(layer[mini-weather].x GT 0,
+			tween(layer[mini-weather].x,-300);
+			tween(plugin[weather].x,-300);
+			,
+			tween(layer[mini-weather].x,10);
+			tween(plugin[weather].x,10);
+		)
+		
+	</action>
+	<action name="render_text" type="Javascript" ><![CDATA[
+		var text = krpano.get("layer[desc_text].html");
+		if(text.length > 5){
+			krpano.set("layer[desc_text].x",2);
+		}
+	]]>	
+	</action>
+<krpano devices="mobile">
+		<plugin name="weather" keep="true" 
+		url="weathermobile.js"
+		width="200"
+		height="160"
+		align="lefttop"
+		x="get:skin_settings.weatheropen"
+		y="110"
+		zorder="2"
+		onloaded="plugin[weather].getdata"
+
+
+	/>	 
+		<layer name="toggle_pan"  scale="0.4" />
+			
+</krpano>
+
+</krpano>

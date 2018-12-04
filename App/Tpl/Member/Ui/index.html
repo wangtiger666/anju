@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        {:W("Easyui")}
+        {:W("Uploader")}
+        <style type="text/css">
+            .addbtn{
+                width: 80px; height: 24px; overflow: hidden; border:1px solid #8ca7ca; display: block; background: #fbfbfb; cursor: pointer;
+                text-align: center; font: bold 12px/24px "微软雅黑"; color: #666; text-decoration: none; border-radius:4px; margin: 5px;
+            }
+            .addbtn:hover{
+                text-decoration: none; color: #6b88ad; border-color: #8ca7ca; background: #eef5ff;
+            }
+
+
+            .uibt{
+                width: auto; overflow: hidden; height: 24px; padding: 0 8px; font: bold 12px/24px "微软雅黑"; color: #666; border-bottom: 1px solid #8ca7ca; background: #eaf2ff;
+            }
+            .uibox{
+                width: 700px; overflow: hidden; min-height: 200px; border: 1px solid #8ca7ca; background: #fff; border-radius: 4px; margin-top: 6px;
+            }
+            .uibd{
+                width: auto; overflow: hidden; min-height: 200px;
+            }
+            .uidesk{
+                width: auto; height: 60px; overflow: hidden; border:1px solid #c7d7eb; margin: 0px 5px 5px 5px; border-radius: 4px;
+            }
+            .uititle{
+                width: 120px; height: 48px; overflow: hidden; float: left; margin-top: 5px; margin-left: 5px; border:1px solid #aac1e0; border-radius: 4px; cursor: default;
+            }
+            .uiinfo{
+                width: 341px; height: 48px; overflow: hidden; float: left; margin-top: 5px; margin-left: 5px; border:1px solid #aac1e0; border-radius: 4px; cursor: default;
+            }
+			.uipic{
+                width: 161px; height: 48px; overflow: hidden; float: left; margin-top: 5px; margin-left: 5px; border:1px solid #aac1e0; border-radius: 4px; cursor: default;
+            }
+			.uipic img{padding:3px 3px 3px 3px;}
+            .uitop{
+                width: auto; height: 24px; overflow: hidden; background: #eaf2ff; text-align: center;
+                font: bold 12px/24px "微软雅黑"; color: #333;
+            }
+            .uidown{
+                width: auto; height: 24px; overflow: hidden; background: #fff; text-align: center;
+                font: 12px/24px "微软雅黑"; color: #555;
+            }
+            .uidel{
+                width: 30px; height: 30px; overflow: hidden; float: left; margin-top: 14px; margin-left: 5px; border:1px solid #aac1e0; border-radius: 4px; cursor: pointer;
+                font: 26px/28px tahoma, arial, "Hiragino Sans GB", sans-serif; color: #8ca7ca; text-align: center; background: #eaf2ff;
+            }
+        </style>
+        <script type="text/javascript">
+            function pickui(){
+                openwin("获取UI","{:U('pick/uibox',array('devices'=>'flash','tp'=>1))}",786,500);
+            }
+            function pickmbui(){
+                openwin("获取UI","{:U('pick/uibox',array('devices'=>'mobile','tp'=>1))}",786,500);
+            }
+            function picksysui(){
+                openwin("获取UI","{:U('pick/uibox',array('tp'=>2))}",786,500);
+            }
+            function backui(id,tp){
+                $.ajax({
+                    url:"{:U('uiadd')}",
+                    type:"POST",
+                    dataType:"JSON",
+                    data:{
+                        pano_id:"{$pano_id}",
+                        uid:id,
+                        utp:tp
+                    },
+                    success:function(data){
+                        if(data.error == 1){
+                            showMsg("添加重复！",0);
+                        }else if(data.error == 0){
+                            addone(data.id,data.title,data.info);
+                        }
+                    }
+                });
+                closewin();
+            }
+            function backmbui(id,tp){
+                $.ajax({
+                    url:"{:U('mbuiadd')}",
+                    type:"POST",
+                    dataType:"JSON",
+                    data:{
+                        pano_id:"{$pano_id}",
+                        uid:id,
+                        utp:tp
+                    },
+                    success:function(data){
+                        if(data.error == 1){
+                            showMsg("添加重复！",0);
+                        }else if(data.error == 0){
+                            addmbone(data.id,data.title,data.info);
+                        }
+                    }
+                });
+                closewin();
+            }
+            function backsysui(id,tp){
+                $.ajax({
+                    url:"{:U('uiadd')}",
+                    type:"POST",
+                    dataType:"JSON",
+                    data:{
+                        pano_id:"{$pano_id}",
+                        uid:id,
+                        utp:tp
+                    },
+                    success:function(data){
+                        if(data.error == 1){
+                            showMsg("添加重复！",0);
+
+                        }else if(data.error == 0){
+                            addsysone(data.id,data.title,data.info,data.uipic);
+                        }
+                    }
+                });
+                closewin();
+            }
+            function addone(id,title,info){
+                if(info == ""){
+                    info = "没有介绍...";
+                }
+                var html = '';
+                html += '<div id="pcui_'+id+'" class="uidesk">';
+                html += '<div class="uititle">';
+                html += '<div class="uitop">UI名称</div>';
+                html += '<div class="uidown">'+title+'</div>';
+                html += '</div>';
+                html += '<div class="uiinfo">';
+                html += '<div class="uitop">简介</div>';
+                html += '<div class="uidown">'+info+'</div>';
+                html += '</div>';
+                html += '<div data-id="'+id+'" onclick="removeui(this);" class="uidel">×</div>';
+                html += '</div>';
+                $("#pc").append(html);
+            }
+            function addsysone(id,title,info,uipic){
+                if(info == ""){
+                    info = "没有介绍...";
+                }
+                var html = '';
+                html += '<div id="pcui_'+id+'" class="uidesk">';
+                html += '<div class="uititle">';
+                html += '<div class="uitop">模版名称</div>';
+                html += '<div class="uidown">'+title+'</div>';
+                html += '</div>';
+                html += '<div class="uiinfo">';
+                html += '<div class="uitop">简介</div>';
+                html += '<div class="uidown">'+info+'</div>';
+                html += '</div>';
+                html += '<div class="uipic">';
+                html += '<img src="'+uipic+'" width="155" height="42" />';
+                html += '</div>';
+                html += '<div data-id="'+id+'" onclick="removeui(this);" class="uidel">×</div>';
+                html += '</div>';
+                $("#sys").append(html);
+            }
+            function addmbone(id,title,info){
+                if(info == ""){
+                    info = "没有介绍...";
+                }
+                var html = '';
+                html += '<div id="mbui_'+id+'" class="uidesk">';
+                html += '<div class="uititle">';
+                html += '<div class="uitop">UI名称</div>';
+                html += '<div class="uidown">'+title+'</div>';
+                html += '</div>';
+                html += '<div class="uiinfo">';
+                html += '<div class="uitop">简介</div>';
+                html += '<div class="uidown">'+info+'</div>';
+                html += '</div>';
+                html += '<div data-id="'+id+'" onclick="removembui(this);" class="uidel">×</div>';
+                html += '</div>';
+                $("#mb").append(html);
+            }
+            function removeui(who){
+                var id = $(who).data("id");
+                $.ajax({
+                    url:"{:U('uidel')}",
+                    type:"POST",
+                    dataType:"script",
+                    data:{
+                        id:id
+                    }
+                });
+            }
+            function removembui(who){
+                var id = $(who).data("id");
+                $.ajax({
+                    url:"{:U('mbuidel')}",
+                    type:"POST",
+                    dataType:"script",
+                    data:{
+                        id:id
+                    }
+                });
+            }
+        </script>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">全景项目 - {$panorow['title']}</div>
+                        <div title="关闭" onclick="DoNote('确认返回功能首页？', '{:U('main/index')}');" class="close"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            {:W("Panomenu",array("pano_id"=>$pano_id,"num"=>6))}
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main" style="background:  #f3f3f3;">
+                                <div class="pano_top">
+                                    <span class="pano_topbtnb">全局UI设定</span>
+                                </div>
+
+                                <div class="uibox">
+                                    <div class="uibt">系统模版选择</div>
+                                    <div onclick="picksysui();" class="addbtn">添加模版</div>
+                                    <div id="sys" class="uibd">
+                                        <volist name="sysrow" id="sui">
+                                            <div id="pcui_{$sui.id}" class="uidesk">
+                                                <div class="uititle">
+                                                    <div class="uitop">模版名称</div>
+                                                    <div class="uidown">{$sui.title}</div>
+                                                </div>
+                                                <div class="uiinfo">
+                                                    <div class="uitop">简介</div>
+                                                    <div class="uidown">{$sui.info}</div>
+                                                   
+                                                </div>
+                                                <div class="uipic">
+                                                    <img src="{$sui.uipic}" width="155" height="42"/> 
+                                                </div>
+                                                
+                                                <div data-id="{$sui.id}" onclick="removeui(this);" class="uidel">×</div>
+                                            </div>
+                                            
+                                        </volist>
+                                    </div>
+                                </div>
+                                
+                                <div class="uibox">
+                                    <div class="uibt">PC设备UI选择</div>
+                                    <div onclick="pickui();" class="addbtn">添加UI</div>
+                                    <div id="pc" class="uibd">
+                                        <volist name="pcrow" id="ui">
+                                            <div id="pcui_{$ui.id}" class="uidesk">
+                                                <div class="uititle">
+                                                    <div class="uitop">UI名称</div>
+                                                    <div class="uidown">{$ui.title}</div>
+                                                </div>
+                                                <div class="uiinfo">
+                                                    <div class="uitop">简介</div>
+                                                    <div class="uidown">{$ui.info}</div>
+                                                </div>
+                                                <div data-id="{$ui.id}" onclick="removeui(this);" class="uidel">×</div>
+                                            </div>
+                                        </volist>
+                                    </div>
+                                </div>
+                                
+                                <div class="uibox">
+                                    <div class="uibt">移动设备UI选择</div>
+                                    <div onclick="pickmbui();" class="addbtn">添加UI</div>
+                                    <div id="mb" class="uibd">
+                                        <volist name="mbrow" id="ui">
+                                            <div id="mbui_{$ui.id}" class="uidesk">
+                                                <div class="uititle">
+                                                    <div class="uitop">UI名称</div>
+                                                    <div class="uidown">{$ui.title}</div>
+                                                </div>
+                                                <div class="uiinfo">
+                                                    <div class="uitop">简介</div>
+                                                    <div class="uidown">{$ui.info}</div>
+                                                </div>
+                                                <div data-id="{$ui.id}" onclick="removembui(this);" class="uidel">×</div>
+                                            </div>
+                                        </volist>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

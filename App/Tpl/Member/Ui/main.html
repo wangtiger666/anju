@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/pano/pano.js"></script>
+        {:W("Easyui")}
+        {:W("Uploader")}
+        <script type="text/javascript">
+            function checksb(){
+                var result = true;
+                if(result == true){
+                    result = AutoCheckSub(".cs");
+                }
+                if(result == true){
+                    var target_id = $("#target_id").val();
+                    if(target_id == "0"){
+                        showMsg("请选定目标场景！");
+                        result = false;
+                    }
+                }
+                return result;
+            }
+            function smallpano(){
+                $("#pano").stop().animate({
+                    "width": "480px",
+                    "height": "320px"
+                },300);
+            }
+            function midpano(){
+                $("#pano").stop().animate({
+                    "width": "600px",
+                    "height": "400px"
+                },300);
+            }
+            function bigpano(){
+                $("#pano").stop().animate({
+                    "width": "780px",
+                    "height": "520px"
+                },300);
+            }
+        </script>
+        <style type="text/css">
+            .chengbox{
+                width: auto; height: 24px; overflow: hidden; border:1px solid #f7db99; border-radius : 5px; text-indent: 10px;
+                background: #fffbf3;margin: 5px; font: 12px/24px "微软雅黑"; color: #FFA900; cursor: default;
+            }
+            #pano{
+                overflow: hidden; border: 1px solid #ccc; margin-left: 30px;
+            }
+            .flash{
+                width: 780px; height: 520px;
+            }
+            .mobile{
+                width: 320px; height: 480px;
+            }
+            #uibox{
+                width: 770px; min-height: 120px; overflow: hidden; border: 1px solid #c6c6c6; margin-left: 30px;
+                border-radius: 4px; background: #f3f3f3; padding: 5px;
+            }
+
+            .groupbox{
+                width: 758px; height: 60px; overflow: hidden; border-radius: 4px;
+                border:1px solid #ccc; background: #fff; margin: 5px;
+            }
+            .grouppic{
+                width: 50px; height: 50px; overflow: hidden; border-radius: 4px; float: left;
+                background: url(__PUBLIC__/member/images/pano/uigroup.jpg) no-repeat; margin-top: 5px; margin-left: 5px;
+            }
+            .grouptb{
+                width: 80px; height: 48px; overflow: hidden; float: left; margin-top: 5px; margin-left: 5px; border:1px solid #bbb; border-radius: 4px; cursor: default;
+            }
+            .grouplongtb{
+                width: 150px; height: 48px; overflow: hidden; float: left; margin-top: 5px; margin-left: 5px; border:1px solid #bbb; border-radius: 4px; cursor: default;
+            }
+            .grouptop{
+                width: auto; height: 24px; overflow: hidden; background: #ddd; text-align: center;
+                font: bold 12px/24px "微软雅黑"; color: #333;
+            }
+            .groupdown{
+                width: auto; height: 24px; overflow: hidden; background: #f3f3f3; text-align: center;
+                font: 12px/24px "微软雅黑"; color: #555;
+            }
+            .groupbtnbox{
+                width: 56px; height: 60px; overflow: hidden; float: left; margin-top: 2px; margin-left: 5px;
+            }
+            .groupbtnbox a{
+                height: 20px; overflow: hidden; background: #f3f3f3; border:1px solid #999; display: block; border-radius: 4px; text-decoration: none;
+                text-align: center;font: 12px/20px "微软雅黑"; color: #555; margin-top: 4px;
+            }
+            .groupbtnbox a:hover{
+                background: #666; border-color: #666; color: #fff;
+            }
+        </style>
+        <script type="text/javascript">
+            var flash = 1;
+            $(function(){
+                $(".groupbox").mouseover(function(){
+                    var uiname = $(this).data("name");
+                    $("body").everyTime("1ds","biu",function(){
+                        if(flash == 1){
+                            flash = 0;
+                            var krpano = document.getElementById("krpano");
+                            krpano.call("set(plugin["+uiname+"].visible,false);");
+                        }else{
+                            flash = 1;
+                            var krpano = document.getElementById("krpano");
+                            krpano.call("set(plugin["+uiname+"].visible,true);");
+                        }
+                    });;
+                });
+                $(".groupbox").mouseout(function(){
+                    $("body").stopTime("biu");
+                    var uiname = $(this).data("name");
+                    if(flash == 0){
+                        flash = 1;
+                        var krpano = document.getElementById("krpano");
+                        krpano.call("set(plugin["+uiname+"].visible,true);");
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">UI模块管理</div>
+                        <div title="关闭" onclick="DoNote('确认返回功能首页？','{:U('main/index')}');" class="close"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            <span class="pano_menu_bottom me">自定义UI</span>
+                            <a href="{:U('sysindex')}" class="pano_menu_bottom">系统默认UI</a>
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main">
+                                <div class="action_title"><a href="{:U('index')}">自定义UI</a> - 管理</div>
+                                <form name="form1" action="" onsubmit="return checksb();" enctype="multipart/form-data" method="post">
+                                    <input type="hidden" name="dopost" value="save" />
+                                    <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">
+                                        <tr class="tr_white" height="36">
+                                            <td align="right" width="80"><b>UI名称：</b></td>
+                                            <td align="left">{$row['title']}</td>
+                                        </tr>
+                                        <tr class="tr_white" height="36">
+                                            <td align="right" width="80"><b>UI简介：</b></td>
+                                            <td align="left">{$row['info']}</td>
+                                        </tr>
+                                        <tr class="tr_white" height="10">
+                                            <td colspan="2"></td>
+                                        </tr>
+                                        <if condition="$row['devices'] eq 'flash'">
+                                            <tr class="tr_white" height="36">
+                                                <td align="right" width="80"><b>视图尺寸：</b></td>
+                                                <td align="left">
+                                                    <input class="btn1" onclick="smallpano();" type="button" value="小"/>
+                                                    <input class="btn1" onclick="midpano();" type="button" value="中"/>
+                                                    <input class="btn1" onclick="bigpano();" type="button" value="大"/>
+                                                </td>
+                                            </tr>
+                                        </if>
+
+                                        <tr class="tr_white" height="10">
+                                            <td colspan="2">
+                                                <div id="pano" class="{$row['devices']}"></div>
+                                                <script type="text/javascript">
+                                                    embedpano({
+                                                        id:"krpano",
+                                                        swf:"__PUBLIC__/pano/pano.swf",
+                                                        xml:"{:U('uixml',array('uid' => $uid))}",
+                                                        target:"pano",
+                                                        html5:"prefer",wmode:"transparent"
+                                                    });
+                                                </script>
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="10">
+                                            <td colspan="2">
+                                                <div id="uibox">
+                                                    <div style="overflow:hidden;">
+                                                        <a class="btn3 input2a" href="{:U('child_add',array('uid' =>$uid));}" style="margin: 5px;">添加组件</a>
+                                                    </div>
+                                                    <volist name="uclist" id="ui">
+                                                        <div class="groupbox" data-name="ui_{$ui.id}">
+                                                            <div class="grouppic"></div>
+                                                            <div class="grouplongtb">
+                                                                <div class="grouptop">标题</div>
+                                                                <div class="groupdown">{$ui.title}</div>
+                                                            </div>
+                                                            <div class="grouplongtb">
+                                                                <div class="grouptop">父级</div>
+                                                                <div class="groupdown">{$ui.pname}</div>
+                                                            </div>
+                                                            <div class="grouptb">
+                                                                <div class="grouptop">UI类别</div>
+                                                                <div class="groupdown">{$ui.uitpname}</div>
+                                                            </div>
+                                                            <div class="grouptb">
+                                                                <div class="grouptop">是否可视</div>
+                                                                <div class="groupdown">是</div>
+                                                            </div>
+                                                            <div class="grouptb">
+                                                                <div class="grouptop">事件个数</div>
+                                                                <div class="groupdown">{$ui.len}</div>
+                                                            </div>
+                                                            <div class="groupbtnbox">
+                                                                <switch name="ui.uitype">
+                                                                <case value="image"><a href="{:U('set_image',array('cid'=>$ui['id']))}">修改</a></case>
+                                                                <case value="superimage"><a href="{:U('set_superimage',array('cid'=>$ui['id']))}">修改</a></case>
+                                                                <case value="video"><a href="{:U('set_video',array('cid'=>$ui['id']))}">修改</a></case>
+                                                                </switch>
+                                                                <a href="{:U('uiaction',array('cid'=>$ui['id']))}">事件</a>
+                                                            </div>
+                                                            <div class="groupbtnbox">
+                                                                <a href="{:U('position',array('cid'=>$ui['id']))}">定位</a>
+                                                                <a style="cursor: pointer;" data-url="{:U('child_del',array('cid'=>$ui['id']))}" data-info="确定删除此UI元素？如果删除，相关子级一并被删除！" class="delme">删除</a>
+                                                            </div>
+                                                        </div>
+                                                    </volist>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="tr_white" height="20">
+                                            <td colspan="2"></td>
+                                        </tr>
+                                        <tr class="tr_white" height="32">
+                                            <td align="right" width="80"></td>
+                                            <td align="left">
+                                                <input type="submit" class="blackbutton" value="提交" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

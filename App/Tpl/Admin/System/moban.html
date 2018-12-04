@@ -1,0 +1,125 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=100"/>
+        <title>微信参数配置</title>
+        <script src="__PUBLIC__/common/js/jquery.js" language="javascript" type="text/javascript"></script>
+        <script language="javascript" type="text/javascript">
+            function showadd(){
+                $("#addvar").show();                
+            }
+            function ShowConfig(n){
+                n--;
+                $(".result_back_box").hide();
+                $(".result_back_box").eq(n).show();
+            }
+            $(document).ready(function(){
+                $(".result_back_box").first().show();
+            });
+        </script>
+        <!-- bootstrap START-->
+        <link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/animate.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/style.css" rel="stylesheet">
+        <style type="text/css">
+            body{
+                background: #FFF;
+            }
+        </style>
+        <!-- bootstrap END -->
+    </head>
+    <body>
+  	  <div class="main">
+            <div class="downbox">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5> 选择主页模板</h5>
+                        </div>
+                        <div class="ibox-content">
+                           <div class="list-div">
+                              <table width="100%" cellpadding="3" cellspacing="1">
+                              <tbody>
+                              <div class="row">
+                                <div class="ibox-title">
+                                    <h5>当前模板</h5>
+                                </div>
+                                <div class="col-md-6" >
+                                    <h4>云平台模板</h4>
+                                    <a href="/Public/admin/images/yun.png" target="_blank"  >
+                                    <img    
+                                    <if condition="($row eq 1)  "> 
+                                            src="/Public/admin/images/yun.png"
+                                    <elseif condition="$row eq 2"/> 
+                                        src="/Public/admin/images/web.png"
+                                    <elseif condition="$row eq 3"/> 
+                                        src="/Public/admin/images/720yun.png"
+                                    </if>      class="img-responsive" alt="" width="125" height="91" >
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="ibox-title">
+                                    <h5>可用模板</h5>&nbsp<span>(点击图片更换模板)</span>
+                                </div>
+                                <div class="col-md-6" >
+                                    <h4>云平台模板</h4>
+                                    <a onClick="choosemoban(1);" >
+                                        <img src="/Public/admin/images/yun.png" class="img-responsive" alt=""  width="125" height="91">
+                                    </a>
+                                </div>
+                                <div class="col-md-6" >
+                                    <h4>关于模板</h4>
+                                    <a  onclick="choosemoban(2);" >
+                                        <img src="/Public/admin/images/web.png" class="img-responsive" alt=""  width="125" height="91">
+                                    </a>
+                                </div>
+                                <div class="col-md-6" >
+                                    <h4>720yun模板</h4>
+                                    <a  onclick="choosemoban(3);" >
+                                        <img src="/Public/admin/images/720yun.png" class="img-responsive" alt=""  width="125" height="91">
+                                    </a>
+                                </div>
+                        </div>
+              </tbody></table>
+                </div>
+                </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            function choosemoban(id){
+                if(id=="1"){ var name="云平台模板"}
+                if(id=="2"){ var name="关于模板"}
+				if(id=="3"){ var name="720yun模板"}
+                var url ='http://'+window.location.host+'/admin/system/moban';
+                if(window.confirm('确定更换模板为'+name+'?')){
+                    $.ajax( {    
+                        url:url,
+                        data:{id:id,ajax:'1'},    
+                        type:'post',    
+                        cache:false,    
+                        dataType:'json',    
+                        success:function(data) {  
+                            if(data =="1"){       
+                                alert("更换成功");
+                                location.href="";    
+                            }else{    
+                                alert("未更新模板");    
+                            }    
+                         },   
+                    }); 
+                }else{
+                 return false;
+             }
+        }
+        </script>
+    </body>
+</html>

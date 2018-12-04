@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link href="__PUBLIC__/admin/style/common.css" rel="stylesheet" type="text/css" />
+        <script src="__PUBLIC__/common/js/jquery.js" language="javascript" type="text/javascript"></script>
+        <script src="__PUBLIC__/common/js/common.js" language="javascript" type="text/javascript"></script>
+        <script language="javascript" type="text/javascript">
+            //反选
+            function ReSel(){
+                var myform = document.form1;
+                for(i=0;i<myform.bakfile.length;i++){
+                    if(myform.bakfile[i].checked) myform.bakfile[i].checked = false;
+                    else myform.bakfile[i].checked = true;
+                }
+            }
+            //全选
+            function SelAll(){
+                var myform = document.form1;
+                for(i=0;i<myform.bakfile.length;i++){
+                    myform.bakfile[i].checked = true;
+                }
+            }
+            //取消
+            function NoneSel(){
+                var myform = document.form1;
+                for(i=0;i<myform.bakfile.length;i++){
+                    myform.bakfile[i].checked = false;
+                }
+            }
+            //
+            function getCheckboxItem(){
+                var myform = document.form1;
+                var allSel="";
+                var max = 0;
+                if(myform.bakfile.value) return myform.bakfile.value;
+                for(i=0;i<myform.bakfile.length;i++)
+                {
+                    if(myform.bakfile[i].checked){
+                        max++;
+                        if(allSel=="")
+                            allSel=myform.bakfile[i].value;
+                        else
+                            allSel=allSel+","+myform.bakfile[i].value;
+                    }
+                }
+                $("#tbname").val(allSel);
+                $("#max").val(max);
+                var tbd = 1;
+                if(myform.structfile.checked == false){
+                    tbd = 0;
+                }
+                $("#dbt").val(tbd);
+            }
+            function bkdb(){
+                getCheckboxItem();
+                backtb();
+            }
+            function backtb(){
+                var opentb = $("#dbt").val();
+                if(opentb == 0){
+                    backdb(0);
+                }else{
+                    var tbname = $("#structfile").val();
+                    $.ajax({
+                        url:"{:U('database/backdata')}",
+                        type:"POST",
+                        dataType:"script",
+                        data:{
+                            db:tbname,
+                            dir:"{$dir}",
+                            dopost:"tb"
+                        }
+                    });
+                }
+            }
+            function backdb(n){
+                $.ajax({
+                    url:"{:U('database/backdata')}",
+                    type:"POST",
+                    dataType:"script",
+                    data:{
+                        db:$("#tbname").val(),
+                        dopost:"db",
+                        now:n,
+                        dir:"{$dir}",
+                        max:$("#max").val()
+                    }
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <div id="indexmian">
+            <div id="indextitle">数据库管理-还原 </div>
+            <div id="indexmain">
+                <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#D6D6D6" align="center">
+                    <tr>
+                        <td height="32"  class="td_title td_head">
+                            <span style="text-align: right;"><input type="button" onclick="window.location.href = '{:U('database/index')}';" value="数据备份" class="btn2"/></span>
+                        </td>
+                    </tr>
+                </table>
+                <form name="form1" method="post">
+                    <input type="hidden" id="dir" value="{$dir}" />
+                    <input type="hidden" id="tbname" value="" />
+                    <input type="hidden" id="max" value="" />
+                    <input type="hidden" id="dbt" value="" />
+                    <table width="100%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D6D6D6">
+                        <tr class="tr_hui">
+                            <td height="24" colspan="8"  style="padding-left: 10px;"><b>发现的备份文件：</b>
+                        </tr>
+                        {$backhtml}
+                        <tr align="center" class="tr_white">
+                            <td height="24" colspan="4">
+                                <input class="btn1" name="b1" type="button" id="b1" onClick="SelAll()" value="全选" />
+                                <input class="btn1"  name="b2" type="button" id="b2" onClick="ReSel()" value="反选" />
+                                <input class="btn1"  name="b3" type="button" id="b3" onClick="NoneSel()" value="取消" />
+                            </td>
+                        </tr>
+                        <tr class="tr_white">
+                            <td height="24" colspan="8"  style="padding-left: 10px;"><b>附加参数：</b></td>
+                        </tr>
+                        <tr class="tr_white">
+                            <td height="24" colspan="4">
+                                <input name="structfile" type="checkbox" id="structfile" value="{$structfile}" checked='1' />还原表结构信息({$structfile})
+                            </td>
+                        </tr>
+                        <tr class="tr_white" align="center">
+                            <td height="33" colspan="4">
+                                <input type="button" name="button" onclick="bkdb();" value="还原数据" class="btn1" />
+                            </td>
+                        </tr>
+                        <tr class="tr_white" align="center" height="40">
+                            <td height="24" colspan="8" id="showbox"></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

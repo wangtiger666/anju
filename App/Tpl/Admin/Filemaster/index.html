@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>文件管理器</title>
+        <link href="__PUBLIC__/admin/style/common.css" rel="stylesheet" type="text/css"/>
+        <style>
+            .linerow{border-bottom: 1px solid #CBD8AC;height:24px}
+            table tr td{
+                padding-left: 10px;
+            }
+            table tr td img{
+                margin-right: 4px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main">
+            <table width='100%' border='0' cellspacing='1' cellpadding='2' align='center' style="background:#cfcfcf;">
+                <tr class="td_title" height="32">
+                    <td style="padding-left:10px;"><b>文件管理系统-列表式</b></td>
+                </tr>
+            </table>
+            <table width='100%' border='0' cellspacing='1' cellpadding='2' align='center' style="background:#cfcfcf; margin-top: 4px;">
+                <tr class="td_title" height="28" align="center">
+                    <td width="28%"><b>文件名</b></td>
+                    <td width="16%"><b>文件大小</b></td>
+                    <td width="22%"><b>最后修改时间</b></td>
+                    <td width="34%"><b>操作</b></td>
+                </tr>
+                {$dir_html}
+                {$file_html}
+                <tr class="tr_hui">
+                    <td colspan="4" height='26'>
+                        <a href='{:UOne("admin/filemaster/index")}'>[根目录]</a>
+                        &nbsp;
+                        <a href='{:UOne("admin/filemaster/view",array("fmdo"=>"newfile","activepath"=>$nowurl))}'>[新建文件]</a>
+                        &nbsp;
+                        <a href='{:UOne("admin/filemaster/view",array("fmdo"=>"newdir","activepath"=>$nowurl))}'>[新建目录]</a>
+                        &nbsp;
+                        <a href='{:UOne("admin/filemaster/view",array("fmdo"=>"upload","activepath"=>$nowurl))}'>[文件上传]</a>
+                        &nbsp;
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

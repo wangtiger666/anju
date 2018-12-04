@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>移动端主页面</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/welcome/css/mobile_main.css">
+</head>
+<style type="text/css">
+	 @import url(__PUBLIC__/welcome/css/widgets.css);
+      html, body, #cesiumContainer {
+          width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+      },
+</style>
+<body>
+<div id="cesiumContainer"></div>
+</body>
+<script type="text/javascript" src="__PUBLIC__/welcome/js/jquery-1.11.min.js"></script>
+<script src="__PUBLIC__/welcome/js/Cesium.js"></script>
+<script type="text/javascript" src="__PUBLIC__/welcome/js/viewerCesiumNavigationMixin.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/welcome/js/js.js"></script>
+<script type="text/javascript" src="/Public/welcome/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.9&key=6b61a08d0f294d8f122780fd778d5be1"></script>
+<script type="text/javascript">
+	/**
+   * [url 调用谷歌影像]
+   * @type {String}
+   */
+  var url = "http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}&s=Gali";
+  var viewer = new Cesium.Viewer('cesiumContainer',{
+      animation:false,
+      baseLayerPicker : false,
+      imageryProvider : new Cesium.UrlTemplateImageryProvider({url:url,maximumLevel:19}),//maximumLevel:设置谷歌地图最高级别。国内一般为19
+      timeline:false,
+      fullscreenButton:false,
+      baseLayerPicker : false,
+      geocoder : false,
+      homeButton : false,
+      infoBox : false,
+      sceneModePicker : false,
+      navigationHelpButton : false,
+      selectionIndicator:false//隐藏相机选中时的绿色边框
+  });
+  viewer.screenSpaceEventHandler.setInputAction(function(){},Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
+);//去掉entities双击事件
+
+  /**
+   * [url 加载注记图层]
+   * @type {String}
+   */
+  viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
+      url: "http://t0.tianditu.com/cia_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cia&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default.jpg",
+      layer: "tdtAnnoLayer",
+      style: "default",
+      format: "image/jpeg",
+      tileMatrixSetID: "GoogleMapsCompatible",
+      show: false
+  }));
+viewer._cesiumWidget._creditContainer.style.display="none"//隐藏版权信息
+
+/**
+ * [complete 飞行]
+ */
+function startflyTo(longitude,latitude,height){
+  viewer.camera.flyTo({
+    destination :  Cesium.Cartesian3.fromDegrees(longitude,latitude,height), // 设置位置
+    duration:3, // 设置飞行持续时间，默认会根据距离来计算
+    complete: function () {
+        // 到达位置后执行的回调函数
+    },
+    cancle: function () {
+        // 如果取消飞行则会调用此函数
+        console.log('飞行取消')
+    }
+  })
+};
+
+/**
+* [定位信息]
+*/
+var map, geolocation;
+map = new AMap.Map('container', {
+  resizeEnable: true
+});
+
+map.plugin('AMap.Geolocation', function() {
+  geolocation = new AMap.Geolocation({
+      enableHighAccuracy: true,//是否使用高精度定位，默认:true
+      timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+      buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+      zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+      buttonPosition:'RB'
+  });
+  map.addControl(geolocation);
+  geolocation.getCurrentPosition();
+  AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+  AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+});
+  //解析定位结果
+var cityarr=[];
+cityarr = JSON.parse(sessionStorage.getItem("city"));
+function onComplete(data) {
+  if(cityarr==null){
+    $("#choose_city").val(data.addressComponent.city)
+    $.ajax({
+      url:"{:U('/HouseResources/getParentAndChildInfo')}",
+      type:'post',
+      data:{name:data.addressComponent.city,show_parent:'2',show_childList:'2'},
+      dataType:'json',
+      success:function(datas){   
+        for (var i = 0; i < datas.child_data.length; i++) {
+            var html;
+            html='<option id='+datas.child_data[i].id+'>'+datas.child_data[i].name+'</option>';
+            $("#choose_area").append(html)
+          }  
+        if(datas.code==200){
+          areaary=datas.child_data;
+          window.sessionStorage.setItem('pid',datas.data.id);
+          startflyTo(data.position.lng,data.position.lat,80000.0)
+          showlabel(datas.child_data,50000,100000);
+        }else{
+          alert('请选择对应的城市')
+        }
+      },
+      error:function(){
+          alert('请求超时')
+      }
+    })
+  }else{
+    $("#choose_city").val(cityarr.name);
+    startflyTo(cityarr.longitude,cityarr.latitude,70000.0);
+    showlabel(areaarr,50000,100000);
+  }     
+}
+
+//解析定位错误信息
+function onError(data) {
+  alert('定位失败')
+}
+</script>
+</html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<krpano version="1.0.8">
+	<!-- buttons-include.xml template -->
+
+
+
+	<!-- events - fullscreen button change, set cursor on start -->
+	<events onxmlcomplete="action(autorotateright);"
+	        onenterfullscreen="set(plugin[cbfullscreen].visible,false); set(plugin[cbfullscreen2].visible,true);"
+	        onexitfullscreen ="set(plugin[cbfullscreen].visible,true);  set(plugin[cbfullscreen2].visible,false);"
+	        />
+
+	<!-- button showtext() style -->
+	<textstyle name="buttonstyle" font="宋体" fontsize="14" border="false" background="false" textcolor="0xFFFFFF" effect="glow(0x000000,0.7,4,2);dropshadow(2,45,0x000000,3,1);" xoffset="35" yoffset="-8" />
+
+	<!-- 小图用按钮 -->
+	<plugin name="cbleft" keep="true" align="leftbottom" x="10" y="48" blendmode="screen" url="circle-buttons.jpg" crop="0|41|30|28" onovercrop="0|148|30|28" ondowncrop="0|255|30|28" ondown="set(movevectorx,-0.07);"  onup="set(movevectorx,0);" onhover="showtext(向左移动,buttonstyle);" />
+	<plugin name="cbup" keep="true" align="leftbottom" x="50" y="86" blendmode="screen" url="circle-buttons.jpg" crop="40|0|30|31" onovercrop="40|107|30|31" ondowncrop="40|214|30|31" ondown="set(movevectory,-0.07);"  onup="set(movevectory,0);" onhover="showtext(向上移动,buttonstyle);" />
+	<plugin name="cbright" keep="true" align="leftbottom" x="89" y="48" blendmode="screen" url="circle-buttons.jpg" crop="79|41|30|28" onovercrop="79|148|30|28" ondowncrop="79|255|30|28" ondown="set(movevectorx,0.07);"  onup="set(movevectorx,0);" onhover="showtext(向右移动,buttonstyle);" />
+	<plugin name="cbdown" keep="true" align="leftbottom" x="50" y="9" blendmode="screen" url="circle-buttons.jpg" crop="40|79|30|29" onovercrop="40|186|30|29" ondowncrop="40|293|30|29" ondown="set(movevectory,0.07);"  onup="set(movevectory,0);" onhover="showtext(向下移动,buttonstyle);" />
+	<plugin name="cbplayleft" keep="true" align="leftbottom" x="40" y="48" blendmode="screen" url="circle-buttons.jpg" crop="30|41|16|28" onovercrop="30|148|16|28" ondowncrop="30|255|16|28" ondown="action(autorotateleft)" onhover="showtext(自动左旋,buttonstyle);" />
+	<plugin name="cbplayleft2" keep="true" align="leftbottom" x="40" y="48" blendmode="screen" url="circle-buttons.jpg" crop="30|148|16|28" onovercrop="30|41|16|28" ondowncrop="30|255|16|28" ondown="action(autorotatepause)" onhover="showtext(停止左旋,buttonstyle);" visible="false" />
+	<plugin name="cbplaypause" keep="true" align="leftbottom" x="56" y="48" blendmode="screen" url="circle-buttons.jpg" crop="46|41|17|28" onovercrop="46|148|17|28" ondowncrop="46|255|17|28" ondown="action(autorotatepause)" onhover="showtext(暂停旋转,buttonstyle);" />
+	<plugin name="cbplayright" keep="true" align="leftbottom" x="73" y="48" blendmode="screen" url="circle-buttons.jpg" crop="63|41|16|28" onovercrop="63|148|16|28" ondowncrop="63|255|16|28" ondown="action(autorotateright)" onhover="showtext(自动右旋,buttonstyle);" />
+	<plugin name="cbplayright2" keep="true" align="leftbottom" x="73" y="48" blendmode="screen" url="circle-buttons.jpg" crop="63|148|16|28" onovercrop="63|41|16|28" ondowncrop="63|255|16|28" ondown="action(autorotatepause)" onhover="showtext(暂停旋转,buttonstyle);" visible="false" />
+	
+	<plugin name="cbblank1" keep="true" align="leftbottom" x="50" y="76" blendmode="screen" url="circle-buttons.jpg" crop="40|31|30|10" />
+	<plugin name="cbblank2" keep="true" align="leftbottom" x="50" y="38" blendmode="screen" url="circle-buttons.jpg" crop="40|69|30|10" />
+	
+	<plugin name="cbzoomin" keep="true" align="leftbottom" x="10" y="76" blendmode="screen" url="circle-buttons.jpg" crop="0|0|40|41" onovercrop="0|107|40|41" ondowncrop="0|107|40|41"  ondown="set(movevectorz,-0.2);"  onup="set(movevectorz,0);" onhover="showtext(按住放大,buttonstyle);" />
+	<plugin name="cbzoomout" keep="true" align="leftbottom" x="80" y="76" blendmode="screen" url="circle-buttons.jpg" crop="70|0|40|41" onovercrop="70|107|40|41" ondowncrop="70|107|40|41"  ondown="set(movevectorz,+0.2);"  onup="set(movevectorz,0);" onhover="showtext(按住缩小,buttonstyle);" />
+	<plugin name="cbhome" keep="true" align="leftbottom" x="10" y="7" blendmode="screen" url="circle-buttons.jpg" crop="0|69|40|41" onovercrop="0|176|40|41" ondowncrop="0|176|40|41" onclick="lookto(0,0,100);" onhover="showtext(初始场景, buttonstyle);" />
+	<plugin name="cbfullscreen" keep="true" align="leftbottom" x="80" y="7" blendmode="screen" url="circle-buttons.jpg" crop="70|69|40|41" onovercrop="70|176|40|41" ondowncrop="70|176|40|41" onclick="set(fullscreen,true);" onhover="showtext(全屏显示, buttonstyle);"  visible="true" />
+	<plugin name="cbfullscreen2" keep="true" align="leftbottom" x="80" y="7" blendmode="screen" url="circle-buttons.jpg" crop="70|176|40|41" onovercrop="70|69|40|41" ondowncrop="70|176|40|41" onclick="set(fullscreen,false);" onhover="showtext(退出全屏,buttonstyle);" visible="false" />
+	<!-- 小图用按钮 end -->
+
+
+	<action name="autorotateleft">
+		action(autorotatepause);
+		set(autorotate.speed,-5);
+		set(autorotate.accel,7);
+		set(autorotate.enabled,true);
+		set(plugin[cbplayleft].visible,false);
+		set(plugin[cbplayleft2].visible,true);
+	</action>
+	<action name="autorotateright">
+		action(autorotatepause);
+		set(autorotate.speed,+5);
+		set(autorotate.accel,7);
+		set(autorotate.enabled,true);
+		set(plugin[cbplayright].visible,false);
+		set(plugin[cbplayright2].visible,true);
+	</action>
+	<action name="autorotatepause">
+		set(autorotate.speed,0);
+		set(autorotate.enabled,false);
+		set(plugin[cbplayleft].visible,true);
+		set(plugin[cbplayleft2].visible,false);
+		set(plugin[cbplayright].visible,true);
+		set(plugin[cbplayright2].visible,false);
+	</action>
+</krpano>

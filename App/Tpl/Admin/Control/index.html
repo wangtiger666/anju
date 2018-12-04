@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <script src="__PUBLIC__/common/js/jquery.js" language="javascript" type="text/javascript"></script>
+        <script src="__PUBLIC__/common/js/common.js" language="javascript" type="text/javascript"></script>
+
+        <!-- bootstrap START-->
+        <link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/plugins/footable/footable.core.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/animate.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/style.css" rel="stylesheet">
+        <link href="__PUBLIC__/common/style/recovebootstrap.css" rel="stylesheet" type="text/css" /> 
+        <!-- bootstrap END -->
+    </head>
+    <body>
+         <div class="main" >
+            <div class="downbox">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox">
+                           <div class="ibox-title">
+                            <h5>管理员帐号管理</h5>
+                            <div class="ibox-tools">
+                                <a  onclick="window.location.href = '{:U('control/add')}';" class="btn btn-primary btn-xs">新增管理员</a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <table class="footable table table-stripped toggle-arrow-tiny footable-loaded default breakpoint" data-page-size="15">
+                                <thead>
+                                <tr>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">ID<span class=""></span></th>
+                                    <th data-hide="phone" class="footable-sortable footable-visible" style="display: table-cell;">管理员帐号<span class=""></span></th>
+
+                                    <th data-hide="phone" class="footable-sortable footable-visible" style="display: table-cell;">所属用户组<span class=""></span></th>
+
+                                    <th data-hide="phone,tablet" class="footable-sortable footable-visible" style="display: table-cell;">管理员昵称<span class=""></span></th>
+
+                                    <th data-hide="phone" class="footable-sortable footable-visible" style="display: table-cell;">注册日期<span class=""></span></th>
+                                     <th data-hide="phone" class="footable-sortable footable-visible" style="display: table-cell;">登录时间<span class=""></span></th>
+                                      <th data-hide="phone" class="footable-sortable footable-visible" style="display: table-cell;">最后登录IP<span class=""></span></th>
+                                    <th class="text-right footable-visible footable-last-column" data-sort-ignore="true">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <volist name="list" id="vo">
+                                <tr    class=" <if condition='(($key%2) eq 0)'>footable-odd<else />footable-even</if>"  style="display: table-row;" >
+                                    <td class="footable-visible footable-first-column">
+                                       {$vo['id']}
+                                    </td>
+                                    <td class="footable-visible" style="display: table-cell;">
+                                       {$vo['account']}<if condition="$vo['status'] eq 0"><font color="red">(已禁用)</font></if>
+                                    </td>
+                                
+                                    <td class="footable-visible" style="display: table-cell;">
+                                        {$vo['groupname']}
+                                    </td>
+                                    <td class="footable-visible" style="display: table-cell;">
+                                      {$vo['nickname']}
+                                    </td>
+                                    <td class="footable-visible" style="display: table-cell;">
+                                        {$vo['create_time']|date='Y-m-d H:i:s',###}
+                                    </td>
+                                    <td class="footable-visible" style="display: table-cell;">
+                                       {$vo['last_login_time']|date='Y-m-d H:i:s',###}
+                                    </td>
+                                    <td class="footable-visible" style="display: table-cell;">
+                                       {$vo['last_login_ip']}
+                                    </td>
+                                      <td class="text-right footable-visible footable-last-column">
+                                        <div class="btn-group">
+                                     <a  onclick="window.location.href = '{:U('control/edit',array('id'=>$vo['id']))}';" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i>修改</a>
+
+                                    <if condition="$vo['status'] eq 0">
+                                         <a  onclick="window.location.href = '{:U('control/adminopened',array('id'=>$vo['id']))}';" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i>启用</a>
+                                    <else/>
+                                         <a  onclick="window.location.href = '{:U('control/admindisabled',array('id'=>$vo['id']))}';" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i>禁用</a>
+                                    </if>
+                                    
+                                    <a onclick="AdminDoNote('确认删除【{$vo.account}】吗？','{:U('control/del',array('id'=>$vo['id']))}');" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i>删除</a>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                                </volist>
+                                </tbody>
+                                 <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" align="center">
+                                    <tr  class="tr_white" align="center">
+                                        <td id="page_list" height="60" >
+                                            {$page}
+                                        </td>
+                                    </tr>
+                                 </table>   
+                        </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+    </body>
+</html>

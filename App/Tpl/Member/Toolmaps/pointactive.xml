@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano showerrors="false">
+    <events name="readyaction" onxmlcomplete="js(pointactiveready(););" />
+    <preview type="grid(cube,32,32,256,0x223344,0x000011,0xFFFFFF);" details="8" />
+    <plugin name="point" url="__PUBLIC__/member/images/pano/mappointactive.png" edge="center"
+        align="center" x="0" y="0" alpha="1" scale="1" visible="True" rotate="0" zorder="1"
+    />
+    <plugin name="radar" keep="true" visible="true"  zorder="0"
+           url="%SWFPATH%/plugins/radar.swf" alturl="%SWFPATH%/plugins/radar.js"
+           align="center" edge="center"
+           fillcolor="0xFFFFFF" fillalpha="0.5" linecolor="0xFF0000" linewidth="1" linealpha="1"
+           scale="1.0" heading="0" headingoffset="0"
+           />
+</krpano>

@@ -1,0 +1,1083 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<krpano showerrors="false" onstart="action(start);action(fixfov);"  idletime="{$panorow['autonextpass']}" now_play="">
+
+<if condition="$panorow['open_splash'] eq 1">
+ <!-- 启动画面开始 -->
+  <layer name="intro_jpg" url.normal="%SWFPATH%/images/{$panorow['splashpic']||basename=###}"  url.mobile="%SWFPATH%/images/{$panorow['splashpicsj']||basename=###}"  preload="true"  handcursor="false"  enabled="true"  children="true"  visible="true"     zorder="5"  maskchildren="true"  keep="true"  width="100%"  height="100%"   >  
+    <layer name="skin_title_logo3" zorder="100" keep="true" enabled="false" visible="false" x="0" y="30%" alpha="0" align="center" url="%SWFPATH%/images/navi.png" crop="" scale="1" onclick="callwith(layer[videointerface_pp_image],ondown);tween(layer[intro_jpg].ox,-2500,2);delayedcall(2,set(layer[intro_jpg].enabled,false);set(layer[intro_jpg].visible,false);stopdelayedcall(startpic1);stopdelayedcall(startpic2));
+delayedcall(10,set(layer[skin_title_pr].visible,false););delayedcall(3, lookto(20,0,get(view.fov),linear(20));lookto(-20,0,get(view.fov),linear(20));lookto(0,0,get(view.fov),linear(20));tween(layer[intro_logo].alpha,0,1,null,set(layer[intro_logo],visible,false)));" onover="stoptween(alpha);set(alpha,1);" onout="tweenintrobuttonalpha(0.35);"
+    />   
+  </layer>
+  <action name="tweenintrobuttonalpha" >
+    if(%1 == 0.35,
+      set(alphavalue,1),
+      set(alphavalue,0.35)
+    );
+    tween(layer[skin_title_logo3].alpha,%1,1,default,tweenintrobuttonalpha(get(alphavalue)));
+  </action>
+
+  <events name="startlogoevents" keep="true" onxmlcomplete=" set(layer[skin_title_logo3].enabled,true); set(layer[skin_title_logo3].visible,true); tweenintrobuttonalpha(1);" onnewpano=" set(layer[navi_title].visible,true);"/>
+<!-- 启动画面开始 -->
+</if>
+ 
+ 
+    <php>echo "<include";</php> url="%SWFPATH%/base.xml" />
+	<php>echo "<include";</php> url="%SWFPATH%/plugins/showtext.xml" />
+    <if condition="$panorow['is_ipad_view'] eq 1">
+        <plugin name="skin_gyro" keep="true" url="%SWFPATH%/plugins/gyro.js" devices="html5+!firefox" enabled="true" camroll="true" friction="0" velastic="0" onavailable="if(device.fullscreensupport, if(device.mobile,add(layer[skin_btn_gyro].x,40),add(layer[skin_btn_gyro].x,20));); set(layer[skin_btn_gyro].visible,true);" />
+    </if>
+
+    <action name="start">
+        loadscene(scene{$firstscene['sort']}, null, MERGE);
+        <if condition="$panorow['open_music'] eq 1">
+        playsound(bgsnd, '%SWFPATH%/music/{$musicurl||basename=###}', 0);
+        </if>
+		if(autorotate.enabled == true ,bombtimer(0););
+		<if condition="$panorow['opennews'] eq 'true'">danmurun1();</if>
+    </action>
+	<!--   手机端图片大小 start       -->
+	<action name="mobilescale" autorun="preinit" devices="mobile">
+     mul(stagescale,{$panorow['mobileuisize']});
+    </action>
+	<!--   手机端图片大小 end       -->
+
+	<plugin name="soundinterface"
+        url="%SWFPATH%/plugins/soundinterface.swf"
+        alturl="%SWFPATH%/plugins/soundinterface.js"
+	rootpath="" preload="true" keep="true" loops="1" />
+
+    <eq name="strorow['open']" value="1">
+        <layer name="introimage" url="%SWFPATH%/toolbox/intro/{$strorow['image']|basename=###}" enabled="true" align="center" onclick="hideintroimage();" keep="true" visible="true" zorder="50000"/>
+
+        <action name="hideintroimage">
+            if(layer[introimage].enabled,
+                    set(layer[introimage].enabled,false);
+                    tween(layer[introimage].alpha, 0.0, 0.5, default, removelayer(introimage));
+              );
+        </action>
+    </eq>
+
+    <if condition="$panorow['open_music'] eq 1 AND $panorow['open_musicbtn'] eq 1">
+        <plugin name="musicbtn" url="%SWFPATH%/music/{$panorow['musicpic']||basename=###}"
+             onurl="%SWFPATH%/music/{$panorow['musicpic']||basename=###}"
+             offurl="%SWFPATH%/music/{$panorow['musichoverpic']||basename=###}"
+             onalpha="{$panorow['alpha']}" outalpha="{$panorow['hoveralpha']}" keep="true"
+             align="{$panorow['musicposto']}" x="{$panorow['mpos_x']}" y="{$panorow['mpos_y']}" alpha="{$panorow['alpha']}" scale="1" onover="tween(alpha,get(onalpha));" onout="tween(alpha,get(outalpha));"
+			onclick="pausesoundtoggle(bgsnd); switch(url, get(onurl), get(offurl));"
+            />
+		<krpano devices="mobile">				
+			<plugin name="musicbtn" scale="0.5" altscale="0.5" />
+		</krpano>
+    </if>
+
+    <if condition="$panorow['openautorate'] eq 1">
+    <autorotate enabled="true" waittime="{$panorow['autoratewaittime']}" speed="{$panorow['autoratespeed']}" accel="1" horizon="0" tofov="{$panorow['autotofov']}" />
+    <else/>
+    <autorotate enabled="false" />
+    </if>
+
+    <volist name="sysuirow" id="sui">
+        <php>echo "<include";</php> url="%SWFPATH%/ui/{$sui.path}/skin/skin.xml?<php>echo time();</php>" />
+    </volist>
+	
+	<php>echo "<include";</php> url="%SWFPATH%/krpanocms.xml?<php>echo time();</php>" />
+	<php>echo "<include";</php> url="%SWFPATH%/gundongzimu.xml?<php>echo time();</php>" />
+	<php>echo "<include";</php> url="%SWFPATH%/html.xml?<php>echo time();</php>" />
+	<if condition="$panorow['openwechat'] eq 1">
+	<php>echo "<include";</php> url="%SWFPATH%/shuoyishuo.xml?<php>echo time();</php>" />
+	<php>echo "<include";</php> url="%SWFPATH%/hotspotComment.xml?<php>echo time();</php>" />
+	</if>
+	<php>echo "<include";</php> url="%SWFPATH%/video-player.xml?<php>echo time();</php>" />
+	<if condition="($sui['path'] eq ui_014) or ($sui['path'] eq ui_017) or ($sui['path'] eq ui_018)">
+	<php>echo "<include";</php> url="%SWFPATH%/cms_uiconfig.xml?<php>echo time();</php>" />
+	<else/>
+	<php>echo "<include";</php> url="%SWFPATH%/cms_config.xml?<php>echo time();</php>" />
+	</if>
+
+	<if condition="empty($sui['path']) eq true">	
+				 <php>echo "<include";</php> url="%SWFPATH%/plugins/plugin.xml?<php>echo time();</php>" />
+	</if>	
+	<!-- sw-ui -->
+	<volist name="sysuirow" id="sui">
+				<if condition="$sui['path'] eq ui_015">				
+				 <group_id name="group_id" >
+					<volist name="swfenzurow" id="swfenzu">  			
+						<item name="c{$swfenzu.id}" title="{$swfenzu.name}" />
+					</volist>
+				 </group_id>				 
+				</if>	
+				
+				<if condition="$sui['path'] eq ui_017">				
+					<volist name="swfenzurow" id="swfenzu"> 
+							<panoramagroup name="c{$swfenzu.id}" title="{$swfenzu.name}"/>					
+					</volist>
+				</if>
+				
+				<if condition="$sui['path'] eq ui_018">	
+				<config>	
+				<groups name="KRpanocms" >
+					<volist name="swfenzurow" id="swfenzu">  	
+						<group name="group_{$swfenzu.id}" title="{$swfenzu.name}">					
+						<volist name="swfenzu['wzListrow']" id="wzList">
+							<pano name="scene{$wzList['sort']}" >								
+								<info title="{$wzList['title']}" thumburl="{$wzList['thumb']}"/>								
+							</pano>
+						</volist>								
+						</group>
+					</volist>
+				</groups>
+				</config>
+				</if>
+				
+	</volist>
+	<!-- sw-ui -->
+
+<events onclick="screentosphere(mouse.x,mouse.y,h,v);trace(h);" />
+<events onxmlcomplete="set(control.mousetype, moveto);" />
+<skin_settings  openautonext="{$panorow['openautonext']}" 
+				thumbs_width="{$panorow['thumbwidth']}" 
+				thumbs_height="{$panorow['thumbheight']}" 
+				thumbs_padding="10" 
+				thumbs_crop="" 
+				
+				<if condition="$panorow['openuipifu'] eq 1">
+				thumbs_opened="true" 
+				<else/>
+				thumbs_opened="false"
+				</if>
+				<if condition="$panorow['openweahter'] eq 1">
+				cityname="{$panorow['cityname']}"
+				<if condition="$panorow['weatheropen'] eq 1">	
+				weatheropen="10"
+				<else/>
+				weatheropen="-300"
+				</if>
+				</if>
+				
+				thumbs_text="true" 
+				krpanocms="true" 
+				domainlink="{$domainlink}" 
+				<if condition="$panorow['is_littleplanet_view'] eq 1">
+				littleplanetintro="true"
+				<else/>
+				littleplanetintro="false"
+				</if>
+				groupid="1" 
+				webvr="true" 
+				<if condition="$panorow['open_music'] eq 1">
+				bgmusic="true" 
+				<else/>
+				bgmusic="false" 
+				</if>
+				bgyunyin="false" 
+				erweima="{$panorow['openshare']}" 
+				opennews="{$panorow['opennews']}" 
+				news="{$panorow['gundongzimu']}" 
+				
+				<if condition="($sui['path'] eq ui_014) or ($sui['path'] eq ui_017) or ($sui['path'] eq ui_018)">
+					 opetel="{$panorow['opentel']}"
+					 tel="openurl('tel://{$panorow['linkphone']}',_blank)"
+					 showtel="TEL:{$panorow['linkphone']}"
+					 opehttp="{$panorow['openhttp']}"
+			         http="openurl('{$panorow['website']}',_blank )"
+					 opedaohang="{$panorow['opendaohang']}"
+					 daohang="openurl('http://apis.map.qq.com/uri/v1/geocoder?coord={$panorow[map]}',_blank )"
+				<else/>	
+					 opentel="{$panorow['opentel']}"
+					 tel="openurl('tel://{$panorow['linkphone']}',_blank)" 
+					 openhttp="{$panorow['openhttp']}" 
+					 http="openurl('{$panorow['website']}',_blank )" 
+					 opendaohang="{$panorow['opendaohang']}" 
+					 daohang="openurl('http://apis.map.qq.com/uri/v1/geocoder?coord={$panorow[map]}',_blank )" 
+				</if>
+				
+				
+				opencard="{$panorow['opencard']}" 
+				ope_bdmap="" 
+				bd_map="" 
+				openzan="{$panorow['openzan']}" 
+				pano_id="{$pano_id}">
+</skin_settings>
+<lensflareset name="DEFAULT" url="%SWFPATH%/lensflare/flares.jpg"/>
+
+<if condition="!empty($panorow['openpanologo'])&&!empty($panorow['pano_logo'])">
+<layer name="ui_logo" type="images" url="%SWFPATH%/images/uiimage/{$panorow['pano_logo']||basename=###}" keep="true" visible="true" zorder="0" align="lefttop" x="2" y="55" autowidth="" autoheight="" scale="1.0" altscale="1.0" alpha="1" />
+</if>
+
+<if condition="!empty($panorow['openauthor'])&&!empty($userinfo['company_logo'])">
+<layer name="zj-logo" type="images" url="%SWFPATH%/images/uiimage/{$userinfo['company_logo']||basename=###}" keep="true" visible="true" zorder="100" align="rightbottom" x="15" y="15" autowidth="" autoheight="" scale="0.5" altscale="0.5" alpha="1"
+<if condition="!empty($userinfo[company_url])">onclick="openurl('{$userinfo[company_url]}',_blank);"</if> />
+</if>
+
+<if condition="!empty($panorow['openwelcome'])&&!empty($panorow['welcome'])">
+<layer name="welcome" type="image" visible="true" url="%SWFPATH%/images/uiimage/{$panorow['welcome']||basename=###}" keep="true" scale="0.5" alpha="1" width="998" height="666" x="0" y="0"  align="center" zorder="100"  maskchildren="false" onclick="action(welcome_close,welcome);" onloaded="welcome_close_ready();" />
+<action name="welcome_close">
+	tween(plugin[%1].alpha,0,0.5,default, set(plugin[%1].visible,false));
+</action>
+<action name="welcome_close_ready">
+delayedcall(10,welcome_close(welcome));
+</action>
+</if>
+
+<if condition="$panorow['opentongji'] eq 1">
+<style name="cms_view" url="%SWFPATH%/plugins/textfield.swf" zorder="0" align="lefttop" x="20" oy="30" keep="true" backgroundcolor="0xFFFFFF" backgroundalpha="0.0" roundedge="0" css="margin:2px 2px 2px 2px;color:#ffffff; font-family:STXihei; font-size:14px; text-shadow: rgb(0, 0, 0) 0px 0px 3.2px;"  width="300" autoheight="" />
+<layer name="cms_view_html" style="cms_view" html=""/>
+<action name="cms_view_html">
+set(layer[cms_view_html].html,%1);
+</action>
+</if>
+
+
+<if condition="$panorow['opennav'] eq 1 and !empty($navList)">
+<style name="nav_text" url="%SWFPATH%/plugins/textfield.swf" zorder="0" align="center" keep="true" backgroundcolor="0xFFFFFF" backgroundalpha="0.0" roundedge="0" css="font-family:Arial,宋体;font-size:14px;font-weight:bold;color:{$panonav.color};" width="100" height="28" autoheight="" />
+<krpano devices="all">
+<volist name="navList" id="nav">
+<layer name="nav_{$nav.id}" keep="true" url="{$nav.navbg_file}" x="{$nav.navbg_x}" y="0" crop="0|{$nav.navbg_crop}|{$nav.navbg_width}|{$nav.navbg_crop}" onovercrop="0|{$nav.navbg_height}|{$nav.navbg_width}|{$nav.navbg_crop}" align="righttop" visible="true"/>
+<layer name="nav_{$nav.id}_html" style="nav_text" parent="nav_{$nav.id}" ox="{$panonav.ox}" oy="{$panonav.oy}" html="{$nav.navname}" onover="set(layer[nav_{$nav.id}_html].css,'font-family:Arial,宋体;font-size:14px;font-weight:bold;color:{$panonav.overcolor};');" 
+onout="set(layer[nav_{$nav.id}_html].css,'font-family:Arial,宋体;font-size:14px;font-weight:bold;color:{$panonav.color};');" 
+<if condition="$nav['opentype'] eq 1 or $nav['opentype'] eq 3">onclick="openIframe({$panonav.iframewidth},{$panonav.iframeheight},'{$nav.linkurl}','{$nav.linkurlmobile}')"</if>
+<if condition="$nav['opentype'] eq 2">onclick="openLink('{$nav.linkurl}')"</if>
+/>
+</volist>
+</krpano>
+</if>
+
+<layer name="Iframe_close" keep="true" url="%SWFPATH%/images/fx.png" align="righttop" edge="righttop" width="25" height="25" x="8" y="8" onclick="closeIframe()" zorder="1" visible="false" />
+<action name="Iframe_bg">
+if(layer[openIframe_bg],'',
+	<!-- step one - add a background layer and fade it in -->
+	set(layer[Iframe_close].visible, true);
+	addlayer(openIframe_bg);
+	set(layer[openIframe_bg].type, container);
+	set(layer[openIframe_bg].zindex, 999999);
+	set(layer[openIframe_bg].align, lefttop);
+	set(layer[openIframe_bg].width, 100%);
+	set(layer[openIframe_bg].height, 100%);
+	set(layer[openIframe_bg].bgcolor, 0x000000);
+	set(layer[openIframe_bg].bgalpha, 0.5);
+	set(layer[openIframe_bg].bgcapture, true);
+	set(layer[openIframe_bg].handcursor, false);
+	set(layer[openIframe_bg].alpha, 0.0);
+	set(layer[openIframe_bg].onclick, closeIframe());	
+	tween(layer[openIframe_bg].alpha, 1.0, 0.5, default);
+);
+</action>
+<action name="openIframe">
+Iframe_bg();
+js(openIframe(%1,%2,%3,1));
+</action>
+
+<action name="openIframewww">
+Iframe_bg();
+js(openIframewww(%1,%2,%3,1));
+</action>
+
+
+<krpano devices="mobile">
+<action name="openIframe">
+txtadd(openurl,%4,'');
+openwindow(get(openurl),100%,100%);
+</action>
+<action name="openIframewww">
+txtadd(openurl,%4,'');
+openwindow(get(openurl),100%,100%);
+</action>
+</krpano>
+
+<action name="openLink">
+js(openLink(%1,%2));
+</action>
+
+
+<action name="openIframevideo">
+Iframe_bg();
+js(openIframevideo(%1,%2,%3));
+</action>
+
+
+<action name="closeIframe">
+set(layer[openIframe_bg].onclick, null);
+js(closeIframe());
+tween(layer[openIframe_bg].alpha, 0.0, 0.5, default,
+	removelayer(openIframe_bg);
+	set(layer[Iframe_close].visible, false);
+);
+</action>
+<action name="hotspot_animate"> 
+inc(frame,1,get(lastframe),0); 
+mul(ypos,frame,frameheight); 
+txtadd(crop,'0|',get(ypos),'|',get(framewidth),'|',get(frameheight)); 
+delayedcall(0.03, if(loaded, hotspot_animate() ) ); 
+</action>
+<krpano devices="mobile">
+<layer name="zj-logo" x="15" y="15" scale="0.55" altscale="0.5"/>
+<layer name="ui_logo" x="10" y="60" scale="0.8" altscale="0.8" />
+<layer name="welcome" scale="0.2" altscale="0.2"/>
+<style name="cms_view" x="10" css="font-family:STXihei; font-size:16px; color:#FFFFFF; text-shadow: rgb(0, 0, 0) 0px 0px 3.2px;" />
+</krpano>
+<style name="cms_skin_point" keep="true" onover="copy(layer[tooltip].html, tooltip);set(layer[tooltip].visible, true);tween(layer[tooltip].alpha, 1.0, 0.5);asyncloop(hovering, copy(layer[tooltip].x,mouse.stagex); copy(layer[tooltip].y,mouse.stagey); );" onout="tween(layer[tooltip].alpha, 0.0, 0.25, default, set(layer[tooltip].visible,false), copy(layer[tooltip].x,mouse.stagex); copy(layer[tooltip].y,mouse.stagey); );" />
+
+
+    <volist name="uirow" id="ui">
+        <php>echo "<include";</php> url="%SWFPATH%/ui/ui{$ui.uid}/ui.xml?<php>echo time();</php>" />
+    </volist>
+
+    <volist name="mbuirow" id="mbui">
+        <php>echo "<include";</php> url="%SWFPATH%/ui/ui{$mbui.uid}/mbui.xml?<php>echo time();</php>" />
+    </volist>
+
+    <if condition="$panorow['open_music'] eq 1">
+        <if condition="$panorow['open_musicbtn'] eq 1">
+            <plugin name="musicbtn" url="%SWFPATH%/music/{$panorow['musicpic']||basename=###}" keep="true"
+                         onurl="%SWFPATH%/music/{$panorow['musichoverpic']||basename=###}"
+                         offurl="%SWFPATH%/music/{$panorow['musicpic']||basename=###}"
+                         onalpha="{$panorow['hoveralpha']}" outalpha="{$panorow['alpha']}"
+                         align="{$panorow['musicposto']}" x="{$panorow['mpos_x']}" y="{$panorow['mpos_y']}" alpha="{$panorow['alpha']}" scale="1" onover="tween(alpha,get(onalpha));" onout="tween(alpha,get(outalpha));"
+	        onclick="pausesoundtoggle(bgsnd); switch(url, get(onurl), get(offurl));"
+	        />
+        </if>
+    </if>
+	<if condition="!empty($banrow)">
+    <contextmenu fullscreen="false" versioninfo="false" native="false" customstyle="calc:'default|default|default|'+(0x000000 BOR (((0.4)*0xFF) LSHT 24))+'|0xFFFFFF|0xBBBBBB|0|0|1|0|4|10|0xFFFFFF|0|0|4|6|7|0xFFFFFF|none|8|0|0|0|3|0xCCCCCC|'+skin_settings.design_bgcolor+'|0|12|8'">
+	<item name="kr" caption="KRPANO"     />
+	<item name="cc" caption="更改控制模式" onclick="cm_changecontrolmode();"  separator="true" />
+         <volist name="banrow" id="ban">
+             <switch name="ban['type']">
+                <case value="none">
+                    <item name="ban{$ban.id}" caption="{$ban.title}" onclick=""/>
+                </case>
+                <case value="link">
+                    <item name="ban{$ban.id}" caption="{$ban.title}" onclick="linkto({$ban.link})"/>
+                </case>
+                <default /><item name="ban{$ban.id}" caption="{$ban.title}" onclick="{$ban.type}()"/>
+                </switch>
+         </volist>
+    </contextmenu>
+	</if> 
+
+    <eq name="toolboxmap_on" value="1">
+        <php>echo "<include";</php> url="%SWFPATH%/toolbox/map/map.xml?<php>echo time();</php>" />
+    </eq>
+
+    <eq name="toolboxmaps_on" value="1">
+        <php>echo "<include";</php> url="%SWFPATH%/toolbox/maps/map.xml?<php>echo time();</php>" />
+    </eq>
+
+	
+	
+	
+	
+	
+	
+	
+    <volist name="viewlist" id="view">
+	<if condition="$view['openvideo'] eq 1">
+	     <action name="startup" autorun="onstart">		
+			if(device.panovideosupport == false,
+				error('Sorry, but panoramic videos are not supported by your current browser!');
+			,
+			loadscene(videopano);
+			);
+		</action>
+	<scene name="videopano" title="{$view['title']}">
+		<!-- include the videoplayer interface / skin (with VR support) -->
+		<!--固定路径-->
+		<php>echo "<include";</php> url="__PUBLIC__/pano/video/skin/videointerface.xml?<php>echo time();</php>" />
+		<!-- include the videoplayer plugin -->
+		<plugin name="video"
+		        url.html5="/Public/pano/video/plugins/videoplayer.js"
+		        url.flash="/Public/pano/video/plugins/videoplayer.swf"
+		        pausedonstart="true"
+		        loop="false"
+		        volume="1.0"
+		        onloaded="add_video_sources();"
+		        />
+		<!-- use the videoplayer plugin as panoramic image source -->
+		<image>
+			<sphere url="plugin:video" />
+		</image>
+		<!-- set the default view -->
+		<view hlookat="0" vlookat="0" fovtype="DFOV" fov="130" fovmin="75" fovmax="150" distortion="0.0" />
+		<!-- add the video sources and play the video -->
+
+
+	
+		<action name="add_video_sources">
+		<if condition="!empty($view['videofile'])">
+			videointerface_addsource('标清', "%SWFPATH%/scene/scene{$view.sort}/{$view['videofile']||basename=###}|%SWFPATH%/scene/scene{$view.sort}/{$view['videofilewebm']||basename=###}|%SWFPATH%/scene/scene{$view.sort}/{$view['videofilem4a']||basename=###}", "%SWFPATH%/scene/scene{$view.sort}/{$view['videofileimg']||basename=###}");
+		</if>
+		<if condition="!empty($view['videofilehd'])">
+			videointerface_addsource('高清', "%SWFPATH%/scene/scene{$view.sort}/{$view['videofilehd']||basename=###}|%SWFPATH%/scene/scene{$view.sort}/{$view['videofilehdwebm']||basename=###}|%SWFPATH%/scene/scene{$view.sort}/{$view['videofilehdm4a']||basename=###}", "%SWFPATH%/scene/scene{$view.sort}/{$view['videofilehdimg']||basename=###}");
+		</if>
+			<if condition="!empty($view['videofile'])">
+			videointerface_play('标清');
+			</if>
+			<if condition="!empty($view['videofilehd'])">
+			videointerface_play('高清');
+			</if>
+		</action>
+	</scene>
+	<else/>
+	
+		
+		
+		
+		<scene name="scene{$view['sort']}" title="{$view['title']}" thumburl="%SWFPATH%/scene/scene{$view.sort}/{$view['thumb']||basename=###}" onstart="newsceneevent();"
+		<volist name="sysuirow" id="sui">
+				<if condition="$sui['path'] eq ui_014">
+					<volist name="view['fenzu']" id="fenzu">
+                           album="{$fenzu['name']}"						   
+					</volist>   
+				<elseif condition="($sui['path'] eq ui_015) or ($sui['path'] eq ui_017)"/>
+					 group_id="c{$view['fenzuid']}"
+				<elseif condition="$sui['path'] eq ui_016"/>
+					 thumb_display="true"
+				<elseif condition="$sui['path'] eq ui_018"/>
+					  group_id="{$view['fenzuid']}"
+				</if>			
+		</volist>
+		>
+		
+            <events name="viewevent" />
+            <eq name="view['open_limit']" value="0">
+                <view hlookat="{$view['hlookat']}" vlookat="{$view['vlookat']}" fov="{$view['fov']}" fisheye="0" fovmin="{$view['fovmin']}" fovmax="{$view['fovmax']}" />
+            </eq>
+            <eq name="view['open_limit']" value="1">
+                <view hlookat="{$view['hlookat']}" vlookat="{$view['vlookat']}" fov="{$view['fov']}" fisheye="0" fovmin="{$view['fovmin']}" fovmax="{$view['fovmax']}"
+                    limitview="{$view['limitview']}" hlookatmin="{$view['hlookatmin']}" hlookatmax="{$view['hlookatmax']}" vlookatmin="{$view['vlookatmin']}" vlookatmax="{$view['vlookatmax']}"
+                />
+            </eq>
+
+            <eq name="view['vopen']" value="0">
+                <preview url="%SWFPATH%/scene/scene{$view.sort}/view/preview.jpg" />
+                <image type="CUBE">
+                    <cube url="%SWFPATH%/scene/scene{$view.sort}/view/{$view['pano_path']||basename=###}" />
+                </image>
+            </eq>
+            <eq name="view['vopen']" value="1">
+                <preview url="%SWFPATH%/scene/scene{$view.sort}/scene/preview.jpg" />
+				
+				
+				<if condition="$view['sdpic'] eq 0">
+				
+                <image type="CUBE" multires="true" tilesize="256" progressive="false">
+                    <level tiledimagewidth="{$view['v1']}" tiledimageheight="{$view['v1']}">
+                        <cube url="%SWFPATH%/scene/scene{$view.sort}/scene/pian_%s/l2/%v/l2_%s_%v_%h.jpg" />
+                    </level>
+                    <level tiledimagewidth="{$view['v2']}" tiledimageheight="{$view['v2']}">
+                        <cube url="%SWFPATH%/scene/scene{$view.sort}/scene/pian_%s/l1/%v/l1_%s_%v_%h.jpg" />
+                    </level>
+                    <mobile>
+                        <cube url="%SWFPATH%/scene/scene{$view.sort}/scene/pano_%s.jpg" />
+                    </mobile>
+				</image>
+				
+				<else/>
+				
+				<image type="CUBE" stereo="true" stereolabels="1|2" multires="true" tilesize="512">
+					<level tiledimagewidth="1792" tiledimageheight="1792">
+						<cube url="%SWFPATH%/scene/scene{$view.sort}/scene/%t/%s/l2/%v/l2_%t/%s_%v_%h.jpg" />
+					</level>
+					<level tiledimagewidth="1024" tiledimageheight="1024">
+						<cube url="%SWFPATH%/scene/scene{$view.sort}/scene/%t/%s/l1/%v/l1_%t/%s_%v_%h.jpg" />
+					</level>
+				</image>
+				
+				</if>
+				
+				
+            </eq>
+
+            <if condition="$view['openmusic'] eq 1">
+            <events name="sound{$view['sort']}" onnewpano="playsound(bgsnd{$view['sort']}, '%SWFPATH%/scene/scene{$view.sort}/{$view['musicfile']||basename=###}', {$view['musictimes']});set(sound[bgsnd{$view['sort']}].volume,{$view['musicvolume']});"  onremovepano="stopsound(bgsnd{$view['sort']});" />
+			<plugin name="musicbtn" url="%SWFPATH%/images/sayon.png"
+             onurl="%SWFPATH%/images/sayon.png"
+             offurl="%SWFPATH%/images/sayoff.png"
+             onalpha="0.8" outalpha="1" keep="false"
+             align="leftbottom" x="10" y="120" alpha="1" scale="0.7" onover="tween(alpha,get(onalpha));" onout="tween(alpha,get(outalpha));"
+			onclick="pausesoundtoggle(bgsnd{$view['sort']}); switch(url, get(onurl), get(offurl));"
+            />
+            </if>
+
+            <if condition="$panorow['openbottomlogo'] eq 1">            
+			<else/>		
+				<eq name="view['logo']['open']" value="1">
+				<events name="nadirlogorotation"
+						onviewchange="if(hotspot[nadirlogo].rotatewithview, set(hotspot[nadirlogo].rotate,get(view.hlookat)) );"
+				/>
+
+				<hotspot name="nadirlogo"
+					url="%SWFPATH%/toolbox/bottomlogo/{$view['logo']['image']|basename=###}"
+					ath="0"
+					atv="90"
+					distorted="true"
+					scale="{$view['logo']['scale']/100}"
+					rotate="0.0"
+					<eq name="view['logo']['logogsopen']" value="0">rotatewithview="false"</eq>
+					<eq name="view['logo']['logogsopen']" value="1">rotatewithview="ture"</eq>
+					onclick="switch(rotatewithview); invalidatescreen();"
+				/>
+			 
+			 
+			    </eq>
+				
+				
+				
+				
+			</if>
+				
+            <volist name="view['roam']" id="roam">
+                <if condition="$roam['spot_type'] eq 1">
+                    <hotspot style="skin_hotspotstyle" title="{$roam['title']}" devices="{$device[$roam['is_flash']][$roam['is_html5']]}" name="spot{$roam.id}" alpha="1" ath="{$roam.spot_x}" scale="{$roam['spot_scale']/100}"
+                    atv="{$roam.spot_y}" url="%SWFPATH%/spot/{$spotdata[$roam['spot_id']]['file']||basename=###}"
+                    align="{$roam.spot_edge}" edge="{$roam.spot_edge}" zorder="2"
+					<eq name="roam['is_showtext']" value="1">onloaded="showtxt_action();"</eq>
+				            
+                    <switch name="roam.changetype" >
+                        <case value="1">onclick="ifnot(device.html5,moveto({$roam['spot_x']},{$roam['spot_y']},smooth());loadscene(scene{$scenedata[$roam['target_id']]}, view.vlookat={$roam['target_y']}&amp;view.hlookat={$roam['target_x']}, MERGE,ZOOMBLEND(1,3));,loadscene(scene{$scenedata[$roam['target_id']]}, view.hlookat={$roam['target_x']}, MERGE,ZOOMBLEND(1,3)););"</case>
+                        <case value="2">onclick="ifnot(device.html5,moveto({$roam['spot_x']},{$roam['spot_y']},smooth());loadscene(scene{$scenedata[$roam['target_id']]}, view.vlookat={$roam['target_y']}&amp;view.hlookat={$roam['target_x']}, MERGE,BLEND(1));,loadscene(scene{$scenedata[$roam['target_id']]}, view.hlookat={$roam['target_x']}, MERGE,BLEND(1)););"</case>
+                        <case value="3">onclick="ifnot(device.html5,loadscene(scene{$scenedata[$roam['target_id']]}, view.vlookat={$roam['target_y']}&amp;view.hlookat={$roam['target_x']}, MERGE,BLEND(1));,loadscene(scene{$scenedata[$roam['target_id']]}, view.hlookat={$roam['target_x']}, MERGE,BLEND(1)););"</case>
+                        <default />
+                    </switch>
+                    />
+                    <elseif condition="$roam['spot_type'] eq 2"/>
+                    <hotspot style="skin_hotspotstyle" title="{$roam['title']}" devices="{$device[$roam['is_flash']][$roam['is_html5']]}" name="spot{$roam.id}" alpha="1" ath="{$roam.spot_x}" scale="{$roam['spot_scale']/100}" atv="{$roam.spot_y}" url="%SWFPATH%/spot/{$spotdata[$roam['spot_id']]['file']||basename=###}"
+                    align="{$roam.spot_edge}" edge="{$roam.spot_edge}" zorder="2" 
+                    crop="0|0|{$spotdata[$roam['spot_id']]['width']}|{$spotdata[$roam['spot_id']]['height']}"
+                    framewidth="{$spotdata[$roam['spot_id']]['width']}" frameheight="{$spotdata[$roam['spot_id']]['height']}" frame="0" lastframe="{$spotdata[$roam['spot_id']]['len'] - 1}"
+					<if condition="$roam['is_showtext'] eq 1">
+					onloaded="hotspot_animate();showtxt_action();"
+					<else/>
+					onloaded="hotspot_animate();"
+					</if>
+                    <switch name="roam.changetype" >
+                        <case value="1">onclick="ifnot(device.html5,moveto({$roam['spot_x']},{$roam['spot_y']},smooth());loadscene(scene{$scenedata[$roam['target_id']]}, view.vlookat={$roam['target_y']}&amp;view.hlookat={$roam['target_x']}, MERGE,ZOOMBLEND(1,3));,loadscene(scene{$scenedata[$roam['target_id']]}, view.hlookat={$roam['target_x']}, MERGE,ZOOMBLEND(1,3)););"</case>
+                        <case value="2">onclick="ifnot(device.html5,moveto({$roam['spot_x']},{$roam['spot_y']},smooth());loadscene(scene{$scenedata[$roam['target_id']]}, view.vlookat={$roam['target_y']}&amp;view.hlookat={$roam['target_x']}, MERGE,BLEND(1));,loadscene(scene{$scenedata[$roam['target_id']]}, view.hlookat={$roam['target_x']}, MERGE,BLEND(1)););"</case>
+                        <case value="3">onclick="ifnot(device.html5,loadscene(scene{$scenedata[$roam['target_id']]}, view.vlookat={$roam['target_y']}&amp;view.hlookat={$roam['target_x']}, MERGE,BLEND(1));,loadscene(scene{$scenedata[$roam['target_id']]}, view.hlookat={$roam['target_x']}, MERGE,BLEND(1)););"</case>
+                        <default />
+                    </switch>
+                    />                    
+                    <elseif condition="$roam['spot_type'] eq 3"/>
+                    <hotspot style="skin_hotspotstyle" title="{$roam['title']}" devices="{$device[$roam['is_flash']][$roam['is_html5']]}" name="spot{$roam.id}" type="image" url="%SWFPATH%/spot/{$roam.spoturl||basename=###}"
+                         keep="false" visible="true" enabled="true" handcursor="true" zorder="2"
+                         ath="{$roam.spot_x}" atv="{$roam.spot_y}" distorted="true" rx="{$roam.rx}" ry="{$roam.ry}" rz="{$roam.rz}"
+                         edge="center" scale="{$roam['spot_scale']/100}" rotate="0" alpha="1.0"
+						 <eq name="roam['is_showtext']" value="1">onloaded="showtxt_action();"</eq>
+                    <switch name="roam.changetype" >
+                        <case value="1">onclick="ifnot(device.html5,moveto({$roam['spot_x']},{$roam['spot_y']},smooth());loadscene(scene{$scenedata[$roam['target_id']]}, view.vlookat={$roam['target_y']}&amp;view.hlookat={$roam['target_x']}, MERGE,ZOOMBLEND(1,3));,loadscene(scene{$scenedata[$roam['target_id']]}, view.hlookat={$roam['target_x']}, MERGE,ZOOMBLEND(1,3)););"</case>
+                        <case value="2">onclick="ifnot(device.html5,moveto({$roam['spot_x']},{$roam['spot_y']},smooth());loadscene(scene{$scenedata[$roam['target_id']]}, view.vlookat={$roam['target_y']}&amp;view.hlookat={$roam['target_x']}, MERGE,BLEND(1));,loadscene(scene{$scenedata[$roam['target_id']]}, view.hlookat={$roam['target_x']}, MERGE,BLEND(1)););"</case>
+                        <case value="3">onclick="ifnot(device.html5,loadscene(scene{$scenedata[$roam['target_id']]}, view.vlookat={$roam['target_y']}&amp;view.hlookat={$roam['target_x']}, MERGE,BLEND(1));,loadscene(scene{$scenedata[$roam['target_id']]}, view.hlookat={$roam['target_x']}, MERGE,BLEND(1)););"</case>
+                        <default />
+                    </switch>
+                    />
+                </if>
+            </volist>
+
+            <volist name="view['link']" id="link">
+                <if condition="$link['spot_type'] eq 1">
+                    <hotspot devices="{$device[$link['is_flash']][$link['is_html5']]}" title="{$link['title']}" name="lkspot{$link.id}" alpha="1" ath="{$link.spot_x}" scale="{$link['spot_scale']/100}"
+                    atv="{$link.spot_y}" url="%SWFPATH%/spot/{$spotdata[$link['spot_id']]['file']||basename=###}"
+                    align="{$link.spot_edge}" edge="{$link.spot_edge}"
+					<if condition="$link['opentype'] eq	1">onclick="openIframe(820,540,'{$link.tuwenlink}','{$link.tuwenlinkmobile}')"</if>
+					<if condition="$link['opentype'] eq	2">onclick="openLink('{$link.linkurl}','{$link.openlink}')"</if>
+					<if condition="$link['opentype'] eq	3">onclick="set(layer[ploycubepic{$link.id}].visible,true);"</if>
+					<if condition="$link['opentype'] eq	4"></if>
+                    <if condition="$link['is_hover'] eq 1">onloaded="showtxt_action();"</if>
+                    />
+                    <elseif condition="$link['spot_type'] eq 2"/>
+                    <hotspot devices="{$device[$link['is_flash']][$link['is_html5']]}" title="{$link['title']}" name="lkspot{$link.id}" alpha="1" ath="{$link.spot_x}" scale="{$link['spot_scale']/100}" atv="{$link.spot_y}" url="%SWFPATH%/spot/{$spotdata[$link['spot_id']]['file']||basename=###}"
+                    align="{$link.spot_edge}" edge="{$link.spot_edge}"
+					crop="0|0|{$spotdata[$link['spot_id']]['width']}|{$spotdata[$link['spot_id']]['height']}"
+                    framewidth="{$spotdata[$link['spot_id']]['width']}" frameheight="{$spotdata[$link['spot_id']]['height']}" frame="0" lastframe="{$spotdata[$link['spot_id']]['len'] - 1}"
+                    <if condition="$link['opentype'] eq	1">onclick="openIframe(820,540,'{$link.tuwenlink}','{$link.tuwenlinkmobile}')"</if>
+					<if condition="$link['opentype'] eq	2">onclick="openLink('{$link.linkurl}','{$link.openlink}')"</if>
+					<if condition="$link['opentype'] eq	3">onclick="set(layer[ploycubepic{$link.id}].visible,true);"</if>
+					<if condition="$link['opentype'] eq	4"></if>
+                    <if condition="$link['is_hover'] eq 1">
+					onloaded="hotspot_animate();showtxt_action();"
+					<else/>
+					onloaded="hotspot_animate();"
+					</if>
+                    />
+                    <elseif condition="$link['spot_type'] eq 3"/>
+                    <hotspot devices="{$device[$link['is_flash']][$link['is_html5']]}" title="{$link['title']}" name="lkspot{$link.id}" type="image" url="%SWFPATH%/spot/{$link.spoturl||basename=###}"
+                         keep="false" visible="true" enabled="true" handcursor="true"
+                         ath="{$link.spot_x}" atv="{$link.spot_y}" distorted="true" rx="{$link.rx}" ry="{$link.ry}" rz="{$link.rz}"
+                         edge="center" scale="{$link['spot_scale']/100}" rotate="0" alpha="1.0"
+						 <if condition="$link['opentype'] eq 1">onclick="openIframe(820,540,'{$link.tuwenlink}','{$link.tuwenlinkmobile}')"</if>
+						 <if condition="$link['opentype'] eq 2">onclick="openLink('{$link.linkurl}','{$link.openlink}')"</if>
+						 <if condition="$link['opentype'] eq 3">onclick="set(layer[ploycubepic{$link.id}].visible,true);"</if>
+					     <if condition="$link['opentype'] eq 4"></if>
+                         <if condition="$link['is_hover'] eq 1">onloaded="showtxt_action();"</if>
+                    />
+                </if>
+            </volist>
+			
+			
+			
+			<volist name="view['linkbag']" id="linkbag">
+                <php>echo "<include";</php> url="%SWFPATH%/toolbox/redpicimg/redpicxml{$linkbag}.xml?<php>echo time();</php>" />
+            </volist>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- rewww redian -->
+			
+			<volist name="view['rewww']" id="rewww">
+                <if condition="$rewww['spot_type'] eq 1">
+                    <hotspot devices="{$device[$rewww['is_flash']][$rewww['is_html5']]}" title="{$rewww['title']}" name="rwspot{$rewww.id}" alpha="1" ath="{$rewww.spot_x}" scale="{$rewww['spot_scale']/100}"
+                    atv="{$rewww.spot_y}" url="%SWFPATH%/spot/{$spotdata[$rewww['spot_id']]['file']||basename=###}"
+                    align="{$rewww.spot_edge}" edge="{$rewww.spot_edge}"
+					<if condition="$rewww['opentype'] eq	1">onclick="openIframewww({$rewww.iframewidth},{$rewww.iframeheight},'{$rewww.linkurl}','{$rewww.linkurl}')"</if>
+                    <if condition="$rewww['is_hover'] eq 1">onloaded="showtxt_action();"</if>
+                    />
+                    <elseif condition="$rewww['spot_type'] eq 2"/>
+                    <hotspot devices="{$device[$rewww['is_flash']][$rewww['is_html5']]}" title="{$rewww['title']}" name="rwspot{$rewww.id}" alpha="1" ath="{$rewww.spot_x}" scale="{$rewww['spot_scale']/100}" atv="{$rewww.spot_y}" url="%SWFPATH%/spot/{$spotdata[$rewww['spot_id']]['file']||basename=###}"
+                    align="{$rewww.spot_edge}" edge="{$rewww.spot_edge}"
+					crop="0|0|{$spotdata[$rewww['spot_id']]['width']}|{$spotdata[$rewww['spot_id']]['height']}"
+                    framewidth="{$spotdata[$rewww['spot_id']]['width']}" frameheight="{$spotdata[$rewww['spot_id']]['height']}" frame="0" lastframe="{$spotdata[$rewww['spot_id']]['len'] - 1}"
+                    <if condition="$rewww['opentype'] eq	1">onclick="openIframewww({$rewww.iframewidth},{$rewww.iframeheight},'{$rewww.linkurl}','{$rewww.linkurl}')"</if>
+                    <if condition="$rewww['is_hover'] eq 1">
+					onloaded="hotspot_animate();showtxt_action();"
+					<else/>
+					onloaded="hotspot_animate();"
+					</if>
+                    />
+                    <elseif condition="$rewww['spot_type'] eq 3"/>
+                    <hotspot devices="{$device[$rewww['is_flash']][$rewww['is_html5']]}" title="{$rewww['title']}" name="rwspot{$rewww.id}" type="image" url="%SWFPATH%/spot/{$rewww.spoturl||basename=###}"
+                         keep="false" visible="true" enabled="true" handcursor="true"
+                         ath="{$rewww.spot_x}" atv="{$rewww.spot_y}" distorted="true" rx="{$rewww.rx}" ry="{$rewww.ry}" rz="{$rewww.rz}"
+                         edge="center" scale="{$rewww['spot_scale']/100}" rotate="0" alpha="1.0"
+						 <if condition="$rewww['opentype'] eq 1">onclick="openIframewww({$rewww.iframewidth},{$rewww.iframeheight},'{$rewww.linkurl}','{$rewww.linkurl}')"</if>
+                         <if condition="$rewww['is_hover'] eq 1">onloaded="showtxt_action();"</if>
+                    />
+                </if>
+            </volist>
+			
+			<!-- rewww redian -->
+			
+			
+			
+			
+			
+			
+			
+			
+			
+
+			
+			<!-- shipinredian -->
+            <volist name="view['vpoint']" id="vpoint">
+                <if condition="$vpoint['spot_type'] eq 1">
+                    <hotspot devices="{$device[$vpoint['is_flash']][$vpoint['is_html5']]}" title="{$vpoint['title']}" name="vpspot{$vpoint.id}" alpha="1" ath="{$vpoint.spot_x}" scale="{$vpoint['spot_scale']/100}"
+                    atv="{$vpoint.spot_y}" url="%SWFPATH%/spot/{$spotdata[$vpoint['spot_id']]['file']||basename=###}"
+                    align="{$vpoint.spot_edge}" edge="{$vpoint.spot_edge}" 
+					onclick="openIframevideo('{$vpoint.url}', '{$vpoint.appleimg}');"
+                    <if condition="$vpoint['is_hover'] eq 1">onloaded="showtxt_action();"</if>
+                    />
+                <elseif condition="$vpoint['spot_type'] eq 2"/>
+                    <hotspot devices="{$device[$vpoint['is_flash']][$vpoint['is_html5']]}" title="{$vpoint['title']}" name="vpspot{$vpoint.id}" alpha="1" ath="{$vpoint.spot_x}" scale="{$vpoint['spot_scale']/100}" atv="{$vpoint.spot_y}" url="%SWFPATH%/spot/{$spotdata[$vpoint['spot_id']]['file']||basename=###}"
+                    align="{$vpoint.spot_edge}" edge="{$vpoint.spot_edge}" 
+                    onclick="openIframevideo('{$vpoint.url}', '{$vpoint.appleimg}');"
+					crop="0|0|{$spotdata[$vpoint['spot_id']]['width']}|{$spotdata[$vpoint['spot_id']]['height']}"
+                    framewidth="{$spotdata[$vpoint['spot_id']]['width']}" frameheight="{$spotdata[$vpoint['spot_id']]['height']}" frame="0" lastframe="{$spotdata[$vpoint['spot_id']]['len'] - 1}"
+                    <if condition="$vpoint['is_hover'] eq 1">
+					onloaded="hotspot_animate();showtxt_action();"
+					<else/>
+					onloaded="hotspot_animate();"
+					</if>
+                    />
+                <elseif condition="$vpoint['spot_type'] eq 3"/>
+                    <hotspot devices="{$device[$vpoint['is_flash']][$vpoint['is_html5']]}" title="{$vpoint['title']}" name="vpspot{$vpoint.id}" type="image" url="%SWFPATH%/spot/{$vpoint.spoturl||basename=###}"
+						 keep="false" visible="true" enabled="true" handcursor="true"
+                         ath="{$vpoint.spot_x}" atv="{$vpoint.spot_y}" distorted="true" rx="{$vpoint.rx}" ry="{$vpoint.ry}" rz="{$vpoint.rz}"
+                         edge="center" scale="{$vpoint['spot_scale']/100}" rotate="0" alpha="1.0" 
+						 onclick="openIframevideo('{$vpoint.url}', '{$vpoint.appleimg}');"
+                         <if condition="$vpoint['is_hover'] eq 1">onloaded="showtxt_action();"</if>
+                    />
+                </if>
+            </volist>				
+			<!-- shipinredian for mobile -->
+			<if condition="!empty($view['vpoint'])">
+			<krpano devices="mobile">
+				<volist name="view['vpoint']" id="vpoint">
+					<hotspot name="vpspot{$vpoint.id}"
+					scale="1.0"
+					zoom="true"
+					ath="{$vpoint.spot_x}" atv="{$vpoint.spot_y}"
+					onclick="openIframevideo('{$vpoint.url}', '{$vpoint.appleimg}', '1');"
+					/>
+				</volist>
+			</krpano>
+			</if>
+
+			<!-- 音乐热点 start -->
+            <volist name="view['musicpoint']" id="musicpoint">
+                <if condition="$musicpoint['spot_type'] eq 1">
+                    <hotspot title="{$musicpoint['title']}" name="musicpspot{$musicpoint.id}" alpha="1" ath="{$musicpoint.spot_x}" scale="{$musicpoint['spot_scale']/100}" style="skin_soundbutton"
+                    atv="{$musicpoint.spot_y}" url="%SWFPATH%/spot/{$spotdata[$musicpoint['spot_id']]['file']||basename=###}" sound="{$musicpoint.url}" 
+                    align="{$musicpoint.spot_edge}" edge="{$musicpoint.spot_edge}" 
+                    <if condition="$musicpoint['is_hover'] eq 1">onloaded="showtxt_action();"</if>
+                    />
+					
+                <elseif condition="$musicpoint['spot_type'] eq 2"/>
+                    <hotspot title="{$musicpoint['title']}" name="musicpspot{$musicpoint.id}"  alpha="1" ath="{$musicpoint.spot_x}" scale="{$musicpoint['spot_scale']/100}" style="skin_soundbutton" 
+					atv="{$musicpoint.spot_y}" url="%SWFPATH%/spot/{$spotdata[$musicpoint['spot_id']]['file']||basename=###}" sound="{$musicpoint.url}" 
+                    align="{$musicpoint.spot_edge}" edge="{$musicpoint.spot_edge}" 
+                    <if condition="$musicpoint['is_hover'] eq 1">
+					onloaded="do_crop_animation({$spotdata[$musicpoint['spot_id']]['width']},{$spotdata[$musicpoint['spot_id']]['height']},60);showtxt_action();"
+					<else/>
+					onloaded="do_crop_animation({$spotdata[$musicpoint['spot_id']]['width']},{$spotdata[$musicpoint['spot_id']]['height']},60);"
+					</if>
+                    />
+                <elseif condition="$musicpoint['spot_type'] eq 3"/>
+                    <hotspot title="{$musicpoint['title']}" name="musicpspot{$musicpoint.id}" type="image" url="%SWFPATH%/spot/{$musicpoint.spoturl||basename=###}" sound="{$musicpoint.url}" style="skin_soundbutton"
+						 keep="false" visible="true" enabled="true" handcursor="true"
+                         ath="{$musicpoint.spot_x}" atv="{$musicpoint.spot_y}" rx="{$musicpoint.rx}" ry="{$musicpoint.ry}" rz="{$musicpoint.rz}"
+                         edge="center" scale="{$musicpoint['spot_scale']/100}" rotate="0" alpha="1.0" 
+                         <if condition="$musicpoint['is_hover'] eq 1">onloaded="showtxt_action();"</if>
+                    />
+                </if>
+				<style name="skin_soundbutton" text="播放"  onhover="showtext(get(text));" distorted="true"
+               onclick="stopallsounds();
+               if(text == 播放,
+               	playsound(get(name),get(sound),1);if(now_play != name, set(hotspot[get(now_play)].text,播放););set(now_play,get(name)),
+               	stopsound(get(name));
+               	);
+               switch(text,播放,暂停);"  /> 
+            </volist>	
+			<!-- 音乐热点 end -->
+			
+			
+			
+			
+
+			
+
+             <volist name="view['zhu']" id="zhu">
+                <if condition="$zhu['spot_type'] eq 1">
+                    <hotspot devices="{$device[$zhu['is_flash']][$zhu['is_html5']]}" name="zhuspot{$zhu.id}" alpha="1" ath="{$zhu.spot_x}" scale="{$zhu['spot_scale']/100}"
+                        atv="{$zhu.spot_y}" url="%SWFPATH%/spot/{$spotdata[$zhu['spot_id']]['file']||basename=###}" 
+                        align="{$zhu.spot_edge}" edge="{$zhu.spot_edge}" zorder="4"
+                        <if condition="$zhu['is_hover'] eq 1">
+                            onover="set(hotspot[zhutbox{$zhu.id}].visible,true);set(hotspot[zhutext{$zhu.id}].visible,true);" 
+                            onout="set(hotspot[zhutbox{$zhu.id}].visible,false);set(hotspot[zhutext{$zhu.id}].visible,false);"
+                        </if>
+                    />
+                    <elseif condition="$zhu['spot_type'] eq 2"/>
+                    <hotspot devices="{$device[$zhu['is_flash']][$zhu['is_html5']]}" name="zhuspot{$zhu.id}" alpha="1" ath="{$zhu.spot_x}" scale="{$zhu['spot_scale']/100}" atv="{$zhu.spot_y}" url="%SWFPATH%/spot/{$spotdata[$zhu['spot_id']]['file']||basename=###}"
+                        ondown="draghotspot();" align="{$zhu.spot_edge}" edge="{$zhu.spot_edge}" crop="0|0|{$spotdata[$zhu['spot_id']]['width']}|{$spotdata[$zhu['spot_id']]['height']}"
+                        framewidth="{$spotdata[$zhu['spot_id']]['width']}" frameheight="{$spotdata[$zhu['spot_id']]['height']}" frame="0" lastframe="{$spotdata[$zhu['spot_id']]['len'] - 1}" 
+                        onloaded="hotspot_animate({$spotdata[$zhu['spot_id']]['speed']}/1000);" zorder="4"
+                        <if condition="$zhu['is_hover'] eq 1">
+                            onover="set(hotspot[zhutbox{$zhu.id}].visible,true);set(hotspot[zhutext{$zhu.id}].visible,true);"
+                            onout="set(hotspot[zhutbox{$zhu.id}].visible,false);set(hotspot[zhutext{$zhu.id}].visible,false);"
+                        </if>
+                    />
+					
+					
+					
+                    <elseif condition="$zhu['spot_type'] eq 3"/>
+                    <hotspot devices="{$device[$zhu['is_flash']][$zhu['is_html5']]}" name="zhuspot{$zhu.id}" type="image" url="%SWFPATH%/spot/{$zhu.spoturl||basename=###}"
+                         keep="false" visible="true" enabled="true" handcursor="true"
+                         ath="{$zhu.spot_x}" atv="{$zhu.spot_y}" distorted="true" rx="{$zhu.rx}" ry="{$zhu.ry}" rz="{$zhu.rz}" 
+                         edge="center" scale="{$zhu['spot_scale']/100}" rotate="0" alpha="1.0" zorder="1"
+                         <if condition="$zhu['is_hover'] eq 1"> 
+                            onover="set(hotspot[zhutbox{$zhu.id}].visible,true);set(hotspot[zhutext{$zhu.id}].visible,true);"
+                            onout="set(hotspot[zhutbox{$zhu.id}].visible,false);set(hotspot[zhutext{$zhu.id}].visible,false);"
+                        </if>
+                    />
+                </if>
+				
+               <hotspot devices="{$device[$zhu['is_flash']][$zhu['is_html5']]}" name="zhutbox{$zhu.id}" ath="{$zhu.spot_x}" scale="1"
+                    atv="{$zhu.spot_y}" url="%SWFPATH%/common/kuanger.png" width="10" height="10" scale9grid="10|10|180|180" 
+                    align="bottom" edge="bottom" alpha="0.5" zorder="3" crop="0|0|200|220"
+                    <if condition="$zhu['is_hover'] eq 1">
+                         visible="false"
+                    <else/>
+                        visible="true"
+                    </if>
+                    />
+              <hotspot devices="{$device[$zhu['is_flash']][$zhu['is_html5']]}" name="zhutext{$zhu.id}" ath="{$zhu.spot_x}" scale="1"
+                    atv="{$zhu.spot_y}" url="%SWFPATH%/plugins/textfield.swf" width="200" 
+                    align="bottom" edge="bottom" alpha="0.8" zorder="4" html="{$zhu.text|zhutext=###}"
+                    css="color:#000000; font-family:微软雅黑; font-size:12px;word-wrap:break-word; word-break:break-all;" border="false" background="false" selectable="false"
+                    onautosized="add(height, 30);add(heightb,height,10);copy(hotspot[zhutbox{$zhu.id}].height, heightb);add(widthb,width,20);copy(hotspot[zhutbox{$zhu.id}].width, widthb);"
+                    <if condition="$zhu['is_hover'] eq 1">
+                         visible="false"
+                    <else/>
+                        visible="true"
+                    </if>
+                    />
+            </volist>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+
+            <volist name="view['cube']" id="cube">
+                <if condition="$cube['spot_type'] eq 1">
+                    <hotspot devices="{$device[$cube['is_flash']][$cube['is_html5']]}" title="{$cube['title']}" name="cubespot{$cube.id}" alpha="1" ath="{$cube.spot_x}" scale="{$cube['spot_scale']/100}"
+                    atv="{$cube.spot_y}" url="%SWFPATH%/spot/{$spotdata[$cube['spot_id']]['file']||basename=###}"
+                    align="{$cube.spot_edge}" edge="{$cube.spot_edge}"
+                    <if condition="$cube['is_hover'] eq 1">onloaded="showtxt_action();"</if>
+                    onclick="set(layer[cube{$cube.id}].visible,true);set(skin_settings.cube{$cube.id}_open,1);cube{$cube.id}next();"
+                    />
+                    <elseif condition="$cube['spot_type'] eq 2"/>
+                    <hotspot devices="{$device[$cube['is_flash']][$cube['is_html5']]}" title="{$cube['title']}" name="cubespot{$cube.id}" alpha="1" ath="{$cube.spot_x}" scale="{$cube['spot_scale']/100}" atv="{$cube.spot_y}" url="%SWFPATH%/spot/{$spotdata[$cube['spot_id']]['file']||basename=###}"
+                    align="{$cube.spot_edge}" edge="{$cube.spot_edge}" crop="0|0|{$spotdata[$cube['spot_id']]['width']}|{$spotdata[$cube['spot_id']]['height']}"
+                    framewidth="{$spotdata[$cube['spot_id']]['width']}" frameheight="{$spotdata[$cube['spot_id']]['height']}" frame="0" lastframe="{$spotdata[$cube['spot_id']]['len'] - 1}"
+                    <if condition="$cube['is_hover'] eq 1">
+					onloaded="hotspot_animate();showtxt_action();"
+					<else/>
+					onloaded="hotspot_animate();"
+					</if>
+                    onclick="set(layer[cube{$cube.id}].visible,true);set(skin_settings.cube{$cube.id}_open,1);cube{$cube.id}next();"
+                    />
+
+                    <elseif condition="$cube['spot_type'] eq 3"/>
+                    <hotspot devices="{$device[$cube['is_flash']][$cube['is_html5']]}" title="{$cube['title']}" name="cubespot{$cube.id}" type="image" url="%SWFPATH%/spot/{$cube.spoturl||basename=###}"
+		     keep="false" visible="true" enabled="true" handcursor="true" ath="{$cube.spot_x}" atv="{$cube.spot_y}" distorted="true" rx="{$cube.rx}" ry="{$cube.ry}" rz="{$cube.rz}" edge="center" scale="{$cube['spot_scale']/100}" rotate="0" alpha="1.0"
+                    <if condition="$cube['is_hover'] eq 1">onloaded="showtxt_action();"</if>
+                    onclick="set(layer[cube{$cube.id}].visible,true);set(skin_settings.cube{$cube.id}_open,1);cube{$cube.id}next();"
+                    />
+                </if>
+            </volist>
+
+            <volist name="view['cubebag']" id="cubebag">
+                <php>echo "<include";</php> url="%SWFPATH%/cube/cube{$cubebag}/cube.xml" />
+            </volist>
+
+
+            <volist name="view['photo']" id="photo">
+                <if condition="$photo['spot_type'] eq 1">
+                    <hotspot devices="all" title="{$photo['title']}" name="photospot{$photo.id}" alpha="1" ath="{$photo.spot_x}" scale="{$photo['spot_scale']/100}"
+                    atv="{$photo.spot_y}" url="%SWFPATH%/spot/{$spotdata[$photo['spot_id']]['file']||basename=###}"
+                    align="{$photo.spot_edge}" edge="{$photo.spot_edge}"
+                    <if condition="$photo['is_hover'] eq 1">onloaded="showtxt_action();"</if>
+                    onclick="set(layer[photo{$photo.id}].visible,true);"
+                    />
+                    <elseif condition="$photo['spot_type'] eq 2"/>
+                    <hotspot devices="all" title="{$photo['title']}" name="photospot{$photo.id}" alpha="1" ath="{$photo.spot_x}" scale="{$photo['spot_scale']/100}" atv="{$photo.spot_y}" url="%SWFPATH%/spot/{$spotdata[$photo['spot_id']]['file']||basename=###}"
+                    align="{$photo.spot_edge}" edge="{$photo.spot_edge}" crop="0|0|{$spotdata[$photo['spot_id']]['width']}|{$spotdata[$photo['spot_id']]['height']}"
+                    framewidth="{$spotdata[$photo['spot_id']]['width']}" frameheight="{$spotdata[$photo['spot_id']]['height']}" frame="0" lastframe="{$spotdata[$photo['spot_id']]['len'] - 1}"
+					<if condition="$photo['is_hover'] eq 1">
+					onloaded="hotspot_animate();showtxt_action();"
+					<else/>
+					onloaded="hotspot_animate();"
+					</if>
+                    onclick="set(layer[photo{$photo.id}].visible,true);"
+                    />
+                    <elseif condition="$photo['spot_type'] eq 3"/>
+                    <hotspot devices="all" title="{$photo['title']}" name="photospot{$photo.id}" type="image" url="%SWFPATH%/spot/{$photo.spoturl||basename=###}"
+                         keep="false" visible="true" enabled="true" handcursor="true"
+                         ath="{$photo.spot_x}" atv="{$photo.spot_y}" distorted="true" rx="{$photo.rx}" ry="{$photo.ry}" rz="{$photo.rz}"
+                         edge="center" scale="{$photo['spot_scale']/100}" rotate="0" alpha="1.0"
+                         <if condition="$photo['is_hover'] eq 1">onloaded="showtxt_action();"</if>
+                         onclick="set(layer[photo{$photo.id}].visible,true);"
+                    />
+                </if>
+            </volist>
+
+<!--              多边形热区 start                      -->
+            <volist name="view['hotploy']" id="hotploy">
+                <hotspot name="ploypot{$hotploy.id}"
+				
+				 <if condition="$hotploy['is_hover'] eq 1">
+								style="cms_skin_point" tooltip="{$hotploy['title']}" 
+								</if>
+				 
+				 keep="false" visible="true" enabled="true"
+				 fillcolor="{$hotploy['fillcolor']|str_replace='#','0x',###}" 
+                 fillalpha="{$hotploy['fillalpha']}" 
+                 borderwidth="{$hotploy['borderwidth']}"
+				 bordercolor="{$hotploy['bordercolor']|str_replace='#','0x',###}"
+                 borderalpha="{$hotploy['borderalpha']}" 
+				 
+				onover="<if condition="$hotploy['is_hover'] eq 1">
+				        copy(layer[tooltip].html, tooltip);
+						set(layer[tooltip].visible, true);
+						tween(layer[tooltip].alpha, 1.0, 0.5);
+						asyncloop(hovering, copy(layer[tooltip].x,mouse.stagex); 
+						copy(layer[tooltip].y,mouse.stagey); );
+						</if>
+						tween(fillcolor, {$hotploy['fillcolorhover']|str_replace='#','0x',###});
+						tween(fillalpha, {$hotploy['fillalphahover']});
+						tween(borderwidth, {$hotploy['borderwidthhover']});
+						tween(bordercolor, {$hotploy['bordercolorhover']|str_replace='#','0x',###});
+						tween(borderalpha, {$hotploy['borderalphahover']});"
+						
+				 onout="<if condition="$hotploy['is_hover'] eq 1">
+				 		tween(layer[tooltip].alpha, 0.0, 0.25, default, set(layer[tooltip].visible,false), copy(layer[tooltip].x,mouse.stagex); 
+						copy(layer[tooltip].y,mouse.stagey); );
+						</if>
+						tween(fillcolor, {$hotploy['fillcolor']|str_replace='#','0x',###});
+						tween(fillalpha, {$hotploy['fillalpha']});
+						tween(borderwidth, {$hotploy['borderwidth']});
+						tween(bordercolor, {$hotploy['bordercolor']|str_replace='#','0x',###});
+						tween(borderalpha, {$hotploy['borderalpha']});" 
+						
+					<if condition="$hotploy['action_type'] eq 1">
+					onclick="loadscene({:getScene($hotploy['scene_id'])}, Null, MERGE,BLEND(1));"
+					<elseif condition="$hotploy['action_type'] eq 3"/>
+					onclick="openIframe({$hotploy.textbox_width},{$hotploy.textbox_height},'{$hotploy.tuwenlink}','{$hotploy.tuwenlinkmobile}')"
+					<else />
+					onclick="set(layer[ploycube{$hotploy.id}].visible,true);"
+					</if>
+                >
+                    <volist name="hotploy['pointarr']" id="spot">
+                        <point ath="{$spot.ath}" atv="{$spot.atv}"/>
+                    </volist>
+                </hotspot>
+            </volist>
+<!--              多边形热区 end                      -->
+
+
+
+			<!-- requtanshipin -->
+            <volist name="view['ployvideo']" id="ployvideo">
+                <hotspot name="ployvideo{$ployvideo.id}" keep="false" visible="true" enabled="true"
+                    fillcolor="{$ployvideo['fillcolor']|str_replace='#','0x',###}" fillcolorhover="{$ployvideo['fillcolorhover']|str_replace='#','0x',###}"
+                    fillalpha="{$ployvideo['fillalpha']}" fillalphahover="{$ployvideo['fillalphahover']}"
+                    borderwidth="{$ployvideo['borderwidth']}" borderwidthhover="{$ployvideo['borderwidthhover']}" bordercolor="{$ployvideo['bordercolor']|str_replace='#','0x',###}" bordercolorhover="{$ployvideo['bordercolorhover']|str_replace='#','0x',###}"
+                    borderalpha="{$ployvideo['borderalpha']}" borderalphahover="{$ployvideo['borderalphahover']}"
+					onclick="openIframevideo('{$ployvideo.url}', '{$ployvideo.appleimg}');"
+                >
+                    <volist name="ployvideo['pointarr']" id="spot">
+                        <point ath="{$spot.ath}" atv="{$spot.atv}"/>
+                    </volist>
+                </hotspot>
+            </volist>
+			<if condition="!empty($view['ployvideo'])">
+			<krpano devices="mobile">
+				<volist name="view['ployvideo']" id="ployvideo">
+					<hotspot name="ployvideo{$ployvideo.id}" zoom="true"
+					onclick="openIframevideo('{$ployvideo.url}', '{$ployvideo.appleimg}', '1');"
+					/>
+				</volist>
+			</krpano>
+			</if>
+
+
+
+			<!-- shipinrequ -->
+            <volist name="view['vspot']" id="vspot">
+                <hotspot name="videospot{$vspot.id}"
+                     url="%SWFPATH%/plugins/videoplayer.swf"
+                     alturl="%SWFPATH%/plugins/videoplayer.js"
+                     videourl="{$vspot.url}"
+                     posterurl="{$vspot.appleimg}"
+                     distorted="true" devices="{$vspot.devices}"
+                     ath="{$vspot.ath}" atv="{$vspot.atv}"
+                     edge="center"
+                     scale="{$vspot.scale}" rx="{$vspot.rx}" ry="{$vspot.ry}" rz="{$vspot.rz}"
+					 width="{$vspot.width}" height="{$vspot.height}" 
+                     loop="true"
+                     <if condition="$vspot['open_video'] eq 1">
+                     pausedonstart="false"
+					 <else/>
+					 pausedonstart="true" 
+					 </if>
+                     directionalsound="true"
+                     range="200"
+                     volume="0.7"
+                     onhover="{$vspot.hover}"
+                     style="{$vspot.style}"
+                     onclick="{$vspot.eve}"
+                     />
+            </volist>
+			
+			
+
+            <volist name="view['photobag']" id="photobag">
+                <php>echo "<include";</php> url="%SWFPATH%/photo/photo{$photobag}/photo.xml?<php>echo time();</php>" />
+            </volist>
+
+            <volist name="view['hotploybag']" id="hotploybag">
+                <php>echo "<include";</php> url="%SWFPATH%/toolbox/ployimg/ployxml{$hotploybag}.xml?<php>echo time();</php>" />
+            </volist>
+
+            <volist name="view['lensflare']" id="lensflare">
+                <lensflare name="lens{$lensflare.id}" ath="{$lensflare.ath}" atv="{$lensflare.atv}"  alpha="1" set="DEFAULT" size="{$lensflare['size']/100}" blind="{$lensflare['blind']/100}" blindcurve="{$lensflare.blindcurve}" keep="False" />
+            </volist>
+
+            <eq name="view['haveui']" value="1">
+                <php>echo "<include";</php> url="%SWFPATH%/scene/scene{$view.sort}/ui/ui.xml?<php>echo time();</php>" />
+            </eq>
+			
+            <action name="newsceneevent">
+                <if condition='$weather_used gt 0'>action({$view['effect_mod']});</if>
+                <eq name="toolboxmap_on" value="1">toolboxmapto({$view['sort']});</eq>
+				<if condition="$view['toolboxmaps_on'] eq 1">
+				toolboxmapsto({$view['sort']});
+				<else/>
+				toolboxmapsto_hide();
+				</if>
+            </action>
+        </scene>
+	</if>	
+    </volist>
+	
+
+	    <if condition="$panorow['openbottomlogo'] eq 1">	
+		<!-- 全局bottomlogo start -->
+			<events name="nadirlogorotation" keep="true" onviewchange="if(hotspot[nadirlogo].rotatewithview, set(hotspot[nadirlogo].rotate,get(view.hlookat)) );"/>	
+				<hotspot name="nadirlogo" keep="true"
+					url="%SWFPATH%/toolbox/bottomlogo/{$panorow['openbottomlogoimg']||basename=###}"
+					ath="0"
+					atv="90"
+					distorted="true"
+					scale="{$panorow['openbottomlogoscale']/100}"
+					rotate="0.0"
+					<if condition="$panorow['openbottomlogogs'] eq 0">					
+					rotatewithview="false"
+					<else/>
+					rotatewithview="ture"
+					</if>
+					onclick="switch(rotatewithview); invalidatescreen();"
+				/>		
+		<!-- 全局bottomlogo end -->	
+		</if>
+<if condition="$panorow['openweahter'] eq 1">	
+		<php>echo "<include";</php> url="%SWFPATH%/weather/weather.xml" />
+</if>
+<if condition="$panorow['open_apple'] eq 1">
+		<php>echo "<include";</php> url="%SWFPATH%/assets/suspendbtnsc.xml?<php>echo time();</php>" />
+		<user_infos
+		homeurl="{$userinfo[company_url]}"
+		phonenumber="{$panorow['linkphone']}"
+		navurl="http://apis.map.qq.com/uri/v1/geocoder?coord={$panorow[map]}"
+		shopurl="{$panorow['website']}"
+		/>
+</if>
+
+
+<krpano flare_dir="%SWFPATH%/lensflare"/>
+<php>echo "<include";</php> url="%SWFPATH%/lensflare/core.xml?<php>echo time();</php>" />
+<lensflares name="obj">
+	<volist name="viewlist" id="view">
+		<volist name="view['lensflare']" id="lensflare">
+			<item name="lens{$lensflare.id}" ath="{$lensflare.ath}" atv="{$lensflare.atv}" scene="scene{$view['sort']}" typ="blinkstyle1" dust_effect="false"/>
+		</volist>
+	</volist>
+</lensflares>
+		
+</krpano>

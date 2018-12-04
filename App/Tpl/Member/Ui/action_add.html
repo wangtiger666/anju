@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/pano/pano.js"></script>
+        {:W("Easyui")}
+        {:W("Boluoui")}
+        {:W("Uploader")}
+        <script type="text/javascript">
+            function checksb(){
+                var result = true;
+                if(result == true){
+                    result = AutoCheckSub(".cs");
+                }
+                if(result == true){
+                    var target_id = $("#target_id").val();
+                    if(target_id == "0"){
+                        showMsg("请选定目标场景！");
+                        result = false;
+                    }
+                }
+                return result;
+            }
+            $(function(){
+                boluoselect("#eventchu");
+                boluoselect_setnum("#eventchu",0);
+                boluoselect("#event");
+                boluoselect_setnum("#event",0);
+            });
+        </script>
+        <style type="text/css">
+            .chengbox{
+                width: auto; height: 24px; overflow: hidden; border:1px solid #f7db99; border-radius : 5px; text-indent: 10px;
+                background: #fffbf3;margin: 5px; font: 12px/24px "微软雅黑"; color: #FFA900; cursor: default;
+            }
+        </style>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">全景项目 - {$panorow['title']}</div>
+                        <div title="关闭" onclick="DoNote('确认返回功能首页？','{:U('main/index')}');" class="close"></div>
+                        <div title="返回上级" onclick="LinkTo('{$backurl}');" class="goback"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            {:W("Panomenu",array("pano_id"=>$pano_id,"num"=>6))}
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main">
+                                <div class="action_title">{$panorow['title']} - {$viewrow['title']} - <a href="{$backurl}">场景UI设置</a> - 事件添加</div>
+                                <form name="form1" action="" onsubmit="return checksb();" enctype="multipart/form-data" method="post">
+                                    <input type="hidden" name="dopost" value="save" />
+                                    <input type="hidden" name="cid" value="{$cid}" />
+                                    <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="80"><b>元素名称：</b></td>
+                                            <td align="left">
+                                                {$row['title']}
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="80"><b>触发类型：</b></td>
+                                            <td align="left">
+                                                <div id="eventchu">
+                                                    <input type="hidden" name="eventchu" id="eventchu" />
+                                                    <div data-value="click" class="boluoselectbox">鼠标点击</div>
+                                                    <div data-value="over" class="boluoselectbox">鼠标经过</div>
+                                                    <div data-value="out" class="boluoselectbox">鼠标移开</div>
+                                                    <div data-value="down" class="boluoselectbox">鼠标按下</div>
+                                                    <div data-value="up" class="boluoselectbox">鼠标弹起</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="10">
+                                            <td colspan="2"></td>
+                                        </tr>
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="80"><b>事件类型：</b></td>
+                                            <td align="left">
+                                                <div id="event">
+                                                    <input type="hidden" name="event" id="event" />
+                                                    <div data-value="view" class="boluoselectbox">全景视角事件</div>
+                                                    <div data-value="link" class="boluoselectbox">超链接（新窗口）</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="tr_white" height="10">
+                                            <td colspan="2"></td>
+                                        </tr>
+
+                                        <tr class="tr_white" height="40">
+                                            <td align="right" width="80"></td>
+                                            <td align="left">
+                                                <input type="submit" class="blackbutton" value="下一步" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

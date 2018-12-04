@@ -1,0 +1,161 @@
+@charset "utf-8";
+body{margin:0;padding:0;background:#fff;}
+ul,li,dl,dt,dd{ margin:0px; padding:0px; list-style:none;}
+a{text-decoration:none;}
+a:link{}
+a:visited{}
+a:hover{text-decoration:underline;}
+a:active{}
+img{border:0;padding:0; margin:0;}
+p{padding:0; margin:0;}
+b{
+    font-weight: normal; 
+}
+
+#top{
+    width: auto; height: 50px; overflow: hidden; background: #303030;
+}
+#logo{
+    width: 260px; height: 50px; overflow: hidden; background: url(../images/index/Guanlihoutai-Logo.png) no-repeat; float: left; _display: inline;
+}
+#topmain{
+    width: auto; height: 50px; overflow: hidden;  float: left; _display: inline; margin-left: 40px;
+    font: 14px/40px "Microsoft Yahei"; color: #fff;
+}
+#topmain .topban{
+    width: auto; height: 36px; overflow: hidden; float: left; background: #333; margin-top: 14px; padding: 0 15px;
+    font: bold 14px/36px "Microsoft Yahei"; color: #ccc; cursor: pointer;
+}
+#topmain .topban.me{
+    background: #000; color: #fff;
+}
+#topmain .topban:hover{
+    color: #fff;
+}
+#topleft{
+    width: auto; overflow: hidden;  float: left; _display: inline; margin-right: 40px;
+    font: 12px/40px "Microsoft Yahei"; color: #eee;
+}
+#topleft a{
+    font: bold 14px/40px "Microsoft Yahei"; color: #eee;height: 50px;
+    line-height: 50px;
+    padding: 0 15px;
+    position: relative;
+    vertical-align: middle;
+}
+#topleft a:hover{
+    color: #fff; text-decoration: none;
+}
+#topleft span{
+    font: bold 14px/40px "Microsoft Yahei"; color: #eee; margin-right: 20px; cursor: default;
+}
+
+#toplast{
+    width: auto; height: 36px; overflow: hidden;  float: right; _display: inline; margin-right: 40px; margin-top: 10px;
+    font: 12px/40px "Microsoft Yahei"; color: #eee;
+}
+#toplast a{
+    font: bold 14px/40px "Microsoft Yahei"; color: #ccc;
+}
+#toplast a:hover{
+    color: #fff; text-decoration: none;
+}
+#toplast span{
+    font: bold 14px/40px "Microsoft Yahei"; color: #eee; margin-right: 20px; cursor: default;
+}
+#mailbox{
+    width: auto; height: 36px; overflow: hidden;  float: right; _display: inline; margin-right: 20px; margin-top: 10px;
+}
+#mailer{
+    width: 22px; height: 20px; overflow: hidden; background: url(../images/index/mail.gif) no-repeat; margin-top: 10px; float: left;
+}
+#mailnum{
+    width: auto; height: 20px; overflow: hidden; float: left; margin-top: 10px; 
+    font: 12px/20px "Microsoft Yahei"; color: #eee;
+}
+#mailer.shan{
+    background-position: 0 -20px;
+}
+#leftbox{
+    width: 165px; height: 500px; overflow: auto; float: left; _display: inline; _margin-right: -3px;
+    background: #202020; border-right:0px solid #3f3f3f;
+}
+.rightbox{
+    width: auto; height: 500px; overflow: hidden;
+}
+
+.cubebox{
+    width: auto; height: auto; overflow: hidden;
+}
+.cube_parent{
+    width: auto; height: 30px;line-height:30px; overflow: hidden; /*background: url(../images/index/parent-shadow.png) repeat-x;*/ border-top:1px solid #cube_parent; border-bottom: 0px solid #3f3f3f; padding:5px 5px 5px 20px;
+}
+.cube_parent .icon{
+    width: 20px; height: 30px;line-height:30px; overflow: hidden; float: left; _display: inline; cursor: pointer;
+}
+.cube_parent .icontitle{
+    width: 100px; height: 30px; overflow: hidden; float: left; font: bold 14px/28px "Microsoft Yahei"; color: #fff; cursor: pointer; margin-left: 5px;
+}
+.cube_child{
+    width: auto; height: auto; overflow: hidden; background: #202020; padding: 3px 0; display: none;
+}
+.cube_chbox{
+    width: auto; height:30px; overflow: hidden;
+}
+.cube_chbox a{
+    font: 14px/30px "Microsoft Yahei";height: 30px; color: #f1f1f1; display: block; padding: 0 45px; letter-spacing:1px;
+}
+.cube_chbox a:hover{
+    background:#7c7c7c; text-decoration: none; color:#f1f1f1;
+}
+#onoffbtn{
+    width: auto; height: 20px; overflow: hidden; border-top:0px solid #3f3f3f; padding: 10px; margin-bottom: 40px;
+}
+#arrow{
+    width: 20px; height: 20px; overflow: hidden; float: left; _display: inline; background: url(../images/index/arrow.png) no-repeat; cursor: pointer;margin-left: 11px;
+}
+#arrowtext{
+    width: 100px; height: 20px; overflow: hidden; float: left; font: 14px/20px "Microsoft Yahei"; color: #d5dbe1; cursor: pointer; margin-left: 5px;
+}
+
+.main {
+    height:100%;
+    width:100%;
+    z-index:0;
+    overflow: auto;
+}
+
+
+
+.msgbox{
+    width: 300px; height: 80px; overflow: hidden; border-radius: 4px;
+    background: url(../images/common/hei.png) repeat; font-family: "微软雅黑";
+    position: fixed; z-index: 1000000000; cursor: default;
+}
+.msgbox .main{
+    width: 290px; height: 70px; overflow: hidden; margin: 5px; background: #fff; border-radius: 3px;
+}
+.msgbox .main .msgform{
+    width: 280px; height: 60px; overflow: hidden; padding: 5px;
+}
+.msgbox .main .msgform .good{
+    width: 48px; height: 48px; overflow: hidden;
+    background: url(../images/common/msg1.png) no-repeat;
+}
+.msgbox .main .msgform .bad{
+    width: 48px; height: 48px; overflow: hidden;
+    background: url(../images/common/msg0.png) no-repeat;
+}
+.msgbox .main .msgform .tan{
+    width: 48px; height: 48px; overflow: hidden;
+    background: url(../images/common/msg2.png) no-repeat;
+}
+.msgbox .main .msgform span{
+    font-size: 14px;
+}
+.msgbox .main .msgform span.red{
+    color: #be0000;
+}
+.msgbox .main .msgform span.green{
+    color: #1F9999;
+}

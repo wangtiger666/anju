@@ -1,0 +1,260 @@
+<include file="Header" />
+<!--float_nav-->
+<link  type="text/css" rel="stylesheet" href="__PUBLIC__/webstyle/css/qjzt_index.css">
+<div id="expoIndex"></div>
+ <foreach name="banner" item="vo">
+<div class="smallBgOver">
+  <div class="smallBg"><a href="{$vo.outlink}" target="_blank"><img src="{$vo.thumb}" alt="{$vo.ad_name}" /></a></div>
+</div>
+</foreach>
+
+<!--smallBgOver-->
+<div class="subNavBg">
+<foreach name="banner" item="vo">
+    <div class="expoSubNav">
+      <a class="expoNavMore" href="{$vo.outlink}" target="_blank">查看详情&gt;&gt;</a>
+      <h3><a href="{$vo.outlink}" target="_blank">{$vo.ad_name}</a></h3>
+    </div>
+  </foreach>
+</div>
+<!--subNavBg-->
+<div class="expoContent expoTopCont">
+  <div class="expoLeft ">
+    <div class="expoLeftL expoBorder">
+      <div class="expoTit">
+        <foreach name="jianjie" item="vo">
+           <a  href="{$vo.ariurl}" target="_blank">查看详情&gt;&gt;</a>
+        </foreach>
+        <h3>专题简介</h3>
+      </div>
+      <div class="expoLeftL">
+       <foreach name="jianjie" item="vo">
+        <div class="expoLeftLCont"><img src="{$vo.thumb}" width="305" height="160" />
+          <p>{$vo.description}</p>
+        </div>
+        </foreach>
+
+        <!--expoLeftLCont--></div>
+      <!--expoLeftL--></div>
+    <!--expoLeft-->
+    <div class="expoLeftR expoBorder">
+      <div class="expoTit">
+        <h3>全景展示</h3>
+      </div>
+      <div class="expoLeftRtab"></div>
+      <div class="expoLeftRCont tabContList">
+         <p >
+      <foreach name="pano1" item="vo">
+          <a href="{$vo.panopath}" target="_blank" style="width:157px;height:132px;position: relative;overflow: hidden;" >
+           <img src="{$vo.panothumb}" alt="{$vo.title}" style="margin-top:-32px;width:157px; height:125px;" />
+            <span>{$vo.title}</span>
+          </a>
+        </foreach>
+
+        </p>
+      </div>
+      <!--expoLeftRCont--></div>
+    <!--expoLeftR-->
+    <div class="clearfloat"></div>
+  </div>
+  <!--expoLeft-->
+  <div class="expoRight expoBorder">
+    <div class="expoTit">
+      <h3>热点资讯</h3>
+    </div>
+   
+      <foreach name="redianzixun" item="vo">
+        <if condition="$key == 0 ">
+        <div class="expoNewsCont">
+          <h3><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></h3>
+          <img src="{$vo.thumb}" alt="{$vo.title}" />
+          <p><a href="{$vo.ariurl}" target="_blank">{$vo.description}...<font>【全文】</font></a></p>
+        </div>
+        </if>
+    </foreach>
+
+    <ul class="expoNewsList">
+     <foreach name="redianzixun" item="vo">
+        <if condition="$key != 0 ">
+      <li><a href="{$vo.ariurl}" title="{$vo.title}" target="_blank">{$vo.title}</a></li>
+      </if>
+    </foreach>
+    </ul>
+    </div>
+ </div>
+
+<div class="clearfloat"></div>
+</div>
+
+<div class="expoContent">
+  <div class="bolanhuiCont expoBorder">
+    <div class="expoTit">
+      <h3>全景推荐</h3>
+    </div>
+    <ul class="bolanhuiList" >   
+     <foreach name="pano2" item="vo">
+          <li style="width:380px;height:311px;position: relative;overflow: hidden;">
+            <a class="blhImg" href="{$vo.panopath}" target="_blank"  >
+              <img src="{$vo.panothumb}" alt="{$vo.title}"  style="margin-top:-43px;width:380px; height:298px;" />
+              <b>点击进入</b>
+            <div class="blackBg"></div>
+            </a>
+            <p ><a href="{$vo.outlink}" target="_blank">{$vo.title}</a></p>
+          </li>
+     </foreach>
+    </ul>
+    <div class="clearfloat"></div>
+  </div>
+  <!--expoContent-->
+  <div class="expoContent expoLastCont">
+    <div class="lastNewsContL expoBorder">
+      <div class="expoTit"><a href="" target="_blank">更多&gt;&gt;</a>
+        <h3>全景新闻</h3>
+      </div>
+     
+      <div class="expoNewsCont">
+      <foreach name="quanjingnew" item="vo">
+        <if condition="$key == 0 ">
+        <h3><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></h3>
+        <a href="{$vo.ariurl}" target="_blank"><img src="{$vo.thumb}" /></a>
+        <p><a href="{$vo.ariurl}" target="_blank">{$vo.description} ...<font>【全文】</font></a></p>
+        </if>
+        </foreach>
+      </div>
+      <!--expoNewsCont-->
+      <ul class="expoNewsList">
+        <foreach name="quanjingnew" item="vo">
+          <if condition="$key != 0 ">
+              <li><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></li>
+          </if>
+        </foreach>
+      </ul>
+    </div>
+    <!--lastNewsCont-->
+    <div class="lastNewsContL expoBorder">
+      <div class="expoTit"><a class="expoTitMore" href="" target="_blank">更多&gt;&gt;</a>
+        <h3>全景动态</h3>
+      </div>
+     
+      <div class="expoNewsCont">
+       <foreach name="dongtai" item="vo">
+        <if condition="$key == 0 ">
+        <h3><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></h3>
+        <a href="{$vo.ariurl}" target="_blank"><img src="{$vo.thumb}" /></a>
+        <p><a href="{$vo.ariurl}" target="_blank">{$vo.description} ...<font>【全文】</font></a></p>
+        </if>
+        </foreach>
+      </div>
+      <!--expoNewsCont-->
+      <ul class="expoNewsList">
+          <foreach name="dongtai" item="vo">
+          <if condition="$key != 0 ">
+              <li><a href="{$vo.ariurl}" target="_blank">{$vo.title}</a></li>
+          </if>
+        </foreach>
+      </ul>
+    </div>
+    <!--lastNewsCont-->
+    <div class="lastNewsContR">
+      <div class="expoAbout expoBorder">
+        <div class="expoTit">
+          <h3>关于我们</h3>
+        </div>
+        <!-- <ul class="videoList"> -->
+        <ul >
+        <!-- 广告 -->
+          <!-- <li video-url="http://s.expoon.com/video/news/video01.flv" ><img src="__PUBLIC__/webstyle/images/about-img.jpg" alt="3D展览实景漫游系统演示" /><b></b><span>3D展览实景漫游系统演示</span></li> -->
+          <foreach name="shipin" item="vo">
+          <li  ><img src="{$vo.thumb}" alt="{$vo.title}" width="384" height="206" /><b></b><span>{$vo.title}</span></li>
+          </foreach>
+
+        </ul>
+      </div>
+      <!--expoAbout-->
+      <div class="expoContact expoBorder">
+        <div class="expoTit">
+          <h3>联系我们</h3>
+        </div>
+        <div class="expoContactCont">
+          <p>合作电话：{$tel}</p>
+          <p>客服电话：{$kefutel}</p>
+          <p>Email：<a href="{$email}" target="_blank">{$email}</a></p>
+        </div>
+        <!--expoContactCont--></div>
+      <!--expoContact--></div>
+    <!--lastNewsContR--></div>
+  <!--expoContent--></div>
+<!--#expoIndex-->
+<div class="videoMain">
+  <div class="videoCont">
+    <div class="videoClose"><a></a></div>
+    <div id="video"></div>
+  </div>
+  <!--videoCont--></div>
+<!--videoMain-->
+<div class="videoBg"></div>
+<script type="text/javascript" src="__PUBLIC__/webstyle/js/ckplayer.js" charset="utf-8"></script><script type="text/javascript" src="__PUBLIC__/webstyle/js/qjzt_main.js"></script><script type="text/javascript">$("#a_company").attr("value","");
+$("#a_contacts").attr("value","");
+$("#a_phone").attr("value","");
+$("#a_email").attr("value","");
+$("#a_userid").attr("value","");
+function submitApplication(){
+    var companyV    = $("#a_company").val();
+    var contactsV   = $("#a_contacts").val();
+    var phoneV    = $("#a_phone").val();
+    var emailV    = $("#a_email").val();
+    var useridV    = $("#a_userid").val();
+    if(companyV == "" || companyV == undefined){
+        $("#applicationTip").html('<font color="red">公司名称不能为空!</font>');
+        return false;
+    }
+    if(contactsV == "" || contactsV == undefined){
+        $("#applicationTip").html('<font color="red">联系人不能为空!</font>');
+        return false;
+    }
+    if( (phoneV == "" || phoneV == undefined) && (emailV == "" || emailV == undefined)){
+        $("#applicationTip").html('<font color="red">联系电话和电子邮箱最少选填一个!</font>');
+        return false;
+    }else{
+        if(phoneV != "" && phoneV != undefined){
+            var mobile_z = /^(13|15|18)[0-9]{9}$/;
+            var tel_z    = /^((d{3,4})-)(\d{3,8})(-(\d{1,5}))?$/;
+            var r_mobile = phoneV.match(mobile_z);
+            var r_tel    = phoneV.match(tel_z);
+            if(r_mobile == null && r_tel == null){
+                $("#applicationTip").html('<font color="red">联系电话格式不正确!</font>');
+                return false;
+            }
+        }
+        if(emailV != "" && emailV  != undefined){
+            var email_z = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+            var r_email = emailV.match(email_z);
+            if(r_email == null){
+                $("#applicationTip").html('<font color="red">电子邮箱格式不正确!</font>');
+                return false;
+            }
+        }
+    }
+    $("#applicationTip").html('');
+    var e_id = '35';
+    $.ajax({
+       // url:'http://www.expoon.com/Expo/Bolanhui/joinApplication',
+        type:'get',
+        data:{a_company:companyV,a_contacts:contactsV,a_phone:phoneV,a_email:emailV,e_id:e_id,a_userid:useridV},
+        dataType:"jsonp",
+        success:function(data){
+            if(data.msg == "ok"){
+                $("#a_company").attr("value","");
+                $("#a_contacts").attr("value","");
+                $("#a_phone").attr("value","");
+                $("#a_email").attr("value","");
+                $("#a_userid").attr("value","");
+                $("#applicationTip").html('<font color="green">提交成功！</font>');
+            }else{
+                $("#applicationTip").html('<font color="red">提交失败，请稍后再试！</font>');
+            }
+        }//--success
+    });
+}
+</script>
+<include file="Footer" />

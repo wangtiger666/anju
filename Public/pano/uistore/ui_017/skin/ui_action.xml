@@ -1,0 +1,51 @@
+<krpano>
+
+<!-- 顶部场景标题  STAR-->
+   <layer name="text_biaoti" keep="true" url="../plugins/textfield.swf" align="top" x="0" y="35"
+       html=""
+       css="font-family:STXihei; font-size:17px; color:#ffffff;letter-spacing:2px;text-shadow: rgb(0, 0, 0) 0px 0px 3.2px;"
+       autowidth="true" autoheight="auto" vcenter="true"
+       padding="4" roundedge="5" 
+	   background="false"
+       backgroundcolor="0xFFFFFF" backgroundalpha="1.5" handcursor="false" enabled="false"
+       /> 
+	<layer name="skin_loadingtext" keep="true" url="../images/roading.png" scale="0.8" align="center" x="5" y="-5" visible="false" autoheight="true" background="false" border="false" enabled="false" />  
+
+	
+	
+	
+	<krpano devices="mobile">
+		<!-- 顶部场景标题  STAR-->
+        <layer name="text_biaoti" x="10" y="50" css="font-family:STXihei; font-size:22px; color:#FFFFFF;text-shadow: rgb(0, 0, 0) 0px 0px 3.2px;"/> 		
+		
+	</krpano>	
+
+	<action name="skin_update_scene_infos">
+	    set(layer[text_biaoti].html,get(scene[get(xml.scene)].title));
+		
+	</action>	
+	<!-- 加载进度 -->
+	<!-- VR模式下不显示加载字样 -->
+	<action name="skin_showloading">
+		if(display.stereo == true,
+			set(layer[skin_loadingtext].visible, false);
+		  ,
+			set(loadingpercent_isloading, true);
+		   set(layer[skin_loadingtext].visible, true);
+		
+		    asyncloop(loadingpercent_isloading,
+			mul(pv, progress.progress, 100);
+			roundval(pv,0);
+			txtadd(layer[skin_loadingtext].html, get(skin_settings.loading), get(pv), '%');
+		     );
+		);
+	</action>
+		
+	<action name="loadingpercent_stoploading">
+		set(loadingpercent_isloading, false); 
+		set(layer[skin_loadingtext].visible, false);
+	</action>
+	<!-- 加载进度 -->
+
+	
+</krpano>

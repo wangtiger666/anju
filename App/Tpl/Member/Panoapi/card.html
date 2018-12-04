@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{$twinfo['c_name']}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="{$twinfo.c_name}">
+<meta name="Description" content="{$twinfo.c_name}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<script type="text/javascript" src="/Public/pano/images/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/Public/pano/images/scroll.js"></script>
+<link href="/Public/pano/images/nav.css" rel="stylesheet"><script>
+var boothCard={
+	"user_id":"5348",
+	"c_name":"<php>echo $twinfo['c_name']</php>",
+	"c_phone":"<php>echo $twinfo['c_phone']</php>",
+	"c_email":"<php>echo $twinfo['c_email']</php>",
+	"c_address":"<php>echo $twinfo['c_address']</php>",
+	"c_weiboname":"",
+	"c_weibourl":"",
+	"c_wechat":"<php>echo $twinfo['c_wechat']</php>",
+	"c_qq":"<php>echo $twinfo['c_qq']</php>",
+	"c_remarks":"<php>echo $twinfo['c_remarks']</php>"
+};
+		var logoUrl = "{$twinfo['pano_logo']}";
+		var type = parseInt("{$m_type}");
+		$(function(){
+			if(type == 1){
+				$("#pluginBox").addClass("mobileBox");
+			}
+			var cardData = boothCard;
+			var weixinImg = "{$twinfo['c_weixinimg']}";
+
+			var name=cardData.c_name;//公司名称
+			var phone=cardData.c_phone;//联系电话
+			var email=cardData.c_email;//email
+			var address=cardData.c_address;//公司地址
+			var weiboname=cardData.c_weiboname;//微博名称
+			var weibourl=cardData.c_weibourl;//微博链接地址
+			var wechat=cardData.c_wechat;//企业微信公众账号
+			var qq=cardData.c_qq;//qq号码
+			var remark=cardData.c_remarks;//备注
+
+			var cardList ="";
+			if(type == 0){
+				cardList += "<div class='cardLogo'><img src='"+logoUrl+"' /></div><div class='cardContent'>";
+				if(weixinImg !="" && weixinImg != null){
+					cardList += "<div class='weixinImg'><img src='"+weixinImg+"' /></div>";
+				}
+				cardList += "<div class='cardList'><div class='card'><h4>"+name+"</h4><p class='phone'>"+phone+"</p><p class='email'><a href='mailto:"+email+"'>"+email+"</a></p><p class='address'>"+address+"</p>";
+			}else{
+				if(weixinImg !="" && weixinImg != null){
+					cardList += "<div class='weixinImg'><img src='"+weixinImg+"' /></div>";
+				}
+				cardList += "<div class='cardList'><div class='card'><h4>"+name+"</h4><p class='comphone'><a href='tel:"+phone+"'>"+phone+"</a></p><p class='email'><a href='mailto:"+email+"'>"+email+"</a></p><p class='address'>"+address+"</p>";
+			}
+			if(weiboname !="" && weiboname != null){
+				cardList += "<p class='weiboname'><a href='"+weibourl+"' target='_blank' style='text-decoration: underline;'>"+weiboname+"</a>&nbsp;<img src='http://s.expoon.com/image/z/sjmynew/v-icon.gif' width='12' height='11' /></p>";
+			};
+			if(wechat !="" && wechat != null){
+				cardList += "<p class='wechat'>企业微信公众账号："+wechat+"</p>";
+			}
+			if(qq !="" && qq != null){
+				cardList += "<p class='qq'>"+qq+"</p>";
+			}
+			cardList += "</div></div><div class='clearfloat'></div></div>";
+			if(remark !="" && remark != null){
+				cardList += "<div class='remark'><span>备注：</span><div class='remarkInfo'><p>"+remark+"</p></div><div class='clearfloat'></div></div>";
+			}
+			$(".pluginBox").append(cardList);
+			if(type == 0){
+				var box_top = (parseInt($(".weixinImg").height()) - parseInt($(".cardList").height()))/2;
+				$(".cardList").css({"margin-top":box_top+"px"});
+			}
+			
+		});
+	</script></head><body style="background: #f9f9f9;"><div id="pluginBox"><div class="pluginBox"></div></div><!-- pluginBox --></body></html>

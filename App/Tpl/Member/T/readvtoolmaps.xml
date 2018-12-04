@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano>
+    <skin_settings toolboxmap_open="0" />
+    <layer name="mapsbox" visible="True" keep="true" type="container" align="{$maprow['map_align']}" 
+	width="{$maprow['map_w']}" height="{$maprow['map_h']+26}" 
+	x="<if condition="$maprow['map_open'] eq 1">0<else/>-{$maprow['map_w']}</if>" y="0" 
+	bgcolor="0x000000" bgalpha="0.3" >
+        <layer name="mapsonoff" visible="True"  keep="true" align="{$mapcenter}" width="20" height="40" 
+		url="__PUBLIC__/member/images/pano/<if condition="$maprow['map_open'] eq 1">hidemap.png<else/>showmap.png</if>"
+            x="{$maprow['map_w']}" y="0" picon="__PUBLIC__/member/images/pano/hidemap.png" picoff="__PUBLIC__/member/images/pano/showmap.png" onoroff="1"
+            onclick="swapmaps();"
+        />
+        <layer name="mapstbg" visible="True"  keep="true" type="container" align="lefttop" width="100%" height="26" x="0" y="0" bgcolor="0x000000" bgalpha="1" >
+            <layer name="mapstitle" parent="mapsbox" keep="true" url="%SWFPATH%/plugins/textfield.swf" align="center" edge="center" width="100%" height="26"
+                autoheight="true" x="0" y="0" zorder="1001" enabled="true" background="false" border="false" html="地图" css="text-align:center; color:#FFFFFF; font-family:微软雅黑; font-size:14px; line-height:26px;" textshadow="0" visible="True"
+            />
+        </layer>
+
+        <layer name="mapsmain" visible="True" keep="true" type="container" align="bottom" width="100%" height="{$maprow['map_h']}" x="0" y="0" bgcolor="0x000000" bgalpha="0">
+            <volist name="maplist" id="mp">
+                <layer name="mapsscrollarea{$mp.sort}" visible="False" url="%SWFPATH%/plugins/scrollarea.swf" alturl="%SWFPATH%/plugins/scrollarea.js" align="center" width="{$mp['photo'][0]+60}" height="{$mp['photo'][1]+60}" direction="all">
+                    <layer name="toolboxmaps{$mp.sort}" url="{:CC('web_root')}{$mp['mapurl']}" align="center">
+                        <volist name="mp['mpp']" id="mpp">
+                            <eq name="mpp['open']" value="1">
+								<if condition="$mpp['map_x'] gt 0 or $mpp['map_y'] gt 0">
+									<layer name="mapspoint{$viewsort[$mpp['view_id']]}" url="{:CC('web_root')}{$maprow['pointimg']}" visible="True" align="lefttop" edge="center" keep="true" enabled="true" zorder="2" x="{$mpp['map_x']}" y="{$mpp['map_y']}" onhover="showtext({$viewname[$mpp['view_id']]});" onclick="loadscene(scene{$viewsort[$mpp['view_id']]},null, MERGE,BLEND(1));" open="1" h="{$mpp['heading']}" maps_id="{$mp.sort}" maps_name="{$mp.mapname}"/>
+								  <else/>
+									<layer name="mapspoint{$viewsort[$mpp['view_id']]}" url="{:CC('web_root')}{$maprow['pointimg']}" visible="false" align="lefttop" edge="center" keep="true" enabled="true" zorder="2" x="{$mpp['map_x']}" y="{$mpp['map_y']}" onhover="showtext({$viewname[$mpp['view_id']]});" onclick="loadscene(scene{$viewsort[$mpp['view_id']]},null, MERGE,BLEND(1));" open="0" h="{$mpp['heading']}" maps_id="{$mp.sort}" maps_name="{$mp.mapname}"/>
+								</if>
+                            </eq>
+                            <eq name="mpp['open']" value="0">
+							<if condition="$mpp['map_x'] gt 0 or $mpp['map_y'] gt 0">
+                                <layer name="mapspoint{$viewsort[$mpp['view_id']]}" url="{:CC('web_root')}{$maprow['pointimg']}" visible="False" align="lefttop" edge="center"
+                                 keep="true" enabled="true" zorder="2" x="{$mpp['map_x']}" y="{$mpp['map_y']}" maps_id="{$mp.sort}" maps_name="{$mp.mapname}"
+                                  open="0"
+                                 />
+							</if>
+                            </eq>
+                        </volist>
+                        <layer name="radar{$mp.sort}" keep="true" visible="true" zorder="0"
+                           url="%SWFPATH%/plugins/radar.swf" alturl="%SWFPATH%/plugins/radar.js"
+                           align="lefttop" edge="center" x="0" y="0"
+                           fillcolor="0x{$maprow['radercolor']||str_replace='#','',###}" fillalpha="{$maprow['raderalpha']}" linecolor="0x{$maprow['raderlinecolor']||str_replace='#','',###}" linewidth="{$maprow['raderlinewidth']}" linealpha="{$maprow['raderlinealpha']}"
+                           scale="{$maprow['radersize']}" heading="0" headingoffset="0" ></layer>
+                    </layer>
+                </layer>
+            </volist>
+        </layer>
+    </layer>
+	<action name="toolboxmapsto_hide">
+	set(layer['mapsonoff'].onoroff,0);
+        tween(layer[mapsbox].x,-{$maprow['map_w']});
+        copy(layer['mapsonoff'].url,layer['mapsonoff'].picoff);
+
+	set(layer[mapsonoff].visible,false);
+	</action>
+    <action name="toolboxmapsto">
+		set(layer[mapsonoff].visible,true);
+		swapmaps2();
+        txtadd(prevname,'mapspoint',get(skin_settings.toolboxmap_prev));
+        txtadd(prevmapname,'mapsscrollarea',get(skin_settings.toolboxmap_prevmap));
+        set(layer[get(pname)].url,"{:CC('web_root')}{$maprow['pointimg']}");
+        set(layer[get(prevmapname)].visible,False);
+        txtadd(pname, 'mapspoint', %1);
+        set(opendata,get(layer[get(pname)].open));
+        set(mapdata,get(layer[get(pname)].maps_id));
+        set(mapnamedata,get(layer[get(pname)].maps_name));
+
+        txtadd(nowradarname,'radar',get(mapdata));
+        txtadd(nowmapname,'mapsscrollarea',get(mapdata));
+        set(layer['mapstitle'].html,get(mapnamedata));
+        set(layer[get(nowmapname)].visible,True);
+
+        if(opendata EQ 1,
+        set(layer[get(pname)].url,"{:CC('web_root')}{$maprow['thepointimg']}");
+        set(layer[get(nowradarname)].visible,true);
+        set(mx,get(layer[get(pname)].x));
+        set(my,get(layer[get(pname)].y));
+        set(layer[get(nowradarname)].x,get(mx));
+        set(layer[get(nowradarname)].y,get(my));
+        set(layer[get(nowradarname)].headingoffset,get(layer[get(pname)].h));
+        add(tmx,get(mx),30);
+        add(tmy,get(my),30);
+        layer[get(nowmapname)].scrolltocenter(get(tmx),get(tmy))
+        ,
+        set(layer[get(nowradarname)].visible,false);
+        );
+        set(skin_settings.toolboxmap_prev,%1);
+        set(skin_settings.toolboxmap_prevmap,get(mapdata));
+    </action>
+	
+	
+	<if condition="$maprow['map_open'] eq 1"> 
+	<action name="swapmaps">
+        set(nowopen,get(layer['mapsonoff'].onoroff));
+        if(nowopen EQ 1,
+        set(layer['mapsonoff'].onoroff,0);
+        tween(layer[mapsbox].x,-{$maprow['map_w']});
+        copy(layer['mapsonoff'].url,layer['mapsonoff'].picoff);
+        ,
+        set(layer['mapsonoff'].onoroff,1);
+        tween(layer[mapsbox].x,0);
+        copy(layer['mapsonoff'].url,layer['mapsonoff'].picon);
+        );
+    </action>
+	<else/>
+	<action name="swapmaps">
+        set(nowopen,get(layer['mapsonoff'].onoroff));
+        if(nowopen EQ 1,
+        set(layer['mapsonoff'].onoroff,0);
+		tween(layer[mapsbox].x,0);
+        copy(layer['mapsonoff'].url,layer['mapsonoff'].picon);
+        ,
+        set(layer['mapsonoff'].onoroff,1);
+        tween(layer[mapsbox].x,-{$maprow['map_w']});
+        copy(layer['mapsonoff'].url,layer['mapsonoff'].picoff);
+        );
+    </action>
+	</if>
+   
+	<action name="swapmaps2">
+        set(nowopen,get(layer['mapsonoff'].onoroff));
+        if(nowopen EQ 0,
+        set(layer['mapsonoff'].onoroff,1);
+        tween(layer[mapsbox].x,0);
+        copy(layer['mapsonoff'].url,layer['mapsonoff'].picon);
+        );
+    </action>
+</krpano>

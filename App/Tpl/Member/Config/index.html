@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script src="__PUBLIC__/common/js/jquery-1.10.2.js" language="javascript" type="text/javascript"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        <script charset="utf-8" src="__PUBLIC__/bootstrap/js/bootstrap.js"></script>
+        <script charset="utf-8" src="__PUBLIC__/bootstrap/js/bootstrap-select.js"></script>
+        <link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/bootstrap-select.css" rel="stylesheet">
+        {:W("Easyui")}
+        {:W("Boluoui")}
+        {:W("Uploader")}
+        <style type="text/css">
+            .box{
+                width: auto; height: 50px; overflow: hidden; border:1px solid #c6c6c6; margin: 5px; float: left; border-radius: 5px; background: #eee; cursor: pointer;
+            }
+            .box.me{
+                background: #e0f5ff; border-color: #ace;
+            }
+            .box:hover{
+                background: #e5ffcb;
+            }
+            .box.me:hover{
+                background: #e0f5ff;
+            }
+            .boxtext{
+                width: 60px; height: 36px; overflow: hidden; float: left; background: #fff; padding: 2px 0;
+                text-align: center; font: 12px/36px "微软雅黑"; cursor: default; margin-top: 5px; margin-left: 5px;
+            }
+            .boxbag{
+                width: auto; height: 50px; overflow: hidden; float: left; padding-right: 5px;
+            }
+            .boxbag .pigbox{
+                width: 38px; height: 38px; overflow: hidden; float: left; background: #fff; margin-left: 5px; border:1px solid #ccc;
+                margin-top: 5px;
+            }
+            .box.me .boxbag .pigbox{
+                border-color: #ace;
+            }
+            .cursorout{
+                overflow: hidden; background: #f8f8f8; padding: 5px; border:1px solid #c6c6c6; float: left; border-radius:5px;
+            }
+            .cursormarket{
+                overflow: hidden;
+            }
+        </style>
+        <script type="text/javascript">
+            function checksb(){
+                var result = true;
+                if(result == true){
+                    result = AutoCheckSub(".cs");
+                }
+                return result;
+            }
+            $(document).ready(function(){
+                onoroff();
+                boluo_autocheckui();
+                $('.dd').tooltip({
+                    position: 'right'
+                });
+
+                $(".box").click(function(){
+                    var cid = $(this).data("cid");
+                    $("#cursor_id").val(cid);
+                    checkcurosr(cid);
+                });
+            });
+            function checkcurosr(n){
+                $(".box").removeClass("me");
+                $("#cursor"+n).addClass("me");
+            }
+			function submitMap(addr_cur,poi_cur)
+			{
+				$("#map").val(poi_cur);
+				$("#address").val(addr_cur);
+				$("#openmap").attr("checked",true);
+				closewin();
+			}
+        </script>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">全景项目 - {$panorow['title']} - 全局参数设定</div>
+                        <div title="关闭" onclick="DoNote('确认返回功能首页？','{:U('main/index')}');" class="close"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            {:W("Panomenu",array("pano_id"=>$pano_id,"num"=>1))}
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main">
+                                <div class="action_title">全局参数设置</div>
+                                <div class="action_web">
+                                    <form name="form1" action="" onsubmit="return checksb();" enctype="multipart/form-data" method="post">
+                                        <input type="hidden" name="dopost" value="save" />
+                                        <input type="hidden" name="pano_id" value="{$pano_id}" />
+                                        <input type="hidden" name="pid" id="pid" value="{$panorow['pid']}" />
+                                        <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">
+                                            <tr class="tr_white" height="36">
+                                                <td align="right" width="100"><b>父节点：</b></td>
+                                                <td align="left">
+                                                    <select id="spid" class="selectpicker" data-style="btn-info" data-live-search="true" style="width: 100px;" data-live-search-placeholder="输入搜索">
+                                                        <option data-tokens="根节点" value="0">根节点</option>
+                                                        <volist name="panoList" id="pano">
+                                                            <option data-tokens="{$pano['title']}" value="{$pano['id']}">{$pano['title']}</option>
+                                                        </volist>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="36">
+                                                <td align="right" width="100"><b>全景项目名称：</b></td>
+                                                <td align="left">
+                                                    <input type="text" id="title" name="title" sbname="全景项目名称" value="{$panorow['title']}" class="inputcube cs"/>
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="36">
+                                                <td align="right" width="100"><b>全景项目描述：</b></td>
+                                                <td align="left">
+                                                    <textarea style="width:500px;height:80px;" class="textacube" name="content">{$panorow['content']}</textarea>
+                                                </td>
+                                            </tr>
+
+                                            
+                                            
+                                            
+                                            
+                                             <!--      微信分享小图标 QQ：540924692   2017.5.19  start       -->
+                                            	<tr class="tr_white" height="10">
+                                                <td align="right" width="100"><b>微信分享小图标：</b></td>
+                                                <td align="left">
+												<input type="checkbox" id="openwxlogo" name="openwxlogo" <if condition="$panorow['openwxlogo'] eq 1">checked</if> value="1" /> 启用微信分享(需要绑定微信认证服务号)  (小图标建议尺寸：100*100)
+
+												<!-- <div class="thumbbox2" style="cursor: pointer; height: auto;">
+												<if condition="!empty($panorow['pano_logo'])">
+                                                    <img id="pano_logo_pic" src="{:CC('web_root')}{$panorow['pano_logo']}?{$Think.now}" title="点击图片重新上传" onload="swichimg2w(this,200);"/>
+                                                <else/>
+													<img id="pano_logo_pic" src="__PUBLIC__/member/images/login/lg_logo.gif" title="点击上传"/>
+												</if>
+												</div> -->
+												<div class="thumbbox3" id="imgbox3" style="cursor: pointer; height: auto;">
+												<if condition="!empty($panorow['wx_logo'])">
+                                                    <img src="{:CC('web_root')}{$panorow['wx_logo']}?{$Think.now}" onload="swichimg2w(this,200);"/>
+                                                </if>
+												</div>
+												<input type="button" id="imgbtn3" class="btn3" value="点击上传" />
+
+                                                <input type="hidden" id="wx_logo" name="wx_logo" value="{$panorow['wx_logo']}" />
+												<input type="hidden" id="old_wx_logo" name="old_pano_logo" value="{$panorow['wx_logo']}" />
+												</td>
+                                                </td>
+                                            </tr>
+											<!-- {:uploadSend(".thumbbox2","#pano_logo","#pano_logo_pic")} -->
+											<script type="text/javascript">
+                                            $(function(){
+                                                $("#imgbtn3").uploader("image", "file3");
+                                            })
+                                            function file3(data){
+                                                $("#wx_logo").val(data);
+                                                $("#imgbox3").html('<img src="'+data+'"" />');
+                                            }
+											</script>
+											<tr class="tr_white" height="10">
+                                                <td colspan="2"></td>
+                                            </tr>
+								
+											<tr class="tr_white" height="10">
+                                                <td align="right" width="100"><b>行业：</b></td>
+                                                <td align="left">											
+												{$web_hangye}
+                                                </td>
+                                            </tr>
+											
+											
+											
+                                            <!--      微信分享小图标 QQ：540924692   2017.5.19 end       -->
+                                            <!--      微信分享描述 QQ：540924692   2017.5.18  start       -->
+                                            <tr class="tr_white" height="10">
+                                                <td align="right" width="100"><b>微信分享描述：</b></td>
+                                                <td align="left">											
+												<textarea style="width:500px;height:80px;" class="textacube" name="wxdesc">{$panorow['wxdesc']}</textarea>
+                                                </td>
+                                            </tr>
+                                            
+                                             <!--      微信分享描述 QQ：540924692   2017.5.18  end       -->
+                                             
+                                             
+                                             
+                                              <!--      微信分享描述 QQ：540924692   2017.6.12  start       -->
+                                            <tr class="tr_white" height="10">
+                                                <td align="right" width="100"><b>微信分享链接：</b></td>
+                                                <td align="left">											
+												<textarea style="width:500px;height:40px;" class="textacube" name="wx_url">{$panorow['wx_url']}</textarea>
+                                                </td>
+                                            </tr>
+                                            
+                                             <!--      微信分享描述 QQ：540924692   2017.6.12  end       -->
+                                             
+                                             
+                                            <tr class="tr_white" height="10">
+                                                <td align="right" width="100"><b>启用皮肤展开：</b></td>
+                                                <td align="left">
+													<input type="checkbox" id="openuipifu" name="openuipifu" <if condition="$panorow['openuipifu'] eq 1">checked</if> value="1" /> 启用													
+                                                </td>
+                                            </tr>
+                                            
+                                            
+											<tr class="tr_white" height="10">
+                                                <td align="right" width="100"><b>启用说一说：</b></td>
+                                                <td align="left">
+													<input type="checkbox" id="openwechat" name="openwechat" <if condition="$panorow['openwechat'] eq 1">checked</if> value="1" /> 启用													
+                                                </td>
+                                            </tr>
+											<tr class="tr_white" height="10">
+                                                <td align="right" width="100"><b>浏览量统计：</b></td>
+                                                <td align="left">
+													<input type="checkbox" id="opentongji" name="opentongji" <if condition="$panorow['opentongji'] eq 1">checked</if> value="1" /> 启用&nbsp;&nbsp;
+													当前浏览量：<input type="text" name="hits" class="shortinputcube" value="{$hits}">
+                                                </td>
+                                            </tr>
+											<tr class="tr_white" height="10">
+                                                <td align="right" width="100"><b>点赞功能：</b></td>
+                                                <td align="left">
+													<input type="checkbox" id="openzan" name="openzan" <if condition="$panorow['openzan'] eq 1">checked</if> value="1" /> 启用&nbsp;&nbsp;
+													当前点赞数：<input type="text" name="zan" class="shortinputcube" value="{$zan}">
+                                                </td>
+                                            </tr>
+											<tr class="tr_white" height="10">
+                                                <td align="right" width="100"><b>快捷热键功能：</b></td>
+                                                <td align="left">
+													<input type="checkbox" id="open_apple" name="open_apple" <if condition="$panorow['open_apple'] eq 1">checked</if> value="1" /> 启用 (功能类型于苹果手机小圆点功能，如果开启，下面官方网站则填写店铺链接) 
+                                                </td>
+                                            </tr>
+											<tr class="tr_white" height="10">
+                                                <td align="right" width="100"><b>分享功能：</b></td>
+                                                <td align="left">
+													<input type="checkbox" id="openshare" name="openshare" <if condition="$panorow['openshare'] eq 1">checked</if> value="1" /> 启用
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="10">
+                                                <td align="right" width="100"><b>官方网站：</b></td>
+                                                <td align="left">
+													<input type="checkbox" id="openhttp" name="openhttp" <if condition="$panorow['openhttp'] eq 1">checked</if> value="1" /> 启用&nbsp;&nbsp;
+                                                    <input type="text" id="website" name="website" value="{$panorow['website']}" class="inputcube"/>
+                                                </td>
+                                            </tr>
+											 <tr class="tr_white" height="10">
+                                                <td align="right" width="100"><b>联系电话：</b></td>
+                                                <td align="left">
+													<input type="checkbox" id="opentel" name="opentel" <if condition="$panorow['opentel'] eq 1">checked</if> value="1" /> 启用
+                                                    <input type="text" id="linkphone" name="linkphone" value="{$panorow['linkphone']}" class="inputcube"/>
+                                                </td>
+                                            </tr> 
+											<tr class="tr_white" height="10">
+                                                <td align="right" width="100"><b>展商名片：</b></td>
+                                                <td align="left">
+												<input type="checkbox" id="opencard" name="opencard" <if condition="$panorow['opencard'] eq 1">checked</if> value="1" /> 启用&nbsp;&nbsp;
+												<input type="button" onclick="openwin('全景名片','{:U('config/card',array(pano_id=>$pano_id))}',820,580);" class="btn1" value="设置名片"/>
+												</td>
+                                                </td>
+                                            </tr>
+											<tr class="tr_white" height="10">
+                                                <td colspan="2"></td>
+                                            </tr>
+											<tr class="tr_white" height="10">
+                                                <td align="right" width="100"><b>滚动字幕：</b></td>
+                                                <td align="left">
+												<input type="checkbox" id="opennews" name="opennews" <if condition="$panorow['opennews'] eq 1">checked</if> value="1" /> 启用<br>
+												<textarea style="width:500px;height:80px;" class="textacube" name="gundongzimu">{$panorow['gundongzimu']}</textarea>
+                                                </td>
+                                            </tr>
+											<tr class="tr_white" height="10">
+                                                <td colspan="2"></td>
+                                            </tr>
+											<tr class="tr_white" height="10">
+                                                <td align="right" width="100"><b>地图坐标：</b></td>
+                                                <td align="left">
+												<input type="checkbox" id="opendaohang" name="opendaohang" <if condition="$panorow['opendaohang'] eq 1">checked</if> value="1" /> 启用
+												<input type="text" maxlength="255" size="20" value="{$panorow['map']}" id="map" name="map" class="inputcube">&nbsp;
+												<input type="button" onclick="openwin('地图坐标拾取','{:U('config/getpoint')}',950,480);" class="btn1" value="点击获取"/>
+												</td>
+                                                </td>
+                                            </tr>
+                                            
+                                            <!------------- weather start 2017.10.15-------------------->
+                                            <tr class="tr_white" height="10">
+                                                <td align="right" width="100"><b>启用天气插件：</b></td>
+                                                <td align="left">
+													<input type="checkbox" id="openweahter" name="openweahter" <if condition="$panorow['openweahter'] eq 1">checked</if> value="1" /> 启用
+                                                    <input type="text" id="cityname" name="cityname" value="{$panorow['cityname']}" class="inputcube"/>		
+                                                    <span class="textspan">右侧填写天气显示城市</span>									
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="10">
+                                                <td align="right" width="100"><b>启用天气展开：</b></td>
+                                                <td align="left">
+													<input type="checkbox" id="weatheropen" name="weatheropen" <if condition="$panorow['weatheropen'] eq 1">checked</if> value="1" /> 启用													
+                                                </td>
+                                            </tr>
+                                            <!------------- weather end 2017.10.15-------------------->
+                                            
+                                            
+                                           
+											<!-- <tr class="tr_white" height="10">
+                                                <td align="right" width="100"><b>所在地址：</b></td>
+                                                <td align="left">
+												<input type="text" id="address" name="address" value="{$panorow['address']}" class="inputcube"/>
+                                                </td>
+                                            </tr> -->
+											<tr class="tr_white" height="10">
+                                                <td align="right" width="100"></td>
+                                                <td align="left" colspan="2"></td>
+                                            </tr>
+											<tr class="tr_white" height="10">
+                                                <td align="right" width="100"><b>启用项目开场图片：</b></td>
+                                                <td align="left">
+												<input type="checkbox" id="openwelcome" name="openwelcome" <if condition="$panorow['openwelcome'] eq 1">checked</if> value="1" /> 启用 (建议尺寸：500*350)
+
+												<!-- <div class="thumbbox1" style="cursor: pointer;width:480px;height:280px;">
+												<if condition="!empty($panorow['welcome'])">
+                                                    <img id="welcome_pic" src="{:CC('web_root')}{$panorow['welcome']}?{$Think.now}" title="点击图片重新上传" onload="swichimg2w(this,200);"/>
+                                                <else/>
+													<img id="welcome_pic" width="380px" height="221px" src="__PUBLIC__/member/images/pano/welcome.jpg" title="点击上传"/>
+												</if>
+												</div> -->
+
+												<div class="thumbbox1" id="imgbox" style="cursor: pointer;width:480px;height:280px;">
+													<if condition="!empty($panorow['welcome'])">
+													<img src="{:CC('web_root')}{$panorow['welcome']}?{$Think.now}" onload="swichimg2w(this,200);"/>
+													</if>		
+												</div>
+												<input type="button" id="imgbtn" class="btn3" value="点击上传" />
+
+                                                <input type="hidden" id="welcome" name="welcome" value="{$panorow['welcome']}" />
+												<input type="hidden" id="old_welcome" name="old_welcome" value="{$panorow['welcome']}" />
+												</td>
+                                            </tr>
+											<!-- {:uploadSend(".thumbbox1","#welcome","#welcome_pic")} -->
+											<script type="text/javascript">
+                                            $(function(){
+                                                $("#imgbtn").uploader("image", "file");
+                                            })
+                                            function file(data){
+                                                $("#welcome").val(data);
+                                                $("#imgbox").html('<img width="200" height="200" src="'+data+'"" />');
+                                            }
+											</script>
+											<tr class="tr_white" height="10">
+                                                <td colspan="2"></td>
+                                            </tr>
+											<tr class="tr_white" height="10">
+                                                <td align="right" width="100"><b>左上角LOGO：</b></td>
+                                                <td align="left">
+												<input type="checkbox" id="openpanologo" name="openpanologo" <if condition="$panorow['openpanologo'] eq 1">checked</if> value="1" /> 启用  (建议尺寸：210*70)
+
+												<!-- <div class="thumbbox2" style="cursor: pointer; height: auto;">
+												<if condition="!empty($panorow['pano_logo'])">
+                                                    <img id="pano_logo_pic" src="{:CC('web_root')}{$panorow['pano_logo']}?{$Think.now}" title="点击图片重新上传" onload="swichimg2w(this,200);"/>
+                                                <else/>
+													<img id="pano_logo_pic" src="__PUBLIC__/member/images/login/lg_logo.gif" title="点击上传"/>
+												</if>
+												</div> -->
+												<div class="thumbbox2" id="imgbox2" style="cursor: pointer; height: auto;">
+												<if condition="!empty($panorow['pano_logo'])">
+                                                    <img src="{:CC('web_root')}{$panorow['pano_logo']}?{$Think.now}" onload="swichimg2w(this,200);"/>
+                                                </if>
+												</div>
+												<input type="button" id="imgbtn2" class="btn3" value="点击上传" />
+
+                                                <input type="hidden" id="pano_logo" name="pano_logo" value="{$panorow['pano_logo']}" />
+												<input type="hidden" id="old_pano_logo" name="old_pano_logo" value="{$panorow['pano_logo']}" />
+												</td>
+                                                </td>
+                                            </tr>
+											<!-- {:uploadSend(".thumbbox2","#pano_logo","#pano_logo_pic")} -->
+											<script type="text/javascript">
+                                            $(function(){
+                                                $("#imgbtn2").uploader("image", "file2");
+                                            })
+                                            function file2(data){
+                                                $("#pano_logo").val(data);
+                                                $("#imgbox2").html('<img src="'+data+'"" />');
+                                            }
+											</script>
+											<tr class="tr_white" height="10">
+                                                <td colspan="2"></td>
+                                            </tr>
+											<tr class="tr_white" height="10">
+                                                <td align="right" width="100"><b>右下角&nbsp;&nbsp;<br>制作者LOGO：</b></td>
+                                                <td align="left">
+												<input type="checkbox" id="openauthor" name="openauthor" <if condition="$panorow['openauthor'] eq 1">checked</if> value="1" /> 启用
+												<span class="textspan">制作者logo请到<a href="javascript:void(0);" style="text-decoration:underline;" onclick="openwin('账号设置','/member/user/',750,850);">账号信息</a>设置</span>
+                                                </td>
+                                            </tr>											
+
+                                            <tr class="tr_white" height="40">
+                                                <td align="right"><b>手机陀螺仪：</b></td>
+                                                <td>
+													<label>
+													<input type="checkbox" id="is_ipad_view" name="is_ipad_view" <if condition="$panorow['is_ipad_view'] eq 1">checked</if> value="1" /> 启用   
+													</label>
+													<span class="textspan">可以通过手机位置移动来浏览全景</span>
+												</td>
+                                            </tr>
+
+											<tr class="tr_white" height="40">
+                                                <td align="right"><b>小行星开场：</b></td>
+                                                <td>
+												<label>
+													<input type="checkbox" id="is_littleplanet_view" name="is_littleplanet_view" <if condition="$panorow['is_littleplanet_view'] eq 1">checked</if> value="1" /> 启用
+												</label>
+												<span class="textspan">开场时以小行星视角进入</span>
+                                                </td>
+                                            </tr>
+											<tr class="tr_white" height="40">
+                                                <td align="right"><b>自动切换场景：</b></td>
+                                                <td>
+													<label>
+													<input type="checkbox" id="openautonext" name="openautonext" <if condition="$panorow['openautonext'] eq 1">checked</if> value="1" /> 启用
+													</label>
+													<span class="textspan">当无操作 <input type="text" id="autonextpass" name="autonextpass" value="{$panorow['autonextpass']}" class="smallinputcube"/> 秒后切换至下一个场景</span>
+                                                </td>
+                                            </tr>
+
+                                             <tr class="tr_white" height="10">
+                                                <td colspan="2"></td>
+                                            </tr>                                            
+											<tr class="tr_white" height="40">
+                                                <td align="right"><b>场景缩略图大小：</b></td>
+                                                <td>
+                                                    宽 <input type="text" id="thumbwidth" name="thumbwidth" value="{$panorow['thumbwidth']}" class="smallinputcube"/>
+                                                    高 <input type="text" id="thumbheight" name="thumbheight" value="{$panorow['thumbheight']}" class="smallinputcube"/>
+													<span class="textspan">场景选择切换处，默认缩略图大小</span>
+												</td>
+                                            </tr> 
+
+
+											<tr class="tr_white" height="40">
+                                                <td align="right"><b>开启自动旋转：</b></td>
+                                                <td>
+													<label>
+													<input type="checkbox" id="openautorate" name="openautorate" <if condition="$panorow['openautorate'] eq 1">checked</if> value="1" /> 启用
+													</label>
+													<span class="textspan">
+													浏览场景时，若没有任何操作 <input type="text" id="autoratewaittime" name="autoratewaittime" value="{$panorow['autoratewaittime']}" class="smallinputcube"/> 秒后自动执行旋转，
+													旋转速度 <input type="text" id="autoratespeed" name="autoratespeed" value="{$panorow['autoratespeed']}" class="smallinputcube"/>（0~10，负数代表反方向）
+													</span>
+                                                </td>
+                                            </tr>
+
+											
+											<tr class="tr_white" height="10">
+                                                <td align="right" width="100"><b>全局手机UI缩放：</b></td>
+                                                <td align="left">
+													当前手机端UI缩放比例：<input type="text" name="mobileuisize" class="shortinputcube" value="{$panorow['mobileuisize']}">（非特殊情况不要修改 1初始大小，比如1.1放大 0.9缩小）
+                                                </td>
+                                            </tr>
+											
+											
+                                                       
+                                            <tr class="tr_white" height="40">
+                                                <td align="right" width="120"></td>
+                                                <td align="left">
+                                                    <input type="submit" class="blackbutton" value="提交" />
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="10">
+                                                <td colspan="2"></td>
+                                            </tr>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    <script>
+        $(function () {
+            $('#spid').selectpicker('val',{$panorow['pid']});
+            $('#spid').selectpicker({
+                style: 'btn-info',
+                size: 10
+            }).on('changed.bs.select', function (e) {
+                var pid = $("#spid").selectpicker('val');
+                $("#pid").val(pid);
+            });
+        });
+
+    </script>
+    </body>
+</html>

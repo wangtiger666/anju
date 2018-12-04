@@ -1,0 +1,50 @@
+<krpano>
+
+	<plugin name="gyro" devices="html5" keep="true"
+			url="%SWFPATH%/plugins/gyro2.js"
+			enabled="true"
+			camroll="true"
+			friction="0.0"
+			touch_mode="full"
+			sensor_mode="1"
+			softstart="0.5"
+			autocalibration="true"
+			onavailable=""
+			onunavailable=""
+			onenable=""
+			ondisable=""
+			/>
+
+	<events name="comprass_update" keep="true" devices="mobile"
+		onviewchange="calc(layer[dial_finger].rotate,view.hlookat);"
+	/>
+
+	<!--方向罗盘-->
+	<layer name="sina_compass" scale="1.5" keep="true" type="container" align="centerleft" bgcolor="0x000000" bgalpha="0" x="2" width="40" height="40" visible="false" onloaded="if(device.mobile,set(visible,true))" >
+		<layer name="dial_plate" url="pan_2.png" align="center"  width="100%" height="100%" />
+		<layer name="dial_finger" url="sanxing_2.png" align="center" edge="bottom" width="25%" height="25%" y="0" />
+	</layer>
+
+	<!--手机提示-->
+	<layer name="mobile_tip" keep="true" url="mobile.png" scale="1.5" align="bottom" y="50" visible="false" onloaded="tween_mobile()" />
+	<layer name="text_tip" keep="true" type="text" bgalpha="0" align="bottom" y="25" visible="false" html="旋转手机或滑动手机观看全景" css="color:#FFFFFF; font-family:Arial;" />
+
+	<action name="tween_mobile" >
+		if(device.mobile,
+			set(visible,true);
+			set(layer[text_tip].visible,true);
+			tween(ox,-60,1.5,default,tween(ox,60,0.7,linear,tween(ox,-70,3.2,easeInQuad,tween(ox,0,1.5,linear,hide_tip()))));
+
+			
+		)
+		
+	</action>
+
+	<action name="hide_tip" >
+		tween(layer[mobile_tip].alpha,0);
+		tween(layer[text_tip].alpha,0);
+
+		delayedcall(0.5,set(layer[mobile_tip].visible,false);set(layer[text_tip].visible,false));
+	</action>
+
+</krpano>

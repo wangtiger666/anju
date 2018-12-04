@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        {:W("Easyui")}
+        {:W("Uploader")}
+        <style type="text/css">
+            .nonumtext{
+                width: auto; min-width: 24px; height: 20px; overflow: hidden; background: #ccc; text-align: center; margin-top: 1px; cursor: pointer;
+                font: 12px/20px "微软雅黑"; color: #fff; position: absolute; border:1px solid #ccc; border-radius:4px; padding: 0 3px;
+            }
+            .numtext{
+                width: auto; min-width: 24px; height: 20px; overflow: hidden; background: #bbb; text-align: center; margin-top: 1px; cursor: pointer;
+                font: 12px/20px "微软雅黑"; color: #fff; position: absolute; border:1px solid #aaa; border-radius:4px; padding: 0 3px;
+            }
+            .pano_table{
+                padding-top: 20px;
+            }
+            .mapbox{
+                width: auto; min-height: 100px; overflow: hidden;
+            }
+            .mapout{
+                width: 220px; height: 150px; overflow: hidden; border:1px solid #dbdbdb; margin: 6px; float: left; border-radius: 4px; background: #f3f3f3;
+            }
+            .mapout.over{
+                border-color: #ffbc00; background: #fff5d6;
+            }
+            .maptop{
+                width: 200px; height: 100px; overflow: hidden; border:1px solid #dbdbdb; margin: 0 auto; padding: 1px; margin-top: 8px; background: #fff;
+                position: relative;
+            }
+
+            .maptop .dpic{
+                width: 200px; height: 100px; overflow: hidden;
+            }
+            .maptop .pic{
+                width: 200px; height: 100px; overflow: hidden; position: absolute; z-index: 5; background: #fbfbfb;
+            }
+            .maptop .ufo{
+                width: 200px; height: 100px; overflow: hidden; text-decoration: none; position: absolute; z-index: 10; display: none; background: url(__PUBLIC__/member/images/common/black.png) repeat; cursor: pointer;
+            }
+            .mapout:hover .maptop .ufo{
+                display: block; text-decoration: none;
+            }
+            .mapdown{
+                width: 200px; height: 24px; overflow: hidden; margin: 0 auto; margin-top: 6px;
+            }
+        </style>
+        <script type="text/javascript">
+            $(function(){
+                $(".ufo_previewbox").click(function(){
+                    var mapname = $(this).data("name");
+                    var mapid = $(this).data("mid");
+                    parent.getmapdata(mapname,mapid);
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div>
+            <volist name="maplist" id="mp">
+                <div class="mapout">
+                    <div class="maptop">
+                        <div class="pic"><img src="{:CC('web_root')}{$mp.mapurl}" onload="photocenterout(this,200,100);" /></div>
+                        <div class="ufo">
+                            <span data-name="{$mp.mapname}" data-mid="{$mp.id}" class="ufo_previewbox">
+                                <div class="ufo_longtxt">选择</div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="mapdown">
+                        <div class="midonlytext">{$mp.mapname}</div>
+                    </div>
+                </div>
+            </volist>
+
+        </div>
+    </body>
+</html>

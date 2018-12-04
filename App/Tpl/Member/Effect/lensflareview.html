@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        {:W("Easyui")}
+        {:W("Uploader")}
+        <script type="text/javascript">
+            function checksb(){
+                var result = true;
+                if(result == true){
+                    result = AutoCheckSub(".cs");
+                }
+                return result;
+            }
+            $(document).ready(function(){
+                onoroff();
+                $('.dd').tooltip({
+                    position: 'right'
+                });
+            });
+        </script>
+        <style>
+            .action_left{
+                width: 140px; min-height: 200px; overflow: hidden; float: left;
+            }
+            .action_myphoto{
+                width: 120px; height: auto; overflow: hidden; border:1px solid #dbdbdb;
+                box-shadow:2px 2px 4px #e2e2e2; margin-bottom: 12px;
+            }
+            .action_mytext{
+                width: auto; height: 22px; overflow: hidden; text-align: left; font: 12px/22px "微软雅黑"; color: #333; cursor: default;
+            }
+            .action_right{
+                width: 660px; min-height: 200px; overflow: hidden; float: left;
+            }
+            .pano_table{
+                background: #f3f3f3;
+            }
+            .roambox{
+                width: auto; height: 70px; overflow: hidden; border:1px solid #dbdbdb; background: #fff; margin-bottom: 6px; border-radius:4px;
+            }
+            .roambox:hover{
+                border-color: #aac5e7;
+            }
+
+            .roambox_left{
+                width: 496px; height: 60px; overflow: hidden; float: left; margin-left: 5px; margin-top: 5px;
+            }
+            .roambox_right{
+                width: 72px; height: 60px; overflow: hidden; margin: 4px;
+                float: right;
+            }
+            .spot_box{
+                width: 128px; height: 58px; overflow: hidden; border:1px solid #e2e2e2; float: left; background: #f3f3f3;
+                font: 12px/28px "微软雅黑"; color: #666;
+            }
+            .target_box{
+                width: 150px; height: 58px; overflow: hidden; border:1px solid #e2e2e2; float: right; background: #f3f3f3;
+                font: 12px/28px "微软雅黑"; color: #666;
+            }
+            .roambox_img{
+                width: 80px; height: 60px; overflow: hidden;
+                float: right; margin-right: 5px;
+            }
+            .topline{
+                width: auto; height: 24px; overflow: hidden; padding: 0 6px; text-align: center;
+                font: bold 12px/24px "微软雅黑"; color: #256786; margin-top: 3px; cursor: default;
+            }
+            .downline{
+                width: auto; height: 24px; overflow: hidden; margin: 0 6px; text-align: center; cursor: default;
+                font: 12px/24px "微软雅黑"; color: #666; background: #fff; border:1px solid #e2e2e2; border-radius:4px;
+            }
+            .lubox{
+                width: 313px; height: 60px; overflow: hidden; float: left;
+                border:1px solid #ace; background: #fafafa; margin: 4px;
+            }
+            .lupic{
+                width: 50px; height: 50px; overflow: hidden; border-radius: 4px; float: left;
+                background: url(__PUBLIC__/member/images/pano/guangyun.jpg) no-repeat; margin-top: 5px; margin-left: 5px;
+            }
+            .lutb{
+                width: 60px; height: 48px; overflow: hidden; float: left; margin-top: 5px; margin-left: 5px; border:1px solid #bbb; border-radius: 4px; cursor: default;
+            }
+            .lutop{
+                width: auto; height: 24px; overflow: hidden; background: #ddd; text-align: center;
+                font: bold 12px/24px "微软雅黑"; color: #333;
+            }
+            .ludown{
+                width: auto; height: 24px; overflow: hidden; background: #f3f3f3; text-align: center;
+                font: 12px/24px "微软雅黑"; color: #555;
+            }
+            .lubtnbox{
+                width: 46px; height: 60px; overflow: hidden; float: left; margin-top: 2px; margin-left: 5px;
+            }
+            .lubtnbox a{
+                height: 20px; overflow: hidden; background: #f3f3f3; border:1px solid #999; display: block; border-radius: 4px; text-decoration: none;
+                text-align: center;font: 12px/20px "微软雅黑"; color: #555; margin-top: 4px;
+            }
+            .lubtnbox a:hover{
+                background: #666; border-color: #666; color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">全景项目 - {$panorow['title']}</div>
+                        <div title="关闭" onclick="DoNote('确认返回功能首页？','{:U('main/index')}');" class="close"></div>
+                        <div title="返回上级" onclick="LinkTo('{$backurl}');" class="goback"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            {:W("Panomenu",array("pano_id"=>$pano_id,"num"=>7))}
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main">
+                                <div class="action_title"><a href="{:U('lensflare',array('pano_id'=>$pano_id))}">全景特效（光晕）</a> - 【{$viewrow['title']}】- 设置 <span class="vrback"><a href="{:U('lensflare',array('pano_id'=>$pano_id))}">返回上级</a></span></div>
+                                <div class="action_web">
+                                    <div class="action_left">
+                                        <div class="action_myphoto"><img src="{:CC('web_root')}{$viewrow['thumb']}" onload="swichimg2w(this,120);"/></div>
+                                        <div class="action_mytext"><b>当前场景：</b>{$viewrow['title']}</div>
+                                    </div>
+                                    <div class="action_right">
+                                        <a href="{:U('lensflare_add',array('view_id'=>$view_id))}" class="button_add">添加光晕特效</a>
+                                        <div class="pano_table">
+                                            <volist name="lensflarerow" id="row">
+                                                <div class="lubox">
+                                                    <div class="lupic"></div>
+                                                    <div class="lutb">
+                                                        <div class="lutop">光晕大小</div>
+                                                        <div class="ludown">{$row['size']/100}</div>
+                                                    </div>
+                                                    <div class="lutb">
+                                                        <div class="lutop">曝光强度</div>
+                                                        <div class="ludown">{$row['blind']/100}</div>
+                                                    </div>
+                                                    <div class="lutb">
+                                                        <div class="lutop">曝光区间</div>
+                                                        <div class="ludown">{$row.blindcurve}</div>
+                                                    </div>
+                                                    <div class="lubtnbox">
+                                                        <a href="{:U('lensflare_edit',array('len_id'=>$row['id']))}">修改</a>
+                                                        <a href="{:U('lensflare_del',array('len_id'=>$row['id']))}">删除</a>
+                                                    </div>
+                                                </div>
+                                            </volist>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

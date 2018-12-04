@@ -1,0 +1,922 @@
+@charset "utf-8";
+*{
+    font: 12px "微软雅黑", "宋体", Helvetica, Arial, Verdana;
+}
+body{margin:0;padding:0;background:#fff;}
+ul,li,dl,dt,dd{ margin:0px; padding:0px; list-style:none;}
+a{text-decoration:none;}
+a:link{}
+a:visited{}
+a:hover{text-decoration:underline;}
+a:active{}
+img{border:0;padding:0; margin:0;}
+p{padding:0; margin:0;}
+b{
+    font-weight: bold;
+}
+
+#bg{
+    top: 0px; left: 0px; position:  fixed; z-index: 1;
+}
+#upmain{
+    width: 100%; height: 100%;
+    position: absolute; z-index: 10;
+    background: url(../images/common/none.png) repeat;
+    _background: none;
+}
+.bluescroll{
+    background: url(../images/common/bluescroll.gif) repeat-x; height: 12px;
+}
+#toper{
+    width: auto; height: 50px; overflow: hidden;
+}
+.toper_main{
+    width: 264px; height: 34px; overflow: hidden; background: url(../images/common/topbg.png) no-repeat; margin: 0px auto; margin-top: 15px;
+}
+.toper_mleft{
+    width: 196px; height: 24px; overflow: hidden; margin-top: 1px; text-indent: 10px;
+    font-size: 12px; line-height: 24px; color: #eee; float: left; _display: inline; cursor: default;
+}
+.toper_mright{
+    width: 60px; height: 24px; overflow: hidden; margin-top: 1px; padding-left: 8px;
+    float: left; _display: inline;
+}
+.toper_mright .mcube{
+    width: 20px; height: 20px; overflow: hidden; margin: 2px; float: left; _display: inline; cursor: pointer;
+}
+.toper_mright .mcube.a1{
+    background: url(../images/common/edit.png) no-repeat;
+}
+.toper_mright .mcube.a2{
+    background: url(../images/common/del.png) no-repeat;
+}
+.toper_mright .mcube:hover{
+    background-position: 0 -20px;
+}
+
+.toolbox{
+    width: auto; overflow: hidden; padding: 4px 8px;
+}
+.toolcube{
+    width: 120px; height: 120px; overflow: hidden; margin: 4px 8px; float: left; _display: inline; cursor: pointer;
+}
+.toolcube:hover{
+    background: url(../images/common/mask.png) no-repeat;
+}
+.toollogo{
+    width: 68px; height: 68px; overflow: hidden; margin: 0 auto; margin-top: 12px; cursor: pointer;
+}
+.tooltext{
+    width: 120px; height:24px; overflow: hidden; text-align: center; margin-top: 6px; cursor: pointer;
+}
+.tooltext_1{
+    height: 24px; max-width: 100px; overflow: hidden; display: inline-block; text-indent: 10px; line-height: 24px; text-decoration: none;
+    background: url(../images/common/text_mask.png) no-repeat; color: #ddd; _background: none; *background: none; *text-indent: 0px;
+}
+.tooltext_2{
+    height: 24px; width: 10px; overflow: hidden; display: inline-block; line-height: 24px;
+    background: url(../images/common/text_mask.png) right center no-repeat; _background: none; *background: none;
+}
+.toolcube:hover{
+    text-decoration: none;
+}
+.floatmod{
+    float: left;
+}
+
+
+#aboutbox{
+    width: 280px; height: auto; padding-bottom: 10px; overflow: hidden; border-radius : 5px 0 0 5px; cursor: pointer;
+    background: url(../images/common/white.png); position: absolute; z-index: 50; right: 0px; top: 20px;
+}
+.about_title{
+    width: auto; height: 24px; overflow: hidden; text-align: center; margin: 0 auto; margin-top: 15px;
+    font: bold 16px/24px "微软雅黑"; color: #206A9B; margin-bottom: 5px;
+}
+.about_line{
+    width: 250px; height: auto; overflow: hidden; margin: 0 auto; text-align: left;
+    font: 12px/24px "微软雅黑"; color: #666;
+}
+.about_line tr td{
+    font: 12px/18px "微软雅黑"; color: #666;
+}
+
+.ban{
+    width: 600px; overflow: hidden; margin: 15px;
+}
+.ban_top{
+    width: auto; height: 5px; overflow: hidden;
+    background: url(../images/common/top.png) no-repeat;
+}
+.ban_mid{
+    width: auto; height: auto; min-height: 200px; overflow: hidden; padding: 10px 0;
+    background: url(../images/common/mid.png) repeat-y;
+}
+.ban_down{
+    width: auto; height: 7px; overflow: hidden;
+    background: url(../images/common/down.png) no-repeat;
+}
+.ban .tb{
+    font: 12px/36px "微软雅黑"; color: #d6d6d6; margin-bottom: 25px; margin-top: 30px;
+}
+.ban_title{
+    width: 100px; height: 26px; overflow: hidden; background: url(../images/common/hei.png) repeat; border-radius: 4px; margin-top: 15px;
+    margin: 0 auto; border:1px solid #756c72; font: bold 12px/26px "微软雅黑"; color: #e6e6e6; text-align: center; cursor: default;
+}
+.ban_input{
+    width: 260px; height: 22px; overflow: hidden; background: url(../images/common/hei.png) repeat; border-radius: 4px;
+    margin: 0 auto; border:1px solid #756c72; font: 12px/22px "微软雅黑"; color: #cfcfcf; padding: 0 5px; vertical-align: middle;
+}
+.ban_input:focus{
+    border-color: #6b88ad; background: url(../images/common/hui.png) repeat;
+}
+.ban_input.short{
+    width: 100px;
+}
+.ban_input.mid{
+    width: 250px;
+}
+.ben_textbox{
+    width: 260px; height: 40px; overflow: hidden; background: url(../images/common/hei.png) repeat; border-radius: 4px;
+    border:1px solid #756c72; font: 12px/20px "微软雅黑"; color: #cfcfcf; padding: 3px 5px; vertical-align: middle;
+}
+.hand{
+    cursor: pointer;
+}
+.hand:hover{
+    border-color: #a68c5a; background: url(../images/common/huang.png) repeat;
+}
+
+.ban_btn{
+    width: 20px; height: 20px; overflow: hidden; margin: 2px; cursor: pointer; text-align: center; line-height: 20px; float: left;
+}
+.ban_btn:hover{
+    border:1px solid #756c72; background: url(../images/common/huang.png) repeat; margin: 1px; border-radius: 3px;
+}
+
+
+.msgbox{
+    width: 300px; height: 80px; overflow: hidden; border-radius: 4px;
+    background: url(../images/common/hei.png) repeat; font-family: "微软雅黑";
+    position: fixed; z-index: 1000000000; cursor: default;
+}
+.msgbox .main{
+    width: 290px; height: 70px; overflow: hidden; margin: 5px; background: #fff; border-radius: 3px;
+}
+.msgbox .main .msgform{
+    width: 280px; height: 60px; overflow: hidden; padding: 5px;
+}
+.msgbox .main .msgform .good{
+    width: 48px; height: 48px; overflow: hidden;
+    background: url(../images/common/msg1.png) no-repeat;
+}
+.msgbox .main .msgform .bad{
+    width: 48px; height: 48px; overflow: hidden;
+    background: url(../images/common/msg0.png) no-repeat;
+}
+.msgbox .main .msgform .tan{
+    width: 48px; height: 48px; overflow: hidden;
+    background: url(../images/common/msg2.png) no-repeat;
+}
+.msgbox .main .msgform span{
+    font-size: 14px;
+}
+.msgbox .main .msgform span.red{
+    color: #be0000;
+}
+.msgbox .main .msgform span.green{
+    color: #1F9999;
+}
+
+
+
+.main{
+    overflow: hidden; margin: 10px;
+}
+.main .main_head{
+    width: auto; height: 32px; overflow: hidden; position: relative;
+}
+.main .main_head .main_head_left{
+    width: 4px; height: 32px; overflow: hidden; position: absolute; left: 0px; top: 0px;
+    background: url(../images/common/web_top.png) no-repeat;
+}
+.main .main_head .main_head_main{
+    width: auto; height: 32px; overflow: hidden; margin: 0 4px;
+    background: url(../images/common/web_top.png) 0 -64px repeat-x;
+}
+.main .main_head .main_head_right{
+    width: 4px; height: 32px; overflow: hidden; position: absolute; right: 0px; top: 0px;
+    background: url(../images/common/web_top.png) 0 -32px no-repeat;
+}
+.main .main_head .main_head_main .title{
+    width: auto; height: 32px; overflow: hidden; float: left; cursor: default;
+    font: bold 14px/30px "微软雅黑"; color: #dbdbdb; margin-left: 8px;
+}
+.main .main_head .main_head_main .title a{
+    font: bold 14px/30px "微软雅黑"; color: #dbdbdb;
+}
+.main .main_head .main_head_main .title a:hover{
+    color: #fff; text-decoration: none;
+}
+.main .main_head .main_head_main .close{
+    width: 48px; height: 20px; overflow: hidden; background: url(../images/common/close.png) no-repeat;
+    float: right; margin-top: 6px; margin-right: 2px; cursor: pointer;
+}
+.main .main_head .main_head_main .close:hover{
+    background: url(../images/common/close.png) 0 -20px no-repeat;
+}
+.main .main_head .main_head_main .goback{
+    width: 48px; height: 20px; overflow: hidden; background: url(../images/common/goback.png) no-repeat;
+    float: right; margin-top: 6px; margin-right: 2px; cursor: pointer;
+}
+.main .main_head .main_head_main .goback:hover{
+    background: url(../images/common/goback.png) 0 -20px no-repeat;
+}
+.main .main_foot{
+    width: auto; height: 6px; overflow: hidden; position: relative;
+}
+.main .main_foot .main_foot_left{
+    width: 4px; height: 6px; overflow: hidden; position: absolute; left: 0px; top: 0px;
+    background: url(../images/common/web_down.png) 0 -6px no-repeat;
+}
+.main .main_foot .main_foot_main{
+    width: auto; height: 6px; overflow: hidden; margin: 0 4px;
+    background: url(../images/common/web_down.png) 0 -30px repeat-x;
+}
+.main .main_foot .main_foot_right{
+    width: 4px; height: 6px; overflow: hidden; position: absolute; right: 0px; top: 0px;
+    background: url(../images/common/web_down.png) 0 -18px no-repeat;
+}
+
+.main .main_mid{
+    width: auto; height: auto; overflow: hidden; position: relative;
+}
+.main .main_mid .main_mid_left{
+    width: 4px; height: 100%; overflow: hidden; position: absolute; left: 0px; top: 0px;
+    background: url(../images/common/web_mid.png) repeat-y;
+}
+.main .main_mid .main_mid_main{
+    width: auto; height: 100%; overflow: hidden; margin: 0 4px;
+    background: url(../images/common/web.png) repeat;
+}
+.main .main_mid .main_mid_right{
+    width: 4px; height: 100%; overflow: hidden; position: absolute; right: 0px; top: 0px;
+    background: url(../images/common/web_mid.png) -4px 0 repeat-y;
+}
+.webpage{
+    width: auto; min-height: 100px; overflow: hidden; background: url(../images/common/page.png); border: 1px solid #666; margin: 0 2px; margin-top: 4px; padding: 3px;
+}
+.action_main{
+    overflow: hidden; min-height: 480px; background: #fff; padding: 12px 10px;
+}
+.pano_menu{
+    width: 140px; min-height:10px; overflow: hidden; background: url(../images/common/hei.png);
+    border:1px solid #666; margin: 4px; border-radius: 5px; text-align: center; float: left;
+}
+.pano_menu_bottom{
+    width: 128px; height: 30px; overflow: hidden; border:1px solid #444; background: url(../images/common/hui.png); margin: 4px auto; cursor: pointer;
+    color: #999; font: bold 12px/30px "微软雅黑"; border-radius : 4px; display: block; text-decoration: none;
+}
+.pano_menu_bottom:hover{
+    background: url(../images/common/glow.png); color: #aaa;  text-decoration: none;
+}
+.pano_menu_bottom:active{
+    color: #aaa;  text-decoration: none;
+}
+.pano_menu_bottom.me{
+    background: url(../images/common/huang.png); color: #ddd;  text-decoration: none; border-color: #777;
+}
+.none_main{
+    overflow: hidden; min-height: 480px; background: url(../images/common/page.png); border: 1px solid #666; margin: 0 2px; margin-top: 4px; padding: 3px;
+}
+.putout_main{
+    overflow: hidden; min-height: 480px; border: 1px solid #666; margin: 0 2px; margin-top: 4px; padding: 3px;
+}
+.putout_action_main{
+    overflow: hidden; min-height: 480px; padding: 12px 10px; background: url(../images/common/putout_bg.png);
+    border: 1px solid #666;
+}
+.putout_action_title{
+    width: auto; height: 32px; overflow: hidden; border-bottom: 1px solid #999;
+    font: bold 14px/30px "微软雅黑"; color: #c6c6c6; cursor: default; padding: 0 6px; margin-bottom: 15px;
+}
+.putout_action_web{
+    color: #bbb;
+}
+
+/*列表分页的样式*/
+.btn1{
+    width: 68px; height: 22px; background: url(../images/common/btn1.png) no-repeat; overflow: hidden; padding: 0px; margin: 2px; border:none;
+    color: #666; cursor: pointer; line-height: 22px; text-decoration: none; text-align: center;
+}
+.btn1:hover{
+    background-position: 0 -22px; text-decoration: none;
+}
+.btn1.me{
+    width: 68px; height: 22px; background: url(../images/common/btnme.png) no-repeat; overflow: hidden; padding: 0px; margin: 2px; border:none;
+    color: #fff; cursor: pointer; line-height: 22px;
+}
+.btn2{
+    width: 80px; height: 22px; background: url(../images/common/btn2.png) no-repeat; overflow: hidden; padding: 0px; margin: 2px; border:none;
+    color: #666; cursor: pointer; line-height: 22px;
+}
+.btn2:hover{
+    background-position: 0 -22px;
+}
+.btn2.me{
+    width: 80px; height: 22px; background: url(../images/common/btn2me.png) no-repeat; overflow: hidden; padding: 0px; margin: 2px; border:none;
+    color: #fff; cursor: pointer; line-height: 22px;
+}
+
+.btn3{
+    width: 100px; height: 26px; background: url(../images/common/btn3.png) no-repeat; overflow: hidden; padding: 0px; margin: 2px; border:none;
+    color: #666; cursor: pointer; line-height: 26px;
+}
+.btn3:hover{
+    background-position: 0 -26px;
+}
+
+.input2a{
+    display:block; text-align: center; text-decoration: none;
+}
+.input2a:hover{
+     text-decoration: none;
+}
+.btn11{
+    width: 68px; height: 22px; background: url(../images/common/btn1.png) no-repeat; overflow: hidden; padding: 0px; margin: 2px; border:none;
+    color: #666; cursor: pointer; line-height: 22px; text-decoration: none; display: block;
+}
+.btn11:hover{
+    background-position: 0 -22px; text-decoration: none;
+}
+
+.btn_lost{
+    width: 22px; height: 22px; background: url(../images/common/lost.png) no-repeat; overflow: hidden; padding: 0px; margin: 2px; border:none;
+    color: #666; cursor: pointer; line-height: 22px; float: right;
+}
+.btn_lost:hover{
+    background-position: 0 -22px;
+}
+.btn_fan{
+    width: 22px; height: 22px; background: url(../images/common/fan.png) no-repeat; overflow: hidden; padding: 0px; margin: 2px; border:none;
+    color: #666; cursor: pointer; line-height: 22px; float: right;
+}
+.btn_fan:hover{
+    background-position: 0 -22px;
+}
+
+
+.td_title{
+    background: url(../images/common/tbg.gif) repeat-x;
+}
+.tr_white{
+    background: #fff;
+}
+.tr_hui{
+    background: url(../images/common/menutbbg.png) repeat-x #f8f8f8;
+}
+#page_list .page_text{
+    padding: 2px 8px; border:1px solid #ddd; background: #f6f6f6; border-radius:3px; color: #333; margin: 0 2px;
+    font: bold 12px/26px "微软雅黑", "宋体", Helvetica, Arial, Verdana; overflow: hidden; cursor: default;
+}
+
+#page_list a{
+    padding: 2px 6px; border:1px solid #bbb; background: #f6f6f6; border-radius:3px; color: #333;
+    font: bold 12px/26px "微软雅黑", "宋体", Helvetica, Arial, Verdana; overflow: hidden; margin: 0 2px;
+}
+#page_list a:hover{
+    background: #eee; border-color: #999; color: #333; text-decoration: none;
+}
+#page_list span.current{
+    padding: 2px 6px; border:1px solid #f88e00; background: #ffbc00; border-radius:3px; color: #fff;
+    font: bold 12px/26px "微软雅黑", "宋体", Helvetica, Arial, Verdana; cursor: default;
+    overflow: hidden; margin: 0 2px;
+}
+#page_list span.notuse{
+    padding: 2px 6px; border:1px solid #ddd; background: #f6f6f6; border-radius:3px; color: #fff;
+    font: bold 12px/26px "微软雅黑", "宋体", Helvetica, Arial, Verdana; cursor: default;
+    overflow: hidden; margin: 0 2px;  color: #999;
+}
+
+
+.smallinputcube{
+    width: 25px; height: 26px; overflow: hidden; padding: 0 5px; border:1px solid #bbb; background: #f3f3f3; border-radius:4px;
+    font: 12px/26px "微软雅黑"; color: #333; box-shadow: 2px 2px 2px #eee; margin-right: 5px;
+}
+.shortinputcube{
+    width: 60px; height: 26px; overflow: hidden; padding: 0 5px; border:1px solid #bbb; background: #f3f3f3; border-radius:4px;
+    font: 12px/26px "微软雅黑"; color: #333; box-shadow: 2px 2px 2px #eee; margin-right: 5px;
+}
+.middleinputcube{
+    width: 100px; height: 26px; overflow: hidden; padding: 0 5px; border:1px solid #bbb; background: #f3f3f3; border-radius:4px;
+    font: 12px/26px "微软雅黑"; color: #333; box-shadow: 2px 2px 2px #eee; margin-right: 5px;
+}
+.inputcube{
+    width: 180px; height: 26px; overflow: hidden; padding: 0 5px; border:1px solid #bbb; background: #f3f3f3; border-radius:4px;
+    font: 12px/26px "微软雅黑"; color: #333; box-shadow: 2px 2px 2px #eee; margin-right: 5px;
+}
+.longinputcube{
+    width: 300px; height: 26px; overflow: hidden; padding:  0 5px; border:1px solid #bbb; background: #f3f3f3; border-radius:4px;
+    font: 12px/26px "微软雅黑"; color: #333; box-shadow: 2px 2px 2px #eee;
+}
+.textacube{
+    width: 300px; height: 88px; overflow: hidden; padding: 5px; border:1px solid #bbb; background: #f3f3f3; border-radius:4px;
+    font: 12px/22px "微软雅黑"; color: #333; box-shadow: 2px 2px 2px #eee; margin-right: 5px;
+}
+.onoff{
+    width: 58px; height: 29px; overflow: hidden; background: url(../images/common/onoff.png) no-repeat; cursor: pointer; display: inline-block; vertical-align: middle;
+}
+.onoff.off{
+    width: 58px; height: 29px; overflow: hidden; background: url(../images/common/onoff.png) 0 -30px no-repeat; cursor: pointer;
+}
+
+.button_add{
+    width: 100px; height: 26px; overflow: hidden; font: bold 12px/26px "微软雅黑"; color: #6b88ad; display: block; margin-right: 8px;
+    border:1px solid #6b88ad; background: #e1e7ed; text-align: center; cursor: pointer; border-radius: 4px; text-decoration: none;
+}
+.button_add:hover{
+    background: #cedeee; text-decoration: none;
+}
+.pano_top{
+    overflow: hidden;
+}
+.pano_topbtnb{
+    width: 100px; height: 26px; overflow: hidden; font: bold 12px/26px "微软雅黑"; color: #fff; display: block; margin-right: 8px; float: left;
+    border:1px solid #6b88ad; background: #6b88ad; text-align: center; cursor: pointer; border-radius: 4px; text-decoration: none;
+}
+.pano_topbtn{
+    width: 100px; height: 26px; overflow: hidden; font: bold 12px/26px "微软雅黑"; color: #6b88ad; display: block; margin-right: 8px; float: left;
+    border:1px solid #6b88ad; background: #e1e7ed; text-align: center; cursor: pointer; border-radius: 4px; text-decoration: none;
+}
+.pano_topbtn:hover{
+    background: #cedeee; text-decoration: none;
+}
+.pano_table{
+    width: auto; min-height: 440px; overflow: hidden; border:1px solid #dbdbdb; padding: 6px;
+    margin-top: 10px; border-radius: 5px; background: #fff;
+}
+.pano_futable{
+    width: auto; min-height: 440px; overflow: hidden; border:1px solid #bbb; padding: 6px;
+    border-radius: 5px; background: #fff; margin-top: 40px;
+}
+.pano_cube{
+    width: 220px; height: 150px; overflow: hidden; border:1px solid #dbdbdb; margin: 6px; float: left; border-radius: 4px; background: #f3f3f3;
+}
+.pano_cube.over{
+    border-color: #ffbc00; background: #fff5d6;
+}
+.pano_up{
+    width: 200px; height: 100px; overflow: hidden; border:1px solid #dbdbdb; margin: 0 auto; padding: 1px; margin-top: 8px; background: #fff;
+    position: relative;
+}
+.pano_up .dpic{
+    width: 200px; height: 100px; overflow: hidden;
+}
+.pano_up .pic{
+    width: 200px; height: 100px; overflow: hidden; position: absolute; z-index: 5;
+}
+.pano_up .ufo{
+    width: 200px; height: 100px; overflow: hidden; text-decoration: none; position: absolute; z-index: 10; display: none; background: url(../images/common/black.png) repeat; cursor: pointer;
+}
+.pano_cube:hover .pano_up .ufo{
+    display: block; text-decoration: none;
+}
+.ufo_editbox{
+    width: 80px; height: 30px; overflow: hidden; background: url(../images/common/huang.png) repeat; float: left;
+    margin-left: 14px; border-radius: 4px; border:1px solid #bbb; margin-top: 34px; display: block;
+    filter:alpha(opacity=60); /*IE滤镜，透明度50%*/
+    -moz-opacity:0.6; /*Firefox私有，透明度50%*/
+    opacity:0.6;/*其他，透明度50%*/
+}
+.ufo_delbox{
+    width: 80px; height: 30px; overflow: hidden; background: url(../images/common/huang.png) repeat; float: left;
+    margin-left: 8px; border-radius: 4px; border:1px solid #bbb; margin-top: 34px; display: block;
+    filter:alpha(opacity=60); /*IE滤镜，透明度50%*/
+    -moz-opacity:0.6; /*Firefox私有，透明度50%*/
+    opacity:0.6;/*其他，透明度50%*/
+}
+.ufo_previewbox{
+    width: 80px; height: 30px; overflow: hidden; background: url(../images/common/huang.png) repeat;
+    margin: 0 auto; border-radius: 4px; border:1px solid #bbb; margin-top: 34px; display: block; text-decoration: none;
+    filter:alpha(opacity=60); /*IE滤镜，透明度50%*/
+    -moz-opacity:0.6; /*Firefox私有，透明度50%*/
+    opacity:0.6;/*其他，透明度50%*/
+}
+.ufo_editbox:hover{
+     text-decoration: none;
+    filter:alpha(opacity=100); /*IE滤镜，透明度50%*/
+    -moz-opacity:1; /*Firefox私有，透明度50%*/
+    opacity:1;/*其他，透明度50%*/
+}
+.ufo_delbox:hover{
+     text-decoration: none;
+    filter:alpha(opacity=100); /*IE滤镜，透明度50%*/
+    -moz-opacity:1; /*Firefox私有，透明度50%*/
+    opacity:1;/*其他，透明度50%*/
+}
+.ufo_previewbox:hover{
+     text-decoration: none;
+    filter:alpha(opacity=100); /*IE滤镜，透明度50%*/
+    -moz-opacity:1; /*Firefox私有，透明度50%*/
+    opacity:1;/*其他，透明度50%*/
+}
+.ufo_ico1{
+    width: 16px; height: 16px; overflow: hidden; background: url(../images/common/pano_edit.png) no-repeat; margin-top: 7px; margin-left: 12px; float: left;
+}
+.ufo_ico2{
+    width: 16px; height: 16px; overflow: hidden; background: url(../images/common/pano_del.png) no-repeat;  margin-top: 7px; margin-left: 12px; float: left;
+}
+.ufo_ico3{
+    width: 16px; height: 16px; overflow: hidden; background: url(../images/common/pano_preview.png) no-repeat;  margin-top: 7px; margin-left: 12px; float: left;
+}
+.ufo_ico4{
+    width: 16px; height: 16px; overflow: hidden; background: url(../images/common/pano_spot.png) no-repeat;  margin-top: 7px; margin-left: 12px; float: left;
+}
+.ufo_txt{
+    width: 40px; height: 30px; overflow: hidden; float: left; font: bold 12px/30px "微软雅黑"; color: #eee; text-align: center; text-decoration: none;
+}
+.ufo_longtxt{
+    width: auto; height: 30px; overflow: hidden; font: bold 12px/30px "微软雅黑"; color: #eee; text-align: center;
+}
+.pano_down{
+    width: 200px; height: 24px; overflow: hidden; margin: 0 auto; margin-top: 6px;
+}
+.leftarrow{
+    width: 24px; height: 20px; overflow: hidden; float: left;
+    background: url(../images/pano/leftarrow.png) no-repeat; margin-top: 2px; cursor: pointer;
+    filter:alpha(opacity=50); /*IE滤镜，透明度50%*/
+    -moz-opacity:0.5; /*Firefox私有，透明度50%*/
+    opacity:0.5;/*其他，透明度50%*/
+
+}
+.leftarrow:hover{
+    filter:alpha(opacity=80); /*IE滤镜，透明度50%*/
+    -moz-opacity:0.8; /*Firefox私有，透明度50%*/
+    opacity:0.8;/*其他，透明度50%*/
+}
+.rightarrow{
+    width: 24px; height: 20px; overflow: hidden; float: right;
+    background: url(../images/pano/rightarrow.png) no-repeat; margin-top: 2px; cursor: pointer;
+    filter:alpha(opacity=50); /*IE滤镜，透明度50%*/
+    -moz-opacity:0.5; /*Firefox私有，透明度50%*/
+    opacity:0.5;/*其他，透明度50%*/
+}
+.rightarrow:hover{
+    filter:alpha(opacity=80); /*IE滤镜，透明度50%*/
+    -moz-opacity:0.8; /*Firefox私有，透明度50%*/
+    opacity:0.8;/*其他，透明度50%*/
+}
+.midtext{
+    width: 152px; height: 24px; overflow: hidden; float: left; text-align: center;
+    font: bold 12px/24px "微软雅黑";
+}
+.midtext a{
+    font: bold 12px/24px "微软雅黑"; cursor: pointer; text-decoration: none; color: #666;
+}
+.midtext a:hover{
+    color: #333;
+}
+
+.midonlytext{
+    width: 152px; height: 24px; overflow: hidden; margin: 0 auto; text-align: center;
+    font: bold 12px/24px "微软雅黑"; cursor: default;
+}
+.midonlytext a{
+    font: bold 12px/24px "微软雅黑"; cursor: pointer; text-decoration: none; color: #666;
+}
+.midonlytext a:hover{
+    color: #333;
+}
+
+.action_title{
+    width: auto; height: 32px; overflow: hidden; border-bottom: 2px solid #c6c6c6;
+    font: bold 14px/30px "微软雅黑"; color: #333; cursor: default; padding: 0 6px; margin-bottom: 15px;
+}
+.action_title a{
+    font: bold 14px/30px "微软雅黑"; color: #333; text-decoration: none;
+}
+.action_title a:hover{
+    text-decoration: none; color: #000;
+}
+
+.blackbutton{
+    width: 120px; height: 32px; overflow: hidden; border: none; color: #bbb; cursor: pointer;
+    background: url(../images/common/blackbutton.png) no-repeat; font-size: 12px;
+}
+.blackbutton:hover{
+    color: #eee;
+}
+
+.textareastyle{
+    width: 240px; height: 100px;
+    padding: 6px;
+    margin: 0;
+    color: #777;
+    -webkit-text-shadow: 0 1px 0 #fff;
+    text-shadow: 0 1px 0 #fff;
+    font-family: "微软雅黑";
+    font-size: 12px;
+    vertical-align: middle;
+    -webkit-background-clip: padding;
+    -moz-background-clip: padding;
+    background-clip: padding;
+    background-color: #f3f3f3;
+    background-image: -moz-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f5f5f5), to(#f1f1f1));
+    background-image: -webkit-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: -o-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: linear-gradient(to bottom, #f5f5f5, #f1f1f1);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#fff1f1f1', GradientType=0);
+    border: 1px solid #c6c6c6;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.btn{
+    position: relative;
+    padding: 6px 12px;
+    margin: 0;
+    color: #777;
+    -webkit-text-shadow: 0 1px 0 #fff;
+    text-shadow: 0 1px 0 #fff;
+    white-space: nowrap;
+    font-family: "微软雅黑";
+    font-weight: bold;
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-background-clip: padding;
+    -moz-background-clip: padding;
+    background-clip: padding;
+    background-color: #f3f3f3;
+    background-image: -moz-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f5f5f5), to(#f1f1f1));
+    background-image: -webkit-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: -o-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: linear-gradient(to bottom, #f5f5f5, #f1f1f1);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#fff1f1f1', GradientType=0);
+    border: 1px solid #c6c6c6;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.btn.me {
+    text-shadow: none;
+    color: #224f91;
+    border-color: #1972b2;
+    vertical-align: middle;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    background-color: #f5f5f5;
+    background-image: -moz-linear-gradient(top, #f8f8f8, #f1f1f1);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f8f8f8), to(#f1f1f1));
+    background-image: -webkit-linear-gradient(top, #f8f8f8, #f1f1f1);
+    background-image: -o-linear-gradient(top, #f8f8f8, #f1f1f1);
+    background-image: linear-gradient(to bottom, #f8f8f8, #f1f1f1);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff8f8f8', endColorstr='#fff1f1f1', GradientType=0);
+    background-position: 0 0;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+
+.btn.me:hover {
+    text-shadow: none;
+    color: #224f91;
+    border-color: #1972b2;
+    vertical-align: middle;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    background-color: #f5f5f5;
+    background-image: -moz-linear-gradient(top, #f8f8f8, #f1f1f1);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f8f8f8), to(#f1f1f1));
+    background-image: -webkit-linear-gradient(top, #f8f8f8, #f1f1f1);
+    background-image: -o-linear-gradient(top, #f8f8f8, #f1f1f1);
+    background-image: linear-gradient(to bottom, #f8f8f8, #f1f1f1);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff8f8f8', endColorstr='#fff1f1f1', GradientType=0);
+    background-position: 0 0;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+
+.btn:hover {
+    text-shadow: none;
+    color: #333;
+    border-color: #bbb;
+    vertical-align: middle;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    background-color: #f5f5f5;
+    background-image: -moz-linear-gradient(top, #f8f8f8, #f1f1f1);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f8f8f8), to(#f1f1f1));
+    background-image: -webkit-linear-gradient(top, #f8f8f8, #f1f1f1);
+    background-image: -o-linear-gradient(top, #f8f8f8, #f1f1f1);
+    background-image: linear-gradient(to bottom, #f8f8f8, #f1f1f1);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff8f8f8', endColorstr='#fff1f1f1', GradientType=0);
+    background-position: 0 0;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+
+.colorinput{
+    width: 55px; height: auto; overflow: hidden;
+    border: 1px solid #c6c6c6; padding: 6px 9px;
+    -webkit-border-radius: 2px; cursor: pointer;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.inputstyle{
+    position: relative;
+    padding: 6px 9px;
+    margin: 0;
+    color: #777;
+    -webkit-text-shadow: 0 1px 0 #fff;
+    text-shadow: 0 1px 0 #fff;
+    white-space: nowrap;
+    font-family: "微软雅黑";
+    font-size: 12px;
+    text-align: left;
+    vertical-align: middle;
+    -webkit-background-clip: padding;
+    -moz-background-clip: padding;
+    background-clip: padding;
+    background-color: #f3f3f3;
+    background-image: -moz-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f5f5f5), to(#f1f1f1));
+    background-image: -webkit-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: -o-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: linear-gradient(to bottom, #f5f5f5, #f1f1f1);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#fff1f1f1', GradientType=0);
+    border: 1px solid #c6c6c6;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.selectstyle{
+    padding: 4px; width: 168px; color: #666;
+}
+
+
+.icobtn{
+    width:36px; height:22px; padding: 0px; cursor: pointer;
+    background-color:#F3F3F3; border:1px solid #DCDCDC;
+    border-radius:4px; -moz-border-radius:4px; -webkit-border-radius:4px;
+    background:url("../images/common/icon_list.png") no-repeat;
+}
+.icobtn:hover{
+    border:1px solid #c6c6c6; background-color:#f5f5f5;
+    box-shadow:0 1px 1px rgba(0,0,0,0.2);
+    -moz-box-shadow:0 1px 1px rgba(0,0,0,0.2);
+    -webkit-box-shadow:0 1px 1px rgba(0,0,0,0.2);
+}
+.icobtn.b1{
+    background-position:-421px 4px;
+}
+.icobtn.b2{
+    background-position:-397px -93px;
+}
+.icobtn.b3{
+    background-position:-85px -69px;
+}
+.icobtn.b4{
+    background-position:-302px 4px;
+}
+
+.icobtn.b6{
+    background-position:-277px -21px;
+}
+.icobtn.b7{
+    background-position:-37px 4px;
+}
+.icobtn.b8{
+    background-position:-158px 4px;
+}
+.icobtn.b9{
+    background-position:11px -21px;
+}
+.icobtn.b10{
+    background-position:-278px -69px;
+}
+.icobtn.b11{
+    background-position:-254px -69px;
+}
+
+.floatimg{
+    width: 120px; height: 120px; overflow: hidden; border: 1px solid #c6c6c6; background: #f3f3f3; background: url(../images/common/noimg.jpg) center center no-repeat;
+}
+
+.pick_scene{
+    width: 250px; height: 30px; overflow: hidden; border: 1px solid #c6c6c6; border-radius:3px; background: #f3f3f3;
+    cursor: pointer; color: #666;
+}
+.pick_scene:hover{
+    border-color: #aaa; color: #333;
+}
+.pick_scene_head{
+    width: 80px; height: 30px; overflow: hidden; border-right: 1px solid #c6c6c6; float: left;
+    font: 12px/30px "微软雅黑"; text-align: center;
+}
+.pick_scene:hover .pick_scene_head{
+    border-color: #aaa;
+}
+.pick_scene_body{
+    width: 150px; height: 30px; overflow: hidden; float: left; margin-left: 10px;
+    font: 12px/30px "微软雅黑";
+}
+
+
+.action_nick{
+    width: auto; height: 40px; overflow: hidden; border-bottom: 2px solid #333;
+    font: bold 14px/30px "微软雅黑"; color: #fff; cursor: default; margin-bottom: 15px;
+}
+.action_nick span{
+    height: 26px; overflow: hidden; display: block; border: 1px solid #333; float: left; text-align: center; min-width: 54px;
+    font: 12px/26px "微软雅黑"; color: #ddd; padding: 0 8px; border-right: 0px solid #333; background: #666;
+}
+.action_nick span.me{
+    background: #444;
+}
+.action_nick span.hd{
+    height: 26px; min-width: 40px; overflow: hidden; font: 12px/26px "微软雅黑"; color: #fff; border-right: 0px solid #333; border-radius: 4px 0px 0px 4px; background: #333;
+}
+.action_nick span.bd{
+    width: 4px; min-width: 0px; height: 26px; overflow: hidden; padding: 0px; font: 12px/26px "微软雅黑";border-left: 1px solid #444; border-right: 1px solid #333; background: #444; color: #fff; border-radius: 0px 4px 4px 0px;
+}
+.action_nick a{
+    height: 26px; overflow: hidden; display: block; border: 1px solid #333; float: left; text-align: center; min-width: 54px; text-decoration: none;
+    font: 12px/26px "微软雅黑"; color: #ddd; padding: 0 8px; border-right: 0px solid #333; background: #666; cursor: pointer;
+}
+.action_nick a:hover{
+    color: #fff; background: #555; text-decoration: none;
+}
+.plugin_update_tips {margin: 0 8px 20px;}
+.page_msg.mini .inner {padding: 9px 20px;}
+.page_msg .inner {background-color: #f4f5f9;position: relative;}
+.a_detail{color: #459ae9;text-decoration: none;}
+.action_title .vrback a{margin-left:12px;color: #256786;}
+.action_title .vrback a:hover{text-decoration: underline; color: #256786;}
+
+.com-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+.dhm-conr-main-title{ position: absolute; left:20px; top:10px; width:98%; border-bottom: 1px solid #ddd}
+.dhm-conr-main-title .com-title{ float: left; line-height: 42px; padding-left: 20px; position: relative;}
+.dhm-conr-main-title .dhm-conr-o{ margin: 6px 0 0 0; }
+.dhm-conr-main-title .badge{ position: absolute; left:8px; top:12px; width: 4px; height: 18px; background-color:#6b88ad;}
+
+
+.nonumtext{	width: auto; min-width: 24px; height: 20px; overflow: hidden; background: #ccc; text-align: center; margin-top: 1px; cursor: pointer;
+font: 12px/20px "微软雅黑"; color: #fff; position: absolute; border:1px solid #ccc; border-radius:4px; padding: 0 3px;}
+.numtext{width: auto; min-width: 24px; height: 20px; overflow: hidden; background: #ff614f; text-align: center; margin-top: 1px; cursor: pointer;
+font: 12px/20px "微软雅黑"; color: #fff; position: absolute; border:1px solid #ff614f; border-radius:4px; padding: 0 3px;}
+
+.textspan{margin-left: 15px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+
+.headimgdiv{border: 1px solid #ddd;display: inline-block;height: 150px;margin-right: 20px;vertical-align: top;width: 150px;}
+.uploaddiv{background-color: #efefef;border: 1px solid #ddd;
+    color: #aaa;
+    cursor: pointer;
+    display: inline-block;
+    height: 129px;
+    line-height: 24px;
+    padding: 10px;
+    position: relative;
+    text-align: center;
+    width: 129px;}
+.headimg{height: 100%;width: 100%;border: 0 none;}
+
+.panoimg{
+    width: 250px; height: 250px; overflow: hidden; border: 1px solid #c6c6c6; background: #f3f3f3; background: url(../images/common/noimg.jpg) center center no-repeat;
+}

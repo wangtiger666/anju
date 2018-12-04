@@ -1,0 +1,397 @@
+﻿<krpano>
+
+   <skin_settings hot_loadscene_blend="OPENBLEND(1.0, 0.0, 0.2, 0.0, linear)"			    
+                  />
+				   
+	<!-- 音频插件 -->	
+	<plugin name="soundinterface"
+	        url.flash="../plugins/soundinterface.swf"
+	        url.html5="../plugins/soundinterface.js"
+	        rootpath=""
+	        preload="true"
+	        keep="true"
+	        />
+			
+	<!-- 重力感应插件 gyro  -->
+	<plugin name="skin_gyro" keep="true" url="" html5_url="../plugins/gyro2.js" softstart="1.0" enabled="get:skin_settings.gyro_enabled" devices="html5" onavailable="gyro_available_info();" 
+			/>
+	
+	<!-- 当设备支持重力感应只显示重力感应按钮 -->
+	<action name="gyro_available_info">        	
+		set(layer[skin_btn_gyro].visible, true);
+		set(layer[skin_btn_fs].visible, false);
+	</action>
+
+
+
+    
+	<!-- 热点样式 属性 -->
+ 	<action name="hotspot_animate">
+		inc(frame,1,get(lastframe),0);
+		mul(ypos,frame,frameheight);
+		txtadd(crop,'0|',get(ypos),'|',get(framewidth),'|',get(frameheight));
+		delayedcall(0.02, if(loaded, hotspot_animate()) );
+	</action>
+	
+	<!-- 1.198版本热点点击事件 -->
+	<action name="skin_hotspotstyle_click">	    
+		if(linkedscene,
+			if(linkedscene_lookat,
+				txtsplit(linkedscene_lookat, ',', hs_lookat_h, hs_lookat_v, hs_lookat_fov);
+			  );
+			set(enabled, false);
+			skin_hidetooltips();
+			tween(depth|alpha|oy|rx, 4000|0.0|-50|-60, 0.5, default,
+				hot_skin_loadscene(get(linkedscene),get(skin_settings.hot_loadscene_blend));
+				if(hs_lookat_h !== null,
+					hot_skin_lookat(get(hs_lookat_h), get(hs_lookat_v), get(hs_lookat_fov));
+					delete(hs_lookat_h, hs_lookat_v, hs_lookat_fov);
+				  );
+				skin_updatescroll();
+				
+			  );
+			  
+		  );
+		  
+	</action>
+	
+	<action name="hot_skin_loadscene">
+		if(webvr.isenabled AND scene.count GT 1,
+			set(hotspot[webvr_prev_scene].visible, false);
+			set(hotspot[webvr_next_scene].visible, false);
+		  );
+
+		txtadd(layer[skin_thumbborder].parent, 'skin_thumb_', get(scene[%1].index));
+		layer[skin_thumbs].scrolltocenter(get(scene[%1].thumbx), get(scene[%1].thumby));
+		loadscene(get(scene[%1].name), null,  get(skin_settings.loadscene_flags), %2);
+			
+		
+	</action>
+	
+	<!-- 视角指向 -->
+	<action name="hot_skin_lookat">
+		if(webvr.isenabled,
+			<!-- adjust the VR prev/next hotspots for the view change -->
+			calc(hlookat_offset, %1 - view.hlookat);
+			add(hotspot[webvr_prev_scene].ath, hlookat_offset);
+			add(hotspot[webvr_next_scene].ath, hlookat_offset);
+		  );
+		if(plugin[skin_gyro].enabled,
+			<!-- reset the gyro tracking -->
+			plugin[skin_gyro].resetsensor(%1);
+		  );
+		<!-- change the view -->
+		lookat(%1, %2, %3);
+	</action>
+
+ 	<action name="hotspot_animate_text">
+		showtxt_name(get(name),get(title),get(ath),get(atv));
+	</action>
+	
+<!-- showtxt_name(get(name),get(text),get(ath),get(atv)); -->
+ 
+<action name="showtxt_name">
+  if(view.fovmax == 170,
+        delayedcall(4.5,
+             txtadd(hotname,'hotsoptname_',%1);
+             addhotspot(get(hotname));
+             set(hotspot[get(hotname)].html,%2);
+             set(hotspot[get(hotname)].ath,%3);
+             set(hotspot[get(hotname)].atv,%4);
+             set(hotspot[get(hotname)].onclick,get(onclick));
+             hotspot[get(hotname)].loadstyle(hotspotname);   
+        );  
+    ,
+         txtadd(hotname,'hotsoptname_',%1);
+         addhotspot(get(hotname));
+         set(hotspot[get(hotname)].html,%2);
+         set(hotspot[get(hotname)].ath,%3);
+         set(hotspot[get(hotname)].atv,%4);
+         set(hotspot[get(hotname)].onclick,get(onclick));
+         hotspot[get(hotname)].loadstyle(hotspotname);   
+    );   
+</action>
+
+	<!-- 动态网站链接 -->
+	<action name="skin_deeplinking_update_url">
+		if(skin_settings.deeplinking AND (!webvr OR webvr.isenabled === false),
+			copy(adr, browser.location);
+			indexoftxt(qi, get(adr), '?');
+			if(qi GT 0, subtxt(adr, adr, 0, get(qi)));
+			copy(si, scene[get(xml.scene)].index);
+			copy(h, view.hlookat);
+			copy(v, view.vlookat);
+			copy(f, view.fov);
+			copy(d, view.distortion);
+			copy(a, view.architectural);
+			clamp(d, 0.0, 1.0);
+			clamp(a, 0.0, 1.0);
+			set(pp, calc(f LT 10 ? 6 : 2));
+			roundval(h, get(pp));
+			roundval(v, get(pp));
+			roundval(f, get(pp));
+			roundval(d, 2);
+			roundval(a, 1);
+			set(adr, calc(adr + '?startscene=' + si + '&amp;startactions=lookat('+h+','+v+','+f+','+d+','+a+');'));
+			js( history.replaceState(null, document.title, get(adr)); );
+		  );
+	</action>
+	
+		<!-- 小行星属性 -->  
+	<action name="skin_setup_littleplanetintro">
+		copy(lp_scene, xml.scene);
+		copy(lp_hlookat, view.hlookat);
+		copy(lp_vlookat, view.vlookat);
+		copy(lp_fov, view.fov);
+		copy(lp_fovmax, view.fovmax);
+		copy(lp_limitview, view.limitview);
+		
+		set(view.fovmax, 170);
+		
+		set(view.limitview, lookto);
+		set(view.vlookatmin, 90);
+		set(view.vlookatmax, 90);
+		
+		littleplanetintro_hotspot_visible(false);
+		
+		hide_UIindex();
+		hide_UI15();
+		
+	    set(layer[skin_layer].visible,false);
+		set(layer[skin_layer].alpha,0);
+	    set(layer[skin_control_bar].visible,false);
+		set(layer[skin_control_bar].alpha,0);
+	    set(layer[skin_scroll_window].visible,false);
+		set(layer[skin_scroll_window].alpha,0);
+		
+		lookat(calc(lp_hlookat - 180), 90, 150, 1, 0, 0);
+		set(events[lp_events].onloadcomplete,
+			
+			delayedcall(3.0,
+				if(lp_scene === xml.scene,
+					set(control.usercontrol, off);
+					copy(view.limitview, lp_limitview);
+					set(view.vlookatmin, null);
+					set(view.vlookatmax, null);
+					tween(view.hlookat|view.vlookat|view.fov|view.distortion, calc('' + lp_hlookat + '|' + lp_vlookat + '|' + lp_fov + '|' + 0.0),
+						3.0, easeOutQuad,
+						set(control.usercontrol, all);
+						tween(view.fovmax, get(lp_fovmax));
+						
+						
+					littleplanetintro_hotspot_visible(true);
+					
+					show_UIindex();
+					show_UI15();
+	                
+					set(layer[skin_scroll_window].visible,true);
+					tween(layer[skin_scroll_window].alpha,1,1);
+					set(layer[skin_layer].visible,true);
+                    tween(layer[skin_layer].alpha,1,1);
+                    set(layer[skin_control_bar].visible,true);
+					tween(layer[skin_control_bar].alpha,1,1);
+					
+					);						
+					);
+					);			  
+					);
+	</action>
+	
+<!-- 全局属性 -->	
+<action name="littleplanetintro_hotspot_visible">
+	for(set(i,0),i LE hotspot.count,inc(i),
+	   if(%1 == false,
+	   	if(hotspot[get(i)].visible == true,
+	   		set(hotspot[get(i)].mark,true);
+			set(hotspot[get(i)].visible,false);
+	   		);
+	   	,
+	   	if(hotspot[get(i)].mark == true,
+	   		set(hotspot[get(i)].visible,true);
+	   		);
+	   	);	  
+	);
+	
+	set(hotspot[vr_cursor].visible,false);
+	set(hotspot[webvr_prev_scene].visible,false);
+	set(hotspot[webvr_next_scene].visible,false);
+	set(hotspot[webvr_menu_bg].visible,false);
+	set(hotspot[webvr_prev_home].visible,false);
+	
+</action>
+
+<!-- 小行星属性 -->
+
+<!-- 右键属性 -->
+	<action name="skin_view_look_straight">
+		if(view.vlookat LT -80 OR view.vlookat GT +80,
+			tween(view.vlookat, 0.0, 1.0, easeInOutSine);
+			tween(view.fov,     100, distance(150,0.8));
+		  );
+		skin_deeplinking_update_url(1.0);
+	</action>
+
+	<action name="skin_view_normal">
+		skin_view_look_straight();
+		tween(view.architectural, 0.0, distance(1.0,0.5));
+		tween(view.pannini,       0.0, distance(1.0,0.5));
+		tween(view.distortion,    0.0, distance(1.0,0.5));
+		
+		littleplanetintro_hotspot_visible(true);
+	    set(layer[skin_scroll_window].visible,true);
+        tween(layer[skin_layer].alpha,1,1);
+        set(layer[skin_control_bar].visible,true);
+					
+	</action>
+	
+	<action name="skin_view_littleplanet">	
+		set(display.flash10,off);
+         tween(view.architectural, 0.0, 0.25);
+         tween(view.vlookat,  90, distance(179, 1.50), easeoutquad);
+         set(backtonormalfirst,false);
+         if(view.pannini       == true,  set(backtonormalfirst,true) );
+         if(view.stereographic == false, set(backtonormalfirst,true) );
+         if(backtonormalfirst, tween(view.fisheye, 0.0 ,distance(1.0, 0.25), easeoutquad, WAIT); );
+         set(view.pannini, false);
+         set(view.stereographic, true);
+         set(view.fovmax, 150);
+         tween(view.fisheye, 1.0, distance(1.0, 0.75), easeoutquad);
+         tween(view.fov,     150, distance(179, 0.75), easeoutquad);
+		
+         littleplanetintro_hotspot_visible(false);
+         set(layer[skin_scroll_window].visible,false);
+         tween(layer[skin_layer].alpha,0,1);
+         set(layer[skin_control_bar].visible,false);		 
+		
+	</action>
+
+<!-- 地图雷达属性 -->	
+<action name="mapdo">
+  set(plugin[mapbox].visible,true);
+  txtadd(oldmapname,"scrollarea",get(skin_settings.map_nowmap));
+  txtadd(nowmapname,"scrollarea",%3);
+  set(plugin[get(oldmapname)].visible,false);
+  set(plugin[get(nowmapname)].visible,true);
+  txtadd(oldmaptitle,"mapname",get(skin_settings.map_nowmap));
+  txtadd(nowmaptitle,"mapname",%3);
+  set(plugin[get(oldmaptitle)].visible,false);
+  set(plugin[get(nowmaptitle)].visible,true);
+  set(skin_settings.map_nowmap,%3);
+  copy(plugin[radar].x, plugin[%1].x);
+  copy(plugin[radar].y, plugin[%1].y);
+  set(plugin[radar].parent, get(nowmapname));
+  set(plugin[radar].visible, true);
+  set(plugin[radar].heading, %2);
+  copy(plugin[activespot].x, plugin[%1].x);
+  copy(plugin[activespot].y, plugin[%1].y);
+  set(plugin[activespot].parent, get(nowmapname));
+  plugin[get(nowmapname)].scrolltocenter(get(plugin[%1].x),get(plugin[%1].y)) 
+</action>
+
+<action name="mapshow">
+  tween(plugin[mapbox].x,0);
+  tween(plugin[mapbox].alpha,1);
+  set(plugin[mapon].visible,false);
+</action>
+
+<action name="activatespot">
+   set(plugin[activespot].parent, plugin[%1]);
+   set(plugin[activespot].visible, true);
+   copy(plugin[radar].x, plugin[%1].x);
+   copy(plugin[radar].y, plugin[%1].y);
+   set(plugin[radar].visible, true);
+   set(plugin[radar].heading, %2);
+</action>
+
+<action name="flyout">
+ copy(backup_rx,rx);
+ copy(backup_ry,ry);
+ copy(backup_rz,rz);
+ copy(backup_scale,scale);
+ copy(backup_directionalsound,directionalsound);
+ copy(backup_zorder,zorder);
+ tween(rx, 0);
+ tween(ry, 0);
+ tween(rz, 0);
+ tween(scale, 1.3);
+ tween(flying, 1.0);
+ set(directionalsound,false);
+ set(zorder,100)
+</action>
+
+<action name="flyback">
+  tween(rx, get(backup_rx));
+  tween(ry, get(backup_ry));
+  tween(rz, get(backup_rz));
+  tween(scale, get(backup_scale));
+  tween(flying, 0.0);
+  set(directionalsound,get(backup_directionalsound));
+  set(zorder,get(backup_zorder));
+</action>
+
+
+
+<!--   ui    -->
+<action name="hide_UIindex">
+		set(layer[introimage].visible,false);
+		set(layer[ui_logo].visible,false);
+		set(layer[zj-logo].visible,false);
+		set(layer[welcome].visible,false);
+		set(layer[cms_view_html].visible,false);
+		
+		
+		hideGui();
+		
+		
+		
+		set(layer[hcMainGui].x,-520);
+		set(layer[hcMainGui_btn].visible,false);
+		set(layer[toggle_gui].x,-520);
+		set(layer[toggle_btn].visible,false);
+		
+		set(layer[cms_guanfang].visible,false);
+		set(layer[cms_xinxi].visible,false);
+		set(layer[cms_map_dtzb].visible,false);
+		set(layer[cms_card].visible,false);
+		set(layer[cms_erweima].visible,false);
+		set(layer[cms_zan].visible,false);
+		set(layer[cms_zan_html].visible,false);
+		set(layer[danmu].visible,false);
+		
+</action>
+<action name="show_UIindex">
+        set(layer[introimage].visible,true);
+		set(layer[ui_logo].visible,true);
+		set(layer[zj-logo].visible,true);
+		set(layer[welcome].visible,true);
+		set(layer[cms_view_html].visible,true);
+		
+		showGui();
+	
+		
+		set(layer[hcMainGui].x,10);
+		set(layer[hcMainGui_btn].visible,true);
+		set(layer[toggle_gui].x,10);
+		set(layer[toggle_btn].visible,true);
+
+		
+		if(skin_settings.openhttp, set(layer[cms_guanfang].visible,true););
+		if(skin_settings.opentel, set(layer[cms_xinxi].visible,true););
+		if(skin_settings.opendaohang, set(layer[cms_map_dtzb].visible,true););
+		if(skin_settings.opencard, set(layer[cms_card].visible,true););
+		if(skin_settings.erweima, set(layer[cms_erweima].visible,true););
+		if(skin_settings.openzan, set(layer[cms_zan].visible,true);set(layer[cms_zan_html].visible,true););
+		if(skin_settings.opennews, set(layer[danmu].visible,true););
+
+		
+</action>
+<action name="hide_UI15">
+        set(layer[text_biaoti].visible,false);
+		
+</action>
+<action name="show_UI15">
+        set(layer[text_biaoti].visible,true);
+
+</action>
+<!--   ui    -->
+</krpano>

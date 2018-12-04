@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        <style>
+            body{
+                background: #fff;
+            }
+            .main{
+                margin-left: 20px; overflow: hidden;
+            }
+            .pick_top{
+                width: auto; height: 26px; margin: 20px 20px 4px 20px; overflow: hidden; text-indent: 12px;
+                font: 12px/26px "微软雅黑"; color: #199372; cursor: default; border: 1px solid #ccc; background: #f3f3f3;
+            }
+            .self_window{
+                width: 300px; height: 106px; overflow: hidden; border:1px solid #8eb9e5; border-radius: 4px;
+                float: left; margin-top: 3px; margin-right: 6px; margin-bottom: 3px; cursor: pointer; background: #deefff; float: left;
+            }
+            .self_window .tw_img{
+                width: 120px; height: 90px; overflow: hidden; float: left; border:1px solid #8eb9e5; padding: 1px; margin: 6px; background: #fff;
+            }
+            .self_window .tw_img span{
+                width: 120px; height: 90px; overflow: hidden; display: block;
+            }
+            .self_window .tw_tbox{
+                width: 152px; height: 86px; overflow: hidden; float: right; padding: 3px 2px; border:1px solid #8eb9e5; margin-top: 6px; margin-right: 6px; background: #f3f9ff;
+            }
+            .self_window .tw_tbox .line{
+                height: 26px; overflow: hidden; font: 12px/36px "微软雅黑"; color: #2d5889; padding-left: 8px;
+            }
+
+            .target_window{
+                width: 300px; height: 106px; overflow: hidden; border:1px solid #c6c6c6; border-radius: 4px; border-bottom: 1px solid #bbb;
+                float: left; margin-top: 3px; margin-right: 6px; margin-bottom: 3px; cursor: pointer; background: #f3f3f3; float: left;
+            }
+            .target_window .tw_img{
+                width: 120px; height: 90px; overflow: hidden; float: left; border:1px solid #c6c6c6; padding: 1px; margin: 6px; background: #fff;
+            }
+            .target_window .tw_img span{
+                width: 120px; height: 90px; overflow: hidden; display: block;
+            }
+            .target_window .tw_tbox{
+                width: 152px; height: 86px; overflow: hidden; float: right; padding: 3px 2px; border:1px solid #c6c6c6; margin-top: 6px; margin-right: 6px; background: #fff;
+            }
+            .target_window .tw_tbox .line{
+                height: 26px; overflow: hidden; font: 12px/36px "微软雅黑"; color: #333; padding-left: 8px;
+            }
+
+            .target_window.me{
+                border:1px solid #FFA900; background: #fff6e4;
+            }
+            .target_window.me .tw_img{
+                width: 120px; height: 90px; overflow: hidden; float: left; border:1px solid #FFA900; padding: 1px; margin: 6px; background: #fff;
+            }
+            .target_window.me .tw_tbox{
+                border:1px solid #FFA900; background: #fffcf7;
+            }
+            .target_window.me .tw_tbox .line{
+                color: #a13d00;
+            }
+
+            .target_window:hover{
+                border:1px solid #FFA900; background: #fff6e4;
+            }
+            .target_window:hover .tw_img{
+                width: 120px; height: 90px; overflow: hidden; float: left; border:1px solid #FFA900; padding: 1px; margin: 6px; background: #fff;
+            }
+            .target_window:hover .tw_tbox{
+                border:1px solid #FFA900; background: #fffcf7;
+            }
+        </style>
+        <script type="text/javascript">
+            $(function(){
+                $(".target_window").click(function(){
+                    var m_view = $(this).data("view");
+                    var m_name = $(this).data("name");
+                    var m_sort = $(this).data("sort");
+                    parent.getscene(m_view,m_name,m_sort);
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="pick_top">提示：点击下方场景，即可选择。</div>
+        <div class="main">
+            <volist name="vlist" id="theview">
+                <if condition="$theview['id'] eq $view_id">
+                    <div class="self_window">
+                        <div class="tw_img">
+                            <span><img src="{:CC('web_root')}{$theview['thumb']}" onload="photocenterout(this,120,90);" /></span>
+                        </div>
+                        <div class="tw_tbox">
+                            <div class="line"><b>排序：</b>{$theview['sort']}</div>
+                            <div class="line"><b>名称：</b>{$theview['title']}</div>
+                            <div class="line"><b>状态：</b><span class="ps">当前场景（自己）</span></div>
+                        </div>
+                    </div>
+                    <else/>
+                    <div class="target_window" data-view="{$theview['id']}" data-name="{$theview['title']}" data-sort="{$theview['sort']}">
+                        <div class="tw_img">
+                            <span><img src="{:CC('web_root')}{$theview['thumb']}" onload="photocenterout(this,120,90);" /></span>
+                        </div>
+                        <div class="tw_tbox">
+                            <div class="line"><b>排序：</b>{$theview['sort']}</div>
+                            <div class="line"><b>名称：</b>{$theview['title']}</div>
+                            <div class="line"><b>状态：</b><span class="ps">可以选择</span></div>
+                        </div>
+                    </div>
+                </if>
+            </volist>
+        </div>
+    </body>
+</html>

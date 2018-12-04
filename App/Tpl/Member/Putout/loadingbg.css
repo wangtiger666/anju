@@ -1,0 +1,12 @@
+body, html{ 
+<if condition="$panorow['openloading'] eq 1">
+	background: #011137 url({$loadingbg['file']||basename=###}) no-repeat fixed top;
+	background-size:{$loadingbg['width']}px {$loadingbg['height']}px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;	
+	background-color:{$loading['color']};
+<else/>
+	background-color:#000000; 
+</if>	
+}

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link href="__PUBLIC__/admin/style/common.css" rel="stylesheet" type="text/css" />
+        <script src="__PUBLIC__/common/js/jquery.js" language="javascript" type="text/javascript"></script>
+        <script src="__PUBLIC__/common/js/common.js" language="javascript" type="text/javascript"></script>
+        <script type="text/javascript">
+            var max_num = 0;
+            var now_num = 0;
+
+            var dir_len = 0;
+            var file_len = 0;
+            var del_len = 0;
+
+            $(function(){
+                step1();
+            });
+            function step1(){
+                $(".step1").show();
+                $("#doing").html("连接更新服务器，获取更新数据！");
+                $.ajax({
+                    url:"{:U('ajax')}",
+                    type:"POST",
+                    dataType:"JSON",
+                    data:{
+                        dopost:"step1"
+                    },
+                    success:function(data){
+                        if(data.result == 1){
+                            $("#doing").html("获取更新版本号！");
+                            $("#ball_1").animate({height:70}, 500, function(){
+                                $("#showing").append('<div class="cube"><b>补丁版本：</b>'+data.ban+'</div>');
+                                $("#doing").html("获取补丁发布日期！");
+                                $("#ball_1").animate({height:40}, 500, function(){
+                                    $("#showing").append('<div class="cube"><b>发布日期：</b>'+data.date+'</div>');
+                                    $("#doing").html("获取补丁大小！");
+                                    $("#ball_1").animate({height:20}, 500, function(){
+                                        $("#showing").append('<div class="cube"><b>补丁大小：</b>'+data.size+'</div>');
+                                        $("#doing").html("获取更新数据完毕！准备下一步");
+                                        $("#ball_1").animate({height:0}, 500, function(){
+                                            $("#ball_1").html("OK");
+                                            step2_down();
+                                        })
+                                    })
+                                })
+                            })
+                        }else if(data.result == 0){
+                            $("#doing").html('<font color="#be0000">目前版本已经是最新版本！</font>');
+                        }else if(data.result == 3){
+                            $("#doing").html('<font color="#be0000">目前版本已经是最新版本！</font>');
+                            $("#showing").append('<div class="cube"><b>目前版本：</b>'+data.ban+'</div>');
+                            $("#showing").append('<div class="cube"><b>发布日期：</b>'+data.date+'</div>');
+                        }
+                    }
+                });
+            }
+            function step2_down(){
+                $("#doing").html("下载补丁数据包！");
+                $.ajax({
+                    url:"{:U('ajax')}",
+                    type:"POST",
+                    dataType:"text",
+                    data:{
+                        dopost:"step2_down"
+                    },
+                    success:function(data){
+                        if(data == 1){
+                            $("#ball_2").animate({height: 90}, 500, function(){
+                                $("#doing").html("下载补丁数据包成功，准备释放数据文件！");
+                                step2_clean();
+                            })
+                        }
+                    }
+                });
+            }
+            function step2_clean(){
+                $.ajax({
+                    url:"{:U('ajax')}",
+                    type:"POST",
+                    dataType:"text",
+                    data:{
+                        dopost:"step2_clean"
+                    },
+                    success:function(data){
+                        if(data == 1){
+                            $("#doing").html("释放数据文件！");
+                            $("#ball_2").animate({height: 60}, 500, function(){
+                                step2_putout()
+                            })
+                        }
+                    }
+                });
+            }
+
+            function step2_putout(){
+                $.ajax({
+                    url:"{:U('ajax')}",
+                    type:"POST",
+                    dataType:"text",
+                    data:{
+                        dopost:"step2_putout"
+                    },
+                    success:function(data){
+                        if(data == 1){
+                            $("#doing").html("读取更新文件！");
+                            $("#ball_2").animate({height: 40}, 500, function(){
+                                step2_readfile();
+                            })
+                        }
+                    }
+                });
+            }
+            function step2_readfile(){
+                $.ajax({
+                    url:"{:U('ajax')}",
+                    type:"POST",
+                    dataType:"script",
+                    data:{
+                        dopost:"step2_readfile"
+                    },
+                    success:function(data){
+                        $("#doing").html("准备文件更新！");
+                        $("#ball_2").animate({height: 0}, 500, function(){
+                            $("#ball_2").html("OK");
+                            step3_go();
+                        })
+                    }
+                });
+            }
+            function step3_go(){
+                dir_len = $(".dircube").length;
+                file_len = $(".filecube").length;
+                del_len = $(".delcube").length;
+                max_num = dir_len + file_len + del_len;
+                step3_dir(0);
+            }
+            function step3_dir(n){
+                if(n>0){
+                    $(".dircube").eq(n-1).addClass("ok");
+                }
+                if(n<dir_len){
+                    $("#doing").html("更新文件路径"+(n+1)+"！");
+                    var p = 100 - 100*(n/max_num);
+                    $("#ball_3").stop().animate({height: p}, 300);
+                    var path = $(".dircube").eq(n).attr("mk");
+                    $.ajax({
+                        url:"{:U('ajax')}",
+                        type:"POST",
+                        dataType:"script",
+                        data:{
+                            dopost:"step3_dir",
+                            n:n,
+                            path:path
+                        },
+                        success:function(data){}
+                    });
+                }else{
+                    $("#doing").html("文件路径更新完毕！");
+                    step3_file(0);
+                }
+            }
+            function step3_file(n){
+                if(n>0){
+                    $(".filecube").eq(n-1).addClass("ok");
+                }
+                if(n<file_len){
+                    var p = 100 - 100*((dir_len + n)/max_num);
+                    $("#doing").html("更新文件"+(n+1)+"！");
+                    $("#ball_3").stop().animate({height: p}, 100);
+                    var path = $(".filecube").eq(n).attr("mk");
+                    $.ajax({
+                        url:"{:U('ajax')}",
+                        type:"POST",
+                        dataType:"script",
+                        data:{
+                            dopost:"step3_file",
+                            n:n,
+                            path:path
+                        },
+                        success:function(data){}
+                    });
+                }else{
+                    $("#doing").html("文件更新完毕！");
+                    step3_del(0);
+                }
+            }
+            function step3_del(n){
+                if(n>0){
+                    $(".delcube").eq(n-1).addClass("ok");
+                }
+                if(n<del_len){
+                    $("#doing").html("删除文件"+(n+1)+"！");
+                    var p = 100 - 100*((dir_len + file_len + n)/max_num);
+                    $("#ball_3").stop().animate({height: p}, 300);
+                    var path = $(".delcube").eq(n).attr("mk");
+                    $.ajax({
+                        url:"{:U('ajax')}",
+                        type:"POST",
+                        dataType:"script",
+                        data:{
+                            dopost:"step3_del",
+                            n:n,
+                            path:path
+                        },
+                        success:function(data){}
+                    });
+                }else{
+                    $("#ball_3").stop().animate({height: 0}, 300,function(){
+                        $("#doing").html("文件删除完毕！");
+                        step4_go();
+                    });
+                }
+            }
+            function step4_go(){
+                $("#ball_3").html("OK");
+                $("#doing").html("开始数据库更新！");
+                $.ajax({
+                    url:"{:U('ajax')}",
+                    type:"POST",
+                    dataType:"text",
+                    data:{
+                        dopost:"step4_go"
+                    },
+                    success:function(data){
+                        if(data == 1){
+                            $("#ball_4").animate({height: 20}, 500, function(){
+                                $("#doing").html("开始数据库完成！开始登记版本号！");
+                                step4_ban();
+                            })
+                        }
+                    }
+                });
+            }
+            function step4_ban(){
+            $("#ball_3").html("OK");
+                $.ajax({
+                    url:"{:U('ajax')}",
+                    type:"POST",
+                    dataType:"text",
+                    data:{
+                        dopost:"step4_ban"
+                    },
+                    success:function(data){
+                        if(data == 1){
+                            $("#ball_4").animate({height: 0}, 500, function(){
+                                $("#doing").html("升级完毕！3S后返回版本页！");
+                                $("#ball_4").html("OK");
+                                allok();
+                            })
+                        }
+                    }
+                });
+            }
+            function allok(){
+                LinkTo("{:U('index')}");
+            }
+        </script>
+        <style type="text/css">
+            #upmain{
+                width: auto; min-height: 500px; overflow: hidden;
+            }
+            .warry{
+                height: 30px; overflow: hidden; border: 1px #F60 dashed; cursor: default;
+                font: 14px/30px "微软雅黑"; color: #be0000; padding: 0 12px;
+            }
+            .stepbox{
+                overflow: hidden; margin-top: 15px;
+            }
+            .stepcube{
+                width: 100px; height: 126px; overflow: hidden; float: left; margin-left: 15px;
+            }
+            .stepball{
+                width: 100px; height: 100px; overflow: hidden;
+                background: url(__PUBLIC__/admin/images/updata/ball_1.png) no-repeat;
+            }
+            .ballin{
+                width: 100px; height: 100px; overflow: visible; text-align: center; line-height: 100px; color: #fff;
+                background: url(__PUBLIC__/admin/images/updata/ball_0.png) no-repeat; font-size: 20px;
+            }
+            .steptxt{
+                height: 26px; overflow: hidden; text-align: center;
+                font: bold 12px/26px "微软雅黑"; color: #398439;
+            }
+            .stepmain{
+                overflow: hidden; display: none; padding-left: 20px; margin-top: 20px;
+            }
+            #doing{
+                width: 300px; height: 28px; overflow: hidden; border:1px solid #ace; border-radius: 4px; background: #f3f3f3;
+                font: 12px/28px "微软雅黑"; color: #08c; padding: 0 10px;
+            }
+            #showing{
+                overflow: hidden; margin-top: 20px;
+            }
+            #showing .cube{
+                height: 28px; overflow: hidden; font: 12px/28px "微软雅黑"; color: #333;
+            }
+            #dirbox,#filebox,#delbox{
+                width: 700px; height: auto; overflow: hidden; margin-bottom: 15px;
+            }
+            .steptitle{
+                width: 90px; height: 26px; overflow: hidden; border:1px solid #777; border-radius: 4px; padding-left: 10px;background: #f3f3f3;
+                font: bold 12px/26px "微软雅黑"; color: #fff; background: #999;
+            }
+            .dircube,.filecube,.delcube{
+                width: 320px; height: 26px; overflow: hidden; border:1px solid #ace; border-radius: 4px; padding-left: 10px; padding-right: 10px; cursor: pointer;
+                font: 12px/26px "微软雅黑"; color: #08c; margin-top : 4px; margin-left: 6px; float: left;
+            }
+            .dircube.ok,.filecube.ok,.delcube.ok{
+                width: 320px; height: 26px; overflow: hidden; border:1px solid #008800; border-radius: 4px; padding-left: 10px; padding-right: 10px; cursor: pointer;
+                font: 12px/26px "微软雅黑"; color: #008800; margin-top : 4px; margin-left: 6px; float: left;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="indexmian">
+            <div id="indextitle">版本升级 </div>
+            <div id="indexmain">
+                <div id="upmain">
+                    <div class="warry">升级期间，请不要中断，请耐心等待至升级完毕。</div>
+                    <div class="stepbox">
+                        <div class="stepcube">
+                            <div class="stepball"><div id="ball_1" class="ballin" style="height: 100px;"></div></div>
+                            <div class="steptxt">获取补丁资源</div>
+                        </div>
+                        <div class="stepcube">
+                            <div class="stepball"><div id="ball_2" class="ballin" style="height: 100px;"></div></div>
+                            <div class="steptxt">补丁文件读取</div>
+                        </div>
+                        <div class="stepcube">
+                            <div class="stepball"><div id="ball_3" class="ballin" style="height: 100px;"></div></div>
+                            <div class="steptxt">补丁文件更新</div>
+                        </div>
+                        <div class="stepcube">
+                            <div class="stepball"><div id="ball_4" class="ballin" style="height: 100px;"></div></div>
+                            <div class="steptxt">数据库表更新</div>
+                        </div>
+                    </div>
+                    <div class="stepmain step1">
+                        <div id="doing"></div>
+                        <div id="showing"></div>
+                    </div>
+                    <div class="stepmain step2">
+                        <div class="steptitle">更新路径</div>
+                        <div id="dirbox"></div>
+                        <div class="steptitle">更新文件名称</div>
+                        <div id="filebox"></div>
+                        <div class="steptitle">删除文件名称</div>
+                        <div id="delbox"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/pano/pano.js"></script>
+        {:W("Easyui")}
+        {:W("Boluoui")}
+        {:W("Uploader")}
+        <style type="text/css">
+            .box{
+                width: auto; height: 50px; overflow: hidden; border:1px solid #c6c6c6; margin: 5px; float: left; border-radius: 5px; background: #eee; cursor: pointer;
+            }
+            .box.me{
+                background: #e0f5ff; border-color: #ace;
+            }
+            .box:hover{
+                background: #e5ffcb;
+            }
+            .box.me:hover{
+                background: #e0f5ff;
+            }
+            .boxtext{
+                width: 60px; height: 36px; overflow: hidden; float: left; background: #fff; padding: 2px 0;
+                text-align: center; font: 12px/36px "微软雅黑"; cursor: default; margin-top: 5px; margin-left: 5px;
+            }
+            .boxbag{
+                width: auto; height: 50px; overflow: hidden; float: left; padding-right: 5px;
+            }
+            .boxbag .pigbox{
+                width: 38px; height: 38px; overflow: hidden; float: left; background: #fff; margin-left: 5px; border:1px solid #ccc;
+                margin-top: 5px;
+            }
+            .box.me .boxbag .pigbox{
+                border-color: #ace;
+            }
+            .cursorout{
+                overflow: hidden; background: #f8f8f8; padding: 5px; border:1px solid #c6c6c6; float: left; border-radius:5px;
+            }
+            .cursormarket{
+                overflow: hidden;
+            }
+            .bgmusic{
+                width: auto; height: 26px; overflow: hidden; float: left; border:1px solid #ace; color: #426076;
+                font: bold 12px/26px "微软雅黑"; padding: 0 10px; border-radius: 4px; cursor: pointer; background: #d4edff;
+            }
+            .player{
+                width: auto; height: 30px; overflow: hidden; border:1px solid #bbb; border-radius: 5px; background: #eee; float: left;
+            }
+            .play{
+                width: 24px; height: 24px; overflow: hidden; margin: 3px; cursor: pointer; float: left;
+                background: url(__PUBLIC__/member/images/pano/playpic.png) no-repeat;
+            }
+            .play.me{
+                background-position: -27px 0;
+            }
+            .pause{
+                width: 24px; height: 24px; overflow: hidden; margin: 3px; cursor: pointer; float: left;
+                background: url(__PUBLIC__/member/images/pano/playpic.png) -53px 0 no-repeat;
+            }
+            .pause.me{
+                background-position: -53px -26px;
+            }
+            .stop{
+                width: 24px; height: 24px; overflow: hidden; margin: 3px; cursor: pointer; float: left;
+                background: url(__PUBLIC__/member/images/pano/playpic.png) -80px 0 no-repeat;
+            }
+            .stoper:hover{
+                background-position: -80px -26px;
+            }
+            .pano{
+                width: 0px; height: 0px; overflow: hidden;
+            }
+            #musicpano{
+                width: 800px; height: 600px; overflow: hidden; border: 1px solid #dbdbdb; display: none;
+            }
+            .musicpos{
+                width: 22px; height: 22px; overflow: hidden; padding: 0px; margin: 0px; border:none;
+                background: url(__PUBLIC__/member/images/pano/ding.png) no-repeat; cursor: pointer;
+            }
+            .musicpos:hover{
+                background-image: url(__PUBLIC__/member/images/pano/ding3.png);
+            }
+            .musicpos.me{
+                background-image: url(__PUBLIC__/member/images/pano/ding2.png);
+            }
+            .lefttop{
+                background-position: 0px 0px;
+            }
+            .top{
+                background-position: -22px 0px;
+            }
+            .righttop{
+                background-position: -44px 0px;
+            }
+            .left{
+                background-position: 0px -22px;
+            }
+            .mid{
+                background-position: -22px -22px;
+            }
+            .right{
+                background-position: -44px -22px;
+            }
+            .leftbottom{
+                background-position: 0px -44px;
+            }
+            .bottom{
+                background-position: -22px -44px;
+            }
+            .rightbottom{
+                background-position: -44px -44px;
+            }
+            .mc{
+                display: none;
+            }
+            .musicpic,.musichoverpic{
+                width: 80px; height: 80px; overflow: hidden; border:1px solid #ccc; border-radius: 4px;
+                background: url(__PUBLIC__/member/images/common/psbg.png); cursor: pointer;
+            }
+        </style>
+        <script type="text/javascript">
+            function checksb(){
+                var result = true;
+                if(result == true){
+                    result = AutoCheckSub(".cs");
+                }
+                return result;
+            }
+            var playing = 0;
+            var pause = 0;
+            var musicpano_on = 0;
+            $(document).ready(function(){
+                onoroff();
+                boluo_autocheckui();
+                $('.dd').tooltip({
+                    position: 'right'
+                });
+                $(".bgmusic").click(function(){
+                    openwin("选择背景音乐","{:U('pick/music')}",600,500);
+                });
+                $(".musicpic").uploader("image","musicpicdata");
+                $(".musichoverpic").uploader("image","musichoverpicdata");
+                $(".play").click(function(){
+                    var temp = $(this).parent().data("checked");
+                    if(temp){
+                        if(temp == 1){
+                            return;
+                        }else{
+                            stopplay();
+                        }
+                    }else{
+                        stopplay();
+                    }
+                    if(playing == 0){
+                        playing = 1;
+                        pause = 0;
+                        var music = $(".bgmusic").data("music");
+                        if(music != "none"){
+                            var krpano = document.getElementById("krpano");
+                            krpano.call("playsound(bgsnd, '"+music+"', 1,stopme);");
+                            $(".play").removeClass("me");
+                            $(this).addClass("me");
+                            $(this).parent().data("checked",1);
+                            $(this).parent().children(".stop").addClass("stoper");
+                        }else{
+                            showMsg("目前未选中任何音乐！",0);
+                        }
+                    }else{
+                        showMsg("请先停止，才能重新播放或播放其它！",0);
+                    }
+                });
+                $(".pause").click(function(){
+                    var temp = $(this).parent().data("checked");
+                    if(temp){
+                        if(temp == 1){
+                            if(playing == 1){
+                                var krpano = document.getElementById("krpano");
+                                if(pause == 0){
+                                    pause = 1;
+                                    $(".pause").removeClass("me");
+                                    $(this).addClass("me");
+                                    krpano.call("pausesound(bgsnd);");
+                                }else{
+                                    pause = 0;
+                                    $(".pause").removeClass("me");
+                                    $(this).data("check",0);
+                                    krpano.call("resumesound(bgsnd);");
+                                }
+                            }
+                        }
+                    }
+                });
+                $(".stop").click(function(){
+                    var temp = $(this).parent().data("checked");
+                    if(temp){
+                        if(temp == 1){
+                            if(playing == 1){
+                                stopplay();
+                            }
+                        }
+                    }
+                });
+            });
+            function musicpicdata(data){
+                $("#musicpic").val(data);
+                $(".musicpic").children("img").attr("src",upload_root + data);
+                var musicpano = document.getElementById("mpano");
+                musicpano.call("set(plugin[musicbtn].url,"+data+");set(plugin[musicbtn].onurl,"+data+");");
+            }
+            function musichoverpicdata(data){
+                $("#musichoverpic").val(data);
+                $(".musichoverpic").children("img").attr("src",upload_root + data);
+                var musicpano = document.getElementById("mpano");
+                musicpano.call("set(plugin[musicbtn].offurl,"+data+");");
+            }
+            function stopplay(){
+                var krpano = document.getElementById("krpano");
+                krpano.call("stopsound(bgsnd);");
+                $(".stoper").removeClass("stoper");
+                $(".play").removeClass("me");
+                $(".pause").removeClass("me");
+                playing = 0;
+                pause = 0;
+                $(".player").data("checked",0);
+            }
+            function getback(name,file,music_id){
+                closewin();
+                $(".bgmusic").html(name);
+                $(".bgmusic").data("music",file);
+                $("#music_id").val(music_id);
+
+                stopplay();
+            }
+            function pickmusicbtn(){
+                if(musicpano_on == 0){
+                    $("#musicpano").show();
+                    $(".mc").show();
+                    musicpano_on = 1;
+                    embedpano({
+                        id:"mpano",
+                        swf:"__PUBLIC__/pano/pano.swf",
+                        xml:"{:U('musicbtnxml',array('pano_id'=>$pano_id))}",
+                        target:"musicpano",
+                        html5:"auto",wmode:"transparent"
+                    });
+                }
+            }
+            function panoready(){
+                var img1 = $(".musicpic").children("img").attr("src");
+                var img2 = $(".musichoverpic").children("img").attr("src");
+                var musicpano = document.getElementById("mpano");
+                mposto("{$panorow['musicposto']}");
+                mpos();mph();mposto("{$panorow['musicposto']}");
+                musicpano.call("set(plugin[musicbtn].url,"+img1+");set(plugin[musicbtn].onurl,"+img1+");set(plugin[musicbtn].offurl,"+img2+");");
+            }
+            function shoot(x,y){
+                $("#mpos_x").val(x);
+                $("#mpos_y").val(y);
+            }
+            function mpos(){
+                var mx = $("#mpos_x").val();
+                var my = $("#mpos_y").val();
+                setmpos(mx,my);
+            }
+            function setmpos(mx,my){
+                var musicpano = document.getElementById("mpano");
+                musicpano.call("set(plugin[musicbtn].x,"+mx+");set(plugin[musicbtn].y,"+my+");");
+            }
+            function mph(){
+                var ap = $("#alpha").val();
+                var hap = $("#hoveralpha").val();
+                setmph(ap,hap);
+            }
+            function setmph(ap,hap){
+                var musicpano = document.getElementById("mpano");
+                musicpano.call("set(plugin[musicbtn].alpha,"+ap+");set(plugin[musicbtn].outalpha,"+ap+");set(plugin[musicbtn].onalpha,"+hap+");");
+            }
+            function mposto(dr){
+                $("#musicposto").val(dr);
+                $("#mposto").val(dr);
+                $(".musicpos").removeClass("me");
+                $("."+dr).addClass("me");
+                var musicpano = document.getElementById("mpano");
+                musicpano.call("set(plugin[musicbtn].align,"+dr+");");
+            }
+        </script>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">全景项目 - {$panorow['title']}</div>
+                        <div title="关闭" onclick="DoNote('确认返回功能首页？','{:U('main/index')}');" class="close"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            {:W("Panomenu",array("pano_id"=>$pano_id,"num"=>5))}
+                        </div>
+                        <div id="pano" class="pano"></div>
+                        <script type="text/javascript">
+                            embedpano({
+                                id:"krpano",
+                                swf:"__PUBLIC__/pano/pano.swf",
+                                xml:"{:U('musicstore/musicxml')}",
+                                target:"pano",
+                                html5:"auto",wmode:"transparent"
+                            });
+                        </script>
+                        <div class="none_main">
+                            <div class="action_main">
+                                <div class="action_title">背景音乐设置</div>
+                                <div class="action_web">
+                                    <form name="form1" action="" onsubmit="return checksb();" enctype="multipart/form-data" method="post">
+                                        <input type="hidden" name="dopost" value="save" />
+                                        <input type="hidden" name="pano_id" value="{$pano_id}" />
+                                        <input type="hidden" id="music_id" name="music_id" value="{$bgmusic['id']}" />
+                                        <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">
+                                            <tr class="tr_white" height="36">
+                                                <td align="right" width="100"><b>全景项目名称：</b></td>
+                                                <td align="left">
+                                                    {$panorow['title']}
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="10">
+                                                <td colspan="2"></td>
+                                            </tr>
+                                            <tr class="tr_white" height="40">
+                                                <td align="right"><b>全局背景音乐：</b></td>
+                                                <td>
+                                                    <span class="onoff easyui-tooltip dd" title="全局背景音乐" target="open_music" value="{$panorow['open_music']}"></span>
+                                                    <input type="hidden" id="open_music" name="open_music" value="{$panorow['open_music']}" />
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="40">
+                                                <td align="right"><b>背景音乐选择：</b></td>
+                                                <td>
+                                                    <div data-music="{$bgmusic['file']}" class="bgmusic easyui-tooltip dd" title="点击选择音乐">{$bgmusic['name']}</div>
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="40">
+                                                <td align="right"></td>
+                                                <td>
+                                                    <div class="player">
+                                                        <div class="play"></div>
+                                                        <div class="pause"></div>
+                                                        <div class="stop"></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="10">
+                                                <td colspan="2"></td>
+                                            </tr>
+                                            <tr class="tr_white" height="40">
+                                                <td align="right"><b>开始控制按钮：</b></td>
+                                                <td>
+                                                    <span class="onoff easyui-tooltip dd" title="控制背景音乐的按钮" target="open_musicbtn" value="{$panorow['open_musicbtn']}"></span>
+                                                    <input type="hidden" id="open_musicbtn" name="open_musicbtn" value="{$panorow['open_musicbtn']}" />
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="36">
+                                                <td align="right"><b>开启时图片：</b></td>
+                                                <td>
+                                                    <input name="musicpic" id="musicpic" type="hidden" value="{$panorow['musicpic']}" />
+                                                    <div class="musicpic"><img src="{$panorow['musicpic']}" onload="photocenterin(this,80,80);" /></div>
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="36">
+                                                <td align="right"><b>关闭时图片：</b></td>
+                                                <td>
+                                                    <input name="musichoverpic" id="musichoverpic" type="hidden" value="{$panorow['musichoverpic']}" />
+                                                    <div class="musichoverpic"><img src="{$panorow['musichoverpic']}" onload="photocenterin(this,80,80);" /></div>
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="36">
+                                                <td align="right"><b>设置按钮位置：</b></td>
+                                                <td>
+                                                    <input type="button" class="btn3" onclick="pickmusicbtn();" value="点击设置" />
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white mc" height="36">
+                                                <td align="right"><b>透明度设置：</b></td>
+                                                <td>
+                                                    平常时：<input type="text" id="alpha" name="alpha" value="{$panorow['alpha']}" class="shortinputcube"/>
+                                                    鼠标指：<input type="text" id="hoveralpha" name="hoveralpha" value="{$panorow['hoveralpha']}" class="shortinputcube"/>
+                                                    <input class="btn1" type="button"  onclick="mph();" value="改变" />
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white mc" height="36">
+                                                <td align="right"><b>按钮位置：</b></td>
+                                                <td>
+                                                    X位置：<input type="text" id="mpos_x" name="mpos_x" value="{$panorow['mpos_x']}" class="shortinputcube"/>
+                                                    Y位置：<input type="text" id="mpos_y" name="mpos_y" value="{$panorow['mpos_y']}" class="shortinputcube"/>
+                                                    <input class="btn1" onclick="mpos();" type="button" value="改变" />
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white mc" height="36">
+                                                <td align="right"><b>定位标准：</b></td>
+                                                <td>
+                                                    <input name="musicposto" id="musicposto" type="hidden" value="{$panorow['musicposto']}" />
+                                                    <input type="button" onclick="mposto('lefttop');" class="musicpos lefttop" value="" /><input type="button" onclick="mposto('top');" class="musicpos top" value="" /><input onclick="mposto('righttop');" type="button" class="musicpos righttop" value="" /><br/>
+                                                    <input type="button" onclick="mposto('left');" class="musicpos left" value="" /><input onclick="mposto('mid');" type="button" class="musicpos mid" value="" /><input onclick="mposto('right');" type="button" class="musicpos right" value="" /><br/>
+                                                    <input type="button" onclick="mposto('leftbottom');" class="musicpos leftbottom" value="" /><input onclick="mposto('bottom');" type="button" class="musicpos bottom" value="" /><input onclick="mposto('rightbottom');" type="button" class="musicpos rightbottom" value="" />
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="5">
+                                                <td align="right"></td>
+                                                <td>
+                                                    <div id="musicpano"></div>
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="10">
+                                                <td colspan="2"></td>
+                                            </tr>
+                                            <tr class="tr_white" height="40">
+                                                <td align="right" width="120"></td>
+                                                <td align="left">
+                                                    <input type="submit" class="blackbutton" value="提交" />
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="10">
+                                                <td colspan="2"></td>
+                                            </tr>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

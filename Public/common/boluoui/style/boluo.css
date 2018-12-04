@@ -1,0 +1,29 @@
+.boluo_checkbox{
+    width: 16px; height: 16px; overflow: hidden; display: inline-block; vertical-align: text-bottom; margin: 0 4px; cursor: pointer; background: url(../images/checkbox/checkbox.png) no-repeat;
+}
+.boluo_checkbox.checked{
+    background-position: 0 -16px;
+}
+
+#boluoloadbar{
+    width: 304px; height: 50px; overflow: hidden; background: #fff; position: fixed; z-index: 100000;
+    border:3px solid #e6e6e6; padding: 5px;
+}
+.boluoloadtext{
+    width: 304px; height: 24px; overflow: hidden; text-align: center;
+    font: bold 12px/24px "微软雅黑"; cursor: default;
+}
+.boluoloadouter{
+    width: 300px; height: 22px; overflow: hidden; padding: 1px; border:1px solid #FFA900;
+}
+.boluoloadbox{
+    width: 0px; height: 22px; overflow: hidden; background: url(../images/loadbar/loadbar.gif) repeat-x;
+}
+
+.boluoselectbox{
+    width: auto; height: 22px; overflow: hidden; border: 1px solid #ddd; float: left; padding: 0 6px; margin-right: 4px; cursor: pointer;
+    font: bold 12px/22px "微软雅黑"; color: #666; border-radius: 3px;
+}
+.boluoselectbox.me{
+    border-color: #FFA900; color: #C60; background: #EEEE99;
+}

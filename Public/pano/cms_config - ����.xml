@@ -1,0 +1,52 @@
+<krpano>
+<style name="cms_skin" url="images/gongneng.png" keep="true" zorder="0" align="righttop" x="9" scale="0.7" />	
+<style name="cms_text" url="%SWFPATH%/plugins/textfield.swf" zorder="0" align="bottom" 
+       x="14" oy="23" keep="true" backgroundcolor="0xFFFFFF" backgroundalpha="0.0" roundedge="0"   
+       css="font-family:黑体; font-size:14px; color:#FFFFFF;"  width="100" autoheight="" />
+
+		<layer name="cms_guanfang" style="cms_skin" crop="0|0|63|63" y="35" onhover="showtext(更多资讯,skintext)" visible="get:skin_settings.openhttp" onclick="get:skin_settings.http"/>	    
+		<layer name="cms_guanfang_html" style="cms_text" parent="cms_guanfang" html="官方网站"/>
+		 
+		<layer name="cms_xinxi" style="cms_skin" crop="0|63|63|63" y="110" onhover="showtext(get(skin_settings.tel),skintext)" visible="get:skin_settings.opentel"   onclick="get:skin_settings.tel" />			 
+		<layer name="cms_xinxi_html" style="cms_text" parent="cms_xinxi" html="联系电话"/>
+			   
+		<layer name="cms_map_dtzb" style="cms_skin" crop="0|126|63|63" y="185" visible="get:skin_settings.opendaohang" onclick="get:skin_settings.daohang"/>		
+        <layer name="cms_map_dtzb_html" style="cms_text" parent="cms_map_dtzb" html="地图导航"/>
+
+		<!-- <layer name="cms_yuyin" style="cms_skin" crop="0|189|63|63" y="260" visible="get:skin_settings.bgyunyin" 
+			onclick="pausesoundtoggle(bgyunyin); 
+			          switch(crop, 0|189|63|63, 0|252|63|63);			          
+					  if(layer[cms_yuyin_html].html==开启语音,
+		                 set(layer[cms_yuyin_html].html,关闭语音);
+			             ,
+			             set(layer[cms_yuyin_html].html,开启语音);
+						)"/>		
+		<layer name="cms_yuyin_html" style="cms_text" parent="cms_yuyin" html="关闭语音"/> -->
+
+		<layer name="cms_erweima" style="cms_skin" crop="0|315|63|63" y="260" visible="get:skin_settings.erweima" onclick="openwindow('./share.html',25%,35%)"/>	
+		<layer name="cms_erweima_html" style="cms_text" x="32" parent="cms_erweima" html="分享"/>
+
+		<style name="zan_text" url="%SWFPATH%/plugins/textfield.swf" align="bottom" oy="23" keep="true" backgroundcolor="0xFFFFFF" backgroundalpha="0.0" roundedge="0" css="text-align:center;font-family:黑体; font-size:14px; color:#FFFFFF;" width="100"/>
+		<layer name="cms_zan" style="cms_skin" crop="0|378|63|63" y="335" visible="get:skin_settings.openzan" onclick="run_cms_zan(get(skin_settings.domainlink),get(skin_settings.pano_id))"/>
+		<layer name="cms_zan_html" keep="true" style="zan_text" parent="cms_zan" html="0"/>
+		<action name="run_cms_zan">
+		js(jsrun_cms_zan(%1,%2));
+		</action>
+		<action name="cms_zan_html">
+		set(layer[cms_zan_html].html,%1);
+		</action>
+
+
+<krpano devices="mobile">
+<style name="cms_skin" scale="0.5" />	
+	<style name="cms_text" x="23" oy="23" css="font-family:微软雅黑; font-size:12px; color:#FFFFFF;" />
+
+	<layer name="cms_guanfang" x="10" y="32"/>
+	<layer name="cms_xinxi" y="92" />
+	<layer name="cms_map_dtzb" y="152" />
+	<!-- <layer name="cms_yuyin" y="212" /> -->	
+	<layer name="cms_erweima" y="212" onclick="openwindow('./share.html',70%,60%)" />
+	<layer name="cms_zan" y="272" />
+</krpano>
+
+</krpano>

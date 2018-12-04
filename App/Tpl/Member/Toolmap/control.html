@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/pano/pano.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jscolor/jscolor.js"></script>
+        {:W("Easyui")}
+        {:W("Uploader")}
+        <style type="text/css">
+            .pano_table{
+                padding-top: 15px;
+            }
+            .mapbtnbox{
+                width: 170px; height: 170px; overflow: hidden; border: 1px solid #dbdbdb; background: #f3f3f3; border-radius: 4px; cursor: pointer;
+            }
+            .mapbtnboxin{
+                width: 160px; height: 160px; overflow: hidden; border: 1px solid #dbdbdb; margin: 4px; background: url(__PUBLIC__/member/images/common/psbg.png);
+            }
+            .windowbox{
+                width: 720px; height: 480px; overflow: hidden; border:1px solid #ccc;
+            }
+        </style>
+        <script type="text/javascript">
+            function setSpotcenter(me,va){
+                $(me).children("input").eq(0).val(va);
+                $(me).children(".btn1").removeClass("me");
+                $(me).children("."+va).addClass("me");
+            }
+            function changeCenter(va){
+                setSpotcenter("#spot_edgebox",va);
+                setSpotcenter("#spot_edge",va);
+                var krpano = document.getElementById("krpano");
+                krpano.call("set(plugin[conbtn].align,"+va+");");
+                krpano.call("set(plugin[conbtn].edge,"+va+");");
+                $("#conrtolmap_x").val(0);
+                $("#conrtolmap_y").val(0);
+                krpano.call("set(plugin[conbtn].x,0);");
+                krpano.call("set(plugin[conbtn].y,0);");
+            }
+            function changeEdge(va){
+                setSpotcenter("#spot_edge",va);
+                var krpano = document.getElementById("krpano");
+                krpano.call("set(plugin[conbtn].edge,"+va+");");
+            }
+            $(function(){
+                $("#openmapimgbox").uploader("image","openmapimgdata");
+                $("#hidemapimgbox").uploader("image","hidemapimgdata");
+                $("#conrtolmap_x").change(function(){
+                    var krpano = document.getElementById("krpano");
+                    krpano.set("plugin[conbtn].x",$(this).val());
+                });
+                $("#conrtolmap_y").change(function(){
+                    var krpano = document.getElementById("krpano");
+                    krpano.set("plugin[conbtn].y",$(this).val());
+                });
+            });
+            function openmapimgdata(data){
+                $("#openmapimg").val(data);
+                $("#openmapimgbox img").attr("src",upload_root + data);
+                var krpano = document.getElementById("krpano");
+                krpano.set("plugin[conbtn].url",upload_root + data);
+            }
+            function hidemapimgdata(data){
+                $("#hidemapimg").val(data);
+                $("#hidemapimgbox img").attr("src",upload_root + data);
+            }
+            function activeready(){
+                var krpano = document.getElementById("krpano");
+                var align = $("#conrtolmap_center").val();
+                krpano.set("plugin[conbtn].align",align);
+                krpano.set("plugin[conbtn].edge",align);
+                krpano.set("plugin[conbtn].x",$("#conrtolmap_x").val());
+                krpano.set("plugin[conbtn].y",$("#conrtolmap_y").val());
+            }
+            function shoot(x,y){
+                $("#conrtolmap_x").val(x);
+                $("#conrtolmap_y").val(y);
+            }
+
+        </script>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">全景项目 - {$panorow['title']}</div>
+                        <div title="关闭" onclick="DoNote('确认返回功能首页？','{:U('main/index')}');" class="close"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="pano_menu">
+                            {:W("Panomenu",array("pano_id"=>$pano_id,"num"=>4))}
+                        </div>
+                        <div class="none_main">
+                            <div class="action_main" style="background:  #f3f3f3;">
+                                <div class="action_title"><a href="{:U('toolbox/index',array('pano_id'=>$pano_id))}">模块管理</a> - 单地图模块
+								<span class="vrback"><a href="{:U('toolbox/index',array('pano_id'=>$pano_id))}">返回上级</a>
+								</div>
+                                <div class="pano_top">
+                                    <a class="pano_topbtn" href="{:U('index',array('pano_id'=>$pano_id))}">全局设置</a>
+                                    <a class="pano_topbtn" href="{:U('point',array('pano_id'=>$pano_id))}">标记设置</a>
+                                    <span class="pano_topbtnb">地图按钮</span>
+                                    <a class="pano_topbtn" href="{:U('faceto',array('pano_id'=>$pano_id))}">雷达方向</a>
+                                </div>
+                                <div class="pano_table">
+                                    <form name="form1" action="" onsubmit="return checksb();" enctype="multipart/form-data" method="post">
+                                        <input type="hidden" name="dopost" value="save" />
+                                        <input type="hidden" name="pano_id" value="{$pano_id}" />
+                                        <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">
+                                            <tr class="tr_white" height="190">
+                                                <td align="right" width="100"><b>地图显示按钮：</b></td>
+                                                <td align="left">
+                                                    <div class="mapbtnbox">
+                                                        <input type="hidden" name="openmapimg" id="openmapimg" value="{$maprow['openmapimg']}" />
+                                                        <div class="mapbtnboxin" id="openmapimgbox">
+                                                            <img src="{:CC('web_root')}{$maprow['openmapimg']}" onload="photocenterin(this,160,160);"/>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="190">
+                                                <td align="right" width="100"><b>地图隐藏按钮：</b></td>
+                                                <td align="left">
+                                                    <div class="mapbtnbox">
+                                                        <input type="hidden" name="hidemapimg" id="hidemapimg" value="{$maprow['hidemapimg']}" />
+                                                        <div class="mapbtnboxin" id="hidemapimgbox">
+                                                            <img src="{:CC('web_root')}{$maprow['hidemapimg']}" onload="photocenterin(this,160,160);"/>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="15">
+                                                <td colspan="2"></td>
+                                            </tr>
+                                            <tr height="36">
+                                                <td align="right" width="70"></td>
+                                                <td align="left">
+                                                    <div id="pano" class="windowbox"></div>
+                                                    <script type="text/javascript">
+                                                        embedpano({
+                                                            id:"krpano",
+                                                            swf:"__PUBLIC__/pano/pano.swf",
+                                                            xml:"{:U('positionxml',array('pano_id'=>$pano_id))}",
+                                                            target:"pano",
+                                                            html5:"auto",wmode:"transparent"
+                                                        });
+                                                    </script>
+                                                </td>
+                                            </tr>
+                                            <tr height="36">
+                                                <td align="right" width="70"><b>UI定位：</b></td>
+                                                <td align="left">
+                                                    <div id="spot_edgebox">
+                                                        <input type="hidden" id="conrtolmap_center" value="{$maprow['conrtolmap_center']}" name="conrtolmap_center"/>
+                                                        <input type="button" onclick="changeCenter('lefttop');" class="btn1 lefttop" value="左上" />
+                                                        <input type="button" onclick="changeCenter('top');" class="btn1 top" value="上" />
+                                                        <input type="button" onclick="changeCenter('righttop');" class="btn1 righttop" value="右上" /><br/>
+                                                        <input type="button" onclick="changeCenter('left');" class="btn1 left" value="左" />
+                                                        <input type="button" onclick="changeCenter('center');" class="btn1 center" value="中" />
+                                                        <input type="button" onclick="changeCenter('right');" class="btn1 right" value="右" /><br/>
+                                                        <input type="button" onclick="changeCenter('leftbottom');" class="btn1 leftbottom" value="左下" />
+                                                        <input type="button" onclick="changeCenter('bottom');" class="btn1 bottom" value="下" />
+                                                        <input type="button" onclick="changeCenter('rightbottom');" class="btn1 rightbottom" value="右下" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <script type="text/javascript">
+                                                setSpotcenter("#spot_edgebox","{$maprow['conrtolmap_center']}");
+                                            </script>
+                                            <tr height="36">
+                                                <td align="right" width="70"><b>位置：</b></td>
+                                                <td align="left">
+                                                    <input type="text" name="conrtolmap_x" id="conrtolmap_x" class="shortinputcube cs" value="{$maprow['conrtolmap_x']}" />
+                                                    <input type="text" name="conrtolmap_y" id="conrtolmap_y" class="shortinputcube cs" value="{$maprow['conrtolmap_y']}" />
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="15">
+                                                <td colspan="2"></td>
+                                            </tr>
+                                            <tr class="tr_white" height="40">
+                                                <td align="right"></td>
+                                                <td align="left">
+                                                    <input type="submit" class="blackbutton" value="提交" />
+                                                </td>
+                                            </tr>
+                                            <tr class="tr_white" height="15">
+                                                <td colspan="2"></td>
+                                            </tr>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

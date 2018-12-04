@@ -1,0 +1,42 @@
+.upload_button{
+    width: 68px; height: 22px; background: url(images/btn1.jpg) no-repeat; overflow: hidden; padding: 0px; margin: 0px; border:none;
+    color: #666; cursor: pointer; font: 12px/22px "微软雅黑", "宋体", Helvetica, Arial, Verdana; color: #333;
+}
+.upload_button:hover{
+    background-position: 0 -22px;
+}
+.photo_outer_btns{
+    width: auto; height: 40px; overflow: hidden; line-height: 40px; vertical-align: middle;
+}
+.photo_outer{
+    width: 220px; height: 130px; overflow: hidden; border:1px solid #dbdbdb; float: left;
+    margin: 4px; background: #fff; border-radius:4px;
+}
+.photo_outer.one{
+    width: 130px; float: left;
+}
+.photo_outer .photo_img{
+    width: 120px; height: 120px; overflow: hidden; border:1px solid #dbdbdb; margin: 4px; float: left; _display: inline; background: #fff;
+}
+.photo_outer .photo_txt{
+    width: 220px; height: 120px; overflow: hidden; margin-top: 5px; float: left; background: #fff;
+}
+.photo_outer .photo_txt .title{
+    width: 220px; height: 24px; overflow: hidden;
+    font: 12px/20px "微软雅黑", "宋体", Helvetica, Arial, Verdana; color: #333;
+}
+.photo_outer .photo_txt .title input{
+    width: 210px; height: 22px; overflow: hidden; border:1px solid #dbdbdb; padding: 0 4px;
+    font: 12px/20px "微软雅黑", "宋体", Helvetica, Arial, Verdana; color: #333;
+}
+.photo_outer .photo_txt .info{
+    width: 220px; height: 92px; overflow: hidden; margin-top: 4px;
+    font: 12px/20px "微软雅黑", "宋体", Helvetica, Arial, Verdana; color: #333;
+}
+.photo_outer .photo_txt .info textarea{
+    width: 210px; height: 90px; overflow: auto; border:1px solid #dbdbdb; padding: 0 4px;
+    font: 12px/20px "微软雅黑", "宋体", Helvetica, Arial, Verdana; color: #333;
+}
+.photo_outer .photo_btn{
+    width: 70px; height: 120px; overflow: hidden; margin-top: 5px; text-align: center; vertical-align: middle; margin-left: 4px; float: left;
+}

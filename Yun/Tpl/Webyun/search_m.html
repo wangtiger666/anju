@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-cn"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="keywords" content="{$web_keywords}">
+  <meta name="description" content="{$web_description}" id="metaDescription">
+  <title>{$web_name}_手机版</title>
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/search.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/webyun/css/listpano.css">  
+  <script src="__PUBLIC__/webyun/js/jquery-1.11.1.min.js"></script>
+  <script src="__PUBLIC__/webyun/js/find.js"></script>
+
+</head>
+<body>
+  <div id="app">
+	<div>
+	   <include file="header_m" />
+		<div class="PageWithNavbar_mobile_10Xw1C App_page_10oT1Y">
+			<div class="IndexPage_mobile_1USU46">
+				<div class="SearchTabs_filter__NKfuu">
+					<div class="SearchTabs_row1_3RCPir">
+						<div class="SearchTabs_mobile_3oVv4o">
+							<ul class="SearchTabs_nav1_3xZJND">
+								<li><a class="SearchTabs_active_123jZP">全景项目</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="SearchTabs_row2_1-NkFS">
+						<div class="SearchTabs_keywords_3C15xU"><span href="" class="SearchTabs_tag_2XSHG5">{$keywords} </span></div>
+					</div>
+				</div>
+				<div>
+				<div class="SearchResult_mobile_T1u-pe">
+					<p class="SearchResult_count_ZVEJOn">共计<em class="SearchResult_total_3tzhob">{$count}</em>个搜索结果</p>
+						<div>
+							<foreach name="panolist" item="vo">
+							<div class="Product_product_2z_9MT Product_mobile_3ReNmz">
+								<a href="{$vo.panopath}" target="_blank" class="Product_thumbimg_2iidBU"><img src="{$vo.thumb}"></a>
+								<div class="Product_info_2-SHHm">
+									<div class="Product_title_18g6EL ellipsis">
+										<a href="{$vo.panopath}" target="_blank" class="Product_link_cGWZDK"><span>{$vo.title}</span></a>
+									</div>
+									<p class="Product_nickname_3SEUj2">
+										<a href="/index.php?s=/webyun/authorlist/id/{$vo.member_id}" target="_blank"><span>{$vo.author}</span></a>
+									</p>
+									<p class="Product_remark_5NI5-1">
+										<span>{$vo.wxdesc}</span>
+									</p>
+								</div>
+								<div class="Product_up_2Z5umC"><a href="/index.php?s=/webyun/listpano/channelid/{$vo.hangyeid}" target="_blank"><span>{$vo.hangye}</span></a></div>
+							</div>
+							</foreach>
+	   </div>
+		<div class="ResPagination_pagination_2GmSW-">
+			<ul class="rc-pagination ant-pagination" unselectable="unselectable">
+				{$page}
+			</ul>
+		</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	<div class="Notification_container_3kJM0z"><span></span></div>
+<include file="footer_m" />	
+	</div>
+	</div>
+</body>
+</html>

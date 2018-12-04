@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link href="__PUBLIC__/common/style/common.css" rel="stylesheet" type="text/css"/>
+        <link href="__PUBLIC__/member/style/reg.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        <script type="text/javascript">
+            $(function(){
+                $(".ban_border input").focus(function(){
+                    $(this).parent(".ban_border").addClass("green");
+                });
+                $(".ban_border input").blur(function(){
+                    $(this).parent(".ban_border").removeClass("green");
+                });
+            });
+            function checksb(){
+                var result = true;
+                if(result == true){
+                    result = AutoCheckSub(".boluo");
+                }
+                if(result == true){
+                    var mima1 = $("#mima1").val();
+                    var mima2 = $("#mima2").val();
+                    if(mima1 != mima2){
+                        result = false;
+                        showMsg("两次输入密码不一样！",0);
+                    }else{
+                        var mima = mima1;
+                        var userid = $("#userid").val();
+                        var user_name = $("#user_name").val();
+                        var phone = $("#phone").val();
+                        var email = $("#email").val();
+                        $.ajax({
+                            url:"{:U('reg/index')}",
+                            type:"POST",
+                            dataType:"script",
+                            data:{
+                                dopost:"reg",
+                                userid:userid,
+                                pwd:mima,
+                                user_name:user_name,
+                                phone:phone,
+                                email:email
+                            }
+                        });
+                    }
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <img id="bg" width="100%" height="100%" src="__PUBLIC__/admin/images/login/bg.jpg" />
+        <div id="upmain">
+            <div class="logo"></div>
+            <div class="ban">                    
+                <div class="ban_top"></div>
+                <div class="ban_mid">
+                    <table width="100%">
+                        <tr height="30">
+                            <td colspan="3" align="center"><span class="reg_title">注册帐号</span></td>
+                        </tr>
+                        <tr height="20">
+                            <td colspan="3" align="center"></td>
+                        </tr>
+                        <tr height="50">
+                            <td width="120" align="right"><b>用户名：</b></td>
+                            <td width="252" align="left">
+                                <div class="ban_border">
+                                    <input type="text" class="boluo" value="" sbmsg="请检查【用户名】为3-15字符的英文或数字" sbreg="/^[a-z0-9_]{3,15}$/" placeholder="用户名" sbname="用户名" id="userid" name="userid" />
+                                </div>
+                            </td>
+                            <td width="180" align="left"><font color="#008800"> * 英文或数字 3-15字符</font></td>
+                        </tr>
+                        <tr height="50">
+                            <td width="100" align="right"><b>密码：</b></td>
+                            <td width="252" align="left">
+                                <div class="ban_border">
+                                    <input type="password" class="boluo" sbmsg="请检查【密码】为6-16字符的英文或数字" sbreg="/^[a-z0-9_]{6,16}$/" value="" placeholder="密码" sbname="密码" id="mima1" name="mima1" />
+                                </div>
+                            </td>
+                            <td width="200" align="left"><font color="#008800"> * 字母或字母+数字</font></td>
+                        </tr>
+                        <tr height="50">
+                            <td width="100" align="right"><b>再次输入：</b></td>
+                            <td width="252" align="left">
+                                <div class="ban_border">
+                                    <input type="password" class="boluo" value="" sbmsg="请检查【密码】为6-16字符的英文或数字" sbreg="/^[a-z0-9_]{6,16}$/" placeholder="再次输入密码" sbname="再次输入密码" id="mima2" name="mima2" />
+                                </div>
+                            </td>
+                            <td width="200" align="left"><font color="#008800"> * 字母或字母+数字</font></td>
+                        </tr>
+                        <tr height="50">
+                            <td width="100" align="right"><b>昵称：</b></td>
+                            <td width="252" align="left">
+                                <div class="ban_border">
+                                    <input type="text" class="boluo" value="" placeholder="昵称" sbname="昵称" id="user_name" name="user_name" />
+                                </div>
+                            </td>
+                            <td width="200" align="left"><font color="#008800"> * 汉字或英文</font></td>
+                        </tr>
+                        <tr height="50">
+                            <td width="100" align="right"><b>手机号码：</b></td>
+                            <td width="252" align="left">
+                                <div class="ban_border">
+                                    <input type="text" class="boluo" value="" placeholder="手机号码" sbname="手机号码" id="phone" name="phone" />
+                                </div>
+                            </td>
+                            <td width="200" align="left"><font color="#008800"> * </font></td>
+                        </tr>
+                        <tr height="50">
+                            <td width="100" align="right"><b>电子邮箱：</b></td>
+                            <td width="252" align="left">
+                                <div class="ban_border">
+                                    <input type="text" class="boluo" value="" placeholder="电子邮箱" sbname="电子邮箱" id="email" name="email" />
+                                </div>
+                            </td>
+                            <td width="200" align="left"><font color="#008800"> * </font></td>
+                        </tr>
+                        <tr height="6">
+                            <td colspan="3"></td>
+                        </tr>
+                        <tr height="50">
+                            <td width="100" align="right"></td>
+                            <td width="252" align="left">
+                                <div class="ban_submit" onclick="checksb();">注册帐号</div>
+                            </td>
+                            <td width="200" align="left"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="ban_down"></div>
+            </div>
+        </div>
+    </body>
+</html>

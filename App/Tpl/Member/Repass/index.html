@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="">
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<meta name="renderer" content="webkit">
+	    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+	    <title>重置密码 - 360VR</title>
+		<meta name="keywords" content="注册" />
+		<meta name="description" content="注册" />
+		<meta http-equiv="Cache-Control" content="no-transform" />
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<link href="__PUBLIC__/member/reg/css/base_2.css" rel="stylesheet" type="text/css"/>
+		<link href="__PUBLIC__/member/reg/css/sign_2.css" rel="stylesheet" type="text/css"/>
+		<script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+         <script type="text/javascript" src="__PUBLIC__/member/login/js/common.js"></script>
+</head>
+<body class="">
+	<!-- content start -->
+	<section id="section" class="fuwo-sign">
+	<a href="http://www.fuwo.com"><i class="icon-logo"></i></a>
+    <div class="sign-wrap register">
+        <p class="top-til">重置密码</p>
+        <form class="login-form" id="signup_form">
+            <div class="form">
+                <div class="inputline-wrap">
+                <div class="inputline">
+                    <p class="input"><i class="icon share-icon-user"></i><input class="control" id="account" name="account" type="text" placeholder="手机号/邮箱" autocomplete="off" onblur="check_mory(this)"  ></p>
+                </div>
+                
+                <div class="inputline">
+                    <p class="input"><input class="control" id="mima1" name="pwd" type="password" placeholder="新密码" autocomplete="off"><i class="icon share-icon-password"></i></p>
+                </div>
+
+                <div class="inputline">
+                    <p class="input"><input class="control" id="mima2" name="pwd" type="password" placeholder="重复新密码" autocomplete="off"><i class="icon share-icon-password"></i></p>
+                </div>
+                <div class="inputline" id="phone-code">
+              		<p class="input">
+                    
+                    <input class="control" id="verifycode" name="verifycode" type="text" autocomplete="off" placeholder="验证码">
+
+
+                    <i class="icon share-icon-code"></i>
+                     <input class="get_ma get_ma_phone" id="signup_check"    href="javascript:;" style="display: inline;cursor:pointer;" value="获取短信验证码"  style="display:none;" >
+
+                     <a class="get_ma get_ma_email" href="javascript:;" id="signup_check_t">
+                            <img src='__APP__/member/Reg/verify/' id="verifycode_id"  width="85" height="30" onClick="this.src=this.src+'?'+Math.random()"  />
+                            <i class="icon share-icon-refresh" id="signup_refresh" onclick="verify_ref()"></i>
+                     </a>
+                    </p>
+                </div>
+                </div>
+         
+                <div class="btn-box">
+                	<input name="reg_act"  id="reg_act"    value="" style="display: none;" >
+                    <span class="btn btn-success" id="signup_submit" onclick="checksb();">重置</span>
+                </div>
+            </div>
+        </form>
+		
+        <div class="open-login f12 login">
+            <span>社交登录：</span>
+            <a class="weixin"  href="{$weixinlogin_url}"><i class="icon share-icon-blog" style="background-position: -18px -146px;"></i>微信</a>
+          <!--   <a class="qq" href="" ><i class="icon share-icon-qq"></i>QQ</a> -->
+        </div>
+        <br>
+    </div>
+    <input type="hidden" id="next_to" value=""/>
+</section>
+
+<script type="text/javascript">
+       var wait = 60;
+       function countdown(obj, msg){
+                    obj = $(obj);
+                    if(wait == 0) {
+                        obj.removeAttr("disabled");
+                        obj.val(msg);
+                        wait = 60;
+                    } else {
+                        if (msg == undefined || msg == null) {
+                            msg = obj.val();
+                        }
+                        obj.attr("disabled", "disabled");
+                        obj.val(wait + "秒后可重新获取");
+                        wait--;
+                        setTimeout(function() {
+                            countdown(obj, msg)
+                        }, 1000)
+                    }
+        }
+
+      function sendMobileCode(mobileObj, sendButton) {
+      	//发送验证码处理 入库操作 或者 写SESSION SDL
+      				  $.ajax({
+                            url:"{:U('repass/send_mobile_code')}",
+                            type:"POST",
+                            dataType:"json",
+                             data:{mobile_phone:mobileObj.val()},
+                             		success:function(result){
+                                        if(result.status == 1){
+                                            alert("短信发送成功");
+                                            //60秒倒计时
+                                            countdown(sendButton);
+                                        }else{
+                                            alert(result.msg);
+                                        }
+                                }
+                       		 }); 
+        }
+     
+	  $("#signup_check").click(function(){
+                   sendMobileCode($("#account") , $(this));
+            });
+
+
+	 function checksb(){
+
+          	var mima1 = $("#mima1").val();
+            var mima2 = $("#mima2").val();
+            var verifycode = $("#verifycode").val();
+            var reg_act = $("#reg_act").val(); //提交 是手机还是邮件注册
+           
+            if(reg_act==""){ 
+                alert('请输入账户'); 
+				return false; 
+            }
+
+           if(mima1==""){ 
+                alert('请输入密码！'); 
+				return false; 
+            }
+
+            if(mima2==""){ 
+                    alert('请输入重复密码！'); 
+				    return false; 
+            }
+
+            if(verifycode==""){ 
+                   	alert('请输入验证码！'); 
+				    return false; 
+            }
+
+            if(mima1 != mima2){
+                    alert("两次输入密码不一样！",0);
+                    return false;
+                }else{
+                	var account = $("#account").val();
+                    var mima = mima1;
+                    var nickname = $("#account").val();
+                    var verifycode = $("#verifycode").val();
+                    $.ajax({
+                            url:"{:U('repass/index')}",
+                            type:"POST",
+                            dataType:"script",
+                            data:{
+                                dopost:"reg",
+                                account:account,
+                                pwd:mima,
+                                nickname:nickname,
+                                verifycode:verifycode,
+                                reg_act:reg_act
+                            }
+                        });
+                    }
+            }
+
+        function verify_ref(){
+                var this_t = $("#verifycode_id");
+                var newsrc = this_t.attr("src")+'?'+Math.random();
+                this_t.attr("src",newsrc);
+        }
+
+         //检测是否是邮件 是否是手机 以及查询是否注册
+        function check_mory(obj){
+        	var account = obj.value;
+        	var email_reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+			var phone_reg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/; 
+			//注册标志位
+			var reg_flag="";
+			if(email_reg.test(account)){
+				reg_flag="email";
+			}
+			if(phone_reg.test(account)){
+				reg_flag="phone";
+			}
+			
+			if(reg_flag==""){
+				$("#reg_act").attr("value",'');
+				alert("请填写有效的手机或者邮箱");
+				return false;
+			}else{
+				//根据标志位显示验证码和设置表单提交
+				if(reg_flag=="phone"){
+					 $("#reg_act").attr("value",'phone');
+					 $("#signup_check").css("display","block");
+					 $("#signup_check_t").css("display","none");
+				}
+
+				if(reg_flag=="email"){
+					$("#reg_act").attr("value",'email');
+					 $("#signup_check").css("display","none");
+					 $("#signup_check_t").css("display","block");
+				}
+				//AJAX查询注册情况
+                 $.ajax({
+                            url:"{:U('repass/check_regstatus')}",
+                            type:"POST",
+                            dataType:"script",
+                            data:{
+                                reg_flag:reg_flag,
+                                account:account
+                            }
+                });
+			}
+    }
+</script>
+</body>
+</html>

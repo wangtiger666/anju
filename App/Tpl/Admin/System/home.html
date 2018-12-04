@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INSPINIA | Widgets</title>
+        <!-- bootstrap START-->
+        <link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/plugins/footable/footable.core.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/animate.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/style.css" rel="stylesheet">
+        <link href="__PUBLIC__/common/style/recovebootstrap.css" rel="stylesheet" type="text/css" /> 
+    	<link href="__PUBLIC__/bootstrap/css/plugins/iCheck/custom.css" rel="stylesheet">
+        <!-- bootstrap END -->
+</head>
+<body>
+<style type="text/css">
+.col-lg-3{width: 25%;float: left;}
+.navy-bgt{background-color: #ed5565;color: #ffffff;}
+</style>
+  <div id="wrapper">
+  	<div class="gray-bg" id="page-wrapper" style="min-height: 274px;margin:0px;">
+        <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-9">
+                    <h2>Index</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a>首页</a>
+                        </li>
+                        <li class="active">
+                            <strong>欢迎页</strong>
+                        </li>
+                    </ol>
+                </div>
+            </div> 
+  		<div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col-lg-3">
+                <div class="widget style1 navy-bgt">
+                        <div class="row " >
+                            <div class="col-xs-4 text-center">
+                                <i class="fa fa-trophy fa-5x"></i>
+                            </div>
+                            <div class="col-xs-8 text-right ">
+                                <span> 新增用户 </span>
+                                <h2 class="font-bold">{$New_User_num}个</h2>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="widget style1 navy-bg">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-cloud fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> 总用户数 </span>
+                            <h2 class="font-bold">{$User_num}个</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="widget style1 yellow-bg">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-music fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> 新增全景</span>
+                            <h2 class="font-bold">{$New_Pano_num}个</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="widget style1 lazur-bg">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-envelope-o fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> 总全景数 </span>
+                            <h2 class="font-bold">{$Pano_num}个</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="ibox-content">
+                    <h2>关于系统</h2>
+                    <small>全景云管理 V6.0</small>
+                    <ul class="todo-list m-t ui-sortable">
+                        <li>
+                            <span class="m-l-xs">全景云管理 V6.0</span>
+                            <small class="label label-primary"><i class="fa fa-clock-o"></i> 1 mins</small>
+                        </li>
+                        <li>
+                            <span class="m-l-xs">全景云管理 V6.0</span>
+                            <small class="label label-info"><i class="fa fa-clock-o"></i> 3 mins</small>
+                        </li>
+                        <li>
+                            <span class="m-l-xs">全景云管理 V6.0</span>
+                            <small class="label label-warning"><i class="fa fa-clock-o"></i> 2 mins</small>
+                        </li>
+                        <li>
+                            <span class="m-l-xs">Go to the doctor dr Smith</span>
+                            <small class="label label-danger"><i class="fa fa-clock-o"></i> 42 mins</small>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="ibox-content">
+                    <h2>管理员登录日志</h2>
+                    <small>全景云管理 V6.0</small>
+                    <ul class="todo-list m-t ui-sortable">
+                        <volist name="Admin_log" id="vo">
+                        <li>
+                            <span class="m-l-xs">{$vo.user_account}</span>
+                            <small class="label label-primary"><i class="fa fa-clock-o"></i>
+                            <?php echo date("Y-m-d:h:i:s",$vo['login_time']); ?>
+                            </small>
+                            <small class="label label-info"><i class="fa"></i>IP:{$vo.login_ip}</small>
+                        </li>
+                        </volist>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        </div>
+  	</div>
+  </div>
+</body>
+</html>

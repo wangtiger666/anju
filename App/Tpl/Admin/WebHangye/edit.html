@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link href="__PUBLIC__/admin/style/common.css" rel="stylesheet" type="text/css" />
+        <script src="__PUBLIC__/common/js/jquery.js" language="javascript" type="text/javascript"></script>
+        <script src="__PUBLIC__/common/js/common.js" language="javascript" type="text/javascript"></script>     
+    </head>
+    <body>
+        <div class="main">
+            <form name='form1' id="form1" method='post' >
+                <input type='hidden' name='dopost' value='save'/>
+                <input type='hidden' name='id' value='{$id}'/>
+                <table width="100%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D6D6D6" align="center">
+                    <tr>
+                        <td class="td_title" height="26" style="padding-left:10px;">
+                            <table width="100%" border="0" cellspacing="1" cellpadding="1">
+                                <tr> 
+                                    <td width="24%" class="td_p8"><b>行业修改</b> </td>
+                                    <td width="76%" class="td_pr8" align="right">
+                                        <input type="button" onclick="window.location.href='{:U('WebHangye/index')}'" value="返回管理" class="btn2"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>                            
+                    </tr>
+                    <tr class="tr_white">
+                        <td align="center" style="padding-top: 20px;">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr> 
+                                    <td width="180" height="40" align="right"><b><font color="red"></font>ID：</b></td>
+                                    <td align="left" class="td_p8">
+                                        <input type="text" class="cs" id="id" name="id" tname="全景ID" value="{$info.id}" disabled />                                        
+                                    </td>
+                                </tr>
+                                <tr height="40">
+                                    <td align="right" width="180"><b>行业名称:</b></td>
+                                    <td align="left" class="td_p8">
+                                        <input type="text" class="cs" id="name" tname="行业名称" name="name"  value="{$info.name}"  /> 
+                                    </td>
+                                </tr>
+                                <tr height="40">
+                                    <td align="right" width="180"><b>行业排序:</b></td>
+                                    <td align="left" class="td_p8">
+                                        <input type="text" class="cs" id="listorder" tname="行业排序" name="listorder"  value="{$info.listorder}"  /> 
+                                    </td>
+                                </tr>
+                               
+                                <tr> 
+                                    <td colspan="2" height="10"></td>
+                                </tr>
+
+                                <tr> 
+                                    <td height="50" align="center">&nbsp;</td>
+                                    <td height="50"  style="text-align:left;">
+                                        <input  class="btn1" type="submit" value="修改"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>                    
+                </table>                
+            </form>
+        </div>
+
+
+    </body>
+</html>

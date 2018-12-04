@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link href="__PUBLIC__/admin/style/common.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/common/style/common.css" rel="stylesheet" type="text/css" />
+        <script src="__PUBLIC__/common/js/jquery.js" language="javascript" type="text/javascript"></script>
+		<script src="__PUBLIC__/common/js/common.js" language="javascript" type="text/javascript"></script>
+        <style type="text/css">
+            .topbox{
+                overflow: hidden;
+            }
+            .downbox{
+                overflow: hidden; margin-top: 6px;
+            }
+            .input2a{
+                display:block; text-align: center; text-decoration: none;
+            }
+            .input2a:hover{
+                text-decoration: none;
+            }
+			.btn3{float: left;}
+			.btn {
+				    display: inline-block;
+				    background-color: #0072C6;
+				    -moz-border-radius: 2px;
+				    -webkit-border-radius: 2px;
+				    border: 0;
+				    color: #FFF;
+				    padding: 6px 15px;
+				    font-weight: bold;
+				    text-transform: capitalize;
+				    cursor: pointer;
+				    -webkit-appearance: none;
+			}
+.menuboxt {
+    width: 186px;
+    height: auto;
+    margin-top: 8px;
+
+}
+.menuboxt .cubet {
+    width: 186px;
+    height: auto;
+}
+.menuboxt .cubet .titlet {
+    width: 186px;
+    height: 28px;
+    overflow: hidden;
+    background: url(../images/index/menubtbg.png) repeat-x;
+    font: bold 12px/28px "微软雅黑";
+    color: #000;
+    text-align: center;
+    border: 1px solid #dbdbdb;
+    cursor: pointer;
+}
+        </style>
+        <script language="javascript" type="text/javascript">
+
+        </script>
+    </head>
+    <body>
+        <div class="main">
+            <div class="downbox " >
+               		<div class="menuboxt" style="display: inline-block;">
+                    <ul class="cubet">
+                    	<li class="titlet" >
+                    		<a style=" color: #009a70;"  onclick="window.location.href = '/admin/Websystemval/index';" >变量管理 </a>
+                    	</li>
+                    </ul>
+            		</div>
+            		<div class="menuboxt" style="display: inline-block;">
+                    <ul class="cubet">
+                    	<li class="titlet"> 
+                    		<a  onclick="window.location.href = '/admin/Websystemval/setlogo';" >LOGO设置 </a>
+                    	</li>
+                    </ul>
+            		</div>
+			
+            <form action="" >  
+               <input type="text" name="step" value="save" size="80" class="inpMain" style="display:none;" />
+               <table width="100%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D6D6D6">
+                    <tbody>
+	                    <tr class="tr_hui" height="30" align="center">
+	                        <td style="width: 100px;">
+	                            <b>名称</b>
+	                        </td>
+	                        <td style="width: 100px;">
+	                            <b>内容</b>
+	                        </td>
+	                    </tr>
+                        <tr class="tr_white">
+                            <td align="right" style="padding-right:20px;">
+						          站点名称							
+						    </td>
+                            <td align="left" style="padding-left:20px;">
+                            	<input type="text" name="mingcheng" value="{$mingcheng}" size="80" class="inpMain">
+                            </td>
+                        </tr>
+
+                        <tr class="tr_white">
+                            <td align="right" style="padding-right:20px;">
+						          站点关键词							
+						    </td>
+                            <td align="left" style="padding-left:20px;">
+                            	<input type="text" name="keywords" value="{$keywords}" size="80" class="inpMain">
+                            </td>
+                        </tr>
+                        <tr class="tr_white">
+                            <td align="right" style="padding-right:20px;">
+						          站点描述							
+						    </td>
+                            <td align="left" style="padding-left:20px;">
+                            	<textarea name="description" placeholder="不超过255字符" rows="5" cols="50" style="padding:5px;border:1px solid:grey;">{$description}</textarea>
+                            </td>
+                        </tr>
+
+                        <tr class="tr_white">
+                            <td align="right" style="padding-right:20px;">
+						          公司地址							
+						    </td>
+                            <td align="left" style="padding-left:20px;">
+                            	<input type="text" name="address" value="{$address}" size="80" class="inpMain">
+                            </td>
+                        </tr>
+
+                    <tr class="tr_white">
+                            <td align="right" style="padding-right:20px;">
+						          ICP备案证书号							</td>
+
+                            <td align="left" style="padding-left:20px;">
+                            	<input type="text" name="beian" value="{$beian}" size="80" class="inpMain">
+                            </td>
+                        </tr>
+                        <tr class="tr_white">
+                            <td align="right" style="padding-right:20px;">
+						          合作电话							
+						    </td>
+                            <td align="left" style="padding-left:20px;">
+                            	<input type="text" name="dianhua" value="{$dianhua}" size="80" class="inpMain">
+                            </td>
+                        </tr>
+                            <tr class="tr_white">
+                            <td align="right" style="padding-right:20px;">
+						          客服电话							
+						    </td>
+                            <td align="left" style="padding-left:20px;">
+                            	<input type="text" name="kefu" value="{$kefu}" size="80" class="inpMain">
+                            </td>
+                        </tr>
+                        <tr class="tr_white">
+                            <td align="right" style="padding-right:20px;">
+						          客服QQ							
+						    </td>
+                            <td align="left" style="padding-left:20px;">
+                            	<input type="text" name="qq" value="{$qq}" size="80" class="inpMain">
+                                  
+                            </td>
+                        </tr>
+                        <tr class="tr_white">
+                            <td align="right" style="padding-right:20px;">
+						          工作时间							</td>
+                            <td align="left" style="padding-left:20px;">
+                            	<input type="text" name="shijian" value="{$shijian}" size="80" class="inpMain">
+                                  
+                            </td>
+                        </tr><tr class="tr_white">
+                            <td align="right" style="padding-right:20px;">
+						          版权							
+						    </td>
+                            <td align="left" style="padding-left:20px;">
+                            	<input type="text" name="banquan" value="{$banquan}" size="80" class="inpMain">
+                            </td>
+                        </tr>
+                        <tr class="tr_white">
+                            <td align="right" style="padding-right:20px;">
+						          邮箱							
+						      </td>
+                            <td align="left" style="padding-left:20px;">
+                            	<input type="text" name="youxiang" value="{$youxiang}" size="80" class="inpMain">
+                            </td>
+                        </tr>
+
+                          <tr class="tr_white" >
+                            <td align="right" style="padding-right:20px;">				
+						      </td>
+                            <td align="left" style="padding-left:20px;padding-top: 20px ;padding-bottom: 20px ;" >
+                            	<input id="sub_btn" class="btn"  type="submit" value="提交" >
+                            </td>
+                        </tr>
+                </tbody>
+                </table>
+
+                </form>
+           
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,34 @@
+ body{
+                background: #FFF;
+            }
+        	#page_list .page_text{padding: 2px 8px; border:0px solid #ddd; background: #f6f6f6; border-radius:3px; color: #333; margin: 0 2px;
+    font: bold 12px/26px "微软雅黑", "宋体", Helvetica, Arial, Verdana; overflow: hidden; cursor: default;
+}
+
+#page_list a{
+    padding: 2px 6px; border:0px solid #bbb; background: #f6f6f6; border-radius:3px; color: #333;
+    font: bold 12px/26px "微软雅黑", "宋体", Helvetica, Arial, Verdana; overflow: hidden; margin: 0 2px;
+}
+#page_list a:hover{
+    background: #eee; border-color: #999; color: #333; text-decoration: none;
+}
+#page_list span.current{
+    padding: 2px 6px; border:0px solid #f88e00; background: #ffbc00; border-radius:3px; color: #fff;
+    font: bold 12px/26px "微软雅黑", "宋体", Helvetica, Arial, Verdana; cursor: default;
+    overflow: hidden; margin: 0 2px;
+}
+#page_list span.notuse{
+    padding: 2px 6px; border:0px solid #ddd; background: #f6f6f6; border-radius:3px; color: #fff;
+    font: bold 12px/26px "微软雅黑", "宋体", Helvetica, Arial, Verdana; cursor: default;
+    overflow: hidden; margin: 0 2px;  color: #999;
+}
+.main {
+    overflow: hidden;
+    margin: 10px;
+}
+
+      .topbox{ overflow: hidden;}
+            .downbox{overflow: hidden; margin-top: 6px;}
+            .input2a{ display:block; text-align: center; text-decoration: none;}
+            .input2a:hover{ text-decoration: none; }
+            .btn3{float: left;}

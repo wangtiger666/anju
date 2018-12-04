@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link href="__PUBLIC__/admin/style/common.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/common/style/common.css" rel="stylesheet" type="text/css" />
+        <script src="__PUBLIC__/common/js/jquery.js" language="javascript" type="text/javascript"></script>
+		<script src="__PUBLIC__/common/js/common.js" language="javascript" type="text/javascript"></script>
+        <style type="text/css">
+            .topbox{
+                overflow: hidden;
+            }
+            .downbox{
+                overflow: hidden; margin-top: 6px;
+            }
+            .input2a{
+                display:block; text-align: center; text-decoration: none;
+            }
+            .input2a:hover{
+                text-decoration: none;
+            }
+			.btn3{float: left;}
+        </style>
+        <script language="javascript" type="text/javascript">
+
+        </script>
+    </head>
+    <body>
+        <div class="main">
+            <div class="downbox">
+                <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#D6D6D6" align="center">
+                    <tr>
+                        <td height="32"  class="td_title td_head">
+                            <b>频道列表 </b>
+                        </td>
+                    </tr>
+                </table>
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#D6D6D6" align="center">
+                    <tr>
+                        <td height="32"  class="td_title td_head">
+                            <span style="text-align: right;"><input type="button" onclick="window.location.href = '{:U('channel/add')}';" value="新增频道" class="btn2"/></span>
+                        </td>
+                    </tr>
+                </table>
+                <table width="100%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D6D6D6">
+                    <tr class="tr_hui" height="30" align="center">
+                      
+                        <td width="5%">
+                            <b>ID</b>
+                        </td>
+                        <td width="20%">
+                            <b>频道名称</b>
+                        </td>
+
+                        <td width="10%">
+                            <b>频道排序</b>
+                        </td>
+						
+                        <td width="35%">
+                            <b>操作</b>
+                        </td>
+                    </tr>
+
+                    <volist name="list" id="vo">
+                        <tr class="tr_white">
+                         <td align="center">{$vo['id']}</td>
+                      
+                            <td align="center">
+						          {$vo['name']}
+							</td>
+						  <td align="center">
+                                  {$vo['listorder']}
+                            </td>
+						
+                            <td align="center">
+							
+							<input class="btn1" onclick="window.location.href = '/admin/channel/edit/id/{$vo.id}';" value="修改" type="button">
+
+                            <input class="btn1" onclick="DoNote('确认删除此条信息吗？','/admin/channel/del/id/{$vo.id}');" value="删除" type="button">
+                            </td>
+                            </td>
+
+
+                        </tr>
+                    </volist>
+                </table>
+                <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" align="center">
+                    <tr  class="tr_white" align="center">
+                        <td id="page_list" height="60" style="border:1px solid #c6c6c6; border-top: none; padding: 0px 10px;">
+                            {$page}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

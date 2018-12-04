@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <meta http-equiv="x-ua-compatible" content="IE=edge" />
+        <script src="__PUBLIC__/pano/pano.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+        <style>
+            @-ms-viewport { width: device-width; }
+            @media only screen and (min-device-width: 800px) { html { overflow:hidden; } }
+            html { height:100%; }
+            body { height:100%; overflow:hidden; margin:0; padding:0; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#FFFFFF; background-color:#000000; }
+            .toolbox{
+                width: 100%; height: 34px; background: url(__PUBLIC__/member/images/common/web.png); overflow: hidden; bottom: 0px; position: absolute; z-index: 100000;
+            }
+            .toolb{
+                width: auto; height: 24px; overflow: hidden; margin: 5px; float: left;
+            }
+            .toolb_h{
+                width: auto; height: 24px; overflow: hidden; float: left; font: bold 14px/24px "微软雅黑"; cursor: default;
+            }
+            .toolb_b{
+                width: auto; height: 24px; overflow: hidden; float: left; font: bold 14px/24px "微软雅黑"; cursor: default;
+                background: url(__PUBLIC__/member/images/common/glow.png);
+            }
+            .toolb_e{
+                width: auto; height: 24px; overflow: hidden; float: left;
+            }
+            .toolb_btn{
+                width: 24px; height: 24px; overflow: hidden; float: left; margin-left: 2px;
+                font: bold 14px/24px "微软雅黑"; text-align: center; color: #fff; cursor: pointer;
+                background: url(__PUBLIC__/member/images/common/glow.png);
+            }
+            .toolb_btn:hover{
+                background: url(__PUBLIC__/member/images/common/huang.png);
+            }
+            .toolinput{
+                width: 60px; height: 24px; overflow: hidden; border: 0px; background: none; margin: 0 2px; text-align: center; color: #fff; cursor: default;
+            }
+            .sub{
+                width: 50px; height: 24px; overflow: hidden; float: left; font: bold 12px/24px "微软雅黑"; cursor: pointer;
+                background: url(__PUBLIC__/member/images/common/glow.png); text-align: center;
+            }
+        </style>
+        <script type="text/javascript">
+            function backhv(h,v){
+                $("#ath").val(h);
+                $("#atv").val(v);
+            }
+            var temp;
+            var times = 0;
+            $(function(){
+                $(".toolb_btn").mousedown(function(){
+                    temp = $(this);
+                    funcdo();
+                    times = 0;
+                    $("body").everyTime("1ms","good",function(){
+                        times++;
+                        if(times>15){
+                            funcdo();
+                        }
+                    });
+                });
+                $(".toolb_btn").mouseup(function(){
+                    times = 0;
+                    $("body").stopTime("good");
+                });
+                $(".toolinput").change(function(){
+                    var value = $(this).val();
+                    var kr_name = $(this).data("kr");
+                    var kr_do = $(this).data("do");
+                    var va = value*kr_do;
+                    var kraction = "set(layer[radar]."+kr_name+","+va+");";
+                    krpano.call(kraction);
+                });
+            });
+            function funcdo(){
+                var temp_id = temp.data("forid");
+                var thevalue = $("#"+temp_id).val();
+                thevalue = parseFloat(thevalue);
+                var changevalue = temp.data("change");
+                changevalue = parseFloat(changevalue);
+                var value = thevalue + changevalue;
+                $("#"+temp_id).val(value);
+                var krpano = document.getElementById("krpano");
+                var kr_name = temp.data("kr");
+                var kr_do = temp.data("do");
+                var va = value*kr_do;
+                var kraction = "set(layer[radar]."+kr_name+","+va+");";
+                krpano.call(kraction);
+            }
+            function backdata(){
+                var ath = $("#ath").val();
+                var atv = $("#atv").val();
+                var scale = $("#scale").val();
+                var rx = $("#rx").val();
+                var ry = $("#ry").val();
+                var rz = $("#rz").val();
+                parent.smartback(ath,atv,scale,rx,ry,rz);
+            }
+        </script>
+    </head>
+    <body>
+        <div class="toolbox">
+            <div class="toolb">
+                <div class="toolb_h">方向：</div>
+                <div class="toolb_b"><input class="toolinput" id="headingoffset" data-kr="headingoffset" data-do="1" value="{$headingoffset}" /></div>
+                <div class="toolb_e">
+                    <div class="toolb_btn" data-forid="headingoffset" data-change="1" data-kr="headingoffset" data-do="1">+</div>
+                    <div class="toolb_btn" data-forid="headingoffset" data-change="-1" data-kr="headingoffset" data-do="1">-</div>
+                </div>
+				<div class="toolb_h">&nbsp;&nbsp;&nbsp;&nbsp;请点击 + - 号调整雷达方向，然后点击右侧OK，否则不生效</div>
+            </div>
+        </div>
+        <div id="pano" style="width:100%;height:100%;">
+            <noscript><table style="width:100%;height:100%;"><tr style="valign:middle;"><td><div style="text-align:center;">ERROR:<br/><br/>Javascript not activated<br/><br/></div></td></tr></table></noscript>
+            <script>
+                {$xmlscript}
+            </script>
+        </div>
+    </body>
+</html>

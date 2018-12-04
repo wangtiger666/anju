@@ -1,0 +1,150 @@
+<div class="_2JqLPn_vrngAbKCF">
+<a href="/"><div class="_2-hBTxig0UPabSUc"><div  class="RoIc6BEmPD2oVYvZ"></div></div></a>
+<a  class="w_nav" href="/"><div class="_2-hBTxig0UPabSUc <eq name='indexnav' value='1'>_3W8HSafttCTuZHug</eq>">首页</div></a>
+<a href="index.php?s=/Channel"><div class="_2-hBTxig0UPabSUc <eq name='recommend' value='1'>_3W8HSafttCTuZHug</eq>">推荐</div></a>
+<a href="index.php?s=/channel/index/id/42"><div class="_2-hBTxig0UPabSUc <eq name='channelnav' value='42'>_3W8HSafttCTuZHug</eq>">航拍</div></a>
+<a href="index.php?s=/channel/index/id/44"><div class="_2-hBTxig0UPabSUc <eq name='channelnav' value='44'>_3W8HSafttCTuZHug</eq>">城市</div></a>
+
+<a href="index.php?s=/channel/index/id/48"><div class="_2-hBTxig0UPabSUc <eq name='channelnav' value='48'>_3W8HSafttCTuZHug</eq>">商业</div></a>
+<a class="w_nav" href="index.php?s=/channel/index/id/50"><div class="_2-hBTxig0UPabSUc <eq name='channelnav' value='50'>_3W8HSafttCTuZHug</eq>">风景</div></a>
+<a class="w_nav" href="index.php?s=/channel/index/id/51"><div class="_2-hBTxig0UPabSUc <eq name='channelnav' value='51'>_3W8HSafttCTuZHug</eq>">创意</div></a>
+<a class="w_nav" href="index.php?s=/channel/index/id/45"><div class="_2-hBTxig0UPabSUc <eq name='channelnav' value='45'>_3W8HSafttCTuZHug</eq>">纪实</div></a>
+<a href="index.php?s=/Author"><div class="_2-hBTxig0UPabSUc <eq name='authornav' value='1'>_3W8HSafttCTuZHug</eq>">作者</div></a>
+<a  class="w_nav" href="index.php?s=/Website" target="_blank"><div class="_2-hBTxig0UPabSUc">关于</div></a>
+<!-- <a href="#"><div class="_2-hBTxig0UPabSUc">论坛</div></a> -->
+</div>
+<php>
+$member_id = cookie('member_id');
+$member_name = cookie('member_name');
+if(!empty($member_id)){
+	$headimg = M("Member")->where("id='$member_id'")->getField("headimg");
+	if(empty($headimg)) $headimg = "/Public/member/images/common/no_img.jpg";
+}
+</php>
+
+<script type="text/javascript">
+        function is_mobile() {
+            var sUserAgent = navigator.userAgent.toLowerCase();
+            var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+            var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+            var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+            var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+            var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+            var bIsAndroid = sUserAgent.match(/android/i) == "android";
+            var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+            var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+            
+            if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+              	 $('#mobile_is').css('display','none'); 
+            } else {
+                $('#mobile_is').css('display','block'); 
+            }
+        }
+     $(document).ready(function(){
+     			is_mobile();
+     })
+    </script>
+
+<div class="_3MyWtsJw7wI6_SH2" id="mobile_is" style="display: none;" >
+                            <div class="_2-hBTxig0UPabSUc">
+                                <div class="jH-mjoooHg2LVWQ2">
+								<style>
+									input[type="text"].hidesearch{padding: 0;border: none;width: 0px}
+								</style>
+									<!-- <span class="searchdiv">
+										<input type="text" name="q" class="hidesearch" style="width: 0px">
+									</span> -->
+                                    <a href="index.php?s=/Website/search/keywords/">
+                                        <i class="icon icon-search _3328DchPB9EYaEBs" ></i>
+                                    </a>
+                                </div>
+                            </div>
+						<if condition="!empty($member_id)">							
+						<div class="_2-hBTxig0UPabSUc " id="changeclass"  onmouseover="show_menu()" onmouseout="hidden_menu()" >
+							<span>
+								<span>
+									<div class="_2K5F8iQxS5sqe6Xr " ><img class="_3FY52TIlSp5gnYU0" src="{$headimg}">	</div>
+									<span class="_18bGPsFDOefY8uwV"><a href="/member/index">{$member_name}</a></span>
+								</span>
+							
+							<div  class="_11g14I0cgOYQQ19-" id="changeclass_t" style="display: none;">
+								<a href="/member/index" >
+									<div class="_1Lf4jB0ZBqHxv6K8">信息中心</div>
+								</a>
+								<?php $myhome_url = "index.php?s=/author/pannolist/id/".$member_id;?>
+								<a href=<?php echo $myhome_url; ?> ><div class="_1Lf4jB0ZBqHxv6K8">我的主页</div>  
+								</a>
+								<div class="_3bh5XDwD-VFRHfgh"></div>
+
+								<a  href="/member/index/index/flag/panolist">
+									<div class="_1Lf4jB0ZBqHxv6K8">作品管理</div>
+								</a>
+								<a href="/member/index/index/flag/daohang" ><div class="_1Lf4jB0ZBqHxv6K8">素材库</div>  
+								</a>
+								<div class="_3bh5XDwD-VFRHfgh"></div>
+
+								<a href="/member/index/index/flag/user/index">
+									<div class="_1Lf4jB0ZBqHxv6K8">账户管理</div>
+								</a>
+								<a href="/member/login/logout"><div class="_1Lf4jB0ZBqHxv6K8">退出登录</div>  
+								</a>
+								<div class="_3bh5XDwD-VFRHfgh"></div>
+							</div>
+
+							</span>
+							</div>
+							<else/>
+							<span style="white-space: normal;">
+							<?php   
+								$host = $_SERVER['HTTP_HOST']; 
+								$domain = $host;
+								$regrul = "http://".$domain."/member/reg";
+								$loginrul = "http://".$domain."/member/login";
+							?>
+								<a href=<?php  echo $regrul;?> >
+									<div class="_2-hBTxig0UPabSUc">
+										注册
+									</div>
+								</a>
+								<a href=<?php  echo $loginrul;?> >
+									<div class="_2-hBTxig0UPabSUc">
+										登录
+									</div>
+								</a>						
+							</span>
+							</if>
+                        </div> 
+
+<script>
+$('#mytask').click(function() {
+	$.ajax({
+		type:"POST",
+		url:"/index.php?s=/User/mytask",
+		data: {dopost:'mytask'},
+		dataType:'json',
+		success:function(data){
+			if (data.status==0){
+				$("#regdiv").hide();$("#logindiv").show(); $("#yunbody").addClass("modal-open");
+			}else{
+				window.location.href="Member/login/auto/from/"+data.info;
+			}
+		}
+	});
+});
+</script>
+
+ <script type="text/javascript">
+                  function show_menu(){
+                        var xiala = "changeclass";
+                        var xiala_t = "changeclass_t";
+                       	$("#"+xiala).addClass("_35rPnbU5BBs2WX0E");
+                        $("#"+xiala_t).css("display","block");
+                   }
+
+                   function hidden_menu(){
+                        var xiala = "changeclass";
+                        var xiala_t = "changeclass_t";
+                       	$("#"+xiala).removeClass("_35rPnbU5BBs2WX0E");
+                        $("#"+xiala_t).css("display","none");
+                 }
+</script>

@@ -1,0 +1,232 @@
+@charset "utf-8";
+* {
+    padding:0px;
+    margin:0px;
+    overflow: hidden;
+}
+body{margin:0;padding:0;background:#fff;}
+ul,li,dl,dt,dd{ margin:0px; padding:0px; list-style:none;}
+a{text-decoration:none;}
+a:link{}
+a:visited{}
+a:hover{text-decoration:underline;}
+a:active{}
+img{border:0;padding:0; margin:0;}
+p{padding:0; margin:0;}
+b{
+    font-weight: normal; 
+}
+
+.header { 
+    width:100%;
+    height:60px;
+    overflow:hidden;
+    z-index:8;
+    position:relative;
+    background: url(../images/index/top_bg.gif) repeat-x;
+
+}
+.header_in{
+	width:100%;
+    height:60px;
+    overflow:hidden;
+    z-index:8;
+    position:relative;    
+}
+#logo{
+    width: 450px; height: 50px; overflow: hidden; float: left; _display: inline; background: url(../images/index/logo.png) no-repeat; margin-top:5px; margin-left:20px;
+}
+
+body.showmenu .left {
+    display:block;
+}
+body.hidemenu .left {
+    display:none;
+}
+body.showmenu .right {
+    left:285px;
+}
+body.hidemenu .right {
+    left:0px;
+}
+
+.left {
+    position:absolute;
+    top:60px;
+    width:284px;
+    left:0px;
+    bottom:0px;
+    z-index:7;    
+    border-right: 1px solid #c6c6c6;
+}
+.left {
+    *height:100%;
+    *top:0;
+    *bottom:0;
+    *border-right: 1px solid #c6c6c6;
+    *z-index:1;
+}
+
+.right {
+    position:absolute;
+    right:0;
+    top:60px;
+    bottom:0px;
+    z-index:7;
+}
+.right {
+    *height:100%;
+    *top:0;
+    *bottom:0;
+    *z-index:1;
+}
+.ie7box{
+    width: auto; 
+    height: 0px; 
+    overflow: hidden; 
+    background: #fff;
+}
+
+.ie7box{
+    *width: auto; 
+    *height: 60px; 
+    *overflow: hidden; 
+    *background: #fff;
+}
+
+.ie7box2{
+    width: auto; 
+    height: 34px; 
+    overflow: hidden; 
+    background: #fff;
+}
+.ie7box2{
+    *width: auto; 
+    *height: 114px; 
+    *overflow: hidden; 
+    *background: #fff;
+}
+
+
+
+.leftline,.rightline{
+    width: auto; height: 32px; overflow: hidden; background: url(../images/index/linebg.png) repeat-x; border-top:1px solid #c6c6c6; border-bottom:1px solid #c6c6c6;
+}
+.rightline .righthide{
+    width: 20px; height: 32px; overflow: hidden; background: url(../images/index/linebg.png) repeat-x; position: absolute; z-index: 20;
+}
+.rightline .userdata{
+    width: 300px; height: 32px; overflow: hidden; float: left; _display: inline; margin-left: 20px;
+    font: bold 12px/32px "微软雅黑"; color: #666; cursor: default;    
+}
+.rightline .userdata:hover{
+    color: #333;
+}
+.rightline .exit{
+    width: 60px; height: 32px; overflow: hidden; float: right; _display: inline; margin-left: 20px; text-align: center;
+    font: bold 12px/32px "微软雅黑"; color: #666;  
+}
+.rightline .exit a{
+    font: bold 12px/32px "微软雅黑"; color: #666; 
+}
+
+.button{
+    width: 28px; height: 78px; overflow: hidden; background: url(../images/index/btn2.png) no-repeat; position: absolute; margin-top: 100px; cursor: pointer; z-index: 10;
+    _background:none;
+}
+body.showmenu .buttonin{
+    width: 28px; height: 78px; overflow: hidden; background: url(../images/index/btn1.gif) no-repeat;
+}
+body.showmenu .buttonin:hover{
+    background-position: -29px 0;
+}
+
+body.hidemenu .buttonin{
+    width: 28px; height: 78px; overflow: hidden; background: url(../images/index/btn1.gif) -85px 0 no-repeat;
+}
+body.hidemenu .buttonin:hover{
+    background-position: -56px 0;
+}
+
+.menu{
+    width: 284px; height: auto; overflow: hidden; background: #fff;
+}
+.menu .viewport { 
+    width: 250px; height: 600px; overflow: hidden; position: relative; margin-left: 12px; background: #fff; float: left; _display: inline;
+}
+.menu .overview { 
+    list-style: none; position: absolute; left: 0; top: 0; padding: 0; margin: 0; 
+}
+.menu .scrollbar{ 
+    background: transparent url(../images/index/scrollbar/bg-scrollbar-track-y.png) no-repeat 0 0; position: relative; background-position: 0 0; float: right; width: 15px; 
+}
+.menu .track { 
+    background: transparent url(../images/index/scrollbar/bg-scrollbar-trackend-y.png) no-repeat 0 100%; height: 100%; width:13px; position: relative; padding: 0 1px; 
+}
+.menu .thumb { 
+    background: transparent url(../images/index/scrollbar/bg-scrollbar-thumb-y.png) no-repeat 50% 100%; height: 20px; width: 25px; cursor: pointer; overflow: hidden; position: absolute; top: 0; left: -5px; 
+}
+.menu .thumb .end { 
+    background: transparent url(../images/index/scrollbar/bg-scrollbar-thumb-y.png) no-repeat 50% 0; overflow: hidden; height: 5px; width: 25px; 
+}
+.menu .disable {
+    display: none; 
+}
+.noSelect { 
+    user-select: none; -o-user-select: none; -moz-user-select: none; -khtml-user-select: none; -webkit-user-select: none;
+}
+.nemulist{
+    width: 250px; height: auto; overflow: hidden; margin-top: 10px;
+}
+.nemulist ul li{
+    font: bold 12px/36px "微软雅黑"; color: #333; width: 115px; height: 38px; padding-left: 10px; overflow: hidden; float: left;
+    background: url(../images/index/menubtn.gif) no-repeat; display: block; cursor: pointer;
+}
+.nemulist ul li:hover{
+    text-decoration: none; color: #be0000;
+}
+.nemulist ul li.leftb{
+    
+}
+.nemulist ul li.rightb{
+    background-position: -125px 0;
+}
+.menubox{
+    width: 250px; height: auto; overflow: hidden; margin-top: 8px; display: none;
+}
+.menubox .cube{
+    width: 250px; height: auto; overflow: hidden;
+}
+.menubox .cube .title{
+    width: 248px; height: 28px; overflow: hidden; background: url(../images/index/menubtbg.png) repeat-x;
+    font: bold 12px/28px "微软雅黑"; color: #009a70; text-align: center;  border:1px solid #dbdbdb; cursor: pointer;
+}
+.menubox .cube .title:hover{
+    color: #ff9600;
+}
+.menubox .cube .body{
+    width: 248px; overflow: hidden; background: url(../images/index/menutbbg.png) repeat-x; padding: 8px 0;  border:1px solid #dbdbdb; border-top: 0px; border-bottom: 0px; 
+}
+.menubox .cube .body .link{
+    width: 112px; height: 24px; overflow: hidden; margin-left: 12px;
+    font: 12px/24px "微软雅黑"; color: #333; float: left; _display: inline
+}
+.menubox .cube .body .link a{
+    font: 12px/24px "微软雅黑"; color: #666;
+}
+.menubox .cube .body .link a:hover{
+    color: #000;
+}
+.menubox .cube .shadow{
+    width: 250px; height: 10px; overflow: hidden; background: url(../images/index/shadow_bottom.gif) no-repeat;
+}
+.main {
+    height:100%;
+}
+
+.main iframe {
+    height:100%;
+    width:100%;
+    z-index:0;
+    overflow: auto;
+}

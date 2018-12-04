@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>首页</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+        <script type="text/javascript" src="__PUBLIC__/common/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+
+        <style>
+            .panoimg{
+                width: 120px; height: 90px; overflow: hidden; border:1px solid #dbdbdb;
+            }
+        </style>
+    </head>
+    <body>
+        {:W("Bg")}
+        <div id="upmain">
+            <div class="main">
+                <div class="main_head">
+                    <div class="main_head_left"></div>
+                    <div class="main_head_right"></div>
+                    <div class="main_head_main">
+                        <div class="title">360物体项目管理</div>
+                        <div title="关闭" onclick="DoNote('确认返回功能首页？','{:U('main/index')}');" class="close"></div>
+                        <div title="返回上级" onclick="LinkTo('{$backurl}');" class="goback"></div>
+                    </div>
+                </div>
+                <div class="main_mid">
+                    <div class="main_mid_left"></div>
+                    <div class="main_mid_right"></div>
+                    <div class="main_mid_main">
+                        <div class="webpage">
+                            <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#c6c6c6" align="center">
+                                <tr>
+                                    <td height="36"  class="td_title" style="border:1px solid #c6c6c6; border-bottom:none; padding: 0px 10px;">
+                                        <input type="button" onclick="window.location.href = '__APP__/wechat/{$dex}/lost';" value="" class="btn_lost"/>
+                                        <input type="button" onclick="window.location.href = '{:U($dex.'/add')}';" value="添加" class="btn1 me"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table width="100%" border="0" cellpadding="2" cellspacing="1" bgcolor="#c6c6c6">
+                                <tr class="tr_hui" height="36" align="center">
+                                    <td width="5%">
+                                        <b>选择</b>
+                                    </td>
+                                    <td width="25%">
+                                        <b>项目名称</b>
+                                    </td>
+                                    <td width="25%">
+                                        <b>场景数</b>
+                                    </td>
+                                    <td width="15%">
+                                        <b>创建时间</b>
+                                    </td>
+                                    <td width="30%">
+                                        <b>操作</b>
+                                    </td>
+                                </tr>
+                                <volist id="vo" name="list">
+                                    <tr class="tr_white" height="36">
+                                        <td align="center"><input type="checkbox" value="{$vo['id']}" /></td>
+                                        <td align="center">{$vo['title']}</td>
+                                        <td align="center">{$vo.num}</td>
+                                        <td align="center">{$vo['creat_time']|date='Y-m-d H:i:s',###}</td>
+                                        <td align="center">
+                                            <input type="button" onclick="LinkTo('{:U('view/index',array('pano_id' =>$vo['id']))}');" class="btn1" value="制作"/>
+                                            <input type="button" onclick="DoNote('确认删除【{$vo.title}】吗？','__APP__/wechat/{$dex}/del/id/{$vo.id}');" class="btn1" value="删除"/>
+                                        </td>
+                                    </tr>
+                                </volist>
+                            </table>
+                            <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#c6c6c6" align="center">
+                                <tr>
+                                    <td height="36"  class="tr_hui" style="border:1px solid #c6c6c6; border-top:none; padding: 0px 10px;">
+                                        <input type="button" onclick="selectAll();" value="全选" class="btn1"/><input type="button" onclick="unselectAll();" value="全不选" class="btn1"/><input type="button" onclick="selectOther();" value="反选" class="btn1"/>
+                                        <input type="button" onclick="DelSelect();" value="批量删除" class="btn2"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" align="center">
+                                <tr  class="tr_white" align="center">
+                                    <td id="page_list" height="60" style="border:1px solid #c6c6c6; border-top: none; padding: 0px 10px;">
+                                        {$page}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_foot">
+                    <div class="main_foot_left"></div>
+                    <div class="main_foot_right"></div>
+                    <div class="main_foot_main"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

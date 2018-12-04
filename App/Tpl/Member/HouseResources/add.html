@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="__PUBLIC__/member/style/common.css" media="screen"/>
+    <script src="__PUBLIC__/common/js/jquery-1.10.2.js" language="javascript" type="text/javascript"></script>
+    <script type="text/javascript" src="__PUBLIC__/common/js/common.js"></script>
+    {:W("Easyui")}
+    {:W("Boluoui")}
+    {:W("Uploader")}
+    <script charset="utf-8" src="__PUBLIC__/bootstrap/js/bootstrap.js"></script>
+    <script charset="utf-8" src="__PUBLIC__/bootstrap/js/bootstrap-select.js"></script>
+    <link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/bootstrap/css/bootstrap-select.css" rel="stylesheet">
+    <style type="text/css">
+        .box{
+            width: auto; height: 50px; overflow: hidden; border:1px solid #c6c6c6; margin: 5px; float: left; border-radius: 5px; background: #eee; cursor: pointer;
+        }
+        .box.me{
+            background: #e0f5ff; border-color: #ace;
+        }
+        .box:hover{
+            background: #e5ffcb;
+        }
+        .box.me:hover{
+            background: #e0f5ff;
+        }
+        .boxtext{
+            width: 60px; height: 36px; overflow: hidden; float: left; background: #fff; padding: 2px 0;
+            text-align: center; font: 12px/36px "微软雅黑"; cursor: default; margin-top: 5px; margin-left: 5px;
+        }
+        .boxbag{
+            width: auto; height: 50px; overflow: hidden; float: left; padding-right: 5px;
+        }
+        .boxbag .pigbox{
+            width: 38px; height: 38px; overflow: hidden; float: left; background: #fff; margin-left: 5px; border:1px solid #ccc;
+            margin-top: 5px;
+        }
+        .box.me .boxbag .pigbox{
+            border-color: #ace;
+        }
+        .cursorout{
+            overflow: hidden; background: #f8f8f8; padding: 5px; border:1px solid #c6c6c6; float: left; border-radius:5px;
+        }
+        .cursormarket{
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+{:W("Bg")}
+<div id="upmain">
+    <div class="main">
+        <div class="main_head">
+            <div class="main_head_left"></div>
+            <div class="main_head_right"></div>
+            <div class="main_head_main">
+                <div class="title">全景项目 - {$panorow['title']} - 房源信息添加</div>
+                <div title="返回上级" onclick="LinkTo('/member/panolist');" class="goback"></div>
+            </div>
+        </div>
+        <div class="main_mid">
+            <div class="main_mid_left"></div>
+            <div class="main_mid_right"></div>
+            <div class="main_mid_main">
+                <div class="none_main">
+                    <div class="action_main">
+                        <div class="action_title">房源信息添加<font style="color: red;font-weight: bold;"><input type="button" value="点击查看说明文档" onclick="readme()"></font></div>
+                        <div class="action_web">
+                            <form id="addForm" onsubmit="return checksb();" method="post" class="form-horizontal">
+                                <input type="hidden" name="dopost" value="save" />
+                                <input type="hidden" name="detail_address" id="detailAddress" value="" />
+                                <input type="hidden" name="province_id" id="province" value="" />
+                                <input type="hidden" name="city_id" id="city" value="" />
+                                <input type="hidden" name="district_id" id="district" value="" />
+                                <input type="hidden" name="pano_id" value="{$pano_id}" />
+                                <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">
+                                    <tr class="tr_white" height="10">
+                                        <td align="right" width="100"><b>全景图类型：</b></td>
+                                        <td align="left">
+                                            <select name="type" id="selectType" onchange="pano_type(this[selectedIndex].value)">
+                                                <option value="1">小区全景</option>
+                                                <option value="2">房屋全景</option>
+                                                <option value="3">鸟瞰</option>
+                                            </select>
+                                        </td>
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_white" height="36">
+                                        <td align="right" width="100"><b>所属省份地区：</b></td>
+                                        <td align="left">
+                                            <select id="province_id" class="selectpicker" data-style="btn-info" data-live-search="true" style="width: 100px;" data-live-search-placeholder="输入搜索">
+                                                <volist name="provinceList" id="province">
+                                                    <option data-tokens="{$province['name']}" value="{$province['id']}">{$province['name']}</option>
+                                                </volist>
+                                            </select>
+                                            <select id="city_id" class="selectpicker" data-style="btn-info" data-live-search="true" data-live-search-placeholder="输入搜索">
+
+                                            </select>
+                                            <select id="district_id" class="selectpicker" data-style="btn-info" data-live-search="true" data-live-search-placeholder="输入搜索">
+
+                                            </select>
+
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_white pano_region pano_nk" height="10">
+                                        <td align="right" width="100"><b>房源标题：</b></td>
+                                        <td align="left">
+                                            <input type="text" sbname="房源标题" maxlength="255" size="20" value="" id="house_title" name="house_title" class="inputcube">&nbsp;
+                                        </td>
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_white" height="36">
+                                        <td align="right" width="100"><b>详细地址：</b></td>
+                                        <td align="left">
+                                            小区：<input type="text" sbname="小区信息"  id="xiaoqu" name="xiaoqu" list="uptown_id" value="" class="inputcube cs" placeholder="请输入小区名称"/>
+                                                 <datalist id="uptown_id" style="display: none">
+
+                                                 </datalist>
+                                            <div class="pano_region pano_nk">
+                                                楼栋的编号：<input type="text" sbname="门牌信息" id="lhbianhao" name="lhbianhao" value="" class="inputcube cs" placeholder="请楼栋的编号"/><br/>
+                                                楼层门牌号：<input type="text" sbname="门牌信息" id="menpai" name="menpai" value="" class="inputcube cs" placeholder="请输入楼层门牌号"/>
+                                            </div>
+                                            <div class="pano_nk">
+                                                坐标：<input type="text" sbname="房屋坐标" name="zuobiao" id="zuobiao" value="" class="inputcube cs" placeholder="请输入坐标"/>
+                                                <input type="button" onclick="openwinNew()" class="btn1" value="点击获取"/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_white pano_house pano_nk" height="10">
+                                        <td align="right" width="100"><b>小区缩略图：</b></td>
+                                        <td align="left">
+                                            <div class="thumbbox1" id="regionimgbox" style="cursor: pointer;width:480px;height:280px;">
+                                                <if condition="!empty($panorow['welcome'])">
+                                                    <img src="{:CC('web_root')}{$panorow['welcome']}?{$Think.now}" onload="swichimg2w(this,200);"/>
+                                                </if>
+                                            </div>
+                                            <input type="button" id="regionimgbtn" class="btn3" value="点击上传" />
+
+                                            <input type="hidden" sbname="小区缩略图" id="region_img" class="cs" name="img" value=" " />
+                                        </td>
+                                    </tr>
+                                    <script type="text/javascript">
+                                        $(function(){
+                                            $("#regionimgbtn").uploader("image", "file_img");
+                                        });
+                                        function file_img(data){
+                                            $("#region_img").val(data);
+                                            $("#regionimgbox").html('<img width="200" height="200" src="'+data+'"" />');
+                                        }
+                                    </script>
+                                    <tr class="tr_white pano_house pano_nk" height="36">
+                                        <td align="right" width="100"><b>小区所属类别：</b></td>
+                                        <td align="left">
+                                            <input type="text" name="category" sbname="小区所属类别" value="" class="inputcube cs"/>
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_white pano_house pano_nk" height="36">
+                                        <td align="right" width="100"><b>小区详情：</b></td>
+                                        <td align="left">
+                                            <textarea style="width:500px;height:80px;" class="textacube" name="content"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_white pano_region pano_nk" height="10">
+                                        <td align="right" width="100"><b>租金：</b></td>
+                                        <td align="left">
+                                            <input type="number" sbname="房屋租金" maxlength="255" size="20" value="" id="lease_money" name="lease_money" class="inputcube">&nbsp;元
+                                        </td>
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_white pano_region pano_nk" height="36">
+                                        <td align="right" width="100"><b>房屋户型：</b></td>
+                                        <td align="left">
+                                            <select name="house_type" id="house_type" class="selectpicker" data-style="btn-info" data-live-search="true" style="width: 100px;" data-live-search-placeholder="输入搜索">
+                                                <volist name="houseTypeList" id="houseType">
+                                                    <option data-tokens="{$houseType['name']}" value="{$houseType['id']}">{$houseType['name']}</option>
+                                                </volist>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_white pano_region pano_nk" height="36">
+                                        <td align="right" width="100"><b>房屋装修：</b></td>
+                                        <td align="left">
+                                            <select name="house_desc" id="house_desc" class="selectpicker" data-style="btn-info" data-live-search="true" style="width: 100px;" data-live-search-placeholder="输入搜索">
+                                                <volist name="houseDescList" id="houseDesc">
+                                                    <option data-tokens="{$houseDesc['name']}" value="{$houseDesc['id']}">{$houseDesc['name']}</option>
+                                                </volist>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_white pano_region pano_nk" height="36">
+                                        <td align="right" width="100"><b>房屋朝向：</b></td>
+                                        <td align="left">
+                                            <select name="house_direction" id="house_direction" class="selectpicker" data-style="btn-info" data-live-search="true" style="width: 100px;" data-live-search-placeholder="输入搜索">
+                                                <volist name="houseDirectionList" id="houseDirection">
+                                                    <option data-tokens="{$houseDirection['name']}" value="{$houseDirection['id']}">{$houseDirection['name']}</option>
+                                                </volist>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_white pano_region pano_nk" height="36">
+                                        <td align="right" width="100"><b>出租方式：</b></td>
+                                        <td align="left">
+                                            <select name="lease_type" id="lease_type" class="selectpicker" data-style="btn-info" data-live-search="true" style="width: 100px;" data-live-search-placeholder="输入搜索">
+                                                <volist name="leaseMethodList" id="leaseMethod">
+                                                    <option data-tokens="{$leaseMethod['name']}" value="{$leaseMethod['id']}">{$leaseMethod['name']}</option>
+                                                </volist>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_white pano_region pano_nk" height="10">
+                                        <td align="right" width="100"><b>小区类型：</b></td>
+                                        <td align="left">
+                                            <select name="uptown_type" id="uptown_type" class="selectpicker" data-style="btn-info" data-live-search="true" style="width: 100px;" data-live-search-placeholder="输入搜索">
+                                            <volist name="uptownTypeList" id="uptownType">
+                                                <option data-tokens="{$uptownType['name']}" value="{$uptownType['id']}">{$uptownType['name']}</option>
+                                            </volist>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_white pano_region pano_nk" height="10">
+                                        <td align="right" width="100"><b>房屋设备：</b></td>
+                                        <td align="left">
+                                            <volist name="houseEquipList" id="obj">
+                                                &nbsp;&nbsp;<input type="checkbox" name="house_equip[]" value="{$obj['name']}" checked/> {$obj['name']}
+                                            </volist>
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_white pano_region pano_nk" height="36">
+                                        <td align="right" width="100"><b>房屋大小：</b></td>
+                                        <td align="left">
+                                            <input type="number" sbname="房屋大小" name="house_size" id="house_size" list="house_size" value="" class="inputcube cs" placeholder="请输入"/>平米
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_white pano_region pano_nk" height="36">
+                                        <td align="right" width="100"><b>房屋所属类别：</b></td>
+                                        <td align="left">
+                                            <input type="text" name="house_category" sbname="房屋所属类别" value="" class="inputcube cs"/>
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_white pano_region pano_nk" height="36">
+                                        <td align="right" width="100"><b>联系方式：</b></td>
+                                        <td align="left">
+                                            <input type="text" name="tel" sbname="联系方式" value="" class="inputcube cs"/>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="tr_white pano_region pano_nk" height="10">
+                                        <td align="right" width="100"></td>
+                                        <td align="left" colspan="2"></td>
+                                    </tr>
+                                    <tr class="tr_white pano_region pano_nk" height="10">
+                                        <td align="right" width="100"><b>房屋缩略图：</b></td>
+                                        <td align="left">
+                                            <div class="thumbbox1" id="imgbox" style="cursor: pointer;width:480px;height:280px;">
+                                                <if condition="!empty($panorow['welcome'])">
+                                                    <img src="{:CC('web_root')}{$panorow['welcome']}?{$Think.now}" onload="swichimg2w(this,200);"/>
+                                                </if>
+                                            </div>
+                                            <input type="button" id="imgbtn" class="btn3" value="点击上传" />
+
+                                            <input type="hidden" sbname="房屋缩略图" id="house_img" class="cs" name="house_img" value=" " />
+                                        </td>
+                                    </tr>
+                                    <script type="text/javascript">
+                                        $(function(){
+                                            $("#imgbtn").uploader("image", "file");
+                                        });
+                                        function file(data){
+                                            $("#house_img").val(data);
+                                            $("#imgbox").html('<img width="200" height="200" src="'+data+'"" />');
+                                        }
+                                    </script>
+                                    <tr class="tr_white pano_region pano_nk" height="10">
+                                        <td align="right" width="100"><b>房屋平面图：</b></td>
+                                        <td align="left">
+                                            <div class="thumbbox1" id="imgbox3" style="cursor: pointer;width:480px;height:280px;">
+                                                <if condition="!empty($panorow['welcome'])">
+                                                    <img src="{:CC('web_root')}{$panorow['welcome']}?{$Think.now}" onload="swichimg2w(this,200);"/>
+                                                </if>
+                                            </div>
+                                            <input type="button" id="imgbtn3" class="btn3" value="点击上传" />
+
+                                            <input type="hidden" sbname="房屋平面图" id="house_img3" class="cs" name="detail_img" value=" " />
+                                        </td>
+                                    </tr>
+                                    <script type="text/javascript">
+                                        $(function(){
+                                            $("#imgbtn3").uploader("image", "file2");
+                                        });
+                                        function file2(data){
+                                            $("#house_img3").val(data);
+                                            $("#imgbox3").html('<img width="200" height="200" src="'+data+'"" />');
+                                        }
+                                    </script>
+                                    <tr class="tr_white" height="10">
+                                        <td colspan="2"></td>
+                                    </tr>
+                                    <tr class="tr_white" height="40">
+                                        <td align="right" width="120"></td>
+                                        <td align="left">
+                                            <input type="button" class="blackbutton" onclick="tijiao()" value="提交" />
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_white" height="10">
+                                        <td colspan="2"></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main_foot">
+            <div class="main_foot_left"></div>
+            <div class="main_foot_right"></div>
+            <div class="main_foot_main"></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function pano_type(values) {
+        if (values == 1){
+            $(".pano_nk").css("display","");
+            $(".pano_house").css("display","");
+            $(".pano_region").css("display","none");
+        }else if(values == 2){
+            $(".pano_nk").css("display","");
+            $(".pano_region").css("display","");
+            $(".pano_house").css("display","none");
+        }else{
+            $(".pano_house").css("display","");
+            $(".pano_region").css("display","");
+            $(".pano_nk").css("display","none");
+        }
+    }
+    function checksb(){
+        var result = true;
+        if(result == true){
+            result = AutoCheckSub(".cs");
+        }
+        return result;
+    }
+    $(document).ready(function(){
+        $(".pano_region").css("display","none");
+        onoroff();
+        boluo_autocheckui();
+        $('.dd').tooltip({
+            position: 'right'
+        });
+
+        $(".box").click(function(){
+            var cid = $(this).data("cid");
+            $("#cursor_id").val(cid);
+            checkcurosr(cid);
+        });
+    });
+    function checkcurosr(n){
+        $(".box").removeClass("me");
+        $("#cursor"+n).addClass("me");
+    }
+
+    function submitMap(addr,poi)
+    {
+        $('#detailAddress').val(addr);
+        $('#zuobiao').val(poi);
+        closewin();
+    }
+
+    function regionList(level, pid){
+        $.ajax({
+            url: "{:U('api/regionList')}",
+            type: "POST",
+            dataType: "json",
+            data: {
+                level: level,
+                pid: pid
+            },
+            success: function(data) {
+//                var html = '<option value="">请选择...</option>';
+                var html = '';
+
+
+                var id = '#' + level + '_id';
+
+                if(level == 'uptown'){
+                    for(var i in data){
+                        html += '<option data-uptown_id="' + data[i].id + '" value="' + data[i].name + '"></option>';
+                    }
+                    $(id).append(html);
+                }else{
+                    for(var i in data){
+                        html += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+                    }
+
+                    $(id).append(html);
+                    $(id).selectpicker('refresh');
+                }
+
+            }
+        });
+    }
+
+
+    var html = '<option value="1">1</option>';
+    $("#uptown_id").html(html);
+
+    regionList('province', 0);
+    regionList('city', 1);//默认北京市
+    regionList('district', 2);//默认北京城区
+    regionList('uptown', 12);//默认东城区
+    $(function () {
+        $('#province_id').selectpicker({
+            style: 'btn-info',
+            size: 10
+        }).on('changed.bs.select',function(e){
+            var pid = $("#province_id").selectpicker('val');
+            $("#province").val(pid);
+            regionList('city', pid);
+            $("#city_id").empty();
+            $("#district_id").empty();
+
+        });
+        $('#city_id').selectpicker({
+            style: 'btn-info',
+            size: 10
+        }).on('changed.bs.select',function(e){
+            var pid = $("#city_id").selectpicker('val');
+            $("#city").val(pid);
+            regionList('district', pid);
+            $("#district_id").empty();
+        });
+        $('#district_id').selectpicker({
+            style: 'btn-info',
+            size: 10
+        }).on('changed.bs.select',function(e){
+            var pid = $("#district_id").selectpicker('val');
+            $("#district").val(pid);
+            regionList('uptown', pid);
+            $("#uptown_id").empty();
+        });
+        $('#house_type').selectpicker({
+            style: 'btn-info',
+            size: 10
+        });
+        $('#house_desc').selectpicker({
+            style: 'btn-info',
+            size: 10
+        });
+        $('#house_direction').selectpicker({
+            style: 'btn-info',
+            size: 10
+        });
+        $('#uptown_type').selectpicker({
+            style: 'btn-info',
+            size: 10
+        });
+    });
+
+
+    function tijiao(){
+        $.ajax({
+            url: "{:U('HouseResources/add')}",
+            type: "POST",
+            dataType: "json",
+            data: $('#addForm').serializeArray(),
+            success: function(data) {
+                if(data.code == 200){
+                    window.location = "{:U('/member/panolist')}";
+                }else{
+                    alert(data.msg);
+                }
+            }
+        });
+    }
+
+    function readme(){
+        var url = "{:U('HouseResources/readme')}";
+        openwin('编辑说明文档',url,600,550);
+    }
+
+    function openwinNew(){
+        var xiaoqu = $("#xiaoqu").val();
+        if(xiaoqu == null || xiaoqu == ''){
+            alert('小区信息不能为空');
+            return ;
+        }
+        var select_type = $("#selectType").val();
+        if (select_type == 2){
+            var lhbianhao = $("#lhbianhao").val();
+            if(lhbianhao == null || lhbianhao == ''){
+                alert('楼栋编号不能为空');
+                return ;
+            }
+            var menpai = $("#menpai").val();
+            if(menpai == null || menpai == ''){
+                alert('门牌信息不能为空');
+                return ;
+            }
+        }
+
+        var province_id = $("#province_id").selectpicker('val');
+        if(province_id == null || province_id == ''){
+            alert('省份信息不能为空');
+            return ;
+        }
+        var city_id = $("#city_id").selectpicker('val');
+        if(city_id == null || city_id == ''){
+            alert('城市信息不能为空');
+            return ;
+        }
+        var district_id = $("#district_id").selectpicker('val');
+        if(district_id == null || district_id == ''){
+            alert('区域信息不能为空');
+            return ;
+        }
+        var detailAddress = xiaoqu + lhbianhao + menpai;
+        var url = "/member/config/gdgetpoint?province_id=" + province_id + "&city_id=" + city_id + "&district_id=" + district_id + "&detailAddress=" + detailAddress;
+        openwin('地图坐标拾取',url,1000,1000);
+    }
+</script>
+</body>
+</html>

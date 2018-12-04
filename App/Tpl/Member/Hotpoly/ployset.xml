@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano showerrors="false" onstart="action(start);">
+    <action name="start">
+        loadscene(scene1, null, MERGE);
+    </action>
+    <style name="button"
+            url="%SWFPATH%/plugins/textfield.swf"
+            children="false"
+            css="text-align:center; color:#FFFFFF; font-family:微软雅黑; font-size:12px;"
+            vcenter="true"
+            backgroundcolor="0x000000" backgroundalpha="0.4" roundedge="1" border="true" bordercolor="0xDDDDDD"
+            width="85"
+            height="24"
+            shadow="0"
+            onover="set(backgroundcolor,0xFF0000);"
+            onout="set(backgroundcolor,0x000000);"
+            />
+    <style name="info"
+            url="%SWFPATH%/plugins/textfield.swf"
+            children="false"
+            css="text-align:center; color:#FFFFFF; font-family:微软雅黑; font-size:12px;"
+            vcenter="true"
+            backgroundcolor="0xAACCEE" backgroundalpha="0.2" roundedge="1" border="false"
+            width="180"
+            height="28"
+            shadow="0"
+            />
+    <scene name="scene1">
+        <view hlookat="{$x}" vlookat="{$y}" fov="80" fisheye="0" fovmin="60" fovmax="160" />
+        <image type="CUBE">
+            <left url="{:CC('web_root')}{$viewrow['left']}" />
+            <front url="{:CC('web_root')}{$viewrow['front']}" />
+            <right url="{:CC('web_root')}{$viewrow['right']}" />
+            <back url="{:CC('web_root')}{$viewrow['back']}" />
+            <up url="{:CC('web_root')}{$viewrow['up']}" />
+            <down url="{:CC('web_root')}{$viewrow['down']}" />
+        </image>
+    </scene>
+    <layer name="toolbox" visible="True" keep="true" zorder="100" type="container" align="bottom" width="200" height="80" x="0" y="10" bgcolor="0x000000" bgalpha="0.4" bgcapture="true" ondown="dragui();">
+        <layer name="botton1" visible="True" style="button" align="lefttop" x="10" y="10"  html="开始设置"
+            onclick="startdo();"
+        />
+        <layer name="botton2" visible="True" style="button" align="righttop" x="10" y="10"  html="提交参数"
+            onclick="senddata();"
+        />
+        <layer name="botton3" visible="false" style="button" align="lefttop" x="10" y="10"  html="完成设置"
+            onclick="finishdo();"
+        />
+        <layer name="botton4" visible="false" style="button" align="righttop" x="10" y="10"  html="清除重置"
+            onclick="clean();"
+        />
+        <layer name="showlog" style="info" align="bottom" x="0" y="10"  html="点击开始设置"/>
+    </layer>
+
+    <layer name="ban" visible="false" keep="true" zorder="50" type="container" align="center" width="100%" height="100%" x="0" y="0" bgcolor="0x000000" bgalpha="0.6" bgcapture="true" onclick="clickactive();"/>
+
+    <style name="thespot" zorder="105" keep="true" visible="true"
+         enabled="true" fillcolor="0xFF0000" fillcolorhover="0xFF0000"
+         fillalpha="0.1" fillalphahover="0.2"
+         borderwidth="2" borderwidthhover="2"
+         bordercolor="0xFF0000" bordercolorhover="0xFF0000"
+         borderalpha="0.6" borderalphahover="0.8" />
+
+    <hotspot name="spot" style="thespot">
+        <volist name="ployarr" id="ploy">
+            <point ath="{$ploy.x}" atv="{$ploy.y}" />
+        </volist>
+    </hotspot>
+
+    <skin_settings clicktime="0" oneclickevent="1" editing="0" />
+    
+    <action name="senddata">
+        js(getPloy(););
+    </action>
+
+    <action name="delendtwo">
+        addhotspot(newspot);
+        hotspot[newspot].loadstyle(thespot);
+        set(point_num,get(hotspot[spot].point.count));
+        add(max_num,point_num,-2);
+        for(set(i,0),i LT max_num,Inc(i),
+            set(hotspot[newspot].point[get(i)].atv,get(hotspot[spot].point[get(i)].atv));
+            set(hotspot[newspot].point[get(i)].ath,get(hotspot[spot].point[get(i)].ath));
+        );
+        removehotspot(spot);
+        set(hotspot[newspot].name,spot);
+    </action>
+
+    <action name="clean">
+        removehotspot(spot);
+        addhotspot(spot);
+        hotspot[spot].loadstyle(thespot);
+    </action>
+
+    <action name="delendone">
+        addhotspot(newspot);
+        hotspot[newspot].loadstyle(thespot);
+        set(point_num,get(hotspot[spot].point.count));
+        add(max_num,point_num,-1);
+        for(set(i,0),i LT max_num,Inc(i),
+            set(hotspot[newspot].point[get(i)].atv,get(hotspot[spot].point[get(i)].atv));
+            set(hotspot[newspot].point[get(i)].ath,get(hotspot[spot].point[get(i)].ath));
+        );
+        removehotspot(spot);
+        set(hotspot[newspot].name,spot);
+    </action>
+
+    <action name="clickactive">
+         copy(navtime,skin_settings.clicktime);
+         copy(nowtime,timertick);
+         sub(dextime,nowtime,navtime);
+         set(skin_settings.clicktime,get(nowtime));
+         set(skin_settings.oneclickevent,1);
+         screentosphere(mouse.x, mouse.y, toh, tov);
+         if(dextime LT 300,
+         set(skin_settings.oneclickevent,0);doubleclickdo();
+         ,
+         checkclickdo();
+         );
+    </action>
+
+    <action name="doubleclickdo">
+        copy(edit_on,skin_settings.editing);
+        set(point_num,get(hotspot[spot].point.count));
+        if(edit_on EQ 0,
+            set(skin_settings.editing,1);
+            set(layer[ban].bgalpha,0.4);
+            showlogtext('单击位置添加热区点');
+            if(point_num GT 0,
+                set(hotspot[spot].point[get(point_num)].ath,get(toh));
+                set(hotspot[spot].point[get(point_num)].atv,get(tov));
+                updatescreen();
+                set(point_num,get(hotspot[spot].point.count));
+                moveendpoint();
+                ,
+                set(hotspot[spot].point[get(point_num)].ath,get(toh));
+                set(hotspot[spot].point[get(point_num)].atv,get(tov));
+                updatescreen();
+                moveendpoint();
+            );
+            ,
+            showlogtext('屏幕中双击进入编辑');
+            endedittwo();
+        );
+    </action>
+
+    <action name="endedittwo">
+        copy(edit_on,skin_settings.editing);
+        if(edit_on EQ 1,
+            set(skin_settings.editing,0);
+            set(layer[ban].bgalpha,0.6);
+            delendtwo();
+        );
+    </action>
+
+    <action name="endedit">
+        copy(edit_on,skin_settings.editing);
+        if(edit_on EQ 1,
+            set(skin_settings.editing,0);
+            delendone();
+        );
+    </action>
+
+    <action name="clickdo">
+        copy(edit_on,skin_settings.editing);
+        if(edit_on EQ 1,
+            set(point_num,get(hotspot[spot].point.count));
+            set(hotspot[spot].point[get(point_num)].ath,get(toh));
+            set(hotspot[spot].point[get(point_num)].atv,get(tov));
+            showlogtext('再次双击完成编辑');
+            updatescreen();
+        );
+    </action>
+
+    <action name="checkclickdo">
+        copy(event_on,skin_settings.oneclickevent);
+        if(event_on EQ 1, set(skin_settings.oneclickevent,0);clickdo(););
+    </action>
+
+    <action name="startdo">
+        set(layer[ban].visible,true);
+        set(layer[botton1].visible,false);
+        set(layer[botton2].visible,false);
+
+        showlogtext('屏幕中双击进入编辑');
+
+        set(layer[botton3].x,-100);
+        set(layer[botton4].x,-100);
+        set(layer[botton3].alpha,0);
+        set(layer[botton4].alpha,0);
+        set(layer[botton3].visible,true);
+        set(layer[botton4].visible,true);
+        tween(layer[botton3].alpha,1);
+        tween(layer[botton4].alpha,1);
+        tween(layer[botton3].x,10);
+        tween(layer[botton4].x,10);
+    </action>
+
+    <action name="finishdo">
+        set(layer[ban].visible,false);
+        set(layer[botton3].visible,false);
+        set(layer[botton4].visible,false);
+        endedit();
+
+        showlogtext('已经结束编辑');
+
+        set(layer[botton1].x,-100);
+        set(layer[botton2].x,-100);
+        set(layer[botton1].alpha,0);
+        set(layer[botton2].alpha,0);
+        set(layer[botton1].visible,true);
+        set(layer[botton2].visible,true);
+        tween(layer[botton1].alpha,1);
+        tween(layer[botton2].alpha,1);
+        tween(layer[botton1].x,10);
+        tween(layer[botton2].x,10);
+    </action>
+
+    <action name="showlogtext">
+        set(layer[showlog].html,%1);
+    </action>
+
+    <action name="moveendpoint">
+        copy(edit_on,skin_settings.editing);
+        if(edit_on EQ 1,
+            screentosphere(mouse.x, mouse.y, tooh, toov);
+            set(point_num,get(hotspot[spot].point.count));
+            add(last_num,get(point_num),-1);
+            set(hotspot[spot].point[get(last_num)].ath,get(tooh));
+            set(hotspot[spot].point[get(last_num)].atv,get(toov));
+            updatescreen();
+            delayedcall(0.1,moveendpoint(););
+        );
+    </action>
+
+    <action name="dragui">
+        if(%1 != dragging,
+                copy(drag_currentx, x);
+                copy(drag_currenty, y);
+                copy(drag_stagex, mouse.stagex);
+                copy(drag_stagey, mouse.stagey);
+                set(drag_sx, +1);
+                set(drag_sy, +1);
+                if(align == righttop,    set(drag_sx,-1); );
+                if(align == right,       set(drag_sx,-1); );
+                if(align == rightbottom, set(drag_sx,-1); set(drag_sy,-1); );
+                if(align == bottom,      set(drag_sy,-1); );
+                if(align == leftbottom,  set(drag_sy,-1); );
+                dragui(dragging);
+          ,
+                if(pressed,
+                        sub(dx, mouse.stagex, drag_stagex);
+                        sub(dy, mouse.stagey, drag_stagey);
+                        mul(dx, drag_sx);
+                        mul(dy, drag_sy);
+                        add(x, drag_currentx, dx);
+                        add(y, drag_currenty, dy);
+                        js(shoot(get(x),get(y)););
+                        delayedcall(0, dragui(dragging) );
+                  );
+          );
+    </action>
+</krpano>

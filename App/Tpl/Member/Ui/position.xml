@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano showerrors="false">
+    <action name="start">
+        loadscene(scene1, null, MERGE);
+    </action>
+
+    <scene name="scene1">
+        <view hlookat="0" vlookat="0" fov="80" fisheye="0" fovmin="60" fovmax="120" />
+        <image type="CUBE">
+            <left url="{:CC('web_root')}{$viewrow['left']}" />
+            <front url="{:CC('web_root')}{$viewrow['front']}" />
+            <right url="{:CC('web_root')}{$viewrow['right']}" />
+            <back url="{:CC('web_root')}{$viewrow['back']}" />
+            <up url="{:CC('web_root')}{$viewrow['up']}" />
+            <down url="{:CC('web_root')}{$viewrow['down']}" />
+        </image>
+        <volist name="uclist" id="ui">
+        <switch name="ui.uitype">
+            <case value="image">
+                <plugin name="ui_{$ui.id}" url="{:CC('web_root')}{$ui.url}" edge="{$ui.edge}" keep="true" parent="ui_{$ui.parent}"
+                align="{$ui.align}" x="{$ui.x}" y="{$ui.y}" alpha="{$ui.alpha}" scale="{$ui.scale}" visible="True" rotate="{$ui.rotate}"
+                />
+            </case>
+            <case value="superimage">
+                <plugin name="ui_{$ui.id}" url="{:CC('web_root')}{$ui.url}" crop="{$ui.crop}" onovercrop="{$ui.hovercrop}" ondowncrop="{$ui.downcrop}" parent="ui_{$ui.parent}"
+                align="{$ui.align}" edge="{$ui.edge}" x="{$ui.x}" y="{$ui.y}" alpha="{$ui.alpha}" scale="{$ui.scale}" visible="True" zorder="{$ui.zorder}"
+                 rotate="{$ui.rotate}" keep="true"
+                />
+            </case>
+            <case value="video">
+                <plugin name="ui_{$ui.id}" url="%SWFPATH%/plugins/videoplayer.swf" alturl="%SWFPATH%/plugins/videoplayer.js" parent="ui_{$ui.parent}"
+                    updateeveryframe="true" videourl="{:CC('web_root')}{$ui.url}" loop="True" align="{$ui.align}" edge="{$ui.edge}"
+                    x="{$ui.x}" y="{$ui.y}" ox="0" oy="0"
+                    volume="0.7" zorder="{$ui.zorder}" alpha="{$ui.alpha}" width="" height=""
+                    scale="{$ui.scale}" rotate="{$ui.rotate}" visible="True" enabled="True" capture="True" keep="True"
+                    />
+            </case>
+            <default />
+        </switch>
+    </volist>
+    </scene>
+
+
+
+    <events name="readyaction" onxmlcomplete="start();js(panoready(););" />
+
+    <action name="dragui">
+            if(%1 != dragging,
+                    copy(drag_currentx, x);
+                    copy(drag_currenty, y);
+                    copy(drag_stagex, mouse.stagex);
+                    copy(drag_stagey, mouse.stagey);
+                    set(drag_sx, +1);
+                    set(drag_sy, +1);
+                    if(align == righttop,    set(drag_sx,-1); );
+                    if(align == right,       set(drag_sx,-1); );
+                    if(align == rightbottom, set(drag_sx,-1); set(drag_sy,-1); );
+                    if(align == bottom,      set(drag_sy,-1); );
+                    if(align == leftbottom,  set(drag_sy,-1); );
+                    dragui(dragging);
+              ,
+                    if(pressed,
+                            sub(dx, mouse.stagex, drag_stagex);
+                            sub(dy, mouse.stagey, drag_stagey);
+                            mul(dx, drag_sx);
+                            mul(dy, drag_sy);
+                            add(x, drag_currentx, dx);
+                            add(y, drag_currenty, dy);
+                            js(shoot(get(x),get(y)););
+                            delayedcall(0, dragui(dragging) );
+                      );
+              );
+    </action>
+</krpano>

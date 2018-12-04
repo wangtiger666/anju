@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{$panorow['title']}</title>
+
+<meta charset="UTF-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="viewport" content="width=device-width,initial-scale=1, minimum-scale=1.0, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="__PUBLIC__/pano/720ring/css/model.css" />
+
+<script type="text/javascript" src="__PUBLIC__/pano/720ring/js/three.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/pano/720ring/js/TrackballControls.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/pano/720ring/js/DDSLoader.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/pano/720ring/js/OBJLoader.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/pano/720ring/js/OBJMTLLoader.js" ></script>	
+<script type="text/javascript" src="__PUBLIC__/pano/720ring/js/jquery-2.0.3.min.js" ></script>
+
+<script src="__PUBLIC__/pano/720ring/js/OrbitControls.min.js"></script>
+<script src="__PUBLIC__/pano/720ring/js/howler.min.js"></script>
+<style>
+body{
+	font-family: Monospace;
+	color: #fff;background-color: #dfdfdf;
+	background-image: url("<php>echo $viewlist['bg720ring'];</php>");
+	background-position: center;
+	background-size: cover;
+	-moz-background-size:cover;
+	-webkit-background-size:cover;
+	-o-background-size:cover;margin: 0px;
+	}
+</style>
+</head>
+<body>
+<div id="bodying">
+<div id="ThreeJS"></div>
+<img id="loading" src="__PUBLIC__/pano/720ring/images/loading.gif" />
+<img id="music" src="__PUBLIC__/pano/720ring/images/btn-music-on.png" src-on="__PUBLIC__/pano/720ring/images/btn-music-on.png" src-off="__PUBLIC__/pano/720ring/images/btn-music-off.png" />
+<img id="ani" src="__PUBLIC__/pano/720ring/images/btn-ani-play.png" src-play="__PUBLIC__/pano/720ring/images/btn-ani-play.png" src-pause="__PUBLIC__/pano/720ring/images/btn-ani-pause.png"  />
+<img id="reset" src="__PUBLIC__/pano/720ring/images/btn-reset.png" />
+</div>
+
+<script type="text/javascript">
+	init();    //初始化相机场景
+    animate();
+	var container,renderer,scene,camera,boxRadius,controls,sl;
+	var music_urls=["{$viewlist['musicfile']}"];
+	var sound = new Howl({
+			urls: music_urls,
+			autoplay: true,
+			loop: true,
+			onend: function() {
+				var play=false;
+				$('#music').data('playing', play).attr('src', $('#music').attr(play?'src-on':'src-off'));
+			}
+		});
+		$('#music').click(function(){
+			var play=$(this).data('playing')==true;
+			play=!play;
+			if (play==true){sound.pause(); }else{ sound.play();}
+			$(this).data('playing', play).attr('src', $(this).attr(play?'src-off':'src-on'));
+		});
+
+	function init(){
+		$("#loading").show();
+		container = document.getElementById( 'ThreeJS' );
+        $container=$(container);
+		var SCREEN_WIDTH = $container.width(), SCREEN_HEIGHT = $container.height();
+	    var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 20000;
+		
+		
+		renderer = new THREE.WebGLRenderer( {antialias:true,alpha:true} );
+		renderer.setClearColor( 0xffffff, 0 );
+		renderer.setSize(SCREEN_WIDTH , SCREEN_HEIGHT);
+		container.appendChild(renderer.domElement);
+		
+		scene=new THREE.Scene();
+		
+ 
+		var mtlLoader = new THREE.MTLLoader();{}
+			    mtlLoader.setPath('{$viewlist['mtl720ring']|str_replace='model.mtl','',###}');
+			    mtlLoader.load('{$viewlist['mtl720ring']||basename=###}', function(materials) {
+			
+			        materials.preload();
+			
+			        var objLoader = new THREE.OBJLoader();
+			        objLoader.setMaterials(materials);
+			        objLoader.setPath('{$viewlist['obj720ring']|str_replace='model.obj','',###}');
+			        objLoader.load('{$viewlist['obj720ring']||basename=###}', function(object) {
+		
+			object.scale.set(0.01, 0.01, 0.01);//中间值为负则倒立
+			object.position.y=0;
+			object.position.x=0;
+			object.position.z=0;
+		    object.children.forEach(function (child) { 
+			
+				//child.material.envMap=textureCube;//环境反射到模型
+				child.material.reflectivity=0.08; //环境反射强度
+				child.material.color=new THREE.Color(0xffffff);
+            	
+            	child.geometry.computeVertexNormals();
+				child.geometry.computeFaceNormals();
+				child.material.side=THREE.DoubleSide;
+				child.material.normalMap=false;
+				child.material.specular=new THREE.Color(0xffffff);
+		    	child.material.shininess=3000;
+				//child.material.overdraw= 0.1;
+			});
+			controls.minDistance=5; //最大
+			controls.maxDistance=20;//最小
+			var box3=new THREE.Box3();
+			var boxRadius=Math.max(box3.max.x-box3.min.x, box3.max.y-box3.min.y, box3.max.z-box3.min.z)/2;
+			//alert(box3.min.z);
+			
+			scene.add(object);
+			$("#loading").hide();
+		});
+		} );
+		// Skybox
+
+		/*
+		var path = "";
+		var format = '.jpg'; 
+		var urls = [
+				path + 'px' + format, path + 'nx' + format,
+				path + 'py' + format, path + 'ny' + format,
+				path + 'pz' + format, path + 'nz' + format
+		];
+
+		var textureCube = THREE.ImageUtils.loadTextureCube( urls );
+		textureCube.format = THREE.RGBFormat;
+	
+		var shader = THREE.ShaderLib[ "cube" ];
+		shader.uniforms[ "tCube" ].value = textureCube;
+		var material = new THREE.ShaderMaterial({fog:true,lights:false,skinning:true,fragmentShader:shader.fragmentShader,vertexShader:shader.vertexShader,uniforms:shader.uniforms,depthWrite:true,color:0xff0000,side:THREE.BackSide});
+		var skymesh = new THREE.Mesh( new THREE.BoxGeometry( 100, 100, 100 ), material );
+		//scene.add( skymesh );
+		*/
+		
+		var ambient = new THREE.AmbientLight(0xffffff);
+        scene.add(ambient);//环境光
+		var hemisphere = new THREE.HemisphereLight(0xffffff,0xffffff,0.1);
+		//hemisphere.position.set(-130,0,130);
+		scene.add(hemisphere);
+		
+		sl = new THREE.SpotLight(0xffffff, 0.1, 1000, Math.PI, 15000);
+		sl.position.set(-130,400,130);
+		sl.position.multiplyScalar( 1 );//光斑大小
+		scene.add(sl);
+		sl1=new THREE.OrbitControls(sl, container);
+		sl1.autoRotate = false;
+
+		
+		
+		camera=new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
+		camera.position.set(0,0,8);
+
+		//camera.lookAt(scene.position);//相机
+		scene.add(camera);
+		
+		controls=new THREE.OrbitControls(camera, container);
+		controls.autoRotate = true;
+		controls.zoomSpeed = 0.6;
+		controls.rotateSpeed=1;
+		controls.autoRotate = true;
+		controls.autoRotateSpeed = 2.0;
+		controls.stopAutoRotateWhenTuch = true;
+        controls.staticMoving = false;
+        controls.dynamicDampingFactor = 0.1;
+		controls.addEventListener('change', render);
+		
+	    $('#reset').click(function(){
+			controls.reset();
+			setAutoRotateState(false);
+	    });
+		
+		var setAutoRotateState=function(toggle){
+			if (toggle===undefined) toggle=true;
+
+			if (toggle) controls.autoRotate = !controls.autoRotate;
+			$('#ani').attr('src', $('#ani').attr(controls.autoRotate?'src-play':'src-pause'));
+			
+			//sl.position.set(30,300,130);
+		}
+
+		$('#ani').click(setAutoRotateState);
+		controls.stopAutoRotateOnTuchCallback=function(){
+			setAutoRotateState(false);
+		}
+		$(document).on('touchmove', function(event){
+  			event.preventDefault();
+		}, false);
+		
+		//var axes = new THREE.AxisHelper(2000);
+		//scene.add(axes);
+}
+		
+function render() {
+	renderer.render(scene,camera);
+}
+ 
+function animate() {
+	controls.update();
+	requestAnimationFrame(animate);
+	render();
+}
+</script>
+</body>
+</html>

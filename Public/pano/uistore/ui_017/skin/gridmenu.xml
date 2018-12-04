@@ -1,0 +1,482 @@
+<krpano>
+
+
+<action name="setup_responsive_grid_plugin" >
+<!-- trace('RESPONSIVE GRID PLUGIN | Version 1.0'); -->
+copy(thumbcrop, responsive_grid.thumbs_crop);
+
+copy(layer[thumbs_grid_heading].html,skin_settings.grid_title);
+               
+copy(layer[grid_active_thumb_border].bgborder,responsive_grid.active_thumb_border);
+subtxt(grid_active_thumb_border_width, layer[grid_active_thumb_border].bgborder, 0, 2);
+
+set(layer[grid_active_thumb_border].width,calc(grid_active_thumb_border_width * (-2)));
+set(layer[grid_active_thumb_border].height,calc(grid_active_thumb_border_width * (-2)));
+
+copy(layer[thumbs_grid_content].y,responsive_grid.padding_top);
+set(layer[thumbs_grid_content].height,calc(stageheight - responsive_grid.padding_top - responsive_grid.padding_bottom));
+
+set(tratio, calc(responsive_grid.thumbs_width / responsive_grid.thumbs_height));
+copy(responsive_grid.thumbs_max_width,responsive_grid.thumbs_width);
+copy(responsive_grid.thumbsaspectratio,tratio);
+add(catpadding,get(style[cont_cattext_style].height),responsive_grid.thumbs_padding);
+rg_set_row_number();
+</action>
+
+<action name="rg_set_row_number">
+if(device.desktop,mul(leftrightpadding, responsive_grid.width_margin,2),mul(leftrightpadding, responsive_grid.width_margin,0));
+sub(scrollwidth,stagewidth,leftrightpadding);
+copy(layer[thumbs_grid_content].width,scrollwidth);
+mul(scaled_thumb_width,responsive_grid.thumbs_max_width,calc(responsive_grid.thumbs_scale / 100));
+div(srows,scrollwidth,get(scaled_thumb_width));
+roundval(srows);
+if(srows == 0,add(srows,1));
+copy(responsive_grid.thumbsperrow,srows);
+rg_create_thumbs_grid();
+</action>
+  
+
+
+  
+<layer name="thumbs_button" url="../images/gridbut.png" keep="true" align="bottom" onclick="rg_show_thumbs_grid(true);" visible="false" crop="0|45|45|45" y="15" zorder="101"/>
+
+<layer name="thumbs_grid_container" keep="true" type="container" width="100%" height="100%" align="top" zorder="100" bgalpha="0.8" bgcolor="0x000000" onclick="rg_show_thumbs_grid(false);" bgcapture="true" visible="false">
+
+	<layer name="thumbs_grid_heading" url="../plugins/textfield.swf" 
+	       autoheight="true" enabled="false" background="false" border="false" 
+		   css="color:#ffffff;font-family:微软雅黑;font-size:23px;letter-spacing:3px;leading:13px;line-height:30px;" 
+		   keep="true" align="top"  y="25" handcursor="false" html="" 
+		   />
+	
+	<layer name="grid_active_thumb_border" type="container" align="center" keep="true" width="1" height="1" />
+    
+	<layer name="thumbs_grid_content" keep="true" type="container" width="" height="" y=""  align="top" >
+		
+		<layer name ="thumbs_grid" keep="true" url.flash="../plugins/scrollarea.swf" url.html5="../plugins/scrollarea.js" direction="v" align="top" width="100%" height="100%" onclick="rg_show_thumbs_grid(false);" onloaded="" onscroll="" />
+			
+	</layer>
+
+</layer>
+
+
+
+<style name="cont_cattext_style" type="container" align="topleft" height="35" width="calc:((responsive_grid.thumbs_padding * 2) * (-1))" bgborder="0,0,1,0 0xffffff 0.3" />
+
+<!-- 分组名称 -->
+<style name="cattext_style" url="..plugins/textfield.swf" align="left" enabled="false" background="false" border="false" css="color:#ffffff;font-family:微软雅黑;font-size:25px;" height="100%" width="100%" alpha="0.8" />
+<!-- 分组介绍 -->
+<style name="catdesc_style" url="../plugins/textfield.swf" alpha="0.5" 
+       align="bottomleft" edge="topleft" width="100%" enabled="false" background="false" border="false" 
+	   css="color:#ffffff;font-family:微软雅黑;font-size:15px;text-align:left;letter-spacing:3px;leading:13px;line-height:20px;" 
+	   onautosized="stopdelayedcall(reresize);delayedcall(reresize,0.1,rg_set_row_number());"
+	   />
+<!-- 缩略图字体 -->
+<style name="thumbtext_style" url="../plugins/textfield.swf" 
+       align="bottom" x="0" y="10" roundedge="5"  padding="3 10" enabled="false" 
+	   background="false" backgroundcolor="0x000000" backgroundalpha="0.7" border="false" 
+	   css="color:#ffffff;font-family:微软雅黑;font-size:16px;text-align:center;letter-spacing:3px;leading:13px;line-height:20px;"  
+	   autoheight="auto" autowidth="true" borderwidth="1" bordercolor="0xffffff"
+	   borderalpha="1.0" shadow="0.0"       	   
+	   onautosized="if(width GT layer[get(parent)].width,set(autowidth,false);set(width,80%))"/>
+<!-- 经过字体 -->
+<style name="thumbdesc_style" url="../plugins/textfield.swf" 
+       align="top"  padding="8 15" y="100%" enabled="false" 
+	   background="true" backgroundcolor="0x000000" backgroundalpha="0.6" border="false" 
+	   css="color:#ffffff;font-family:微软雅黑;font-size:15px;text-align:center;letter-spacing:3px;leading:13px;line-height:20px;"  
+	   width="100%" height="100%" vcenter="true"/>
+
+
+<!--手机端皮肤显示比例  -->
+<krpano devices="mobile">
+ 
+<layer name="thumbs_button" scale="1.5" />
+
+<layer name="thumbs_grid_container" >
+
+	<layer name="thumbs_grid_heading" 
+		   css="color:#ffffff;font-family:微软雅黑;font-size:35px;letter-spacing:20px;leading:17px;line-height:30px;" 
+		    y="45" 
+		   />
+	
+	<layer name="grid_active_thumb_border" />    
+	<layer name="thumbs_grid_content" >		
+		<layer name ="thumbs_grid" />			
+	</layer>
+
+</layer>
+
+
+
+<style name="cont_cattext_style" />
+
+<!-- 分组名称 -->
+<style name="cattext_style" css="color:#ffffff;font-family:微软雅黑;font-size:27px;letter-spacing:3px;leading:13px;line-height:35px;" />
+<!-- 分组介绍 -->
+<style name="catdesc_style" 
+	   css="color:#ffffff;font-family:微软雅黑;font-size:23px;text-align:left;letter-spacing:3px;leading:13px;line-height:35px;"
+	   />
+<!-- 缩略图字体 -->
+<style name="thumbtext_style" backgroundalpha="0.5" border="false" alpha="0.7"  y="17"  
+	   css="color:#ffffff;font-family:微软雅黑;font-size:20px;text-align:center;letter-spacing:3px;leading:10px;line-height:20px;"
+	   onautosized="if(width GT layer[get(parent)].width,set(autowidth,false);set(width,100%))"/>
+<!-- 经过字体 -->
+<style name="thumbdesc_style"
+	   css="color:#ffffff;font-family:微软雅黑;font-size:20px;text-align:center;letter-spacing:3px;leading:10px;line-height:20px;"  
+	   />
+	   
+
+</krpano>
+<!--手机端皮肤显示比例  -->
+
+<action name="autosize_thumb_txt">
+   if(layer[%1].width GT layer[get(layer[%1].parent)].width,
+      set(layer[%1].autowidth,false);
+	  set(layer[%1].width,80%);
+    )
+</action>
+
+  <action name="rg_show_thumbs_grid">
+    if(%1 == false,
+	  tween(layer[thumbs_grid_container].y,get(stageheight),0.5,,
+      set(layer[thumbs_grid_container].visible, false);
+      set(layer[thumbs_button].onclick, rg_show_thumbs_grid(true));
+	  );
+	  set(layer[thumbs_button].visible,false);
+      ,
+	  
+      set(layer[thumbs_grid_container].y, get(stageheight));
+      set(layer[thumbs_grid_container].visible, true);
+
+      tween(layer[thumbs_grid_container].y,0,0.5);
+      set(layer[thumbs_button].onclick, rg_show_thumbs_grid(false));
+	  set(layer[thumbs_button].visible,true);
+    );
+  </action>
+
+  <action name="rg_create_thumbs_grid">	
+	copy(thumbsperrow, responsive_grid.thumbsperrow);
+	if(device.desktop,mul(borderpadding, responsive_grid.width_margin, 2),mul(borderpadding, responsive_grid.width_margin, 0));
+	
+	                                       
+	if(stagewidth GT calc(scaled_thumb_width + responsive_grid.width_margin + (responsive_grid.thumbs_padding * 2)),
+    sub(container_width, stagewidth, borderpadding),
+	copy(container_width,stagewidth));
+	
+    copy(thumbpadding, responsive_grid.thumbs_padding);
+	
+                            
+    mul(totalpadding, thumbsperrow, thumbpadding);
+	add(totalpadding, thumbpadding);
+
+    copy(layer[thumbs_grid_content].width, container_width);
+
+                             
+    sub(thumbwidth, container_width, totalpadding);
+    div(thumbwidth, thumbsperrow);
+
+                              
+    div(thumbheight, thumbwidth, responsive_grid.thumbsaspectratio);
+	
+                               
+    add(thumbxoffset, thumbwidth, thumbpadding);
+    add(thumbyoffset, thumbheight, thumbpadding);
+
+	set(catx, get(thumbpadding));
+	set(caty, calc(thumbyoffset * (-1) - catpadding));
+	set(catnb,0);
+	set(ttnb, 0);
+	set(descpadding,0);
+
+                               
+	if(responsive_grid.group == true,
+		if(responsive_grid.current == true,
+
+    		rg_build_cat(get(scene[get(xml.scene)].group_id));
+
+			,
+			
+			for(set(pan_groups,0), pan_groups LT panoramagroup.count, inc(pan_groups),
+    		   rg_build_cat(get(panoramagroup[get(pan_groups)].name));
+			);
+		);
+	,
+    	                       
+		set(thumbx, get(thumbpadding));
+    	set(thumby, 0);
+		set(thumbnb, 1);
+		set(start_row,true);
+		for(set(banzai,0), banzai LT scene.count, inc(banzai),
+			rg_build_thumbs_scenes(get(scene[get(banzai)].name));
+    	);
+	);
+
+	                         
+	mul(thumbborder, responsive_grid.active_thumb_border,2);
+	mul(cth,catnb,catpadding);
+	mul(tth,ttnb,thumbyoffset);
+	add(tgh,cth,tth);
+	add(tgh,thumbborder);
+	add(tgh,descpadding);
+	sub(tgh,responsive_grid.thumbs_padding);	
+    set(layer[thumbs_grid].height, get(tgh));
+
+	set(layer[thumbs_grid_content].height,calc(stageheight - responsive_grid.padding_top - responsive_grid.padding_bottom));
+	
+	for(set(g,0), g LT panoramagroup.count, inc(g),
+    		rg_resizegroup(get(panoramagroup[get(g)].name));
+			);
+	for(set(s,0), s LT scene.count, inc(s),
+    		rg_resizescene(get(scene[get(s)].name));
+			);	
+  </action>
+
+<action name="rg_resizegroup">
+txtadd(catname,'cat_',%1);
+set(layer[get(catname)].x,get(layer[get(catname)].bx));
+tween(layer[get(catname)].y,get(layer[get(catname)].by));
+</action>
+
+<action name="rg_resizescene">
+txtadd(thumbname,'thumb_',%1);
+tween(layer[get(thumbname)].x,get(layer[get(thumbname)].bx));
+tween(layer[get(thumbname)].y,get(layer[get(thumbname)].by),,,stopdelayedcall(update_act_pos);delayedcall(0.1,rg_update_thumbs_grid_border()));
+txtadd(thumbtext, 'thumbtext_', %1);
+autosize_thumb_txt(get(thumbtext));
+</action>
+
+<action name="rg_build_cat">
+set(next,false);
+add(caty,thumbyoffset);
+add(caty,catpadding);
+add(catnb,1);
+add(ttnb,1);
+
+                                               
+    set(thumbx, 0);
+    set(thumby, get(catpadding));
+	set(thumbnb, 1);
+	
+                        
+      txtadd(catname,'cat_',%1);
+      addlayer(get(catname));
+      set(layer[get(catname)].type, container);
+      set(layer[get(catname)].parent, 'thumbs_grid');
+      set(layer[get(catname)].align, topleft);
+	  set(layer[get(catname)].bx, get(catx));
+	  set(layer[get(catname)].by, get(caty));
+      set(layer[get(catname)].width, 100%);
+	  
+	  set(layer[get(catname)].height, 100%);
+	  ifnot(responsive_grid.current,
+	  set(layer[get(catname)].keep, true);
+	  );
+
+                                  
+	  txtadd(cont_cattext, 'cont_cattext_', %1);
+      addlayer(get(cont_cattext));
+      
+	  layer[get(cont_cattext)].loadstyle(cont_cattext_style);
+      set(layer[get(cont_cattext)].parent, get(catname));
+	  
+	  <!-- set(layer[get(cont_cattext)].alpha, 0.5); -->
+	  
+	  ifnot(responsive_grid.current,
+	      set(layer[get(cont_cattext)].keep, true);
+	    );
+	  
+ 	                    
+      txtadd(cattext, 'cattext_', %1);
+      addlayer(get(cattext));
+      
+	  layer[get(cattext)].loadstyle(cattext_style);
+      set(layer[get(cattext)].parent, get(cont_cattext));
+	  <!-- set(layer[get(cattext)].alpha, 0.5); -->
+	 	  
+	  ifnot(responsive_grid.current,
+	  set(layer[get(cattext)].keep, true);
+	  );
+	  set(layer[get(cattext)].html, get(panoramagroup[%1].title));
+	  
+                       
+	  if(responsive_grid.display_cat_desc,
+
+      txtadd(catdesc, 'catdesc_', %1);
+      addlayer(get(catdesc));
+      
+	  layer[get(catdesc)].loadstyle(catdesc_style);
+      set(layer[get(catdesc)].parent, get(cont_cattext));
+	  
+	  ifnot(responsive_grid.current,
+	     set(layer[get(catdesc)].keep, true);
+	    );
+		
+	  set(layer[get(catdesc)].y, calc(responsive_grid.cat_container_border_height * (-1)));
+	  set(layer[get(catdesc)].html, get(panoramagroup[%1].title_hover));
+
+	   	calc(caty,caty + layer[get(catdesc)].height + responsive_grid.cat_container_border_height);
+	   	calc(thumby,thumby + layer[get(catdesc)].height + responsive_grid.cat_container_border_height);
+	   	calc(descpadding,descpadding + layer[get(catdesc)].height + responsive_grid.cat_container_border_height);
+		 
+	  );
+	  
+	                                
+	  
+	  for(set(banzai,0), banzai LT scene.count, inc(banzai),
+    			if(scene[get(banzai)].group_id == %1,
+				rg_build_thumbs(get(scene[get(banzai)].name));
+				);
+      		);
+</action>
+
+<action name="rg_build_thumbs">
+                          
+      txtadd(thumbname,'thumb_',%1);
+      addlayer(get(thumbname));
+      copy(layer[get(thumbname)].url, scene[%1].thumburl);
+	  copy(layer[get(thumbname)].crop, thumbcrop);
+	  txtadd(catname,'cat_',get(scene[%1].group_id));
+	  
+	  set(layer[get(thumbname)].parent, get(catname));
+	  
+      set(layer[get(thumbname)].align, topleft);
+	  set(layer[get(thumbname)].maskchildren, true);
+      copy(layer[get(thumbname)].width, thumbwidth);
+      copy(layer[get(thumbname)].height, thumbheight);
+	  ifnot(responsive_grid.current,
+	  set(layer[get(thumbname)].keep, true);
+	  );
+      set(layer[get(thumbname)].onclick,rg_show_thumbs_grid(false); loadscene(%1,null,get(responsive_grid.loadscene_flags),get(responsive_grid.loadscene_blend)););
+
+                         
+	  if(responsive_grid.display_thumb_title,
+      txtadd(thumbtext, 'thumbtext_', %1);
+      addlayer(get(thumbtext));
+      
+	  layer[get(thumbtext)].loadstyle(thumbtext_style);
+      set(layer[get(thumbtext)].parent, get(thumbname));
+	  ifnot(responsive_grid.current,
+	  set(layer[get(thumbtext)].keep, true);
+	  );
+	  set(layer[get(thumbtext)].html, get(scene[%1].title));
+	  );
+	  
+	                            
+	  if(responsive_grid.display_thumb_desc AND scene[%1].title_hover,
+      txtadd(thumbdesc, 'thumbdesc_', %1);
+      addlayer(get(thumbdesc));
+      
+	  layer[get(thumbdesc)].loadstyle(thumbdesc_style);
+      set(layer[get(thumbdesc)].parent, get(thumbname));
+	  ifnot(responsive_grid.current,
+	  set(layer[get(thumbdesc)].keep, true);
+	  );
+	  set(layer[get(thumbdesc)].html, get(scene[%1].title_hover));
+	  
+	  copy(layer[get(thumbname)].desclayer, thumbdesc);
+	  set(layer[get(thumbname)].onover,tween(layer[get(desclayer)].y,0));
+	  set(layer[get(thumbname)].onout,tween(layer[get(desclayer)].y,100%));
+
+	  );
+	  
+                          
+
+                           
+	  set(layer[get(thumbname)].bx, get(thumbx));
+      set(layer[get(thumbname)].by, get(thumby));
+      
+                                       
+	  
+	  if(thumbnb LT responsive_grid.thumbsperrow, 
+	  		if(next == true, add(caty, thumbyoffset);add(ttnb,1);set(next,false););
+			inc(thumbnb);
+			add(thumbx, thumbxoffset);
+		, 
+			if(responsive_grid.thumbsperrow == 1 AND next == true,add(caty, thumbyoffset);add(ttnb,1););
+			add(thumby, thumbyoffset);
+			set(thumbnb,1);
+			set(thumbx, 0);
+			set(next,true);
+		);
+
+</action>
+
+<action name="rg_build_thumbs_scenes">
+                     
+      txtadd(thumbname,'thumb_',%1);
+      addlayer(get(thumbname));
+      copy(layer[get(thumbname)].url, scene[%1].thumburl);
+	  copy(layer[get(thumbname)].crop, thumbcrop);
+      set(layer[get(thumbname)].keep, true);
+      set(layer[get(thumbname)].parent, 'thumbs_grid');
+      set(layer[get(thumbname)].align, topleft);
+	  set(layer[get(thumbname)].maskchildren, true);
+      copy(layer[get(thumbname)].width, thumbwidth);
+      copy(layer[get(thumbname)].height, thumbheight);
+      set(layer[get(thumbname)].onclick, loadscene(%1,null,get(responsive_grid.loadscene_flags),get(responsive_grid.loadscene_blend));rg_show_thumbs_grid(false););
+
+
+                         
+	  if(responsive_grid.display_thumb_title,
+      txtadd(thumbtext, 'thumbtext_', %1);
+      addlayer(get(thumbtext));
+      
+	  layer[get(thumbtext)].loadstyle(thumbtext_style);
+      set(layer[get(thumbtext)].parent, get(thumbname));
+	  set(layer[get(thumbtext)].html, get(scene[%1].title));
+	  );
+
+                                
+	  if(responsive_grid.display_thumb_desc AND scene[%1].title_hover,
+      txtadd(thumbdesc, 'thumbdesc_', %1);
+      addlayer(get(thumbdesc));
+      
+	  layer[get(thumbdesc)].loadstyle(thumbdesc_style);
+      set(layer[get(thumbdesc)].parent, get(thumbname));
+	  set(layer[get(thumbdesc)].html, get(scene[%1].title_hover));
+	  
+	  copy(layer[get(thumbname)].desclayer, thumbdesc);
+	  set(layer[get(thumbname)].onover,tween(layer[get(desclayer)].y,0));
+	  set(layer[get(thumbname)].onout,tween(layer[get(desclayer)].y,100%));
+
+	  );
+	  	  
+                          
+
+                           
+	  set(layer[get(thumbname)].bx, get(thumbx));
+      set(layer[get(thumbname)].by, get(thumby));
+	  
+
+                                       
+	  if(thumbnb LT responsive_grid.thumbsperrow, 
+	  		if(start_row == true, add(ttnb,1);set(start_row,false));
+			inc(thumbnb);
+			add(thumbx, thumbxoffset);
+		, 
+			add(thumby, thumbyoffset);
+			set(thumbnb,1);
+			set(thumbx, get(thumbpadding));
+			add(ttnb,1);
+		);
+
+</action>
+
+                                          
+  <action name="rg_update_thumbs_grid_border">
+    txtadd(activethumbname,'thumb_',get(scene[get(xml.scene)].name));
+	txtadd(activecatname,'cat_',get(scene[get(xml.scene)].group_id));
+	
+    copy(layer[grid_active_thumb_border].parent, activethumbname);
+	
+	set(active_y,get(layer[get(activethumbname)].y));
+	set(active_group_y,get(layer[get(activecatname)].y));
+
+	if(responsive_grid.group,
+	   layer[thumbs_grid].scrolltocenter(0,calc(active_y + active_group_y + (thumbheight / 2)));
+	,
+	   layer[thumbs_grid].scrolltocenter(0,calc(active_y + (thumbheight / 2)));
+	);
+  </action>
+
+ 
+</krpano>

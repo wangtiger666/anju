@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<title>{$web_name}</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+
+<link rel="stylesheet"  href="__PUBLIC__/webstyle/css/header.css" />
+<script type="text/javascript" src="__PUBLIC__/webstyle/js/jquery.js"></script>
+
+</head>
+<body>
+<div id="header_warp">
+  <div class="header">
+    <div class="logo fl">
+      <h1><a href="/"><img src="__PUBLIC__/webstyle/images/logo.jpg" alt="" title=""></a></h1>
+    </div>
+    <ul class="nav fl">
+      <li    <if condition="$murl == '' "> class="cur"  </if>  ><a href="index.php?s=/Website"><strong>首页</strong></a></li>
+      <li  <if condition="$murl == 'qjzs' or $murl == 'qjzscat' "> class="cur"  </if>  ><a href="index.php?s=/Website/qjzs"><strong>全景案例</strong></a></li>
+      <li <if condition="$murl == 'qjzt' "> class="cur"  </if>   ><a href="index.php?s=/Website/qjzt"><strong>全景专题</strong></a></li>
+      <li  <if condition="$murl == 'qjfx' "> class="cur"  </if>  ><a href="index.php?s=/Website/qjfx"><strong>全景发现</strong></a></li>
+      <li   <if condition="$murl == 'wzzx' or $murl == 'wzzxlist' or $murl == 'content'  "> class="cur"  </if>  class="end"><a href="index.php?s=/Website/wzzx"><strong>全景资讯</strong></a></li>
+    </ul>
+    <div class="index_search fl">
+      <form method="get" id="form_my" target="_blank" action="index.php?s=/Website/search" enctype="multipart/form-data" id="search_v1">
+        <input type="text" id="so_wd1" name="wd" placeholder="搜全景" value="" />
+        <input type="button" class="search_btn" onclick="search()"  />
+      </form>
+    </div>
+    <div class="login_warp fr">
+      <div class="login fl"><a href="{$domainlink}/member/login" target="_blank">登录</a><span class="fl">&frasl;</span><a href="{$domainlink}/member/reg" target="_blank">注册</a></div>
+      </div>
+  </div>
+</div>
+<script type="text/javascript">
+	function search(){
+		var keywords = $("#so_wd1").val();
+		location.href="index.php?s=/Website/search/keywords/"+keywords;
+	}
+
+	function searcht(){
+		var keywords = $("#so_wd2").val();
+		location.href="index.php?s=/Website/search/keywords/"+keywords;
+	}
+</script>
+<div id="float_nav"></div>

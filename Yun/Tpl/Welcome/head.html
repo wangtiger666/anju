@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/Public/welcome/css/head.css">
+    <link href="/Public/welcome/css/jquery.city.css" rel="stylesheet" />
+    <link href="/Public/welcome/css/animate.min.css" rel="stylesheet" />
+</head>
+
+<body style="min-width: 1600px;">
+    <nav>
+        <img src="/Public/welcome/images/CCBlogo.png" class="logo">
+        <input id="txt_city" placeholder="请选择城市   ▼">
+        <!-- <ol class="nav-bar">
+            <li id="Navigation"><a href="/Welcome/index">首页导航</a></li>
+            <li id="Panoramic"><a href="#">全景租房</a></li>
+            <li id="Navigations"><a>首页导航</a></li>
+            <if condition="empty($accountSession)">
+              <li class="Personal"><a onclick="pleaselog()">个人中心</a></li>
+            <else/>
+                <li class="Personal"><a href="/Account/user">个人中心</a></li>
+            </if> 
+        </ol> -->
+        <if condition="empty($accountSession)">
+        <ol class="user">
+            <img src="/Public/welcome/images/user-img.png" id="user-img">
+            <li id="logbtn">登录</li>
+            <div class="separator"></div>
+            <li id="regbtn">注册</li>
+        </ol>
+        <else/>
+           <img src="{$accountSession['head_img']}" id="login_user_img" onclick="mycenter()">
+        </if>
+    </nav>
+    <div id="container"></div>
+    <!-- 加载登录注册界面 -->
+    <include file="LoginReg/index" />
+</body>
+<script src="/Public/welcome/js/jquery-1.11.min.js"></script>
+<script type="text/javascript" src="/Public/welcome/js/gt.js"></script>
+<script src="/Public/welcome/js/jquery.city.js"></script>
+<script type="text/javascript" src="/Public/welcome/js/head.js"></script>
+<script type="text/javascript" src="/Public/welcome/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/Public/welcome/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.9&key=6b61a08d0f294d8f122780fd778d5be1"></script>
+<script type="text/javascript">
+  $(".logo").on("click",function(){
+    window.location.href="/Welcome/index"
+  })
+  function pleaselog(){
+    alert('请先登录')
+  }
+
+  function mycenter(){
+    window.open("/Account/user")
+  }
+    /**
+     * [记住密码，下次自动登录]
+     */
+    
+    $(document).ready(function () {
+        if ($.cookie("rmbUser") == "true") {
+            $("#ck_rmbUser").attr("checked", true);
+            $("#log_phone").val($.cookie("username"));
+            $("#log_pwd").val($.cookie("password"));
+            if($('.user').css('display')=='block'){
+              log();
+            }
+        }
+    });
+
+  /**
+   * [定位信息]
+   */
+  $.ajax({
+    url:"https://restapi.amap.com/v3/ip?key=c6168b5b82c04c5597a125effc87cbd8",
+    dataType:'json',
+    success:function(data){
+      $("#txt_city").val(data.city)
+      $.ajax({
+          url:"{:U('/HouseResources/getParentAndChildInfo')}",
+          type:'post',
+          data:{name:data.city,show_parent:'2',show_childList:'2'},
+          dataType:'json',
+          success:function(datas){         
+            sessionStorage.setItem("areadata",JSON.stringify(datas.child_data));
+            window.sessionStorage.setItem('pid',datas.data.id);
+          },
+          error:function(){
+              alert('网络超时')
+          }
+        })    
+    },
+    error:function(){
+        alert('请求超时')
+    }
+  })
+
+    /**
+    * [onChoice 城市选择器]
+    */
+      $('#txt_city').jcity({
+          urlOrData: '/Public/welcome/js/citydata.json',
+          animate: { showClass: 'animated flipInX', hideClass: 'animated flipOutX' },  // 需要第一步引用的animate.min.css文件，也可以自己定义动画 
+          onChoice: function (data) {
+            var name;
+            if(data.cityName=='北京'|| data.cityName=='天津' || data.cityName=='上海' || data.cityName== '重庆'){
+                name=data.cityName+'城区'
+            }else{
+                name=data.cityName+'市'
+            }
+              $.ajax({
+                url:"{:U('/HouseResources/getParentAndChildInfo')}",
+                type:'post',
+                data:{name:name,show_parent:'2',show_childList:'2'},
+                dataType:'json',
+                success:function(data){   
+                  if(data.code==200){
+                    for (var i = 0; i < data.child_data.length; i++) {
+                      data.child_data[i].longitude=Number(data.child_data[i].longitude)-0.005;
+                      data.child_data[i].latitude=Number(data.child_data[i].latitude)+0.0027;
+                    }
+                     sessionStorage.setItem("city",JSON.stringify(data.data))
+                     sessionStorage.setItem("area",JSON.stringify(data.child_data))
+                     window.sessionStorage.setItem('pid',data.data.id)
+                  }
+                },
+                error:function(){
+                    alert('网络超时')
+                }
+              })
+          }
+      });
+
+    function Save() {    
+        if ($("#ck_rmbUser").prop("checked")) {   
+            var str_username = $("#log_phone").val();      
+            var str_password = $("#log_pwd").val();      
+            $.cookie("rmbUser", "true", {
+                expires: 7,path:'/Account/user'
+            }); //存储一个带7天期限的cookie
+                  
+            $.cookie("username", str_username, {
+                expires: 7
+            });      
+            $.cookie("password", str_password, {
+                expires: 7
+            });    
+        }    
+        else {      
+            $.cookie("rmbUser", "false", {
+                expire: -1
+            });      
+            $.cookie("username", "", {
+                expires: -1
+            });      
+            $.cookie("password", "", {
+                expires: -1
+            });    
+        } 
+    };
+  
+    /**
+   * [手机正则]
+   */
+  function isPoneAvailable($poneInput) {
+    var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+    if (!myreg.test($poneInput.val())) {
+        return false;
+    } else {
+        return true;
+    }
+  }
+
+  /**
+   * [手机验证码封装函数]
+   */
+   var clock = ''; 
+   var nums = 60;
+   var btn;
+   function sendCode(thisBtn,inputval){  
+      if(inputval.val()==''){
+            alert('请输入手机号')
+      }else{
+          if(isPoneAvailable(inputval)==false){
+              alert('请输入正确手机号')
+          }else{
+             btn = thisBtn;  
+             btn.attr("disabled",true); //将按钮置为不可点击
+             btn.val(nums+'秒后可重新获取');
+             clock = setInterval(doLoop, 1000); //一秒执行一次  
+          }
+      } 
+   }
+
+   function doLoop(){
+     nums--;
+     if(nums > 0){
+        btn.val(nums+'秒后可重新获取');
+     }else{
+        clearInterval(clock); //清除js定时器
+        btn.attr("disabled",false);
+        btn.val('获取验证码');
+        nums = 60; //重置时间
+     }
+   }
+
+   var clocks = ''; 
+   var numss = 60;
+   var btns;
+   function sendCodes(thisBtn,inputval){  
+      if(inputval.val()==''){
+            alert('请输入手机号')
+      }else{
+          if(isPoneAvailable(inputval)==false){
+              alert('请输入正确手机号')
+          }else{
+             btns = thisBtn;  
+             btns.attr("disabled",true); //将按钮置为不可点击
+             btns.val(numss+'秒后可重新获取');
+             clocks = setInterval(doLoops, 1000); //一秒执行一次  
+          }
+      } 
+   }
+
+   function doLoops(){
+     numss--;
+     if(numss > 0){
+        btns.val(numss+'秒后可重新获取');
+     }else{
+        clearInterval(clocks); //清除js定时器
+        btns.attr("disabled",false);
+        btns.val('获取验证码');
+        numss = 60; //重置时间
+     }
+   }
+
+
+   var clockss = ''; 
+   var numsss = 60;
+   var btnss;
+   function sendCodess(thisBtn,inputval){  
+      if(inputval.val()==''){
+            alert('请输入手机号')
+      }else{
+          if(isPoneAvailable(inputval)==false){
+              alert('请输入正确手机号')
+          }else{
+             btnss = thisBtn;  
+             btnss.attr("disabled",true); //将按钮置为不可点击
+             btnss.val(numsss+'秒后可重新获取');
+             clockss = setInterval(doLoopss, 1000); //一秒执行一次  
+          }
+      } 
+   }
+
+   function doLoopss(){
+     numsss--;
+     if(numsss > 0){
+        btnss.val(numss+'秒后可重新获取');
+     }else{
+        clearInterval(clockss); //清除js定时器
+        btnss.attr("disabled",false);
+        btnss.val('获取验证码');
+        numsss = 60; //重置时间
+     }
+   }
+
+  /**
+   * [注册短信手机验证码发送]
+   */
+  var reg_code;
+  $("#reg_gaincode").on('click',function(){
+    if(isPoneAvailable($("#regphone"))==false){
+              alert('请输入正确手机号')
+      }else{
+        sendCode($(this),$("#regphone")) 
+        $.ajax({
+          url:"{:U('Api/sendPhoneMessage')}",
+          type:'post',
+          data:{phone:$("#regphone").val(),code_type:'1'},
+          dataType:'json',
+          success:function(data){          
+            if(data.code==200){
+              reg_code=data.msg.substr(7,13);
+            }
+          },
+          error:function(){
+            alert('请求超时')
+          }
+        })
+      }
+  })
+
+  /**
+   * [注册]
+   */
+  var names=document.getElementsByName('servername');
+  $("#reginbtn").on("click",function(){
+      if($("#regphone").val()==''){
+        alert('请输入手机号')
+      }else{
+        if(isPoneAvailable($("#regphone"))==false){
+          alert('请输入正确手机号')
+        }else{
+          if($("#reg_chitcode").val()==''){
+            alert('请填写验证码')
+          }else{
+            if($("#reg_chitcode").val()!=reg_code){
+              alert('手机验证码不正确')
+            }else{
+              if($("input[type='checkbox']").is(':checked')==false){
+                alert('请先阅读该服务协议并同意')
+              }else{
+                $.ajax({
+                  url:"{:U('/LoginReg/phoneVerifycodeReg')}",
+                  type:'post',
+                  data:{phone:$("#regphone").val(),code:$("#reg_chitcode").val(),password:$("#reg_pwd").val()},
+                  dataType:'json',
+                  success:function(data){
+                    console.log(data)
+                    if(data.code==200){
+                      alert('注册成功,请返回登录界面登录')
+                    }
+                  },
+                  error:function(){
+                    alert('请求超时')
+                  }
+                })
+              }
+            }
+          }
+        }
+      }
+  })
+
+  /**
+    * [短信登录手机验证码发送]
+    */
+   var log_code;
+   $("#getVerify").on("click",function(){
+      if(isPoneAvailable($("#log_chitphone"))==false){
+              alert('请输入正确手机号')
+      }else{
+        sendCodes($(this),$("#log_chitphone")) 
+        $.ajax({
+          url:"{:U('Api/sendPhoneMessage')}",
+          type:'post',
+          data:{phone:$("#log_chitphone").val(),code_type:'4'},
+          dataType:'json',
+          success:function(data){
+            log_code=data.msg.substr(7,13);
+          },
+          error:function(){
+            alert('请求超时')
+          }
+        })
+      }        
+   })
+
+   /**
+     * [短信登录]
+     */
+     $("#pwdlogin").on("click",function(){
+        if($("#log_chitphone").val()==''){
+            alert('请输入手机号')
+        }else{
+          if(isPoneAvailable($("#log_chitphone"))==false){
+            alert('请输入正确手机号')
+          }else{
+            if($("#log_chitcode").val()==''){
+              alert('请输入验证码')
+            }else{
+              if($("#log_chitcode").val()!=log_code){
+                alert('验证码不正确')
+              }else{
+                $.ajax({
+                  url:"{:U('/Api/phoneVerifycodeValid')}",
+                  type:'post',
+                  data:{phone:$("#log_chitphone").val(),code:$("#log_chitcode").val(),code_type:'4'},
+                  dataType:'json',
+                  success:function(data){
+                    if(data.code==200){
+                      alert('登录成功')
+                      window.location.reload()
+                    }else{
+                      alert('登录失败')
+                    }
+                  },
+                  error:function(){
+                    alert('error')
+                  }
+                })
+              }
+            }
+          }
+        }
+     })
+    
+   /**
+     * [密码登录]
+     */
+      function log(){
+        if($("#log_phone").val()==''){
+          alert('请输入手机号')
+        }else{
+          if(isPoneAvailable($("#log_phone"))==false){
+            alert('请输入正确手机号')
+          }else{
+            if($("#log_pwd").val()==''){
+              alert('请输入密码')
+            }else{
+              $.ajax({
+                url:"{:U('/LoginReg/accountPwdLogin')}",
+                type:'post',
+                data:{account:$("#log_phone").val(),password:$("#log_pwd").val()},
+                dataType:'json',
+                success:function(data){
+                 if(data.code==200){
+                      alert('登录成功')
+                      Save();
+                      window.location.reload();
+                    }else{
+                      alert(data.msg)
+                    }
+                },
+                error:function(){
+                  alert('error')
+                }
+              })
+            }
+          }
+        }   
+      }
+
+    /**
+    * [找回密码手机验证码发送]
+    */
+   var find_code;
+   $("#gaincode").on("click",function(){
+      if(isPoneAvailable($("#chitphone"))==false){
+        alert('请输入正确手机号')
+      }else{
+        sendCodess($(this),$("#chitphone"));
+          $.ajax({
+            url:"{:U('Api/sendPhoneMessage')}",
+            type:'post',
+            data:{phone:$("#chitphone").val(),code_type:'3'},
+            dataType:'json',
+            success:function(data){
+              find_code=data.msg.substr(7,13);
+            },
+            error:function(){
+              alert('error')
+            }
+          })
+      }    
+   })
+
+   $("#chitbtn").on("click",function(){
+      if($("#chitphone").val()==''){
+        alert('请输入手机号')
+      }else{
+        if(isPoneAvailable($("#chitphone"))==false){
+          alert('请输入正确手机号')
+        }else{
+          if($("#chitcode").val()!=find_code){
+            alert('验证码不正确')
+          }else{
+            $.ajax({
+              url:"{:U('Api/sendPhoneMessage')}",
+              type:'post',
+              data:{phone:$("#chitphone").val(),code_type:'3'},
+              dataType:'json',
+              success:function(data){
+                console.log(data)
+              },
+              error:function(){
+                alert('error')
+              }
+            })
+          }
+        }
+      }
+   })
+</script>
+
+</html>

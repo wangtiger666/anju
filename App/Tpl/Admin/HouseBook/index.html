@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <script src="__PUBLIC__/common/js/jquery.js" language="javascript" type="text/javascript"></script>
+		<script src="__PUBLIC__/common/js/common.js" language="javascript" type="text/javascript"></script>
+		<script src="__PUBLIC__/admin/laydate/laydate.js" language="javascript" type="text/javascript"></script>
+		<!-- bootstrap START-->
+        <link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/plugins/footable/footable.core.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/animate.css" rel="stylesheet">
+        <link href="__PUBLIC__/bootstrap/css/style.css" rel="stylesheet">
+        <link href="__PUBLIC__/common/style/recovebootstrap.css" rel="stylesheet" type="text/css" />
+
+        <!-- bootstrap END -->
+    </head>
+    <body>
+         <div class="main">
+            <div class="downbox">
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5>账号列表</h5>
+                            <div class="ibox-tools" style="display: inline-block;float: right;">
+                                <form id="myform" method="post" action="{:U('House/index')}" >
+                                    账号：<input type="text" name="account" value="{$account}">
+                                    开始时间：<input type="text" id="startDate" name="startDate" value="{$startDate}">
+                                    结束时间：<input type="text" id="endDate" name="endDate" value="{$endDate}">
+                                    <a   onclick="$('#myform').submit();" class="btn btn-primary btn-xs">搜索</a>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <table class="footable table table-stripped toggle-arrow-tiny footable-loaded default breakpoint" data-page-size="15">
+                                <thead>
+                                  <tr>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">账号<span class=""></span></th>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">房屋信息id<span class=""></span></th>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">预订时间<span class=""></span></th>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">订单id<span class=""></span></th>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">预订金额<span class=""></span></th>
+                                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">创建时间<span class=""></span></th>
+                                 </tr>
+                                 </thead>
+                                 <tbody>
+                                 <volist name="list" id="vo">
+                                     <tr    class=" <if condition='(($key%2) eq 0)'>footable-odd<else />footable-even</if>"  style="display: table-row;" >
+                                     <td class="footable-visible footable-first-column">{$vo['account']}</td>
+                                     <td class="footable-visible footable-first-column">{$vo['house_resouces_id']} </td>
+                                     <td class="footable-visible footable-first-column">{$vo['book_date']}</td>
+                                     <td class="footable-visible footable-first-column">{$vo['order_id']}</td>
+                                     <td class="footable-visible footable-first-column">{$vo['book_money']}</td>
+                                     <td class="footable-visible footable-first-column">{$vo['create_time']}</td>
+                                </tr>
+                                </volist>
+                                </tbody>
+                            </table>
+                            <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" align="center">
+                                    <tr  class="tr_white" align="center">
+                                        <td id="page_list" height="60" >
+                                            {$page}
+                                        </td>
+                                    </tr>
+                            </table> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </body>
+<script>
+    //执行一个laydate实例
+    laydate.render({
+        elem: '#startDate' //指定元素
+    });
+    laydate.render({
+        elem: '#endDate' //指定元素
+    });
+</script>
+</html>

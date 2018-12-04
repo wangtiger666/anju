@@ -1,0 +1,108 @@
+<html lang="zh-cn">
+<head>
+<meta charset="UTF-8">
+<meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" name="viewport">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta name="keywords" content="全景虚拟现实社区,全景摄影,全景视频,360度全景拍摄,VR制作,全景旅游,街景地图,全景新闻,全景图片,虚拟漫游,VR视频,VR航拍">
+<meta name="description" content="360vr全景云平台，是一站式解决360度全景摄影、VR全景视频拍摄、VR空中全景航拍、3D虚拟现实制作，全景上传、分享、展示、漫游，以及创作者互动交流、VR供需交易的综合性社区平台">
+<meta content="all" name="robots">
+<title>360vr全景云平台|720全景摄影,全景相机,360度全景拍摄,VR制作,全景旅游,全景新闻,全景图片,虚拟漫游,VR航拍</title>
+<link href="/favicon.ico" rel="shortcut icon">
+<link href="__PUBLIC__/yun/css/author.css" rel="stylesheet" type="text/css"/>
+<script src="__PUBLIC__/yun/js/jquery-1.10.2.js"></script>
+</head>
+<body>
+<div id="root">
+	<div>
+		<div style="height:50px;" class="p4b9YXf9RfoBkQjb">
+			<div class="notifications-wrapper">
+			</div>
+			<div class="_2xfu_lq1CjrY3ElJ">
+				<include file="Public:header"/>
+			</div>
+			<span></span>
+		</div>
+		<div style="margin-top:50px;" class="HVx4c9z6zEn-a1UZ">
+			<div class="_2Emzb2391gRUy5Io">
+				<div class="_1EAV3WKTgHERqfEZ">
+					<div class="_2BEFnuLwf2z8Nt5G">
+						<div class="_2QZzJKxjX0cNap0a _3B5oKFKJWg9Y_zqO">
+							<div class="_1-dQFRuh6MTasAL-">
+								<div class="_3Ju_y7gEZHZ4XPE-">
+									<span class="_2ECuXG2NLJUJpAOy">作者</span>
+									<a href="index.php?s=/Author/index/filter/1"><span class='_1FjFOUiZmaAaR_nG <if condition="$filter eq 1">_10jR6W_OO7lGfCgN</if>'>综合</span></a>
+									<a href="index.php?s=/Author/index/filter/2"><span class='_1FjFOUiZmaAaR_nG <if condition="$filter eq 2">_10jR6W_OO7lGfCgN</if>'>人气</span></a>
+									<a href="index.php?s=/Author/index/filter/3"><span class='_1FjFOUiZmaAaR_nG <if condition="$filter eq 3">_10jR6W_OO7lGfCgN</if>'>作品</span></a>
+									<a href="index.php?s=/Author/index/filter/4"><span class='_1FjFOUiZmaAaR_nG <if condition="$filter eq 4">_10jR6W_OO7lGfCgN</if>'>新晋</span></a>
+								</div>
+								<div class="_15Aay3CNIXMxhKUa">
+								</div>
+								<!--
+								<div class="_3Ju_y7gEZHZ4XPE-">
+									<span class="_2ECuXG2NLJUJpAOy">筛选</span>
+									<a href="javascript: void 0;"><span class="_1FjFOUiZmaAaR_nG _10jR6W_OO7lGfCgN">全部摄影师</span></a>
+									<a href="javascript: void 0;"><span class="_1FjFOUiZmaAaR_nG">商业摄影师</span></a>
+								</div>
+								<div data-reactid=".0.1.1.0.0.0.0.3" class="_15Aay3CNIXMxhKUa"></div>
+								 -->
+							</div>
+						</div>
+						<div >
+							<div class="_1SKVZ2X8IKPqa4QT">
+
+								<volist name="authorlist" id="vo">
+								<div class="_2QZzJKxjX0cNap0a">
+									<div class="bGX3B5pvXCgp6HHg">
+										<a href="javascript:void(0);">
+										<div class="_1PK61OFbgnXDuZH3">
+											<div title="{$vo.nickname}">
+												<img alt="{$vo.nickname}" src="{$vo.headimg}" class="_3FY52TIlSp5gnYU0">
+											</div>
+										</div>
+										</a><a href="javascript:void(0);"><span class="_4uUdyA1cPu0u4wQr">{$vo.nickname}</span></a>
+										<div class="_1o7BiiUHfKM7Dlic">
+											<span class="_2UbxPUIwHCfQqPsu"><span>人气: </span><span >{$vo.renqi}</span></span><span class="_2UbxPUIwHCfQqPsu"><span>作品: </span><span>{$vo.zuopin}</span></span>
+										</div>
+									</div>
+								</div>
+								</volist>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="_31A1H8LN8FhMDQl4">
+					<a href="/">
+					<div class="MLUWKouLLX8f3P1V _2d3EYDq7zxJIBfOT">
+						<img src="__PUBLIC__/yun/images/footer.png" class="_3FY52TIlSp5gnYU0">
+					</div>
+					</a>
+					<div class="_1fo7Bzg6WSygEakf _1kiXH1q2aTBv2hF0">
+						<div>
+							<a class="zbAI9NL9T1n_f6ty" href="tel:4000016166">合作电话：4000-123-720</a>
+							<span>工作时间: 8:00 - 18:00</span>
+							<!-- <a class="sD-njl4C6EvCCTP5" target="_blank" href="http://form.mikecrm.com/f.php?t=Qn8cfc">在线约拍</a> -->
+						</div>
+						<div>
+							&copy; Copyright 2016 360VR.cn Inc. All Rights Reserved 鲁ICP备13006441号
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="_1atukyZAoJFnyUPn">
+				<a title="720云 - 微信公众平台" href="javascript: void 0;">
+				<div class="ME-OzEtldEv6X7aZ">
+					<i class="icon icon-qr _2BXXjA-svbp0gKD_"></i>
+				</div>
+				</a><a title="全景教程" href="/channel/4/article">
+				<div class="ME-OzEtldEv6X7aZ">
+					<i class="icon icon-note _2BXXjA-svbp0gKD_"></i>
+				</div>
+				</a>
+			</div> -->
+		</div>
+	</div>
+</div>
+<script src="__PUBLIC__/yun/js/commoncheck.js"></script>
+</body>
+</html>

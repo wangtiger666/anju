@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano showerrors="false">
+    <preview type="grid(cube,32,32,256,0x223344,0x000011,0xFFFFFF);" details="8" />
+    <plugin name="point" url="__PUBLIC__/member/images/pano/mappoint.png" edge="center"
+        align="center" x="0" y="0" alpha="1" scale="1" visible="True" rotate="0"
+    />
+</krpano>

@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano>
+    <textstyle name="DEFAULT" effect="" bordercolor="0xF6F6F6" backgroundcolor="0xFEFEFE" background="True"
+        edge="bottom" blendmode="NORMAL" alpha="0.8" fadeintime="0" fadetime="0" showtime="0.1"
+        noclip="False" yoffset="-3" xoffset="0" textalign="none" origin="cursor" textcolor="0x000000"
+        border="True" italic="False" bold="False" fontsize="12" font="Arial, Helvetica, sans-serif"
+        />
+
+    <action name="hotspot_animate">
+            inc(frame,1,get(lastframe),0);
+            mul(ypos,frame,frameheight);
+            txtadd(crop,'0|',get(ypos),'|',get(framewidth),'|',get(frameheight));
+            delayedcall(%1, if(loaded, hotspot_animate(%1) ) );
+    </action>
+
+
+    <plugin name="snow" zorder="1" visible="false"
+        url="%SWFPATH%/plugins/snow.swf"
+        alturl="%SWFPATH%/plugins/snow.js"
+        floor="0.7" keep="true"
+        />
+
+    <action name="noeffect">
+        set(plugin[snow].visible,false);
+    </action>
+    <action name="defaultsnow">
+        set(plugin[snow].visible,true);
+            set(plugin[snow].mode,          snow);
+            set(plugin[snow].blendmode,     normal);
+            set(plugin[snow].flakes,        4000);
+            set(plugin[snow].color,         0xFFFFFF);
+            set(plugin[snow].speed,         1.0);
+            set(plugin[snow].shake,         4.0);
+            set(plugin[snow].speedvariance, 2.0);
+            set(plugin[snow].spreading,     4.0);
+            set(plugin[snow].wind,          0.0);
+    </action>
+
+    <action name="snowballs">
+        set(plugin[snow].visible,true);
+            set(plugin[snow].mode,          image);
+            set(plugin[snow].imageurl,      '%SWFPATH%/weather/snowball.png');
+            set(plugin[snow].blendmode,     normal);
+            set(plugin[snow].flakes,        2000);
+            set(plugin[snow].imagescale,    0.5);
+            set(plugin[snow].speed,         1.0);
+            set(plugin[snow].shake,         4.0);
+            set(plugin[snow].speedvariance, 2.0);
+            set(plugin[snow].spreading,     2.0);
+            set(plugin[snow].wind,          0.0);
+    </action>
+
+    <action name="snowflakes">
+        set(plugin[snow].visible,true);
+            set(plugin[snow].mode,          image);
+            set(plugin[snow].imageurl,      '%SWFPATH%/weather/snowflake.png');
+            set(plugin[snow].blendmode,     add);
+            set(plugin[snow].flakes,        2000);
+            set(plugin[snow].imagescale,    0.4);
+            set(plugin[snow].speed,         0.5);
+            set(plugin[snow].shake,         8.0);
+            set(plugin[snow].speedvariance, 2.0);
+            set(plugin[snow].spreading,     2.0);
+            set(plugin[snow].wind,          0.0);
+    </action>
+
+    <action name="rain">
+        set(plugin[snow].visible,true);
+            set(plugin[snow].mode,          rain);
+            set(plugin[snow].blendmode,     normal);
+            set(plugin[snow].flakes,        2000);
+            set(plugin[snow].color,         0x7FAFFF);
+            set(plugin[snow].speed,         3.5);
+            set(plugin[snow].shake,         1.0);
+            set(plugin[snow].speedvariance, 1.0);
+            set(plugin[snow].spreading,     3.0);
+            set(plugin[snow].rainwidth,     1.0);
+            set(plugin[snow].rainalpha,     0.5);
+            set(plugin[snow].wind,          2.0);
+    </action>
+
+    <action name="heavyrain">
+        set(plugin[snow].visible,true);
+            set(plugin[snow].mode,          rain);
+            set(plugin[snow].blendmode,     normal);
+            set(plugin[snow].flakes,        4000);
+            set(plugin[snow].color,         0x9FAFFF);
+            set(plugin[snow].speed,         4.1);
+            set(plugin[snow].shake,         0.0);
+            set(plugin[snow].speedvariance, 1.5);
+            set(plugin[snow].spreading,     4.0);
+            set(plugin[snow].rainwidth,     1.5);
+            set(plugin[snow].rainalpha,     0.3);
+            set(plugin[snow].wind,          3.0);
+    </action>
+	
+	<action name="hearts">
+        set(plugin[snow].visible,true);
+            set(plugin[snow].mode,          image);
+            set(plugin[snow].imageurl,      '%SWFPATH%/weather/heart.png');
+            set(plugin[snow].blendmode,     normal);
+            set(plugin[snow].flakes,        100);
+            set(plugin[snow].imagescale,    0.7);
+            set(plugin[snow].speed,         4.0);
+            set(plugin[snow].shake,         0.0);
+            set(plugin[snow].speedvariance, 2.0);
+            set(plugin[snow].spreading,     2.0);
+            set(plugin[snow].wind,          0.0);
+    </action>
+	
+	<action name="hongbao">
+        set(plugin[snow].visible,true);
+            set(plugin[snow].mode,          image);
+            set(plugin[snow].imageurl,      '%SWFPATH%/weather/hongbao.png');
+            set(plugin[snow].blendmode,     normal);
+            set(plugin[snow].flakes,        150);
+            set(plugin[snow].imagescale,    1.0);
+            set(plugin[snow].speed,         4.0);
+            set(plugin[snow].shake,         0.0);
+            set(plugin[snow].speedvariance, 2.0);
+            set(plugin[snow].spreading,     2.0);
+            set(plugin[snow].wind,          0.0);
+    </action>
+	
+	<action name="tongqian">
+        set(plugin[snow].visible,true);
+            set(plugin[snow].mode,          image);
+            set(plugin[snow].imageurl,      '%SWFPATH%/weather/tongqian.png');
+            set(plugin[snow].blendmode,     normal);
+            set(plugin[snow].flakes,        150);
+            set(plugin[snow].imagescale,    0.7);
+            set(plugin[snow].speed,         3.0);
+            set(plugin[snow].shake,         0.0);
+            set(plugin[snow].speedvariance, 2.0);
+            set(plugin[snow].spreading,     2.0);
+            set(plugin[snow].wind,          0.0);
+    </action>
+
+
+    <action name="linkto">
+        js(window.open(%1););
+    </action>
+
+<action name="skin_changecontrolmode">
+        switch(control.mouse, moveto, drag);
+        switch(control.touch, moveto, drag);
+    </action>
+    <action name="skin_view_normal">
+            tween(view.fovmax,       150.0, distance(179, 1.00), easeoutquad);
+            tween(view.architectural,  0.0, distance(1.0, 0.45), easeoutquad);
+            tween(view.fisheye,        0.0, distance(1.0, 0.45), easeoutquad, set(view.stereographic,false); if(view.pannini, set(view.pannini,false); delayedcall(0,updateobject(true,true)); ); );
+            set(centerview,false);
+            if(view.architectural LT 0.2,
+                    if(view.vlookat LT -60, set(centerview,true));
+                    if(view.vlookat GT +60, set(centerview,true));
+                    if(centerview, tween(view.vlookat, 0.0, distance(90, 0.45), easeoutquad));
+              );
+            if(view.fov GE 150, tween(view.fov, 100.0, distance(50, 0.45), easeoutquad));
+    </action>
+
+    <action name="skin_view_fisheye">
+            tween(view.architectural, 0.0, distance(1.0, 0.30), easeoutquad);
+            tween(view.fisheye,       0.0 ,distance(1.0, 0.30), easeoutquad, set(view.stereographic,false); if(view.pannini, set(view.pannini,false); delayedcall(0,updateobject(true,true)); ); set(view.fovmax,179); tween(view.fisheye, 0.35, distance(1.0,1.25)); );
+    </action>
+
+    <action name="skin_view_architectural">
+            tween(view.fovmax,       150.0, distance(179, 1.00), easeoutquad);
+            tween(view.architectural,  1.0, distance(1.0, 0.45), easeoutquad);
+            tween(view.fisheye,        0.0, distance(1.0, 0.45), easeoutquad, set(view.stereographic,false); if(view.pannini, set(view.pannini,false); delayedcall(0,updateobject(true,true)); ); );
+    </action>
+
+    <action name="skin_view_stereographic">
+            tween(view.architectural, 0.0, 0.25);
+            set(backtonormalfirst,false);
+            if(view.pannini       == true,  set(backtonormalfirst,true) );
+            if(view.stereographic == false, set(backtonormalfirst,true) );
+            if(backtonormalfirst, tween(view.fisheye, 0.0 ,distance(1.0, 0.25), easeoutquad, WAIT); );
+            if(view.pannini, set(view.pannini,false); delayedcall(0,updateobject(true,true)); );
+            set(view.stereographic, true);
+            set(view.fovmax, 150);
+            tween(view.fisheye, 1.0, distance(1.0, 0.75), easeoutquad);
+    </action>
+
+    <action name="skin_view_pannini">
+            tween(view.architectural, 0.0, 0.25);
+            set(backtonormalfirst,false);
+            if(view.pannini       == false, set(backtonormalfirst,true) );
+            if(view.stereographic == false, set(backtonormalfirst,true) );
+            if(backtonormalfirst, tween(view.fisheye, 0.0 ,distance(1.0, 0.25), easeoutquad, WAIT); );
+            set(view.pannini, true);
+            set(view.stereographic, true);
+            set(view.fovmax, 150);
+            tween(view.fisheye, 1.0, distance(1.0, 0.75), easeoutquad);
+    </action>
+
+    <action name="skin_view_littleplanet">
+            tween(view.architectural, 0.0, 0.25);
+            tween(view.vlookat,  90, distance(179, 1.50), easeoutquad);
+            set(backtonormalfirst,false);
+            if(view.pannini       == true,  set(backtonormalfirst,true) );
+            if(view.stereographic == false, set(backtonormalfirst,true) );
+            if(backtonormalfirst, tween(view.fisheye, 0.0 ,distance(1.0, 0.25), easeoutquad, WAIT); );
+            if(view.pannini, set(view.pannini,false); delayedcall(0,updateobject(true,true)); );
+            set(view.stereographic, true);
+            set(view.fovmax, 150);
+            tween(view.fisheye, 1.0, distance(1.0, 0.75), easeoutquad);
+            tween(view.fov,     150, distance(179, 0.75), easeoutquad);
+    </action>
+
+    <action name="becomestar">
+        set(display.flash10, off);
+        set(view.stereographic,true);
+        set(view.fisheye,1.0);
+        set(view.fov,150);
+        set(view.fovtype,VFOV);
+        set(view.fovmax,150);
+        set(view.hlookat,calc(view.hlookat - 180)); 
+        set(view.vlookat,90)
+    </action>
+
+    <action name="normalview">
+            tween(view.hlookat, %1, 2.5, easeInOutQuad);
+            tween(view.vlookat, %2, 2.5, easeInOutQuad);
+            tween(view.fov,     %3,  2.5, easeInOutQuad);
+            tween(view.fisheye, 0.0, 2.5, easeInOutQuad);
+            wait(2.7);
+            set(display.flash10, on);
+    </action>
+
+    <action name="fixfov">
+            if(stagewidth LT stageheight,
+                    set(view.fovtype,HFOV);
+                    ,
+                    set(view.fovtype,VFOV);
+            );
+    </action>
+    <action name="autonextscene">
+    if(skin_settings.openautonext == 1,
+        nextscene();
+    );
+    </action>
+    <action name="prevscene">
+            copy(sceneindex, scene[get(xml.scene)].index);
+            sub(lastindex, scene.count, 1);
+            dec(sceneindex, 1, 0, get(lastindex));
+            loadscene(get(scene[get(sceneindex)].name), null, MERGE, BLEND(0.5));
+    </action>
+
+    <action name="nextscene">
+            copy(sceneindex, scene[get(xml.scene)].index);
+            sub(lastindex, scene.count, 1);
+            inc(sceneindex, 1, get(lastindex), 0);
+            loadscene(get(scene[get(sceneindex)].name), null, MERGE, BLEND(0.5));
+    </action>
+
+    <style name="flyoutimage"
+           distorted="true"
+           backup_rx="0"
+           backup_ry="0"
+           backup_rz="0"
+           backup_scale="0"
+           backup_zorder="0"
+           flying="0.0"
+           flystate="0"
+           onclick="if(flystate == 0, flyout_by_name(get(name)), flyback_by_name(get(name)) );"
+           />
+
+    <action name="flyout_by_name">
+            <!-- make all other hotspots flying back -->
+            flyback_others();
+
+            <!--
+                    for best control set 4 fly states:
+                    0 = normal
+                    1 = while flying out
+                    2 = out
+                    3 = while flying back
+            -->
+
+            <!-- save original position/rotation -->
+            if(hotspot[%1].flystate == 0,
+                copy(hotspot[%1].backup_rx,     hotspot[%1].rx);
+                copy(hotspot[%1].backup_ry,     hotspot[%1].ry);
+                copy(hotspot[%1].backup_rz,     hotspot[%1].rz);
+                copy(hotspot[%1].backup_scale,  hotspot[%1].scale);
+                copy(hotspot[%1].backup_zorder, hotspot[%1].zorder);
+              );
+
+            <!-- set new state -->
+            set(hotspot[%1].flystate,1);
+            set(hotspot[%1].zorder,99);
+
+            <!-- tween the rotations values to 0 for a flat screen view -->
+            tween(hotspot[%1].rx, 0);
+            tween(hotspot[%1].ry, 0);
+            tween(hotspot[%1].rz, 0);
+            tween(hotspot[%1].scale, 1.5);
+
+            <!--
+                    tween 'flying' to 1.0,
+                    this makes the hotspot independent from the panorama rotation and scaling
+            -->
+            tween(hotspot[%1].flying, 1.0, 0.5, default, set(hotspot[%1].flystate,2); );
+    </action>
+
+
+    <action name="flyback_by_name">
+            if(hotspot[%1].flystate != 3,
+                    set(hotspot[%1].flystate,3);
+
+                    <!-- tween back to the stored backup values -->
+                    tween(hotspot[%1].rx,    get(hotspot[%1].backup_rx)    );
+                    tween(hotspot[%1].ry,    get(hotspot[%1].backup_ry)    );
+                    tween(hotspot[%1].rz,    get(hotspot[%1].backup_rz)    );
+                    tween(hotspot[%1].scale, get(hotspot[%1].backup_scale) );
+
+                    copy(hotspot[%1].zorder, hotspot[%1].backup_zorder);
+
+                    <!-- tween 'flying' also back to 0.0 -->
+                    tween(hotspot[%1].flying, 0.0, 0.5, default, set(hotspot[%1].flystate,0); );
+              );
+    </action>
+
+    <action name="flyback_others">
+            for(set(i,0), i LT hotspot.count, inc(i),
+                    if(hotspot[%i].flystate GT 0, flyback_by_name(get(hotspot[get(i)].name)); );
+              );
+    </action>
+	
+	<action name="do_crop_animation">
+		registerattribute(xframes, calc((imagewidth / %1) BOR 0));
+		registerattribute(yframes, calc((imageheight / %2) BOR 0));
+		registerattribute(frames, calc(xframes * yframes));
+		registerattribute(frame, 0);
+
+		set(crop, '0|0|%1|%2');
+
+		setinterval(calc('crop_anim_' + name), calc(1.0 / %3),
+			if(loaded,
+				inc(frame);
+				if(frame GE frames, if(onlastframe !== null, onlastframe() ); set(frame,0); );
+				mod(xpos, frame, xframes);
+				div(ypos, frame, xframes);
+				Math.floor(ypos);
+				mul(xpos, %1);
+				mul(ypos, %2);
+				calc(crop, xpos + '|' + ypos + '|%1|%2');
+			  ,
+				clearinterval(calc('crop_anim_' + name));
+			  );
+		  );
+	</action>
+
+	<action name="cm_changecontrolmode">
+	switch(control.mouse, moveto, drag);
+	switch(control.touch, moveto, drag);
+	</action>
+
+
+<action name="cm_littleplanet_view">
+	tween(view.architectural, 0.0, distance(1.0,0.5));
+	tween(view.pannini,       0.0, distance(1.0,0.5));
+	tween(view.fisheye,       1.0, distance(1.0,0.8));
+	tween(view.fov,           150, distance(150,0.8));
+	tween(view.vlookat,        90, distance(100,0.8));
+	add(new_hlookat, view.hlookat, 123.0);
+	tween(view.hlookat, get(new_hlookat), distance(100,0.8));
+</action>
+
+<action name="cm_look_straight">
+	if(view.vlookat LT -80 OR view.vlookat GT +80,
+		tween(view.vlookat, 0.0, 1.0, easeInOutSine);
+		tween(view.fov,     100, distance(150,0.8));
+	  );
+</action>
+
+<action name="cm_normal_view">
+	cm_look_straight();
+	tween(view.architectural, 0.0, distance(1.0,0.5));
+	tween(view.pannini,       0.0, distance(1.0,0.5));
+	tween(view.fisheye,       0.0, distance(1.0,0.5));
+</action>
+
+<action name="cm_architectural_view">
+	cm_look_straight();
+	tween(view.architectural, 1.0, distance(1.0,0.5));
+	tween(view.pannini,       0.0, distance(1.0,0.5));
+	tween(view.fisheye,       0.0, distance(1.0,0.5));
+</action>
+
+<action name="cm_fisheye_view">
+	cm_look_straight();
+	tween(view.architectural, 0.0,  distance(1.0,0.5));
+	tween(view.pannini,       0.0,  distance(1.0,0.5));
+	tween(view.fisheye,       0.35, distance(1.0,0.5));
+</action>
+
+<action name="cm_stereographic_view">
+	cm_look_straight();
+	tween(view.architectural, 0.0, distance(1.0,0.5));
+	tween(view.pannini,       0.0, distance(1.0,0.5));
+	tween(view.fisheye,       1.0, distance(1.0,0.8));
+</action>
+
+<action name="cm_pannini_view">
+	cm_look_straight();
+	tween(view.architectural, 0.0, distance(1.0,0.5));
+	tween(view.pannini,       1.0, distance(1.0,0.8));
+	if(view.fisheye LT 0.1,
+		tween(view.fisheye, 1.0, distance(1.0,0.8));
+	  );
+</action>
+
+
+	<style name="tooltip" onover="copy(layer[tooltip].html, tooltip);set(layer[tooltip].visible, true);tween(layer[tooltip].alpha, 1.0, 0.5);asyncloop(hovering, copy(layer[tooltip].x,mouse.stagex); copy(layer[tooltip].y,mouse.stagey); );" onout="tween(layer[tooltip].alpha, 0.0, 0.25, default, set(layer[tooltip].visible,false), copy(layer[tooltip].x,mouse.stagex); copy(layer[tooltip].y,mouse.stagey); );" />
+	<layer name="tooltip" keep="true" url="%SWFPATH%/plugins/textfield.swf" parent="STAGE" visible="false" alpha="0" enabled="false" align="lefttop" edge="bottom" oy="-2" background="true" backgroundcolor="#000000" backgroundalpha="0.5" border="false" bordercolor="#000000" borderalpha="1.0" borderwidth="1.0" roundedge="5" shadow="0.0" shadowrange="4.0" shadowangle="45" shadowcolor="#000000" shadowalpha="1.0" textshadow="1" textshadowrange="6.0" textshadowangle="90" textshadowcolor="#000000" textshadowalpha="1.0" css="margin:5px;text-align:center;color:#FFFFFF;font-family:Arial,宋体;font-size:12px;" html="" padding="5" />
+
+</krpano>
